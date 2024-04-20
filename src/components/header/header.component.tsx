@@ -12,8 +12,8 @@ export function Header() {
                 <p className="text-primary-500 mt-3 text-xl">Over 500+ stores available — rewards at your own pace.</p>
 
                 <div className="flex gap-3 mt-12">
-                    <Button variant="ghost-dark">Learn more</Button>
-                    <Button variant="ghost-dark">Sign up</Button>
+                    <Button variant="accent">Learn more</Button>
+                    <Button variant="ghost-light">Sign up</Button>
                 </div>
             </div>
 
