@@ -26,6 +26,9 @@ const config: Config = {
       },
       fontFamily: {
         stardom: ['var(--font-stardom)']
+      },
+      screens: {
+        xs: '376px'
       }
     },
   },
