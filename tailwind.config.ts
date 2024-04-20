@@ -21,7 +21,8 @@ const config: Config = {
           200: "#DFD7C9",
           100: "#EFECE5",
           50: "#F8F6F4"
-        }
+        },
+        accent: '#BE7B62'
       },
       fontFamily: {
         stardom: ['var(--font-stardom)']
