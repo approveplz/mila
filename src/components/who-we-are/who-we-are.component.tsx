@@ -3,7 +3,7 @@ import { data } from './metadata';
 
 export function WhoWeAre() {
     return (
-        <div className="grid grid-cols-12 sm:gap-10 gap-8 sm:px-10 lg:px-20 px-5 py-20">
+        <div id='about-us' className="grid grid-cols-12 sm:gap-10 gap-8 sm:px-10 lg:px-52 px-5 py-20">
             <div className="sm:col-span-7 lg:col-span-9 col-span-12">
                 <div className="text-left">
                     <h2 className="text-3xl font-stardom text-primary-600">
