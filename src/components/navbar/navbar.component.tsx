@@ -6,8 +6,7 @@ import { Button } from "@/components/button/button.component";
 import { Container } from "@/components/container/container.component";
 import { Divider } from "@/components/divider/divider.component";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { HiBars3 } from "react-icons/hi2";
-import { HiXMark } from "react-icons/hi2";
+import { List as ListIcon, X as XIcon } from "@phosphor-icons/react";
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
@@ -48,13 +47,13 @@ export function NavBar() {
                             <div className="flex flex-1 justify-end sm:hidden">
                                 <Button type="button" asChild variant="ghost-dark" className="data-[state=open]:hidden">
                                     <AccordionTrigger>
-                                        <HiBars3 className="h-6 w-6 mr-2" />
+                                        <ListIcon className="h-6 w-6 mr-2" />
                                         Menu
                                     </AccordionTrigger>
                                 </Button>
                                 <Button type="button" asChild variant="ghost-dark" className="data-[state=closed]:hidden">
                                     <AccordionTrigger>
-                                        <HiXMark className="h-6 w-6 mr-2" />
+                                        <XIcon className="h-6 w-6 mr-2" />
                                         Close
                                     </AccordionTrigger>
                                 </Button>
