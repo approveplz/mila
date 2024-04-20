@@ -49,7 +49,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${generalSans.variable} ${stardom.variable} ${generalSans.className} bg-[#FAFAF9]`}>
         <NavBar />
-        <main>
+        <main className="pt-[98px]">
           {children}
         </main>
       </body>

@@ -12,8 +12,8 @@ const buttonVariants = cva(
                 primary: "bg-primary text-primary-foreground",
                 accent: "bg-accent text-white",
                 "ghost-dark": "text-primary-800 border-primary-800 font-medium leading-5 text-sm hover:bg-primary-800 hover:text-white",
-                "ghost-light": "text-primary-600 border-primary-600 font-medium leading-5 text-sm hover:bg-primary-600 hover:text-white"
-                // link: "text-primary underline-offset-4 hover:underline",
+                "ghost-light": "text-primary-600 border-primary-600 font-medium leading-5 text-sm hover:bg-primary-600 hover:text-white",
+                link: "text-primary-800 underline-offset-4 border-none",
             },
         },
         defaultVariants: {
