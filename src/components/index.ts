@@ -6,4 +6,5 @@ export * from "./header/header.component";
 export * from "./clients/clients.component";
 export * from "./how-it-works/how-it-works.component";
 export * from "./feature/feature.component";
+export * from "./gallery/gallery.component";
 export * from "./navbar";
