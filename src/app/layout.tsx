@@ -46,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={`${generalSans.variable} ${stardom.variable} ${generalSans.className} bg-[#FAFAF9]`}>
         <NavBar />
         <main className="pt-[98px]">
