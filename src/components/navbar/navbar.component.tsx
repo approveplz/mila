@@ -14,9 +14,9 @@ const AccordionTrigger = AccordionPrimitive.Trigger;
 const AccordionContent = AccordionPrimitive.Content;
 
 const navigation = [
-    { name: 'How it works', href: '/' },
-    { name: 'FAQ', href: '/' },
-    { name: 'About us', href: '/' }
+    { name: 'How it works', href: '/#how-it-works', scroll: false },
+    { name: 'FAQ', href: '/#FAQ', scroll: false },
+    { name: 'About us', href: '/#about-us', scroll: false }
 ]
 
 export function NavBar() {
@@ -33,7 +33,7 @@ export function NavBar() {
                                         <Image fill src="/images/logo-primary.png" alt="Logo" />
                                     </div>
                                 </Link>
-                                <div className="hidden lg:flex lg:gap-x-11 overflow-hidden">
+                                <div className="hidden sm:flex sm:gap-x-11 overflow-hidden">
                                     {navigation.map((item) => (
                                         <Link key={item.name} href={item.href} className="text-sm font-medium text-primary-800">
                                             {item.name}
