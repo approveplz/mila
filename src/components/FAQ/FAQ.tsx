@@ -10,7 +10,7 @@ export function FAQ() {
     };
 
     return (
-        <div className="sm:px-10 lg:p-20 p-5">
+        <div id='FAQ' className="sm:px-10 lg:pt-20 lg:px-52 p-5">
             <div className="text-left">
                 <h2 className="text-3xl font-stardom text-primary-600">
                     {data?.title}
@@ -18,7 +18,7 @@ export function FAQ() {
             </div>
 
             <div className='w-full py-10'>
-                {data.accordian.map((item, index) => (
+                {data.accordion.map((item, index) => (
                     <div key={index} className="flex flex-col">
                         <div className="flex justify-between pt-5 cursor-pointer items-center" onClick={() => toggleAccordion(index)}>
                             <div className="text-base font-medium text-primary-800">{item.title}</div>
