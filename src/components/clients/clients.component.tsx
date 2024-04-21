@@ -7,7 +7,7 @@ const clients = ['italic', 'allbirds', 'yeti', 'warby-parker', 'peloton'];
 export function Clients() {
     return (
         <Container>
-            <div className="flex flex-wrap justify-center gap-x-4 gap-y-[30px] pb-20 md:gap-x-8 lg:gap-x-[114px]">
+            <div className="flex flex-wrap justify-around gap-x-4 gap-y-[30px] pb-20 md:gap-x-8 lg:gap-x-[114px]">
                 {clients.map((client, idx) => (
                     <img
                         key={`client-${idx}`}
