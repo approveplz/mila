@@ -6,7 +6,7 @@ export function ContactUs() {
     return (
         <div
             id='contact-us'
-            className="lg:px-20 px-10 lg:py-40 py-16 flex flex-col lg:flex-row lg:gap-0 gap-8 justify-left bg-gradient-to-b from-[#FEFCE800] to-[#EFECE5] border border-primary-100"
+            className="lg:px-20 px-10 lg:py-40 py-16 flex flex-col lg:flex-row lg:gap-0 gap-8 justify-left bg-[url('/images/bg-section-rotate.png')] bg-no-repeat bg-cover"
         >
             <div className='sm:w-1/2 w-full'>
                 <div className='xl:px-32'>
