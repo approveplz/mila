@@ -33,9 +33,9 @@ export function NavBar() {
                                         <Image fill src="/images/logo-primary.png" alt="Logo" />
                                     </div>
                                 </Link>
-                                <div className="hidden lg:flex lg:gap-x-11 overflow-hidden">
+                                <div className="hidden sm:flex sm:gap-x-11 overflow-hidden">
                                     {navigation.map((item) => (
-                                        <Link key={item.name} href={item.href} scroll={item.scroll} className="text-sm font-medium text-primary-800">
+                                        <Link key={item.name} href={item.href} className="text-sm font-medium text-primary-800">
                                             {item.name}
                                         </Link>
                                     ))}
