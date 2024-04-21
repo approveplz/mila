@@ -6,9 +6,10 @@ import Image from 'next/image'
 export function Header() {
     return (
         <Container>
-            <header className="relative pt-[50px] pb-20 sm:flex sm:min-h-[585px]">
+            <header className="relative pt-[50px] pb-20 sm:flex sm:min-h-[585px] lg:gap-x-[93px]">
                 {/* Hero Info */}
-                <div className="w-full z-40 sm:min-w-[561px] sm:mt-[78px]">
+                {/* w-full */}
+                <div className="z-40 sm:min-w-[561px] sm:mt-[78px]">
                     <h1 className="font-stardom text-primary-600 text-5xl sm:text-7xl">Welcome to <br /> MilaCollective</h1>
                     <p className="text-primary-500 mt-3 text-xl">Over 500+ stores available — rewards at your own pace.</p>
 
