@@ -16,7 +16,7 @@ import { Gift, HandPointing, Lock, LockKeyOpen } from '@phosphor-icons/react';
 
 export function HowItWorks() {
     return (
-        <section id="how-it-works" className="py-20 bg-[url('/images/bg-section.png')] bg-no-repeat bg-cover">
+        <section id="how-it-works" className="py-20 bg-[url('/images/bg-section.png')] bg-no-repeat" style={{ backgroundSize: '100% 50%' }}>
             <Container>
                 <h2 className="text-3xl font-stardom text-primary-600 mb-14">How it works</h2>
 
