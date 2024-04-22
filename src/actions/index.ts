@@ -58,7 +58,7 @@ export async function addUserToNotion(formState: any, formData: FormData) {
                     }
                 },
                 Live: {
-                    checkbox: false
+                    checkbox: process.env.ENVIRONMENT_TYPE! === 'live' ? true : false
                 }
             }
         });
