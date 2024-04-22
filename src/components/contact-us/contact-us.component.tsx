@@ -21,7 +21,7 @@ export function ContactUs() {
             <div>
                 <div className='flex flex-col sm:flex-row sm:gap-5 gap-2 items-center w-full sm:w-1/2'>
                     <input
-                        className='border border-primary-300 h-[48px] text-primary-400 w-full sm:min-w-[324px] px-5 placeholder-primary-700 shadow-md'
+                        className='border border-primary-300 h-[48px] text-primary-500 font-medium w-full sm:min-w-[324px] px-5 placeholder-primary-500 shadow-md placeholder:font-medium outline-none'
                         placeholder='Enter your email'
                         type="text"
                     />

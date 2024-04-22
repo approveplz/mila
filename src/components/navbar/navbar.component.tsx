@@ -41,8 +41,12 @@ export function NavBar() {
                                     ))}
                                 </div>
                             </div>
-                            <div className="hidden sm:flex sm:flex-1 sm:justify-end xl:hidden">
-                                <Button variant="ghost-dark">Sign up</Button>
+                            <div className="hidden sm:flex sm:flex-1 sm:justify-end">
+                                <Button variant="ghost-dark" asChild>
+                                    <Link href="/#contact-us">
+                                        Sign up
+                                    </Link>
+                                </Button>
                             </div>
                             <div className="flex flex-1 justify-end sm:hidden">
                                 <Button type="button" asChild variant="ghost-dark" className="data-[state=open]:hidden">
@@ -74,7 +78,7 @@ export function NavBar() {
 
                                     <Divider />
 
-                                    <Link href="/" className="block text-sm text-center font-medium text-primary-800">
+                                    <Link href="/#contact-us" className="block text-sm text-center font-medium text-primary-800">
                                         Sign up
                                     </Link>
                                 </div>
