@@ -4,7 +4,7 @@ import Slider from 'react-infinite-logo-slider';
 
 export function Gallery() {
     return (
-        <section>
+        <section className="border-b border-primary-200">
             <Slider
                 width="203px"
                 duration={40}
