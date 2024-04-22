@@ -41,7 +41,7 @@ export function NavBar() {
                                     ))}
                                 </div>
                             </div>
-                            <div className="hidden sm:flex sm:flex-1 sm:justify-end xl:hidden">
+                            <div className="hidden sm:flex sm:flex-1 sm:justify-end">
                                 <Button variant="ghost-dark" asChild>
                                     <Link href="/#contact-us">
                                         Sign up
