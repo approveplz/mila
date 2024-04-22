@@ -4,9 +4,9 @@ import Slider from 'react-infinite-logo-slider';
 
 export function Gallery() {
     return (
-        <section>
+        <section className="border-b border-primary-200">
             <Slider
-                width="250px"
+                width="203px"
                 duration={40}
                 pauseOnHover={true}
                 blurBorders={false}

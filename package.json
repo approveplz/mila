@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.15",
     "@phosphor-icons/react": "^2.1.5",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
@@ -18,7 +19,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-infinite-logo-slider": "^1.0.13",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "zod": "^3.23.0"
   },
   "devDependencies": {
     "@types/node": "^20",
