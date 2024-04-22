@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Container } from '@/components';
 import Image from 'next/image'
+import Link from 'next/link';
 
 {/* Hero */ }
 export function Header() {
@@ -8,14 +9,19 @@ export function Header() {
         <Container>
             <header className="relative pt-[50px] pb-20 sm:flex sm:min-h-[585px] lg:gap-x-[93px]">
                 {/* Hero Info */}
-                {/* w-full */}
                 <div className="z-40 sm:min-w-[561px] sm:mt-[78px]">
                     <h1 className="font-stardom text-primary-600 text-5xl sm:text-7xl">Welcome to <br /> MilaCollective</h1>
                     <p className="text-primary-500 mt-3 text-xl">Over 500+ stores available — rewards at your own pace.</p>
 
                     <div className="hidden sm:flex sm:gap-3 sm:mt-12">
-                        <Button variant="accent">Learn more</Button>
-                        <Button variant="ghost-light">Sign up</Button>
+                        <Button variant="accent" asChild>
+                            <Link href="/#FAQ">Learn more</Link>
+                        </Button>
+                        <Button variant="ghost-light" asChild>
+                            <Link href="/#contact-us">
+                                Sign up
+                            </Link>
+                        </Button>
                     </div>
                 </div>
 
