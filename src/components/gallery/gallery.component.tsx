@@ -6,7 +6,7 @@ export function Gallery() {
     return (
         <section>
             <Slider
-                width="250px"
+                width="203px"
                 duration={40}
                 pauseOnHover={true}
                 blurBorders={false}
