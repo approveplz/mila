@@ -48,7 +48,7 @@ export function ContactUsForm() {
                         </p>
                     ) : (
                         <p className="text-sm text-primary-500 mt-2">
-                            {data.policyStatement} <span className="font-medium cursor-pointer">{data.privacyPolicy}</span>
+                            {data.policyStatement} <a href="/privacy-policy.pdf" target="_blank" className="font-medium cursor-pointer">{data.privacyPolicy}</a>
                         </p>
                     )}
                 </>
