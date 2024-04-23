@@ -67,6 +67,8 @@ export async function addUserToNotion(formState: any, formData: FormData) {
             id: user.id
         }
     } catch (error) {
-        throw new Error('Failed to create user');
+        return {
+            message: 'An unexpected issue occurred. Please retry adding your email.'
+        }
     }
 }
