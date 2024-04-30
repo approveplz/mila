@@ -18,7 +18,7 @@ export function WhoWeAre() {
                 <div className="flex justify-center">
                     <div className="relative max-w-[250px] min-h-[300px] rounded-t-full rounded-br-full before:content-['] before:absolute before:-right-1 before:top-2 before:w-full before:h-full before:border before:-z-40 before:border-primary-600 before:rounded-t-full before:rounded-br-full">
                         <img
-                            src="https://s3-alpha-sig.figma.com/img/f11c/b65d/6e3970bb3d1da51dee671273a841ed49?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=kChY4RA8KC6flPUldzaL93qNPH3jfpFk49yMIC3w-Q-yCsO0qNXpCpj0Y3Pn0kcdMNuXe72Y03P5cu0QGvPnmIZL75PXLPScxFiuychu-vsP6lw04TkitCX4z3h0WsFNJuMKkY9tbu5JbaNEhk7WxQDsQYxu~wPC76EXZYfagVzVjttuNwv4ql59c9O6pW9KMSGE8PmCdZ27IA3BapU9iInrEOZTMjZX18mYzIhRbnMBILre7mh1NvdP0-Ovfznc6T6IO9MP6zNf3mBXZt9VbCWHt6N-z~41nod1yQifi6V50WOhWcsa8Jqu4zpBKQFQaOqm5Gl1xjUT1UeBNX4LYA__"
+                            src="/images/who-we-image.png"
                             alt="Who We Are"
                             className="rounded-t-full rounded-br-full border border-gray-300 border-b-0 max-w-[250px] min-h-[300px]"
                             style={{ objectFit: 'cover', width: '100%', height: '100%' }}
