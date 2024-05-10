@@ -1,10 +1,10 @@
-export * from "./button/button.component";
-export * from "./container/container.component";
-export * from "./divider/divider.component";
-export * from "./footer/footer.component";
-export * from "./header/header.component";
-export * from "./clients/clients.component";
-export * from "./how-it-works/how-it-works.component";
-export * from "./feature/feature.component";
-export * from "./gallery/gallery.component";
-export * from "./navbar";
+// UI
+export * from "./ui/button/button.component";
+export * from "./ui/dialog/dialog.component";
+
+// Layout
+export * from "./layout/navbar";
+export * from "./layout/container/container.component";
+
+// Overlay
+export * from "./overlay/signin-dialog/signin-dialog.component";

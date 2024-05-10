@@ -1,39 +1,7 @@
+import "@/styles/css/globals.css";
+
 import type { Metadata } from "next";
-import localFont from 'next/font/local';
-import { NavBar } from "@/components/navbar";
-
-import "./globals.css";
-
-const generalSans = localFont({
-  variable: '--font-general-sans',
-  src: [
-    {
-      path: './fonts/GeneralSans-Regular.woff2',
-      weight: '400',
-      style: 'normal'
-    },
-    {
-      path: './fonts/GeneralSans-Medium.woff2',
-      weight: '500',
-      style: 'normal'
-    },
-    {
-      path: './fonts/GeneralSans-Semibold.woff2',
-      weight: '600',
-      style: 'normal'
-    },
-    {
-      path: './fonts/GeneralSans-Bold.woff2',
-      weight: '700',
-      style: 'normal'
-    },
-  ]
-});
-
-const stardom = localFont({
-  variable: '--font-stardom',
-  src: './fonts/Stardom-Regular.woff'
-})
+import { inter, ttRamillasTrlVar } from "@/styles/fonts";
 
 export const metadata: Metadata = {
   title: "MilaCollective",
@@ -47,12 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${generalSans.variable} ${stardom.variable} ${generalSans.className} bg-[#FAFAF9]`}>
-        <NavBar />
-        <main className="pt-[98px]">
-          {children}
-        </main>
-      </body>
+      <body className={`${inter.variable} ${ttRamillasTrlVar.variable} ${inter.className} text-[#171614]`}>{children}</body>
     </html>
   );
 }
