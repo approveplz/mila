@@ -25,7 +25,7 @@ const config: Config = {
         accent: '#BE7B62'
       },
       fontFamily: {
-        stardom: ['var(--font-stardom)']
+        "tt-ramillas": ['var(--font-tt-ramillas-trl-var)']
       },
       screens: {
         xs: '376px'
