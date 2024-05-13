@@ -1,9 +1,19 @@
+import { FAQ } from "@/app/(landing)/components/faq/faq.component";
+import { Brands } from "./components/brands/brands.component";
+import { FollowUs } from "./components/follow-us/follow-us.component";
+import { GiveAway } from "./components/give-away/give-away.component";
+import { Header } from "./components/header/header.component";
+import { HowItWorks } from "./components/how-it-works/how-it-works.component.";
+
 export default function Home() {
   return (
-    <header className="relative bg-[url('/images/hero-bg.png')] h-screen bg-no-repeat bg-cover">
-      <div className="absolute left-1/2 top-1/2 text-white -translate-x-1/2 -translate-y-1/2">
-        <h1 className="no">Landing</h1>
-      </div>
-    </header>
+    <div>
+      <Header />
+      <Brands />
+      <GiveAway />
+      <HowItWorks />
+      <FollowUs />
+      <FAQ />
+    </div>
   )
 }

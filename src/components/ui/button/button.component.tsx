@@ -15,7 +15,9 @@ const buttonVariants = cva(
                 // "ghost-light": "text-primary-600 border-primary-600 font-medium leading-5 text-sm hover:bg-primary-600 hover:text-white",
                 // link: "text-primary-800 underline-offset-4 border-none",
                 primary: "bg-[#B06E6A] border-[#B06E6A] text-white",
-                "primary-outline": "border-[#171614] text-[#171614] hover:bg-[#B06E6A] hover:border-[#B06E6A] hover:text-white"
+                "primary-outline": "border-[#171614] text-[#171614] hover:bg-[#B06E6A] hover:border-[#B06E6A] hover:text-white",
+                secondary: "bg-white border-white text-[#171614]",
+                "secondary-outline": "border-white text-white hover:bg-white hover:border-white hover:text-[#171614]",
             },
             full: {
                 true: "w-full",

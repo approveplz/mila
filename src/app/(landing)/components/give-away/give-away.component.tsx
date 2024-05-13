@@ -1,0 +1,101 @@
+import { Button } from "@/components/ui/button/button.component";
+import { messages } from "@/shared/constants/messages";
+import Image from 'next/image'
+
+
+
+export function GiveAway() {
+
+  const { giveAway: {
+    heading,
+    subHeading,
+    card: {
+      heading: cardHeading,
+      subHeading: cardSubHeading,
+      description,
+      author
+    },
+    winMe
+  } } = messages;
+
+  return (
+    <section className="py-[112px] px-[24px] sm:px-[192.5px] bg-[#F3F3F3]">
+      <div className="flex flex-col gap-20 items-center">
+        <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-[72px] text-4xl leading-[43.2px] sm:leading-[86.4px] text-[#171614] px-[26px] sm:px-0">
+          {heading}
+        </div>
+
+        <div className="flex flex-col gap-12 items-center">
+          <div className="font-tt-ramillas text-center font-normal text-[30px] leading-9 text-[#171614] px-[26px] sm:px-0">
+            {subHeading}
+          </div>
+
+          <div className=" relative bg-white rounded-[24px]   border-[#9CA3AF] overflow-hidden">
+            <div className="z-10 opacity-[0.08] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+
+            </div>
+            <div className="relative border flex flex-col sm:flex-row gap-12  p-8 rounded-[24px] z-20">
+              <div >
+                <Image
+                  src="/images/bagpack.png"
+                  alt="bagpack"
+                  layout="responsive"
+                  width={457}
+                  height={399}
+                  className="w-auto h-auto sm:min-w-[457px] sm:min-h-[399px]"
+                />
+
+              </div>
+              <div className="pb-[61.5px] sm:pb-0 sm:py-[61.5px] flex flex-col gap-8 items-start">
+
+                <div className="w-full flex flex-col gap-2">
+                  <div className="w-full flex flex-col sm:flex-row gap-2 justify-between sm:items-center">
+                    <div className="font-semibold text-[30px] leading-9 text-[#171614]">
+                      {cardHeading}
+                    </div>
+                    <div className="flex flex-row gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
+                        <div className="text-[14px] leading-[20px] font-semibold text-white">
+                          00
+                        </div>
+                      </div>
+                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
+                        <div className="text-[14px] leading-[20px] font-semibold text-white">
+                          00
+                        </div>
+                      </div>
+                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
+                        <div className="text-[14px] leading-[20px] font-semibold text-white">
+                          00
+                        </div>
+                      </div>
+                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
+                        <div className="text-[14px] leading-[20px] font-semibold text-white">
+                          00
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-[#9CA3AF] font-medium text-base leading-6">
+                    {cardSubHeading}
+                  </div>
+                </div>
+
+                <div className="flex flex-col ">
+                  <div className="font-medium text-base leading-6 text-[#6B7280]">
+                    {description}
+                  </div>
+                  <div className="font-medium text-base leading-6 text-[#6B7280]">
+                    {author}
+                  </div>
+                </div>
+                <Button variant="primary">{winMe}</Button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

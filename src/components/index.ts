@@ -8,3 +8,7 @@ export * from "./ui/checkbox/checkbox.component";
 // Layout
 export * from "./layout/navbar";
 export * from "./layout/container/container.component";
+export * from "./layout/container/container.component";
+
+
+export * from "./ui/accordion/accordion.component"

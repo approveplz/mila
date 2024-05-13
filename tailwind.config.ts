@@ -14,11 +14,25 @@ const config: Config = {
         fatal: "#171614"
       },
       fontFamily: {
-        "tt-ramillas": ['var(--font-tt-ramillas-trl-var)']
+        "tt-ramillas": ['var(--font-tt-ramillas-trl-var)'],
       },
       screens: {
         xs: '376px'
-      }
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
   plugins: [],
