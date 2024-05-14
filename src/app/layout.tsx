@@ -2,6 +2,7 @@ import "@/styles/css/globals.css";
 
 import type { Metadata } from "next";
 import { inter, ttRamillasTrlVar } from "@/styles/fonts";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "MilaCollective",
@@ -9,13 +10,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  auth,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  auth: React.ReactNode,
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${ttRamillasTrlVar.variable} ${inter.className} text-[#171614]`}>{children}</body>
+      <body className={`${inter.variable} ${ttRamillasTrlVar.variable} ${inter.className} text-[#171614]`}>
+        <Providers>
+          {children}
+          {auth}
+        </Providers>
+      </body>
     </html>
   );
 }

@@ -1,9 +1,15 @@
 import React from "react";
 import Image from "next/image"
-import { Button, Container, SignInDialog } from "@/components";
+import { Button, Container } from "@/components";
 import { NavList } from "./navlist.component";
+import Link from "next/link";
+import { auth } from "@/auth";
+import { authSignOut } from "@/actions";
 
-export function NavBar() {
+export async function NavBar() {
+    const session = await auth();
+    console.log("session:: ", session);
+
     return (
         <nav className="py-[21px] bg-[#F3F3F3]">
             <Container>
@@ -14,11 +20,19 @@ export function NavBar() {
                         <Image src="/images/logo-black.svg" alt="logo" fill />
                     </div>
 
-                    <div className="flex gap-4">
-                        <Button>Sign Up</Button>
-                        <SignInDialog triggerComponent={<Button variant="primary-outline">Sign In</Button>} />
-                        {/* <Button variant="primary-outline">Sign In</Button> */}
-                    </div>
+                    {session ? (
+                        <form action={authSignOut}>
+                            <Button type="submit">Sign Out</Button>
+                            {/* {JSON.stringify(session)} */}
+                        </form>
+                    ) : (
+                        <div className="flex gap-4">
+                            <Button>Sign Up</Button>
+                            <Button variant="primary-outline" asChild>
+                                <Link href="/signin">Sign In</Link>
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </Container>
         </nav>

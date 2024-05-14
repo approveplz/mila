@@ -9,20 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          950: "#2D221D",
-          900: "#54423A",
-          800: "#674F45",
-          700: "#7E6050",
-          600: "#97765F",
-          500: "#A4866B",
-          400: "#A4866B",
-          300: "#C7B8A3",
-          200: "#DFD7C9",
-          100: "#EFECE5",
-          50: "#F8F6F4"
-        },
-        accent: '#BE7B62'
+        primary: "#B06E6A",
+        muted: "#9CA3AF",
+        fatal: "#171614"
       },
       fontFamily: {
         "tt-ramillas": ['var(--font-tt-ramillas-trl-var)']
