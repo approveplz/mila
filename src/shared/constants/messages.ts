@@ -50,7 +50,9 @@ export const messages = {
         winMe: 'Win me'
     },
     header: {
-        heading: "WELCOME to MILA COLLECTIVE",
+        headingA: "WELCOME ",
+        headingB: "to MILA ",
+        headingC: "COLLECTIVE",
         subHeading: "Over 500+ stores available — rewards at your own pace.",
         learnMore: "Learn more",
         signUp: "Sign up"
@@ -70,5 +72,99 @@ export const messages = {
             title: "Win Giveaways",
             description: "That’s it, you’re entered into all our giveaways.Including monthly and smaller giveaways."
         }
+    },
+    benefits: {
+        heading: "AMERICA'S fastest growing BENFITS CLUB",
+        description: "Welcome to Mila Collective, where we're dedicated to bringing joy and excitement into your life through our innovative rewards platform. Our mission is simple: to offer a diverse range of prizes, from dream getaways to coveted give aways replaced with latest in fashion. With fairness and transparency at our core, every spin or entry gives you an equal chance to win big.",
+        points: [
+            'Join a community of luxury lovers',
+            'Be in to win weekly luxury prizes',
+            "Don't want to become a member? No worries, buy limited access and still be entered to win!"
+        ]
+    },
+    footer: {
+        logo: {
+            title: 'Logo',
+            description: 'Join our newsletter to stay up to date on features and releases.',
+            input: {
+                placeholder: 'Enter your email',
+                subscribe: 'Subscribe',
+                messageA: 'By subscribing you agree to with our',
+                messageB: ' Privacy Policy',
+                messageC: 'and provide consent to receive updates from our company.'
+            }
+        },
+        tradeMark: '© 2024 Mila Collective. All rights reserved.',
+        link: {
+            title: 'LINKS',
+            list: [
+                'Privacy Policy',
+                'Terms of Service',
+                'Sweeps Rules',
+                'Cookies Settings',
+                'About Us',
+                'FAQ'
+            ]
+        },
+        followUs: {
+            heading: 'Follow Us',
+        },
+
+    },
+    minorGiveways: {
+        title: 'MINOR giveaways',
+        cards: [
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+            {
+                entry: '100 entries',
+                title: 'Product Name',
+                description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+            },
+
+        ]
     }
 }

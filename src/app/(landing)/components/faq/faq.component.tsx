@@ -1,11 +1,9 @@
-"use client"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components"
-import { useState } from "react";
 import { messages } from "@/shared/constants/messages";
 
 
@@ -18,7 +16,6 @@ export function FAQ() {
     subHeading
   } } = messages;
 
-  const [accordionItems, setAccordionItems] = useState(accordionData);
 
   return (
     <section className="sm:mx-[336px] sm:my-[112px] my-[64px] mx-[24px]">
@@ -32,7 +29,7 @@ export function FAQ() {
       </div>
 
       <Accordion type="single" collapsible className="w-full flex flex-col space-y-4">
-        {accordionItems.map((item, index) => (
+        {accordionData.map((item, index) => (
           <div key={index}>
             <AccordionItem value={item.value}>
               <AccordionTrigger>

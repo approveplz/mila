@@ -1,4 +1,3 @@
-"use client"
 import { messages } from "@/shared/constants/messages";
 import Image from 'next/image'
 
