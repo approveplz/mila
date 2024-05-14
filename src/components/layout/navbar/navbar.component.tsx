@@ -8,7 +8,7 @@ import { authSignOut } from "@/actions";
 
 export async function NavBar() {
     const session = await auth();
-    console.log("session: ", session);
+    console.log("session:: ", session);
 
     return (
         <nav className="py-[21px] bg-[#F3F3F3]">
