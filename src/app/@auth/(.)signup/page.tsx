@@ -4,17 +4,16 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components";
-import { AuthDialog } from './components/auth-dialog/auth-dialog.component';
-import { AuthForm } from './components/auth-form/auth-form.component';
+import { AuthDialog } from "./components/auth-dialog/auth-dialog.component";
 
 export default function SignInForm() {
     return (
         <AuthDialog>
-            <DialogContent className="sm:max-w-[455px]">
-                <DialogHeader>
+            <DialogContent withClose className="min-w-full h-screen p-4 rounded-none">
+                {/* <DialogHeader>
                     <DialogTitle>Sign In</DialogTitle>
-                </DialogHeader>
-                <AuthForm />
+                </DialogHeader> */}
+                <p>Sign Up</p>
             </DialogContent>
         </AuthDialog>
     )
