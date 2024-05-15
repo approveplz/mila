@@ -11,7 +11,8 @@ const config: Config = {
       colors: {
         primary: "#B06E6A",
         muted: "#9CA3AF",
-        fatal: "#171614"
+        fatal: "#171614",
+        destructive: "#c92a2a"
       },
       fontFamily: {
         "tt-ramillas": ['var(--font-tt-ramillas-trl-var)']

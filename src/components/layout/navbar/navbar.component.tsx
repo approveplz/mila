@@ -8,7 +8,6 @@ import { authSignOut } from "@/actions";
 
 export async function NavBar() {
     const session = await auth();
-    console.log("session:: ", session);
 
     return (
         <nav className="py-[21px] bg-[#F3F3F3]">
@@ -23,7 +22,6 @@ export async function NavBar() {
                     {session ? (
                         <form action={authSignOut}>
                             <Button type="submit">Sign Out</Button>
-                            {/* {JSON.stringify(session)} */}
                         </form>
                     ) : (
                         <div className="flex gap-4">
