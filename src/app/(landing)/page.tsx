@@ -6,6 +6,8 @@ import { GiveAway } from "@/app/(landing)/components/upcoming-give-away/upcoming
 import { Header } from "@/app/(landing)/components/header/header.component";
 import { HowItWorks } from "@/app/(landing)/components/how-it-works/how-it-works.component.";
 import { MinorGiveaways } from "./components/minor-giveaways/minor-giveaways.component";
+import { MajorGiveaways } from "./components/major-giveaways/major-giveaways.component";
+import { Pricing } from "./components/pricing/pricing.component";
 
 export default function Home() {
   return (
@@ -15,6 +17,8 @@ export default function Home() {
       <Benefits />
       <GiveAway />
       <HowItWorks />
+      <Pricing />
+      <MajorGiveaways />
       <MinorGiveaways />
       <FollowUs />
       <FAQ />

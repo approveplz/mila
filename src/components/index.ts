@@ -15,3 +15,5 @@ export * from "./layout/container/container.component";
 
 
 export * from "./ui/accordion/accordion.component"
+
+export * from "./ui/tabs/tabs.component"
