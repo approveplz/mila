@@ -1,17 +1,8 @@
-import NextAuth, { CredentialsSignin } from "next-auth"
+import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { isApiError } from "@/api"
 import { signInWithCredentials } from "@/api/auth"
 import { withAsync } from "@/utils/withAsync"
-import { SignInWithCredentialsErrorResponse } from "./api/auth/auth.types"
-
-// class CustomError extends CredentialsSignin {
-//     detail = "custom_error"
-// }
-
-class InvalidLoginError extends CredentialsSignin {
-    code = 'Invalid identifier or password'
-}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -26,7 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     type: "password"
                 }
             },
-            async authorize(credentials, request) {
+            async authorize(credentials) {
                 const { response, error } = await withAsync(() => signInWithCredentials({
                     email: credentials.email as string,
                     password: credentials.password as string
@@ -58,41 +49,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // @ts-ignore
             session.user = token;
 
-
-            // console.log({ session, token })
-            // return params.session;
             return session;
         },
-        // authorized({ auth, request: { nextUrl } }) {
-        //     console.log('auth: ', auth);
-
-        //     const isLoggedIn = !!auth?.user;
-        //     const isOnDashboard = nextUrl.pathname.startsWith('/');
-
-        //     if (isOnDashboard) {
-        //         if (isLoggedIn) return true;
-        //         return false; // Redirect unauthenticated users to login page
-        //     } else if (isLoggedIn) {
-        //         return Response.redirect(new URL('/', nextUrl));
-        //     }
-        //     return true;
-        // },
     },
-    // callbacks: {
-    // authorized({ auth, request: { nextUrl }  }) {
-    //     console.log('auth: ', auth);
-    //     const isLoggedIn = !!auth?.user;
-    //     const isOnDashboard = nextUrl.pathname.startsWith('/');
-
-    //     if (isOnDashboard) {
-    //         if (isLoggedIn) return true;
-    //         return false; // Redirect unauthenticated users to login page
-    //     } else if (isLoggedIn) {
-    //         return Response.redirect(new URL('/', nextUrl));
-    //     }
-    //     return true;
-    // },
-    // },
     pages: {
         signIn: "/signin"
     },
