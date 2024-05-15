@@ -9,3 +9,7 @@ export type SignInWithCredentialsResponse = {
     refresh: string;
     access: string
 };
+
+export type SignInWithCredentialsErrorResponse = {
+    detail: string
+}

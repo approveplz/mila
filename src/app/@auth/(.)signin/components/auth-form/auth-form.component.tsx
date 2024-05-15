@@ -1,25 +1,117 @@
 "use client";
 
 import * as React from "react";
-import { authSignIn } from "@/actions";
+import * as actions from "@/actions";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SigInFormData, sigInSchema } from "./auth-form.schema";
+import {
+    Alert,
+    AlertTitle,
+    Button,
+    Checkbox,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    Input,
+    Label
+} from "@/components";
+import { useFormState, useFormStatus } from "react-dom";
+import { WarningCircle } from "@phosphor-icons/react";
 
-export function AuthForm({ children }: React.PropsWithChildren) {
+export function AuthForm() {
+    const [result, formAction] = useFormState(actions.authSignIn, {
+        status: 'idle',
+        error: ''
+    });
+    const [isLoading, setIsLoading] = React.useState(false);
     const router = useRouter();
-    
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const formRef = React.useRef<HTMLFormElement>(null);
 
-        const form = event.currentTarget;
-        const data = new FormData(form);
+    const form = useForm<SigInFormData>({
+        mode: "onTouched",
+        resolver: zodResolver(sigInSchema)
+    });
 
-        await authSignIn(data);
-        router.back();
-    };
+    React.useEffect(() => {
+        if (result) {
+            if(result.status === "success") {
+                setIsLoading(false);
+                router.back()
+            } else if(result.status === "failed"){
+                setIsLoading(false);
+            }
+        }
+    }, [result, router]);
 
     return (
-        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-            {children}
-        </form>
+        <Form {...form}>
+            <form
+                ref={formRef}
+                className="flex flex-col gap-6"
+                action={formAction}
+                onSubmit={(evt) => {
+                    evt.preventDefault();
+                    setIsLoading(true);
+                    form.handleSubmit(async () => {
+                        formAction(new FormData(formRef.current!));
+                    })(evt);
+                }}
+            >
+                {result?.error && (
+                    <Alert variant="destructive">
+                        <WarningCircle className="h-4 w-4" />
+                        <AlertTitle>{result?.error}</AlertTitle>
+                    </Alert>
+                )}
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel htmlFor="email">Email Address</FormLabel>
+                            <FormControl>
+                                <Input
+                                    id="email"
+                                    placeholder="e.g.JohnDoe"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel htmlFor="password">Password</FormLabel>
+                            <FormControl>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="e.g.JohnDoe"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <div className="flex items-center space-x-2">
+                    <Checkbox id="remember" />
+                    <Label htmlFor="remember">Remember me</Label>
+                </div>
+
+                <Button type="submit" disabled={isLoading}>Sign in</Button>
+            </form>
+        </Form>
     )
 }

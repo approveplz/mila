@@ -18,7 +18,7 @@ export default function SignInForm() {
                 <DialogHeader>
                     <DialogTitle>Sign In</DialogTitle>
                 </DialogHeader>
-                <AuthForm>
+                {/* <AuthForm>
                     <div className="flex flex-col gap-1">
                         <Label htmlFor="email">Email Address</Label>
                         <Input
@@ -44,7 +44,8 @@ export default function SignInForm() {
                     </div>
 
                     <Button>Sign in</Button>
-                </AuthForm>
+                </AuthForm> */}
+                <AuthForm />
             </DialogContent>
         </AuthDialog>
     )

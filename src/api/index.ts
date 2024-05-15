@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiError } from "next/dist/server/api-utils";
+import { ApiError } from "./api.types";
 
 // API interceptors for modifying request to be send to backend
 const axiosParams = {
