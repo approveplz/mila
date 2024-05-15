@@ -10,3 +10,7 @@ export * from "./ui/alert/alert.component";
 // Layout
 export * from "./layout/navbar";
 export * from "./layout/container/container.component";
+export * from "./layout/container/container.component";
+
+
+export * from "./ui/accordion/accordion.component"
