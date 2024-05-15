@@ -9,7 +9,7 @@ export default function LandingLayout({
     return (
         <>
             <NavBar />
-            <main>
+            <main className="pt-[92px]">
                 {children}
             </main>
             <Footer />
