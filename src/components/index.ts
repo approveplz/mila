@@ -6,6 +6,7 @@ export * from "./ui/label/label.component";
 export * from "./ui/checkbox/checkbox.component";
 export * from "./ui/form/form.component";
 export * from "./ui/alert/alert.component";
+export * from "./ui/dropdown-menu/dropdown-menu.component";
 
 // Layout
 export * from "./layout/navbar";
