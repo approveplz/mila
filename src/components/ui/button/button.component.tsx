@@ -18,7 +18,9 @@ const buttonVariants = cva(
                 "primary-outline": "border-[#171614] text-[#171614] hover:bg-[#B06E6A] hover:border-[#B06E6A] hover:text-white",
                 secondary: "bg-white border-white text-[#171614]",
                 "secondary-outline": "border-white text-white hover:bg-white hover:border-white hover:text-[#171614]",
-                fatal: "bg-fatal text-white"
+                fatal: "bg-fatal text-white",
+                tertiary:"bg-transparent border-[#171614] text-[#171614]"
+
             },
             full: {
                 true: "w-full",
