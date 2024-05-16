@@ -13,7 +13,7 @@ export function FollowUs() {
   } } = messages;
 
   return (
-    <section className="sm:pt-[112px] pt-[64px] bg-[#F3F3F3]">
+    <section className="sm:pt-[112px] pt-[32px] bg-[#F3F3F3]">
 
       <div className="flex flex-col sm:flex-row w-full">
         <Image

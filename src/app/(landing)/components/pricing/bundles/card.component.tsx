@@ -1,5 +1,6 @@
 'use client'
 import { Button } from "@/components";
+import { messages } from "@/shared/constants/messages";
 import { Check, Gift, Minus, Plus, X } from "@phosphor-icons/react";
 import { useState } from "react";
 
@@ -14,14 +15,20 @@ type bundleCard = {
     cost: string,
     benefits: benefit[]
   },
-  select: string,
-  draw: string,
-  oneOff: string
 }
 
-export function BundleCard({ cardData, select, draw, oneOff }: bundleCard) {
+export function BundleCard({ cardData }: bundleCard) {
 
   const [counter, setCounter] = useState<number>(0)
+
+  const { pricing: {
+    bundleData: {
+      oneOff,
+      draw,
+      select,
+    },
+    continueWithSelected
+  } } = messages;
 
   return (
 

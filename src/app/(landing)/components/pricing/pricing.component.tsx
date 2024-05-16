@@ -18,19 +18,19 @@ export function Pricing() {
 
 
   return (
-    <section className="py-[66px] px-16 flex flex-col items-center gap-12 bg-[#F3F3F3]">
+    <section className="py-[66px] sm:px-16 px-6 flex flex-col items-center gap-12 bg-[#F3F3F3]">
 
       <div className="flex flex-col gap-6 items-center">
         <div>
-          <span className="font-tt-ramillas font-normal text-5xl leading-[57.6px]">{headingA}</span> <span className="italic font-tt-ramillas font-normal text-5xl leading-[57.6px]">{headingB}</span>
+          <span className="font-tt-ramillas font-normal text-4xl leading-[43.2px] sm:text-5xl  sm:leading-[57.6px]">{headingA}</span> <span className="italic font-tt-ramillas font-normal text-4xl leading-[43.2px] sm:text-5xl  sm:leading-[57.6px]">{headingB}</span>
         </div>
 
-        <div className="font-normal text-lg leading-7 text-[#000000] text-center px-[300px]">
+        <div className="font-normal text-lg leading-7 text-[#000000] text-center sm:px-[300px]">
           {description}
         </div>
       </div>
 
-      <Tabs defaultValue="subscription">
+      <Tabs defaultValue="subscription" className="w-full">
         <TabsList className="flex flex-row justify-center">
           <div className="bg-white rounded-[30px] p-1">
             <TabsTrigger value="subscription">{subscription}</TabsTrigger>

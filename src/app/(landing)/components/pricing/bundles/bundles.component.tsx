@@ -1,6 +1,6 @@
 'use client'
 import { messages } from "@/shared/constants/messages";
-import { ArrowUpRight} from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import { BundleCard } from "./card.component";
 
 
@@ -15,10 +15,6 @@ export function Bundle() {
       bundleD,
       bundleE,
       bundleF,
-      oneOff,
-      draw,
-      select,
-      selected,
       clear
     },
     continueWithSelected
@@ -33,12 +29,12 @@ export function Bundle() {
         </div>
 
         <div className="grid grid-cols-3 gap-8">
-          <BundleCard cardData={bundleA} select={select} draw={draw} oneOff={oneOff} />
-          <BundleCard cardData={bundleB} select={select} draw={draw} oneOff={oneOff} />
-          <BundleCard cardData={bundleC} select={select} draw={draw} oneOff={oneOff} />
-          <BundleCard cardData={bundleD} select={select} draw={draw} oneOff={oneOff} />
-          <BundleCard cardData={bundleE} select={select} draw={draw} oneOff={oneOff} />
-          <BundleCard cardData={bundleF} select={select} draw={draw} oneOff={oneOff} />
+          <BundleCard cardData={bundleA} />
+          <BundleCard cardData={bundleB} />
+          <BundleCard cardData={bundleC} />
+          <BundleCard cardData={bundleD} />
+          <BundleCard cardData={bundleE} />
+          <BundleCard cardData={bundleF} />
         </div>
       </div>
 
