@@ -121,7 +121,7 @@ export function MajorGiveaways() {
                             {min}
                           </div>
                         </div>
-
+                        
                         <div className=" flex flex-col gap-[6px]  items-center justify-center">
                           <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
                             00
@@ -131,7 +131,6 @@ export function MajorGiveaways() {
                             {sec}
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>
