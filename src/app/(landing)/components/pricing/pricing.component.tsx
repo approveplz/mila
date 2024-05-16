@@ -1,31 +1,20 @@
 'use client'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { messages } from "@/shared/constants/messages";
-import { ArrowUpRight } from "@phosphor-icons/react";
-import { useState } from "react";
+import { Bundle } from "./bundles/bundles.component";
 import { Subscription } from "./subscriptions.component";
 
 
 
 export function Pricing() {
 
-  const frequencies = [
-    { label: 'Monthly' },
-    { label: 'Annually' },
-  ]
-
   const { pricing: {
-
     headingA,
     headingB,
     description,
     subscription,
     bundle,
-    clearSelection,
-    continueWithSelected
   } } = messages;
-
-  const [frequency, setFrequency] = useState(frequencies[0])
 
 
   return (
@@ -41,8 +30,6 @@ export function Pricing() {
         </div>
       </div>
 
-
-
       <Tabs defaultValue="subscription">
         <TabsList className="flex flex-row justify-center">
           <div className="bg-white rounded-[30px] p-1">
@@ -54,16 +41,9 @@ export function Pricing() {
           <Subscription />
         </TabsContent>
         <TabsContent value="bundle">
-          <Subscription />
+          <Bundle />
         </TabsContent>
       </Tabs>
-
-
-
-      <div className="bg-[#171614] py-3 px-6 items-center rounded-[30px] cursor-pointer flex flex-row gap-2">
-        <span className="font-medium text-white text-base leading-6">{continueWithSelected} </span> <ArrowUpRight size={24} color="white" />
-      </div>
-
 
     </section>
   )

@@ -7,26 +7,31 @@ export const messages = {
       {
         value: "item-1",
         Title: "HOW DOES MILA COLLECTIVE WORK?",
+        description: 'Mila Collective is Americas fastest growing benefits club. Becoming a member gives you access to amazing benefits with our partners, automatic entries into all our giveaway and exclusive opportunity to earn additional entries.',
         isOpen: "close",
       },
       {
         value: "item-2",
         Title: "CAN ANYONE IN THE UNITED STATES WIN?",
+        description: 'Anyone in the United States can become a member. Please refer to our Official Rules to see if you’re eligible to win. ',
         isOpen: "close",
       },
       {
         value: "item-3",
         Title: "HOW DO I KNOW I AM IN THE DRAW?",
+        description: 'After you become a member or enter you will receive an email with the number of your entries. When you are logged in you can also see your entries on the home page.',
         isOpen: "close",
       },
       {
         value: "item-4",
         Title: "HOW ARE WINNERS CHOSEN?",
+        description: 'All draws are completed through a random selection process. Random selection allows each entry equal probability of winning and eliminates bias. ',
         isOpen: "close",
       },
       {
         value: "item-5",
         Title: "IF I WIN, HOW WILL I BE CONTACTED?",
+        description: 'When you signup you’ll provide your contact details. If you’re the lucky winner you’ll be contacted within 24 hours of the giveaway drawing time. ',
         isOpen: "close",
       },
     ],
@@ -205,74 +210,172 @@ export const messages = {
     subscription: 'Subscription',
     bundle: 'bundle',
     clearSelection: 'Clear Selection',
-    free: {
-      title: 'FREE',
-      amount: '$0',
+    subscriptionData: {
+      free: {
+        title: 'FREE',
+        amount: '$0',
 
-      entry: '1 Entry',
-      benefits: [
-        {
-          benefit: 'Mailing list',
-          included: true
-        },
-        {
-          benefit: 'No access to Benefits',
-          included: false
-        },
-      ]
+        entry: '1 Entry',
+        benefits: [
+          {
+            benefit: 'Mailing list',
+            included: true
+          },
+          {
+            benefit: 'No access to Benefits',
+            included: false
+          },
+        ]
+      },
+      bronze: {
+        title: 'BRONZE',
+        oldPrice: '$20',
+        price: '$9.99',
+        entry: '40 Entries',
+        benefits: [
+          {
+            benefit: 'Access to 25% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: 'Full site access',
+            included: true
+          },
+        ]
+      },
+      silver: {
+        title: 'SILVER',
+        oldPrice: '$40',
+        price: '$19.99',
+        entry: '110 Entries',
+        benefits: [
+          {
+            benefit: 'Access to 50% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: 'Full site access',
+            included: true
+          },
+        ]
+      },
+      gold: {
+        title: 'GOLD',
+        oldPrice: '$100',
+        price: '$49.99',
+        entry: '400 Entries',
+        benefits: [
+          {
+            benefit: 'Access to 100% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: 'Full site access',
+            included: true
+          },
+        ]
+      },
+      getMessageA: "What you'll get",
+      getMessageB: 'into every giveaway',
+      select: 'Select',
+      days: 'per 30 days',
+      
     },
-    bronze: {
-      title: 'BRONZE',
-      oldPrice: '$20',
-      price: '$9.99',
-      entry: '40 Entries',
-      benefits: [
-        {
-          benefit: 'Access to 25% of Mila Benefits',
-          included: true
-        },
-        {
-          benefit: 'Full site access',
-          included: true
-        },
-      ]
+    bundleData :{
+      bundleA: {
+        entry: '20 Entries',
+        cost: '$9.99',
+        benefits: [
+          {
+            benefit: 'Access to 100% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: '2 days access',
+            included: true
+          },
+        ]
+      },
+      bundleB: {
+        entry: '40 Entries',
+        cost: '$19.99',
+        benefits: [
+          {
+            benefit: 'Access to 100% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: '5 days access',
+            included: true
+          },
+        ]
+      },
+      bundleC: {
+        entry: '150 Entries',
+        cost: '$49.99',
+        benefits: [
+          {
+            benefit: 'Access to 100% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: '20 days access',
+            included: true
+          },
+        ]
+
+      },
+      bundleD: {
+        entry: '110 Entries',
+        cost: '$39.99',
+        benefits: [
+          {
+            benefit: 'Access to 100% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: '15 days access',
+            included: true
+          },
+        ]
+
+      },
+      bundleE: {
+        entry: '400 Entries',
+        cost: '$99.99',
+        benefits: [
+          {
+            benefit: 'Access to 100% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: '50 days access',
+            included: true
+          },
+        ]
+
+      },
+      bundleF: {
+        entry: '1000 Entries',
+        cost: '$199.99',
+        benefits: [
+          {
+            benefit: 'Access to 100% of Mila Benefits',
+            included: true
+          },
+          {
+            benefit: '110 days access',
+            included: true
+          },
+        ]
+
+      },
+      draw: 'For the upcoming major draw',
+      oneOff: 'One off',
+      select: 'Select',
+      selected: 'Selected',
+      clear: 'Clear All Bundles'
     },
-    silver: {
-      title: 'SILVER',
-      oldPrice: '$40',
-      price: '$19.99',
-      entry: '110 Entries',
-      benefits: [
-        {
-          benefit: 'Access to 50% of Mila Benefits',
-          included: true
-        },
-        {
-          benefit: 'Full site access',
-          included: true
-        },
-      ]
-    },
-    gold: {
-      title: 'GOLD',
-      oldPrice: '$100',
-      price: '$49.99',
-      entry: '400 Entries',
-      benefits: [
-        {
-          benefit: 'Access to 100% of Mila Benefits',
-          included: true
-        },
-        {
-          benefit: 'Full site access',
-          included: true
-        },
-      ]
-    },
-    getMessageA: "What you'll get",
-    getMessageB: 'into every giveaway',
-    select: 'Select',
-    days: 'per 30 days',
     continueWithSelected: 'Continue With Selected'
 
   }
