@@ -2,7 +2,9 @@
 import { Button } from "@/components/ui/button/button.component";
 import { Input } from "@/components/ui/input/input.component";
 import { messages } from "@/shared/constants/messages";
-import { FacebookLogo, InstagramLogo, TiktokLogo } from "@phosphor-icons/react";
+import { FBIcon } from "./facebook-icon.component";
+import { InstaIcon } from "./instagram-icon.component";
+import { TikTokIcon } from "./tiktok.component";
 
 export async function Footer() {
 
@@ -87,13 +89,13 @@ export async function Footer() {
 
             <div className="flex flex-col gap-6 mt-6">
               <div className="flex flex-row gap-3 items-center cursor-pointer" >
-                <FacebookLogo size={16} weight="fill" /> <div className="font-normal text-[14px] leading-[21px]"> Facebook</div>
+              <FBIcon /> <div className="font-normal text-[14px] leading-[21px]"> Facebook</div>
               </div>
               <div className="flex flex-row gap-3 items-center  cursor-pointer" >
-                <InstagramLogo size={16} /> <div className="font-normal text-[14px] leading-[21px]"> Instagram</div>
+                <InstaIcon /> <div className="font-normal text-[14px] leading-[21px]"> Instagram</div>
               </div>
               <div className="flex flex-row gap-3 items-center cursor-pointer" >
-                <TiktokLogo size={16} weight="fill" /> <div className="font-normal text-[14px] leading-[21px]">Tik Tok </div>
+                <TikTokIcon /> <div className="font-normal text-[14px] leading-[21px]">Tik Tok </div>
               </div>
             </div>
           </div>

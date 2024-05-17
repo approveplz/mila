@@ -1,3 +1,4 @@
+'use client'
 import {
   Accordion,
   AccordionContent,
@@ -5,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components"
 import { messages } from "@/shared/constants/messages";
+import { useState } from "react";
 
 
 
@@ -15,6 +17,12 @@ export function FAQ() {
     heading,
     subHeading
   } } = messages;
+
+  const [openItem, setOpenItem] = useState(null);
+
+  const handleToggle = (value:any) => {
+    setOpenItem((prev) => (prev === value ? null : value));
+  };
 
 
   return (
@@ -28,17 +36,22 @@ export function FAQ() {
         </div>
       </div>
 
-      <Accordion type="single" collapsible className="w-full flex flex-col space-y-4">
-        {accordionData.map((item, index) => (
-          <div key={index}>
-            <AccordionItem value={item.value}>
-              <AccordionTrigger>
-                {item?.Title}
-              </AccordionTrigger>
-            </AccordionItem>
-          </div>
-        ))}
-      </Accordion>
+      <div className="border-b border-primary">
+        <Accordion type="single" collapsible className="w-full flex flex-col">
+          {accordionData.map((item, index) => (
+            <div key={index}>
+              <AccordionItem value={item.value}>
+                <AccordionTrigger isOpen={openItem === item.value} onClick={() => handleToggle(item.value)}>
+                  {item?.Title}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {item?.description}
+                </AccordionContent>
+              </AccordionItem>
+            </div>
+          ))}
+        </Accordion>
+      </div>
     </section>
   )
 }
