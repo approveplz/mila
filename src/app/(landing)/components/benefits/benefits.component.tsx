@@ -29,14 +29,14 @@ export function Benefits() {
         </div>
         <div className="flex flex-col gap-4">
           {points?.map((point, index) => (
-            <div className="flex flex-row gap-4 items-start" key={index}>
+            <div className="flex flex-row gap-4 items-center" key={index}>
               <Image
                 src="/images/cube.png"
                 alt="benefits"
                 layout="responsive"
                 width={15}
                 height={16}
-                className="max-w-[15px] max-h-[16px] mt-[5px]"
+                className="max-w-[15px] max-h-[16px]"
               />
               <div className="font-normal text-base leading-6">{point}</div>
             </div>
