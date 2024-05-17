@@ -15,9 +15,10 @@ type bundleCard = {
     cost: string,
     benefits: benefit[]
   },
+  // isMobile: boolean
 }
 
-export function BundleCard({ cardData }: bundleCard) {
+export function BundleCard({ cardData}: bundleCard) {
 
   const [counter, setCounter] = useState<number>(0)
 
@@ -32,9 +33,9 @@ export function BundleCard({ cardData }: bundleCard) {
 
   return (
 
-    <div className="relative overflow-hidden bg-white rounded-[24px]  border-[#CDCDCD]">
+    <div className={`relative overflow-hidden bg-white rounded-[24px] border-[#CDCDCD]`}>
 
-      <div className="z-20 flex flex-col items-left gap-8  px-6 py-8 border-2 rounded-[24px]  w-[416px] ">
+      <div className="flex flex-col items-left gap-8  px-6 py-8 border-2 rounded-[24px]  sm:w-[416px] ">
 
         <div className="flex flex-col items-left">
 
