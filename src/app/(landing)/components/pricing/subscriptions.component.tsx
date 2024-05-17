@@ -1,7 +1,11 @@
 'use client'
 import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
-import { ArrowUpRight, Check, Gift, X } from "@phosphor-icons/react";
+import { HiCheck } from "react-icons/hi2";
+import { HiXMark } from "react-icons/hi2";
+import { HiArrowUpRight } from "react-icons/hi2";
+import { HiOutlineGift } from "react-icons/hi2";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 
@@ -9,7 +13,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
-import { useEffect, useState } from "react";
 
 
 export function Subscription() {
@@ -99,7 +102,7 @@ export function Subscription() {
                         <div className="flex flex-row gap-2 items-center">
 
 
-                          <Gift size={24} color="#BE7B62" />
+                          <HiOutlineGift size={24} color="#BE7B62" />
                           <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{free?.entry}</span>
 
                         </div>
@@ -117,7 +120,7 @@ export function Subscription() {
                     {
                       free?.benefits.map((benefit, index) => (
                         <div key={index} className="flex flex-row gap-[7px] items-center">
-                          {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                          {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                           <div className="font-normal text-base leading-6">
                             {benefit?.benefit}
                           </div>
@@ -182,7 +185,7 @@ export function Subscription() {
                         <div className="flex flex-row gap-2 items-center">
 
 
-                          <Gift size={24} color="#BE7B62" />
+                          <HiOutlineGift size={24} color="#BE7B62" />
                           <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{bronze?.entry}</span>
 
                         </div>
@@ -200,7 +203,7 @@ export function Subscription() {
                     {
                       bronze?.benefits.map((benefit, index) => (
                         <div key={index} className="flex flex-row gap-[7px] items-center">
-                          {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                          {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                           <div className="font-normal text-base leading-6">
                             {benefit?.benefit}
                           </div>
@@ -265,7 +268,7 @@ export function Subscription() {
                         <div className="flex flex-row gap-2 items-center">
 
 
-                          <Gift size={24} color="#BE7B62" />
+                          <HiOutlineGift size={24} color="#BE7B62" />
                           <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{silver?.entry}</span>
 
                         </div>
@@ -283,7 +286,7 @@ export function Subscription() {
                     {
                       silver?.benefits.map((benefit, index) => (
                         <div key={index} className="flex flex-row gap-[7px] items-center">
-                          {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                          {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                           <div className="font-normal text-base leading-6">
                             {benefit?.benefit}
                           </div>
@@ -350,7 +353,7 @@ export function Subscription() {
                         <div className="flex flex-row gap-2 items-center">
 
 
-                          <Gift size={24} color="#BE7B62" />
+                          <HiOutlineGift size={24} color="#BE7B62" />
                           <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{gold?.entry}</span>
 
                         </div>
@@ -368,7 +371,7 @@ export function Subscription() {
                     {
                       gold?.benefits.map((benefit, index) => (
                         <div key={index} className="flex flex-row gap-[7px] items-center">
-                          {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                          {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                           <div className="font-normal text-base leading-6">
                             {benefit?.benefit}
                           </div>
@@ -429,7 +432,7 @@ export function Subscription() {
                       <div className="flex flex-row gap-2 items-center">
 
 
-                        <Gift size={24} color="#BE7B62" />
+                        <HiOutlineGift size={24} color="#BE7B62" />
                         <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{free?.entry}</span>
 
                       </div>
@@ -447,7 +450,7 @@ export function Subscription() {
                   {
                     free?.benefits.map((benefit, index) => (
                       <div key={index} className="flex flex-row gap-[7px] items-center">
-                        {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                        {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                         <div className="font-normal text-base leading-6">
                           {benefit?.benefit}
                         </div>
@@ -509,7 +512,7 @@ export function Subscription() {
                       <div className="flex flex-row gap-2 items-center">
 
 
-                        <Gift size={24} color="#BE7B62" />
+                        <HiOutlineGift size={24} color="#BE7B62" />
                         <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{bronze?.entry}</span>
 
                       </div>
@@ -527,7 +530,7 @@ export function Subscription() {
                   {
                     bronze?.benefits.map((benefit, index) => (
                       <div key={index} className="flex flex-row gap-[7px] items-center">
-                        {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                        {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                         <div className="font-normal text-base leading-6">
                           {benefit?.benefit}
                         </div>
@@ -589,7 +592,7 @@ export function Subscription() {
                       <div className="flex flex-row gap-2 items-center">
 
 
-                        <Gift size={24} color="#BE7B62" />
+                        <HiOutlineGift size={24} color="#BE7B62" />
                         <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{silver?.entry}</span>
 
                       </div>
@@ -607,7 +610,7 @@ export function Subscription() {
                   {
                     silver?.benefits.map((benefit, index) => (
                       <div key={index} className="flex flex-row gap-[7px] items-center">
-                        {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                        {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                         <div className="font-normal text-base leading-6">
                           {benefit?.benefit}
                         </div>
@@ -671,7 +674,7 @@ export function Subscription() {
                       <div className="flex flex-row gap-2 items-center">
 
 
-                        <Gift size={24} color="#BE7B62" />
+                        <HiOutlineGift size={24} color="#BE7B62" />
                         <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{gold?.entry}</span>
 
                       </div>
@@ -689,7 +692,7 @@ export function Subscription() {
                   {
                     gold?.benefits.map((benefit, index) => (
                       <div key={index} className="flex flex-row gap-[7px] items-center">
-                        {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                        {benefit?.included ? <HiCheck size={16} color="black"  /> : <HiXMark size={16} color="black"  />}
                         <div className="font-normal text-base leading-6">
                           {benefit?.benefit}
                         </div>
@@ -711,7 +714,7 @@ export function Subscription() {
       </div>
 
       <div className="bg-[#171614] py-3 px-6 items-center rounded-[30px] cursor-pointer flex flex-row gap-2">
-        <span className="font-medium text-white text-base leading-6">{continueWithSelected} </span> <ArrowUpRight size={24} color="white" />
+        <span className="font-medium text-white text-base leading-6">{continueWithSelected} </span> <HiArrowUpRight size={24} color="white" />
       </div>
 
     </section>

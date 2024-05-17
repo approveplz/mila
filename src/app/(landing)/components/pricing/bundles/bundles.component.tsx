@@ -1,6 +1,6 @@
 'use client'
+import { HiArrowUpRight } from "react-icons/hi2";
 import { messages } from "@/shared/constants/messages";
-import { ArrowUpRight } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { BundleCard } from "./card.component";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,8 +10,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
-
-
 
 
 export function Bundle() {
@@ -93,7 +91,7 @@ export function Bundle() {
       </div>
 
       <div className="bg-[#171614] py-3 px-6 items-center rounded-[30px] cursor-pointer flex flex-row gap-2">
-        <span className="font-medium text-white text-base leading-6">{continueWithSelected} </span> <ArrowUpRight size={24} color="white" />
+        <span className="font-medium text-white text-base leading-6">{continueWithSelected} </span> <HiArrowUpRight size={24} color="white" />
       </div>
     </section>
   )

@@ -3,8 +3,8 @@
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { cn } from "@/utils"
-import { Plus } from "@phosphor-icons/react"
-import { Minus } from "@phosphor-icons/react/dist/ssr"
+import { HiMiniPlus } from "react-icons/hi2";
+import { HiMiniMinus } from "react-icons/hi2";
 
 const Accordion = AccordionPrimitive.Root
 
@@ -34,8 +34,8 @@ const AccordionTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      {isOpen ? <Minus className="transition-transform duration-200" color="#B06E6A" size={24} /> :
-        <Plus className="transition-transform duration-200" color="#B06E6A" size={24} />}
+      {isOpen ? <HiMiniMinus className="transition-transform duration-200" color="#B06E6A" size={24} /> :
+        <HiMiniPlus className="transition-transform duration-200" color="#B06E6A" size={24} />}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ))

@@ -1,8 +1,13 @@
 'use client'
 import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
-import { Check, Gift, Minus, Plus, X } from "@phosphor-icons/react";
 import { useState } from "react";
+
+import { HiCheck } from "react-icons/hi2";
+import { HiXMark } from "react-icons/hi2";
+import { HiOutlineGift } from "react-icons/hi2";
+import { HiMiniPlus } from "react-icons/hi2";
+import { HiMiniMinus } from "react-icons/hi2";
 
 type benefit = {
   benefit: string,
@@ -15,7 +20,6 @@ type bundleCard = {
     cost: string,
     benefits: benefit[]
   },
-  // isMobile: boolean
 }
 
 export function BundleCard({ cardData}: bundleCard) {
@@ -27,8 +31,7 @@ export function BundleCard({ cardData}: bundleCard) {
       oneOff,
       draw,
       select,
-    },
-    continueWithSelected
+    }
   } } = messages;
 
   return (
@@ -41,17 +44,14 @@ export function BundleCard({ cardData}: bundleCard) {
 
           <div className="flex flex-row gap-2 items-center">
 
-            <Gift size={24} color="#BE7B62" />
+            <HiOutlineGift size={24} color="#BE7B62" />
             <span className="font-tt-ramillas text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry}</span>
 
           </div>
           <div className="font-medium text-base leading-6 text-[#171614]">
             {draw}
           </div>
-
-
         </div>
-
 
         <div className="flex flex-col gap-6 items-left w-full">
           <div className="flex flex-col items-left">
@@ -67,7 +67,7 @@ export function BundleCard({ cardData}: bundleCard) {
             {
               cardData?.benefits.map((benefit: benefit, index: number) => (
                 <div key={index} className="flex flex-row gap-[7px] items-center">
-                  {benefit?.included ? <Check size={16} color="black" weight="bold" /> : <X size={16} color="black" weight="bold" />}
+                  {benefit?.included ? <HiCheck size={16} color="black" /> : <HiXMark size={16} color="black"/>}
                   <div className="font-normal text-base leading-6">
                     {benefit?.benefit}
                   </div>
@@ -83,7 +83,7 @@ export function BundleCard({ cardData}: bundleCard) {
 
           <div className="flex flex-row gap-2 items-center">
             <div>
-              <Minus
+              <HiMiniMinus
                 onClick={() => {
                   if (counter > 0)
                     setCounter(counter - 1)
@@ -97,7 +97,7 @@ export function BundleCard({ cardData}: bundleCard) {
             </div>
 
             <div>
-              <Plus
+              <HiMiniPlus
                 onClick={() => {
                   setCounter(counter + 1)
                 }}

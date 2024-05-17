@@ -1,6 +1,6 @@
 'use client'
 import { messages } from "@/shared/constants/messages";
-import { Gift } from "@phosphor-icons/react";
+import { HiOutlineGift } from "react-icons/hi2";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -72,7 +72,7 @@ export function MajorGiveaways() {
                 />
 
                 <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
-                  <Gift size={24} color="#B06E6A" />
+                  <HiOutlineGift size={24} color="#B06E6A" />
                   <div className="font-semibold text-base leading text-primary">
                     {card?.entry}
                   </div>
@@ -157,7 +157,7 @@ export function MajorGiveaways() {
                 />
 
                 <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
-                  <Gift size={24} color="#B06E6A" />
+                  <HiOutlineGift size={24} color="#B06E6A" />
                   <div className="font-semibold text-base leading text-primary">
                     {card?.entry}
                   </div>
