@@ -1,6 +1,15 @@
+'use client';
 import { Button } from "@/components/ui/button/button.component";
 import { messages } from "@/shared/constants/messages";
 import Image from 'next/image'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components"
+import { BecomeAPartnerForm } from "./components/become-a-partner-form/form.component";
 
 
 
@@ -12,7 +21,10 @@ export function BecomeAPartner() {
       bePromoted,
       promotedSection,
       work,
-      button
+      button,
+      dialog: {
+        title
+      }
     }
   } } = messages;
 
@@ -76,8 +88,17 @@ export function BecomeAPartner() {
       </div>
 
       <div className="flex flex-col justify-center items-center sm:mx-[336px]">
-      <Button variant="primary" className="w-[185px]">{button}</Button>
+        <Dialog>
+          <DialogTrigger className="w-[185px] bg-[#B06E6A] border-[#B06E6A] text-white inline-flex items-center justify-center whitespace-nowrap text-base font-normal ring-offset-background border px-6 py-3 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">{button}</DialogTrigger>
+          <DialogContent className="sm:w-[455px] w-[329px]">
+            <DialogHeader>
+              <DialogTitle className="font-normal text-[32px] leading-[38.4px]">{title}</DialogTitle>
+            </DialogHeader>
+            <BecomeAPartnerForm />
+          </DialogContent>
+        </Dialog>
       </div>
+
 
     </section>
   )
