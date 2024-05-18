@@ -149,7 +149,7 @@ export function MajorGiveaways() {
                   layout="responsive"
                   width={319}
                   height={280}
-                  className="!w-[319] !h-[280] !rounded-l-[20px]"
+                  className="!w-[319px] !h-[280px] !rounded-l-[20px]"
                 />
 
                 <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
