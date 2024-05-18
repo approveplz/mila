@@ -25,12 +25,12 @@ export function GiveAway() {
           {heading}
         </div>
 
-        <div className="flex flex-col gap-12 items-center">
+        <div className="flex flex-col gap-12 items-center rounded-[24px]">
           <div className="font-tt-ramillas text-center font-normal text-[30px] leading-9 text-[#171614] px-[26px] sm:px-0">
             {subHeading}
           </div>
 
-          <div className=" relative bg-white rounded-[24px]   border-[#9CA3AF] overflow-hidden">
+          <div className=" relative bg-white rounded-[24px] shadow-xl border-[#9CA3AF] overflow-hidden">
             <div className="z-10 opacity-[0.08] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
 
             </div>

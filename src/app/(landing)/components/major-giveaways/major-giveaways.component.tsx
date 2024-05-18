@@ -56,11 +56,7 @@ export function MajorGiveaways() {
           {cards?.map((card, index) => (
             <SwiperSlide key={index} className="rounded-[20px]">
               <div
-                className="relative bg-white flex flex-col items-left sm:flex-row rounded-[20px]"
-                style={{
-                  boxShadow:
-                    '0px 4px 6px -2px rgba(0, 0, 0, 0.13), 0px 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                }}
+                className="relative border-2 shadow-lg border-[#E5E7EB] bg-white flex flex-col items-left sm:flex-row rounded-[20px]"
               >
                 <Image
                   src="/images/bagpack-2.jpeg"
@@ -68,7 +64,7 @@ export function MajorGiveaways() {
                   layout="responsive"
                   width={319}
                   height={280}
-                  className={`max-w-[319px] max-h-[280px] !rounded-t-[20px]`}
+                  className={` !rounded-t-[20px]`}
                 />
 
                 <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
@@ -91,9 +87,9 @@ export function MajorGiveaways() {
                   <div className="flex flex-row gap-2 items-center justify-between">
                     <div>
 
-                      <div className="flex flex-row gap-4">
+                      <div className="flex flex-row gap-1">
                         <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
+                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
                             00
                           </div>
 
@@ -103,7 +99,7 @@ export function MajorGiveaways() {
                         </div>
 
                         <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
+                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
                             00
                           </div>
 
@@ -113,7 +109,7 @@ export function MajorGiveaways() {
                         </div>
 
                         <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
+                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
                             00
                           </div>
 
@@ -123,7 +119,7 @@ export function MajorGiveaways() {
                         </div>
                         
                         <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
+                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
                             00
                           </div>
 
@@ -142,10 +138,10 @@ export function MajorGiveaways() {
       }
 
       {
-        !isMobile && <div className="flex flex-wrap gap-8 ">
+        !isMobile && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {cards?.map((card, index) => (
-              <div key={index} className="relative bg-white flex flex-row rounded-[20px]" style={{ boxShadow: '0px 4px 6px -2px rgba(0, 0, 0, 0.13), 0px 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+              <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row rounded-[20px]" >
 
                 <Image
                   src="/images/bagpack-2.jpeg"
@@ -153,7 +149,7 @@ export function MajorGiveaways() {
                   layout="responsive"
                   width={319}
                   height={280}
-                  className="max-w-[319px] max-h-[280px] !rounded-l-[20px]"
+                  className="w-full h-full !rounded-l-[20px]"
                 />
 
                 <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
