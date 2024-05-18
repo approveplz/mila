@@ -141,7 +141,7 @@ export function MajorGiveaways() {
         !isMobile && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {cards?.map((card, index) => (
-              <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row rounded-[20px]" >
+              <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[280] rounded-[20px]" >
 
                 <Image
                   src="/images/bagpack-2.jpeg"
@@ -149,7 +149,7 @@ export function MajorGiveaways() {
                   layout="responsive"
                   width={319}
                   height={280}
-                  className=" w-[328px] h-[279px] sm:w-[319] sm:h-[280] !rounded-l-[20px]"
+                  className="!w-[319] !h-[280] !rounded-l-[20px]"
                 />
 
                 <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
