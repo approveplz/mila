@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const listItems = [
     { id: "1", title: "About Us", href: "/" },
-    { id: "2", title: "Benefits", href: "/coupens" },
+    { id: "2", title: "Benefits", href: "/coupons" },
     { id: "3", title: "Giveaways", href: "/" },
 ];
 

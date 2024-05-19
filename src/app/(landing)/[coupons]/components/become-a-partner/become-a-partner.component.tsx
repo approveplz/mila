@@ -9,13 +9,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components"
-import { BecomeAPartnerForm } from "./components/become-a-partner-form/form.component";
+import { BecomeAPartnerForm } from "./form.component";
 
 
 
 export function BecomeAPartner() {
 
-  const { coupens: {
+  const { coupons: {
     becomeAPrtner: {
       becomeAPartner,
       bePromoted,

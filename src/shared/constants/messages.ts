@@ -380,7 +380,7 @@ export const messages = {
 
   },
 
-  coupens: {
+  coupons: {
     heading: 'Exclusive Benefits',
     subheading: 'Become a member today and receive exclusive discounts from all of our brand partners!',
     becomeAPrtner: {

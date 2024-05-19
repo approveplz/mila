@@ -1,9 +1,9 @@
 import { Brands } from "../components/brands/brands.component";
 import { BecomeAPartner } from "./components/become-a-partner/become-a-partner.component";
-import { CoupensList } from "./components/coupens/coupens.component";
+import { CoupensList } from "./components/coupons/coupons.component";
 import { Header } from "./components/header/header.component";
 
-export default function Coupens() {
+export default function Coupons() {
   return (
     <div>
       <Header />
