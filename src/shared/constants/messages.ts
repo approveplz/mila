@@ -380,16 +380,26 @@ export const messages = {
 
   },
 
-  coupens: {
+  coupons: {
     heading: 'Exclusive Benefits',
     subheading: 'Become a member today and receive exclusive discounts from all of our brand partners!',
-    becomeAPrtner : {
+    becomeAPrtner: {
       becomeAPartner: 'BECOME a PARTNER',
       bePromoted: 'Be promoted and called out on our socials',
-      promotedSection:'Promoted section within our store  for customers',
+      promotedSection: 'Promoted section within our store  for customers',
       work: 'We will work with you on special giveaways, get your products promoted to thousands',
-      button:'Become a Partner'
+      button: 'Become a Partner',
+      dialog: {
+        title: 'Become a Partner',
+        labels: {
+          businessName: 'Business Name',
+          contactName: 'Contact Name',
+          contactEmail: 'Contact Email',
+          optiona: 'Optional',
+          send: 'Send'
+        }
+      }
     },
-   
+
   }
 }

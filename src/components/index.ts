@@ -2,6 +2,8 @@
 export * from "./ui/button/button.component";
 export * from "./ui/dialog/dialog.component";
 export * from "./ui/input/input.component";
+export * from "./ui/text-area/text-area.component";
+
 export * from "./ui/label/label.component";
 export * from "./ui/checkbox/checkbox.component";
 export * from "./ui/form/form.component";

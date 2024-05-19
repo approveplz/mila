@@ -2,7 +2,7 @@ import { messages } from "@/shared/constants/messages";
 
 export function Header() {
 
-  const { coupens: {
+  const { coupons: {
     heading,
     subheading
   } } = messages;
