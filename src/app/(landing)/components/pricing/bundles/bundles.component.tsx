@@ -44,7 +44,7 @@ export function Bundle() {
   return (
     <section className="flex flex-col items-center gap-12 bg-[#F3F3F3] mt-12">
       <div className="flex flex-col items-center gap-6 w-full">
-        <div className="font-medium text-primary text-lg leading-7">
+        <div className="font-medium text-primary text-lg leading-7 cursor-pointer">
           {clear}
         </div>
         {isMobile ?

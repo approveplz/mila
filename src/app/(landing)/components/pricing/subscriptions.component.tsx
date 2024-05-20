@@ -8,6 +8,7 @@ import { HiOutlineGift } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import './styles.css';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -49,7 +50,7 @@ export function Subscription() {
   return (
     <section className="flex flex-col items-center gap-12 bg-[#F3F3F3] mt-12">
       <div className="flex flex-col items-center gap-6 w-full">
-        <div className="font-medium text-primary text-lg leading-7">
+        <div className="font-medium text-primary text-lg leading-7 cursor-pointer">
           {clearSelection}
         </div>
 
@@ -68,7 +69,7 @@ export function Subscription() {
 
               <div className="relative overflow-hidden bg-white rounded-[24px]  h-[579px]  border-[#CDCDCD]">
 
-                <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+                <div className="z-10 cardA opacity-[0.02] absolute bg-[url('/images/subscription.png')] w-full h-full">
 
                 </div>
 
@@ -145,7 +146,7 @@ export function Subscription() {
             <SwiperSlide className="rounded-[24px]">
               <div className="relative overflow-hidden bg-[#EFECE5] rounded-[24px] border-2  h-[579px]  border-primary">
 
-                <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+                <div className="z-10 cardB opacity-[0.02] absolute bg-[url('/images/subscription.png')] w-full h-full">
 
                 </div>
 
@@ -228,7 +229,7 @@ export function Subscription() {
             <SwiperSlide className="rounded-[24px]">
               <div className="relative overflow-hidden bg-[#DFD7C9] rounded-[24px]  h-[579px]  border-[#CDCDCD]">
 
-                <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+                <div className="z-10 cardC opacity-[0.02] absolute bg-[url('/images/subscription.png')] w-full h-full">
 
                 </div>
 
@@ -313,7 +314,7 @@ export function Subscription() {
             <SwiperSlide className="rounded-[24px]">
               <div className="relative overflow-hidden bg-[#C7B8A3] rounded-[24px]  h-[579px] border-[#CDCDCD]">
 
-                <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+                <div className="z-10 cardD opacity-[0.02] absolute bg-[url('/images/subscription.png')] w-full h-full">
 
                 </div>
 
@@ -398,11 +399,11 @@ export function Subscription() {
 
             <div className="relative overflow-hidden bg-white rounded-[24px] h-[579px]  border-[#CDCDCD]">
 
-              <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+              <div className="z-0 cardA opacity-[0.02] absolute bg-[url('/images/subscription.png')] !w-[304px] !h-[579px]">
 
               </div>
 
-              <div className="z-20 flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
+              <div className="z-10 relative flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
 
                 <div className="flex flex-col items-center px-6">
 
@@ -472,11 +473,11 @@ export function Subscription() {
 
             <div className="relative overflow-hidden bg-[#EFECE5] rounded-[24px]  h-[579px] border-2  border-primary">
 
-              <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+              <div className="z-0 cardB opacity-[0.02] absolute bg-[url('/images/subscription.png')] w-full h-full">
 
               </div>
 
-              <div className="z-20 flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
+              <div className="z-10 relative flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
 
                 <div className="flex flex-col items-center px-6">
 
@@ -552,11 +553,11 @@ export function Subscription() {
 
             <div className="relative overflow-hidden bg-[#DFD7C9] rounded-[24px]  h-[579px]  border-[#CDCDCD]">
 
-              <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+              <div className="z-0 cardC opacity-[0.02] absolute bg-[url('/images/subscription.png')] w-full h-full">
 
               </div>
 
-              <div className="z-20 flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
+              <div className="z-10 relative flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
 
                 <div className="flex flex-col items-center px-6">
 
@@ -634,11 +635,11 @@ export function Subscription() {
 
             <div className="relative overflow-hidden bg-[#C7B8A3] rounded-[24px]  h-[579px]  border-[#CDCDCD]">
 
-              <div className="z-10 bg-cover opacity-[0.03] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
+              <div className="z-0 cardD opacity-[0.02] absolute bg-[url('/images/subscription.png')] w-full h-full">
 
               </div>
 
-              <div className="z-20 flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
+              <div className="z-10 relative flex flex-col items-left gap-8  py-8 border-2 rounded-[24px]  w-[304px] h-[579px]">
 
                 <div className="flex flex-col items-center px-6">
 
