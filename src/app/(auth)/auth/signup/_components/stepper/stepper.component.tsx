@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState, useEffect } from "react";
 import {
@@ -30,7 +30,7 @@ const stepsMobileMeta = [
     Finish
 ];
 
-export function StepperMain() {
+function StepperMain() {
     const { step } = useStepperContext();
     const Component = stepsMeta[step - 1];
 
@@ -39,7 +39,7 @@ export function StepperMain() {
     )
 }
 
-export function StepperMobile() {
+function StepperMobile() {
     const { step } = useStepperContext();
     const Component = stepsMobileMeta[step - 1];
 
@@ -48,7 +48,7 @@ export function StepperMobile() {
     )
 }
 
-export function Stepper() {
+function Stepper() {
     const [width, setWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -66,3 +66,5 @@ export function Stepper() {
         </StepperProvider>
     )
 }
+
+export default Stepper;
