@@ -2,12 +2,9 @@
 
 import Image from 'next/image'
 import { HiOutlineLockClosed } from "react-icons/hi2";
-import { Button } from "@/components/ui/button/button.component";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components"
 import SelectCoupons from '../select-coupon/select-coupon.component';
