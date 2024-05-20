@@ -1,5 +1,7 @@
 import { messages } from "@/shared/constants/messages";
 import Image from 'next/image'
+import { HiMiniArrowLeft } from "react-icons/hi2";
+import { HiMiniArrowRight } from "react-icons/hi2";
 
 export function MinorGiveaways() {
   const { minorGiveways: {
@@ -14,37 +16,49 @@ export function MinorGiveaways() {
         {title}
       </div>
 
+      <div className="max-w-full flex flex-col gap-3 items-center">
+        <div className="flex sm:flex-wrap overflow-x-auto max-w-full sm:max-w-[1440px] sm:justify-center items-left  gap-6 px-6 sm:px-16 pb-8 pt-2">
+          {cards?.map((card, index) => (
+            <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[240px] flex flex-col gap-4">
 
-      <div className="grid grid-cols-5 gap-6 px-6 sm:px-16 pb-16 pt-2">
-        {cards?.map((card, index) => (
-          <div key={index} className="relative flex-shrink-0 rounded-[30px] flex flex-col gap-4" style={{ boxShadow: '0px 4px 6px -2px rgba(0, 0, 0, 0.13), 0px 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+              <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+                <div className="font-semibold text-base leading-6">
+                  {card?.entry}
+                </div>
+              </div>
 
-            <div className="absolute bg-white rounded-full px-2 top-4 left-[50%] transform -translate-x-1/2">
-              <div className="font-semibold text-base leading-6">
-                {card?.entry}
+              <Image
+                src="/images/bagpack-2.jpeg"
+                alt="bagpack"
+                layout="responsive"
+                width={240}
+                height={210}
+                className="w-full h-full !rounded-t-[30px]"
+              />
+
+              <div className="flex flex-col gap-2 px-4 pb-4">
+                <div className="font-bold text-[14px] leading-[20px] text-[#54423A]">
+                  {card?.title}
+                </div>
+
+                <div className="font-normal text-xs leading-4">
+                  {card?.description}
+                </div>
               </div>
             </div>
+          ))}
+        </div>
 
-            <Image
-              src="/images/bagpack-2.jpeg"
-              alt="bagpack"
-              layout="responsive"
-              width={240}
-              height={210}
-              className="h-[210px] !rounded-t-[30px]"
-            />
+        <div className="hidden sm:flex flex-row gap-2 items-center">
+          <HiMiniArrowLeft className="w-[20px] font-bold cursor-pointer" />
 
-            <div className="flex flex-col gap-2 p-4">
-              <div className="font-bold text-[14px] leading-[20px] text-[#54423A]">
-                {card?.title}
-              </div>
-
-              <div className="font-normal text-xs leading-4">
-                {card?.description}
-              </div>
-            </div>
+          <div className="text-base leading-6 font-normal text-[#171614] rounded-lg border border-[#171614] px-2 py-1">
+            01
           </div>
-        ))}
+
+          <HiMiniArrowRight className="w-[20px] font-bold cursor-pointer" />
+
+        </div>
       </div>
 
     </section>

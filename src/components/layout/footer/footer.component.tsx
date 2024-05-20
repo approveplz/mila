@@ -2,7 +2,11 @@
 import { Button } from "@/components/ui/button/button.component";
 import { Input } from "@/components/ui/input/input.component";
 import { messages } from "@/shared/constants/messages";
-import { FacebookLogo, InstagramLogo, TiktokLogo } from "@phosphor-icons/react";
+import { FBIcon } from "./facebook-icon.component";
+import { InstaIcon } from "./instagram-icon.component";
+import { TikTokIcon } from "./tiktok.component";
+import Image from "next/image"
+
 
 export async function Footer() {
 
@@ -31,11 +35,10 @@ export async function Footer() {
   return (
     <footer className="sm:py-20 sm:px-16 py-16 px-6 bg-[#F3F3F3] ">
 
-      <div className="flex flex-col sm:flex-row jutify-between">
-        <div className="flex flex-col items-start gap-6 sm:w-2/3 w-full">
-
-          <div className="font-bold text-lg text-[#171614]">
-            {title}
+      <div className="flex flex-col sm:flex-row gap-12 sm:gap-0 jutify-between">
+        <div className="flex flex-col items-start gap-6 sm:w-2/3 2xl:ml-52 w-full">
+          <div className="relative h-12 w-[49.4px]">
+            <Image src="/images/logo-fatal.svg" alt="logo" fill />
           </div>
 
           <div className="font-normal text-base leading-6 text-[#171614]">
@@ -48,7 +51,7 @@ export async function Footer() {
               id="email"
               name="email"
               placeholder={placeholder}
-              className="sm:w-[360px] h-12"
+              className="sm:w-[360px] h-12 border-[#171614]"
             />
 
             <Button variant="primary">{subscribe}</Button>
@@ -65,7 +68,7 @@ export async function Footer() {
 
         </div>
 
-        <div className="flex sm:flex-row sm:gap-20 sm:w-1/3 flex-col gap-10 w-full mt-6 sm:mt-0">
+        <div className="flex sm:flex-row sm:gap-20 sm:w-1/3 flex-col 2xl:justify-center gap-10 w-full mt-6 sm:mt-0">
           <div>
             <div className="font-semibold text-base leading-6 text-[#171614]">
               {linkTitle}
@@ -87,13 +90,13 @@ export async function Footer() {
 
             <div className="flex flex-col gap-6 mt-6">
               <div className="flex flex-row gap-3 items-center cursor-pointer" >
-                <FacebookLogo size={16} weight="fill" /> <div className="font-normal text-[14px] leading-[21px]"> Facebook</div>
+                <FBIcon /> <div className="font-normal text-[14px] leading-[21px]"> Facebook</div>
               </div>
               <div className="flex flex-row gap-3 items-center  cursor-pointer" >
-                <InstagramLogo size={16} /> <div className="font-normal text-[14px] leading-[21px]"> Instagram</div>
+                <InstaIcon /> <div className="font-normal text-[14px] leading-[21px]"> Instagram</div>
               </div>
               <div className="flex flex-row gap-3 items-center cursor-pointer" >
-                <TiktokLogo size={16} weight="fill" /> <div className="font-normal text-[14px] leading-[21px]">Tik Tok </div>
+                <TikTokIcon /> <div className="font-normal text-[14px] leading-[21px]">Tik Tok </div>
               </div>
             </div>
           </div>
@@ -101,7 +104,7 @@ export async function Footer() {
 
       </div>
 
-      <div className="flex justify-center sm:justify-start font-normal text-[14px] leading-[21px] mt-6">
+      <div className="flex justify-center sm:justify-start font-normal text-[14px] leading-[21px] mt-6 2xl:ml-52">
         {tradeMark}
       </div>
 
