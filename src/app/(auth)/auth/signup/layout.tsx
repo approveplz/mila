@@ -1,4 +1,4 @@
-import { Provider } from "./components/provider/provider.component";
+import { Provider } from "./_components/provider/provider.component";
 
 export default function SignUpLayout({
     children,
