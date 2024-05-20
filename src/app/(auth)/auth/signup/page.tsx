@@ -1,4 +1,4 @@
-import { Stepper } from "./components/stepper/stepper.component";
+import { Stepper } from "./_components/stepper/stepper.component";
 
 export default function SignUp() {
     return (
