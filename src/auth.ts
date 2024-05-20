@@ -7,6 +7,7 @@ import { withAsync } from "@/utils/withAsync"
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
         Credentials({
+            id: "credentials",
             name: "credentials",
             credentials: {
                 email: {
@@ -23,6 +24,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     password: credentials.password as string
                 }));
 
+                console.log("response: ", response);
+                console.log("error: ", error);
                 if (error) {
                     if (isApiError(error)) {
                         return null;
@@ -32,11 +35,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
 
                 return {
-                    name: "test",
                     ...response
                 };
             },
         }),
+        Credentials({
+            id: "register",
+            name: "register",
+            async authorize(credentials) {                
+                return null
+            },
+        })
     ],
     callbacks: {
         jwt({ token, user }) {
@@ -53,7 +62,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
     },
     pages: {
-        signIn: "/signin"
+        signIn: "/signin",
+        newUser: "/auth/signup"
     },
     secret: process.env.AUTH_SECRET,
     trustHost: true

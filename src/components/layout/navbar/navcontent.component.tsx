@@ -33,7 +33,7 @@ export function NavContent({ session }: { session: Session | null }) {
                         ) : (
                             <div className="flex gap-4">
                                 <Button asChild>
-                                    <Link href="/signup">Sign Up</Link>
+                                    <Link href="/auth/signup">Sign Up</Link>
                                 </Button>
                                 <Button variant="primary-outline" asChild>
                                     <Link href="/signin">Sign In</Link>
@@ -63,7 +63,7 @@ export function NavContent({ session }: { session: Session | null }) {
 
                 <AccordionContent>
                     <div className="sm:hidden">
-                        <NavListMobile />
+                        <NavListMobile session={session} />
                     </div>
                 </AccordionContent>
             </AccordionItem>

@@ -9,6 +9,7 @@ export * from "./ui/checkbox/checkbox.component";
 export * from "./ui/form/form.component";
 export * from "./ui/alert/alert.component";
 export * from "./ui/dropdown-menu/dropdown-menu.component";
+export * from "./ui/input-otp/input-otp.component";
 
 // Layout
 export * from "./layout/navbar";
@@ -19,3 +20,9 @@ export * from "./layout/container/container.component";
 export * from "./ui/accordion/accordion.component"
 
 export * from "./ui/tabs/tabs.component"
+
+// Common
+export * from "./common/centralized-content/centralized-content.component"
+export * from "./common/email-verification/email-verification.component"
+export * from "./common/phone-verification/phone-verification.component"
+export * from "./common/thank-you/thank-you.component"
