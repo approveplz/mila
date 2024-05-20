@@ -1,0 +1,23 @@
+.cardA {
+    background-position-x: 31px;
+    background-position-y: -255px;
+    transform: scale(1.25);
+}
+
+.cardB {
+    background-position-x: -233px;
+    background-position-y: -255px;
+    transform: scale(1.25);
+}
+
+.cardC {
+    background-position-x: -484px;
+    background-position-y: -255px;
+    transform: scale(1.25);
+}
+
+.cardD {
+    background-position-x: -739px;
+    background-position-y: -255px;
+    transform: scale(1.25);
+}
