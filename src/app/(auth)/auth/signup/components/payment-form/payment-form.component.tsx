@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, Input, Label } from '@/components';
-import { useCheckOutStore } from '@/store';
 import {
     CardNumberElement,
     CardExpiryElement,
@@ -11,6 +10,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { StripeElementStyleVariant } from '@stripe/stripe-js';
 import * as React from "react";
+import { useStepperContext } from '../stepper/stepper.context';
 
 const inputStylesBase: StripeElementStyleVariant = {
     fontSize: "14px",
@@ -25,7 +25,7 @@ const inputStylesBase: StripeElementStyleVariant = {
 }
 
 export function PaymentForm() {
-    const { nexStep } = useCheckOutStore(state => state);
+    const { nextStep } = useStepperContext();
     const stripe = useStripe();
     const elements = useElements();
     
@@ -93,7 +93,7 @@ export function PaymentForm() {
             </div>
 
             {/* <Button type="submit" disabled={false}>Pay</Button> */}
-            <Button type="button" disabled={false} onClick={nexStep}>Next</Button>
+            <Button type="button" disabled={false} onClick={nextStep}>Next</Button>
         </form>
     )
 }
