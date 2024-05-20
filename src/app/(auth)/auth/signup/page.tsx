@@ -1,10 +1,9 @@
-import { Provider } from "./components/provider/provider.component";
 import { Stepper } from "./components/stepper/stepper.component";
 
-export default function Signup() {
+export default function SignUp() {
     return (
-        <Provider>
+        <div>
             <Stepper />
-        </Provider>
+        </div>
     )
 }
