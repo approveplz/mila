@@ -5,15 +5,7 @@ import {
     Button,
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components";
 import {
@@ -36,7 +28,7 @@ export function NavAction() {
                         <HiUserCircle className="h-12 w-12" />
                     </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-20">
+                <DropdownMenuContent className="w-20 z-[9999]">
                     <DropdownMenuItem onClick={() => authSignOut()}>
                         <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
                         <span>Log out</span>

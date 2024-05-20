@@ -3,7 +3,7 @@
 import { signOut, signIn } from "@/auth";
 import { AuthError } from "next-auth";
 
-function isRedirectError(error: Error & {digest?: string}) {
+function isRedirectError(error: Error & { digest?: string }) {
     return !!error.digest?.startsWith("NEXT_REDIRECT")
 }
 
@@ -26,7 +26,7 @@ export async function authSignIn(prevState: any, data: FormData) {
                 error: ''
             }
         };
-        
+
         if (error instanceof AuthError) {
             switch (error.type) {
                 case 'CredentialsSignin':

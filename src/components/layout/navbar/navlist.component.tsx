@@ -1,9 +1,17 @@
+import { Session } from "next-auth";
 import Link from "next/link";
 
 const listItems = [
     { id: "1", title: "About Us", href: "/" },
     { id: "2", title: "Benefits", href: "/" },
     { id: "3", title: "Giveaways", href: "/" },
+];
+
+const listItemsSignedIn = [
+    { id: "1", title: "Profile", href: "/" },
+    { id: "2", title: "About Us", href: "/" },
+    { id: "3", title: "Benefits", href: "/" },
+    { id: "4", title: "Giveaways", href: "/" },
 ];
 
 function NavItem({ children }: React.PropsWithChildren) {
@@ -24,20 +32,32 @@ export function NavList() {
     )
 }
 
-export function NavListMobile() {
+export function NavListMobile({ session }: { session: Session | null }) {
     return (
         <ul className="space-y-6 py-6">
-            {listItems.map(item => (
-                <NavItem key={item.id}>
-                    <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
-                </NavItem>
-            ))}
+            {session ? (
+                <>
+                    {listItemsSignedIn.map(item => (
+                        <NavItem key={item.id}>
+                            <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
+                        </NavItem>
+                    ))}
+                </>
+            ) : (
+                <>
+                    {listItems.map(item => (
+                        <NavItem key={item.id}>
+                            <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
+                        </NavItem>
+                    ))}
 
-            <hr />
+                    <hr />
 
-            <NavItem>
-                <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/signup">Sign Up</Link>
-            </NavItem>
+                    <NavItem>
+                        <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/signup">Sign Up</Link>
+                    </NavItem>
+                </>
+            )}
         </ul>
     )
 }
