@@ -159,17 +159,16 @@ export const messages = {
         title: 'Product Name',
         description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
       },
-      {
-        entry: '100 entries',
-        title: 'Product Name',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
-      },
-      {
-        entry: '100 entries',
-        title: 'Product Name',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
-      },
-
+      // {
+      //   entry: '100 entries',
+      //   title: 'Product Name',
+      //   description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+      // },
+      // {
+      //   entry: '100 entries',
+      //   title: 'Product Name',
+      //   description: 'Sed ut perspiciatis unde omnis iste natus error sit.'
+      // },
     ]
   },
   majorGiveaways: {
