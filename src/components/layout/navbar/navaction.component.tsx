@@ -1,6 +1,6 @@
 "use client";
 
-import { authSignOut } from "@/actions";
+import { authSignIn, authSignOut } from "@/actions";
 import {
     Button,
     DropdownMenu,
@@ -8,7 +8,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components";
-import { signOut } from "next-auth/react";
 import {
     HiOutlineGift,
     HiUserCircle,
@@ -30,7 +29,9 @@ export function NavAction() {
                     </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-20 z-[9999]">
-                    <DropdownMenuItem onClick={() => authSignOut()}>
+                    <DropdownMenuItem onClick={async () => {
+                        await authSignOut()
+                    }}>
                         <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
                         <span>Log out</span>
                     </DropdownMenuItem>

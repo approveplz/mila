@@ -5,6 +5,8 @@ import { signInWithCredentials } from "@/api/auth"
 import { withAsync } from "@/utils/withAsync";
 import { removePrefixFromObjectKeys } from "./utils";
 
+export const BASE_PATH = "/api/auth";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
         Credentials({
@@ -71,7 +73,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         newUser: "/",
         signOut: "/"
     },
+    basePath: BASE_PATH,
     secret: process.env.AUTH_SECRET,
     trustHost: true,
-    debug: !!process.env.NEXTAUTH_DEBUG
+    debug: !!process.env.NEXTAUTH_DEBUG,
 })
