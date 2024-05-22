@@ -14,7 +14,6 @@ export function NextGiveAway() {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log(isMobile);
       setIsMobile(window.innerWidth <= 1000);
     };
 

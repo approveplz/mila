@@ -5,7 +5,6 @@ import { MinorGiveaways } from "./components/minor-giveaways/minor-giveaways.com
 import { NextGiveAway } from "./components/next-giveaway/next-giveaway.component";
 import { UpcomingGiveAways } from "./components/upcoming-giveaways/upcoming-giveaways.component";
 
-
 export default function Giveaways() {
   return (
     <div>
@@ -13,7 +12,7 @@ export default function Giveaways() {
       <NextGiveAway />
       <UpcomingGiveAways />
       <MinorGiveaways />
-      <Pricing />
+      <Pricing products={[]} />
       <FollowUs />
     </div>
   )
