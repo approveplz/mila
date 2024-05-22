@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import {
     AuthStep,
     PricingStep,
@@ -93,10 +93,10 @@ function StepperMobile({
 }
 
 function Stepper() {
-    const [width, setWidth] = useState(window.innerWidth);
+    const [width, setWidth] = React.useState(window.innerWidth);
     const { checkoutFlow } = useCheckOutStore();
 
-    useEffect(() => {
+    React.useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
 
@@ -107,7 +107,11 @@ function Stepper() {
 
     return (
         <StepperProvider>
-            {width < 640 ? <StepperMobile withPayment={checkoutFlow === "paid"} /> : <StepperMain withPayment={checkoutFlow === "paid"} />}
+            {width < 640 ? (
+                <StepperMobile withPayment={checkoutFlow === "paid"} />
+            ) : (
+                <StepperMain withPayment={checkoutFlow === "paid"} />
+            )}
         </StepperProvider>
     )
 }

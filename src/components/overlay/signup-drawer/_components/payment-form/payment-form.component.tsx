@@ -14,6 +14,9 @@ import { useStepperContext } from '../stepper/stepper.context';
 import { confirmMembership, generateMembership } from '@/api/auth';
 import { useCheckOutStore } from '@/store';
 import { useSession } from 'next-auth/react';
+import { useFormContext } from 'react-hook-form';
+
+type K = keyof {};
 
 const inputStylesBase: StripeElementStyleVariant = {
     fontSize: "14px",
@@ -34,23 +37,16 @@ export function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
 
+    const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
+
     const handlePayment = () => {
-        if (!stripe) {
-            // Stripe.js hasn't yet loaded.
-            // Make sure to disable form submission until Stripe.js has loaded.
+        if (!stripe || !elements) {
             return;
         }
-
-        if (!elements) {
-            // Stripe.js hasn't yet loaded.
-            // Make sure to disable form submission until Stripe.js has loaded.
-            return;
-        }
-
 
         if (session.data?.user.user) {
             const payload = {
-                coupon: null,
+                coupon: couponForm.getValues("coupon") || null,
                 user: session.data?.user.user.id,
                 prices: products
                     .map(product => product.prices[0])
@@ -60,26 +56,58 @@ export function PaymentForm() {
                     }))
             }
 
-            confirmMembership(payload)
-                .then(async (res) => generateMembership(payload))
-                .then(async (res) => {
-                    const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
-                        payment_method: {
-                            card: elements.getElement(CardNumberElement)!
+            if (couponForm.getValues("hasCompletedMemberShip")) {
+                generateMembership(payload)
+                    .then(async (res) => {
+                        const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
+                            payment_method: {
+                                card: elements.getElement(CardNumberElement)!
+                            }
+                        })
+
+                        if (error) {
+                            console.log("error: ", error);
+                        } else {
+                            nextStep();
+                        }
+                    })
+                    .catch(err => {
+                        console.log("err: ", err);
+                    })
+            } else {
+                confirmMembership(payload)
+                    .then(async (res) => generateMembership(payload))
+                    .then(async (res) => {
+                        const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
+                            payment_method: {
+                                card: elements.getElement(CardNumberElement)!
+                            }
+                        })
+
+                        if (error) {
+                            console.log("error: ", error);
+                        } else {
+                            nextStep();
+                        }
+                    })
+                    .catch(err => {
+                        const errors = err.response.data;
+
+                        if (errors && typeof errors === "object") {
+                            Object.entries(errors).forEach((error) => {
+                                const [key, val] = error as [K, [string]];
+
+                                if (key === "coupon") {
+                                    couponForm.setError(key, {
+                                        message: val[0]
+                                    });
+                                }
+                            });
                         }
                     })
 
-                    if (error) {
-                        console.log("error: ", error);
-                    } else {
-                        nextStep();
-                    }
-                })
-                .catch(err => {
-                    console.log("err: ", err);
-                })
+            }
         }
-
     }
 
     return (

@@ -1,9 +1,72 @@
-import { Button, Input, Label } from "@/components";
-import { HiMinus, HiPlus } from "react-icons/hi2";
+import {
+    Button,
+    Input,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+} from "@/components";
+import {
+    HiMinus,
+    HiPlus
+} from "react-icons/hi2";
 import { useStepperContext } from "../stepper/stepper.context";
+import { useFormContext } from "react-hook-form";
+import { useCheckOutStore } from "@/store";
+import { confirmMembership, generateMembership } from '@/api/auth';
+import { useSession } from "next-auth/react";
+
+type K = keyof {};
 
 export function PaymentList() {
     const { nextStep } = useStepperContext();
+    const { products } = useCheckOutStore();
+    const form = useFormContext<{
+        coupon: string
+        hasCompletedMemberShip: boolean
+    }>();
+    const session = useSession();
+
+    const subscriptions = products.filter(product => product.type === "subscription");
+    const bundles = products.filter(product => product.type === "bundle");
+
+    const handleNext = () => {
+        if (session.data?.user.user) {
+            const payload = {
+                coupon: form.getValues("coupon") || null,
+                user: session.data?.user.user.id,
+                prices: products
+                    .map(product => product.prices[0])
+                    .map(price => ({
+                        price: price.id,
+                        quantity: 1
+                    }))
+            }
+
+            confirmMembership(payload)
+                .then(res => {
+                    form.setValue("hasCompletedMemberShip", true);
+                    nextStep();
+                })
+                .catch(err => {
+                    const errors = err.response.data;
+
+                    if (errors && typeof errors === "object") {
+                        Object.entries(errors).forEach((error) => {
+                            const [key, val] = error as [K, [string]];
+
+                            if (key === "coupon") {
+                                form.setError(key, {
+                                    message: val[0]
+                                });
+                            }
+                        });
+                    }
+                })
+        }
+    }
 
     return (
         <article className="flex flex-col justify-between h-full">
@@ -14,24 +77,51 @@ export function PaymentList() {
 
             <main>
                 <table className="w-full">
-                    <tr>
-                        <td className="font-semibold py-2">Bronze Subscription</td>
-                        <td className="align-middle" valign="middle" align="right">
-                            <Button className="w-6 h-5 p-1 mt-1" variant="fatal">
-                                <HiMinus />
-                            </Button>
-                        </td>
-                        <td className="font-normal py-2" align="right">$9.99</td>
-                    </tr>
-                    <tr>
-                        <td colSpan={3} className="pt-2 pb-8">
-                            <div>
-                                <Label>Subscription Coupon Code</Label>
-                                <Input placeholder="e.g.35639234" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
+                    {/* Subscriptions */}
+                    {subscriptions.length > 0 && (
+                        <>
+                            {subscriptions.map(subscription => (
+                                <tr key={subscription.id}>
+                                    <td className="font-semibold py-2 w-full">{subscription.name}</td>
+                                    <td className="align-middle" valign="middle" align="right">
+                                        <Button className="w-6 h-5 p-1 mt-1" variant="fatal">
+                                            <HiMinus />
+                                        </Button>
+                                    </td>
+                                    <td className="font-normal py-2" align="right">$9.99</td>
+                                </tr>
+                            ))}
+
+                            <tr>
+                                <td colSpan={3} className="pt-2 pb-8">
+                                    <Form {...form}>
+                                        <form>
+                                            <FormField
+                                                control={form.control}
+                                                name="coupon"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel htmlFor="coupon">Subscription Coupon Code</FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                id="coupon"
+                                                                placeholder="e.g.35639234"
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </form>
+                                    </Form>
+                                </td>
+                            </tr>
+                        </>
+                    )}
+
+                    {/* Bundles */}
+                    {/* <tr>
                         <td className="font-semibold py-2">45 Entires</td>
                         <td className="align-middle py-2" valign="middle" align="right">
                             <Button className="mt-1 p-1 gap-1 cursor-default" variant="fatal">
@@ -52,7 +142,9 @@ export function PaymentList() {
                             </Button>
                         </td>
                         <td className="font-normal py-2" align="right">$9.99</td>
-                    </tr>
+                    </tr> */}
+
+                    {/* Total */}
                     <tr>
                         <td className="py-2" colSpan={3}>
                             <hr />
@@ -66,7 +158,12 @@ export function PaymentList() {
             </main>
 
             <footer className="block sm:hidden">
-                <Button full onClick={nextStep}>Proceed to payment</Button>
+                <Button
+                    full
+                    onClick={handleNext}
+                >
+                    Proceed to payment
+                </Button>
             </footer>
         </article>
     )
