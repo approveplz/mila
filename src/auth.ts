@@ -2,7 +2,8 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { isApiError } from "@/api"
 import { signInWithCredentials } from "@/api/auth"
-import { withAsync } from "@/utils/withAsync"
+import { withAsync } from "@/utils/withAsync";
+import { removePrefixFromObjectKeys } from "./utils";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -24,8 +25,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     password: credentials.password as string
                 }));
 
-                console.log("response: ", response);
-                console.log("error: ", error);
+                // console.log("response: ", response);
+                // console.log("error: ", error);
                 if (error) {
                     if (isApiError(error)) {
                         return null;
@@ -42,8 +43,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         Credentials({
             id: "register",
             name: "register",
-            async authorize(credentials) {                
-                return null
+            async authorize(credentials) {
+                const response = JSON.parse(JSON.stringify(credentials));
+                const user = removePrefixFromObjectKeys(response, "userpre_")
+
+                return {
+                    ...response,
+                    user
+                }
             },
         })
     ],

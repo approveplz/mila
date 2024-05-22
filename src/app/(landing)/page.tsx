@@ -8,8 +8,11 @@ import { HowItWorks } from "@/app/(landing)/components/how-it-works/how-it-works
 import { MinorGiveaways } from "./components/minor-giveaways/minor-giveaways.component";
 import { MajorGiveaways } from "./components/major-giveaways/major-giveaways.component";
 import { Pricing } from "./components/pricing/pricing.component";
+import { getProducts } from "@/actions";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts();
+
   return (
     <div>
       <Header />
@@ -17,7 +20,7 @@ export default function Home() {
       <Benefits />
       <GiveAway />
       <HowItWorks />
-      <Pricing />
+      <Pricing products={products} />
       <MajorGiveaways />
       <MinorGiveaways />
       <FollowUs />

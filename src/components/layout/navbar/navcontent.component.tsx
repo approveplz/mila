@@ -8,15 +8,17 @@ import Link from "next/link";
 import { Button } from "@/components";
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { Session } from "next-auth";
 import { HiBars3, HiOutlineGift, HiXMark } from "react-icons/hi2";
+import { useSession } from "next-auth/react";
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
 const AccordionTrigger = AccordionPrimitive.Trigger;
 const AccordionContent = AccordionPrimitive.Content;
 
-export function NavContent({ session }: { session: Session | null }) {
+export function NavContent() {
+    const { data: session } = useSession();
+
     return (
         <Accordion type="single" collapsible>
             <AccordionItem value="nav">
@@ -33,7 +35,7 @@ export function NavContent({ session }: { session: Session | null }) {
                         ) : (
                             <div className="flex gap-4">
                                 <Button asChild>
-                                    <Link href="/auth/signup">Sign Up</Link>
+                                    <Link href="/">Sign Up</Link>
                                 </Button>
                                 <Button variant="primary-outline" asChild>
                                     <Link href="/signin">Sign In</Link>

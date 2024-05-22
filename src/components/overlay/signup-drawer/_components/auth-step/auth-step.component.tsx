@@ -36,7 +36,7 @@ export function PricingStep() {
     const { nextStep } = useStepperContext();
 
     return (
-        <Container>
+        <Container className="mx-0">
             <CentralizedContent className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0">
                 <h2 className="text-[32px] font-tt-ramillas text-center mb-[32px]">You have chosen</h2>
                 <PricingList products={products} />
@@ -48,7 +48,7 @@ export function PricingStep() {
 
 export function AuthFormStep() {
     return (
-        <Container>
+        <Container className="mx-0">
             <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0">
                 <h2 className="text-[32px] font-tt-ramillas text-center mb-[27px]">Sign Up</h2>
                 <AuthForm />

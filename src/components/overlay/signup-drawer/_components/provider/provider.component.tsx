@@ -11,14 +11,16 @@ export function Provider({
 }: {
     children: React.ReactNode
 }) {
+    const options = React.useMemo(() => ({
+        fonts: [{
+            family: "Inter",
+            cssSrc: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap&subset=latin",
+            weight: "400"
+        }]
+    }), []);
+
     return (
-        <Elements stripe={stripePromise} options={{
-            fonts: [{
-                family: "Inter",
-                cssSrc: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap&subset=latin",
-                weight: "400"
-            }]
-        }}>
+        <Elements stripe={stripePromise} options={options}>
             {children}
         </Elements>
     )

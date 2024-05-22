@@ -5,7 +5,7 @@ export function EmailVerificationContent({
     action
 }: {
     onReSend: () => void,
-    action: React.ReactNode
+    action?: React.ReactNode
 }) {
     return (
         <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">

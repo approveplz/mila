@@ -1,3 +1,4 @@
+import { User } from "@/entities"
 import NextAuth from "next-auth"
 
 declare module "next-auth" {
@@ -8,6 +9,7 @@ declare module "next-auth" {
         user: {
             /** The user's postal address. */
             access: string
+            user: User
         }
     }
 }
