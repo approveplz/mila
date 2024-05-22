@@ -20,7 +20,7 @@ type Props = VariantProps<typeof cardClasses> & {
     count: number
 }
 
-const SubCard = React.forwardRef<
+const SubscriptionCard = React.forwardRef<
     HTMLElement,
     React.HTMLAttributes<HTMLElement> & Props
 >(({ className, type, count, ...props }, ref) => (
@@ -48,10 +48,39 @@ const SubCard = React.forwardRef<
             </section>
         </div>
     </article>
-))
-SubCard.displayName = "SubCard"
-SubCard.defaultProps = {
+));
+
+SubscriptionCard.displayName = "SubscriptionCard"
+SubscriptionCard.defaultProps = {
     type: "free"
 }
 
-export { SubCard }
+const BundleCard = React.forwardRef<
+    HTMLElement,
+    React.HTMLAttributes<HTMLElement> & Props
+>(({ className, type, count, ...props }, ref) => (
+    <article
+        ref={ref}
+        role="figure"
+        className={cn(cardClasses({ type: "free" }), className)}
+        style={{ overflow: "hidden" }}
+        {...props}
+    >
+        <section className="text-center">
+            <h2 className="text-3xl capitalize leading-[46.8px] font-tt-ramillas font-medium">
+                <HiOutlineGift className="inline align-middle h-6 w-6 mr-2" />
+                <span className="align-middle">
+                    {count} Entries
+                </span>
+            </h2>
+            <p>For the upcoming major draw</p>
+        </section>
+    </article>
+));
+
+BundleCard.displayName = "BundleCard"
+BundleCard.defaultProps = {
+    type: "free"
+}
+
+export { SubscriptionCard, BundleCard }

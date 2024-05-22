@@ -15,11 +15,20 @@ export const isApiError = (error: unknown): error is ApiError => {
     return axios.isAxiosError(error);
 };
 
-const noAuthUrls = ["/users/v0/sign-up", "/auth/v0/token"];
+// "/users/v0/sign-up",
+// "/auth/v0/token",
+const noAuthUrls = [
+    /^\/users\/v0\/sign-up$/,
+    /^\/users\/v0\/token$/,
+    /^\/users\/v0\/user\/[^/]+\/confirm-membership-details$/,
+    /^\/users\/v0\/user\/[^/]+\/generate-membership$/
+];
 
 axiosInstance.interceptors.request.use(
     async (config: any) => {
-        if (!noAuthUrls.includes(config.url)) {
+        const isNoAuthUrl = noAuthUrls.some((pattern) => pattern.test(config.url));
+
+        if (!isNoAuthUrl) {
             let session;
             let accessToken;
 

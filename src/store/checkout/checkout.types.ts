@@ -11,7 +11,7 @@ type CheckoutProduct = {
 
 type State = {
     checkoutFlow: "free" | "paid"
-    products: Array<CheckoutProduct>
+    products: Array<Product>
 }
 
 type Actions = {

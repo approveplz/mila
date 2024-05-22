@@ -41,3 +41,34 @@ export type VerifyEmailOrSMSPayload = {
 }
 
 export type VerifyEmailOrSMSResponse = User;
+
+type MembershipPayload = {
+    user: string
+    coupon: string | null
+    prices: Array<{
+        price: string
+        quantity: number
+    }>
+}
+
+type MembershipResponse = {
+    coupon: string
+    total: number
+    prices: Array<{
+        price: string
+        quantity: number
+        subtotal: string
+        subtotal_after_discount: string
+    }>
+}
+
+export type ConfirmMembershipPayload = MembershipPayload;
+export type ConfirmMembershipResponse = MembershipResponse;
+
+export type GenerateMembershipPayload = MembershipPayload & {
+    payment_method?: string
+};
+
+export type GenerateMembershipResponse = {
+    client_secret: string
+};

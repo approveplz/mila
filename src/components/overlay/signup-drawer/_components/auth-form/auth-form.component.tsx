@@ -21,11 +21,14 @@ import {
     signUpSchema
 } from "./auth-form.schema";
 import { useStepperContext } from "../stepper/stepper.context";
+import { prefixObjectKeys } from "@/utils";
 
 type K = keyof SignUpFormData;
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
+    const { products } = useCheckOutStore();
+
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
         resolver: zodResolver(signUpSchema),
@@ -41,22 +44,31 @@ export function AuthForm() {
     });
 
     const onSubmit = (data: SignUpFormData) => {
-        const prices = [
-            {
-                price: "ppr_bd393da27a524bd6ab68e7395b84e9",
-                quantity: 0
-            }
-        ];
+        const prices = products
+            .map(product => product.prices[0])
+            .map(price => ({
+                price: price.id,
+                quantity: 1
+            }))
 
-        // nextStep();
         signUpWithPrices({
             ...data,
             prices
         })
             .then(res => {
-                return signIn("credentials", {
-                    email: data.email,
-                    password: data.password,
+                // return signIn("credentials", {
+                //     email: data.email,
+                //     password: data.password,
+                //     redirect: false
+                // })
+                const user = prefixObjectKeys(res.user, "userpre_")
+
+                const payload = JSON.parse(JSON.stringify(res));
+                delete payload.user;
+
+                return signIn("register", {
+                    ...payload,
+                    ...user,
                     redirect: false
                 })
             })
@@ -79,7 +91,6 @@ export function AuthForm() {
     return (
         <Form {...form}>
             <form
-                // className="flex flex-col flex-1 justify-center gap-6 mt-0 sm:mt-auto"
                 className="flex flex-col flex-1 sm:flex-initial justify-center gap-6"
                 onSubmit={form.handleSubmit(onSubmit)}
             >
