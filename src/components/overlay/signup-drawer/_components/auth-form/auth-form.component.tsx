@@ -45,7 +45,7 @@ export function AuthForm() {
 
     const onSubmit = (data: SignUpFormData) => {
         const prices = products
-            .map(product => product.prices[0])
+            .map(product => product.data.prices[0])
             .map(price => ({
                 price: price.id,
                 quantity: 1

@@ -5,7 +5,7 @@ import { HiOutlineGift } from "react-icons/hi2";
 
 // box-shadow: 0px 4px 6px -2px #0000000D;
 // box-shadow: 0px 10px 15px -3px #0000001A;
-const cardClasses = cva("relative py-8 px-6 rounded-3xl border-card before:rounded-3xl before:-z-10 z-20", {
+const cardClasses = cva("relative py-8 px-6 rounded-3xl price-card before:rounded-3xl before:-z-10 z-20", {
     variants: {
         type: {
             free: "after:bg-white",
@@ -31,7 +31,7 @@ const SubscriptionCard = React.forwardRef<
         style={{ overflow: "hidden" }}
         {...props}
     >
-        <div className="bg-card">
+        <div className="price-card__bg">
             <header className="text-center">
                 <h2 className="text-3xl capitalize leading-[46.8px] font-tt-ramillas font-medium">{type}</h2>
             </header>
