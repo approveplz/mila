@@ -10,15 +10,18 @@ import { Button } from "@/components";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { HiBars3, HiOutlineGift, HiXMark } from "react-icons/hi2";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
 const AccordionTrigger = AccordionPrimitive.Trigger;
 const AccordionContent = AccordionPrimitive.Content;
 
-export function NavContent() {
-    const { data: session } = useSession();
-
+export function NavContent({
+    session
+}: {
+    session: Session | null
+}) {
     return (
         <Accordion type="single" collapsible>
             <AccordionItem value="nav">

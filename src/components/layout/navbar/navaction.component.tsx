@@ -8,6 +8,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components";
+import { signOut } from "next-auth/react";
 import {
     HiOutlineGift,
     HiUserCircle,
@@ -29,7 +30,7 @@ export function NavAction() {
                     </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-20 z-[9999]">
-                    <DropdownMenuItem onClick={() => authSignOut()}>
+                    <DropdownMenuItem onClick={() => signOut()}>
                         <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
                         <span>Log out</span>
                     </DropdownMenuItem>
