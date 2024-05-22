@@ -25,8 +25,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     password: credentials.password as string
                 }));
 
-                // console.log("response: ", response);
-                // console.log("error: ", error);
                 if (error) {
                     if (isApiError(error)) {
                         return null;
