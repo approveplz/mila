@@ -72,7 +72,7 @@ export function Pricing({
           <Subscription subscriptions={subscriptions} />
         </TabsContent>
         <TabsContent value="bundle">
-          <Bundle />
+          <Bundle bundles={bundles} />
         </TabsContent>
       </Tabs>
 

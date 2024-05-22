@@ -11,8 +11,14 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
+import { Product } from "@/entities";
+import { useCheckOutStore } from "@/store";
 
-export function Bundle() {
+export function Bundle({
+  bundles
+}: {
+  bundles: Array<Product>
+}) {
   const { pricing: {
     bundleData: {
       bundleA,
@@ -25,7 +31,7 @@ export function Bundle() {
     },
     continueWithSelected
   } } = messages;
-
+  const { products, addProduct, increaseProductQuantity, decreaseProductQuantity } = useCheckOutStore();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -46,7 +52,7 @@ export function Bundle() {
           {clear}
         </button>
 
-        {isMobile ?
+        {isMobile ? (
           <Swiper
             style={{
               paddingBottom: "48px"
@@ -57,11 +63,25 @@ export function Bundle() {
             modules={[Pagination]}
             className="mySwiper"
           >
-
-            <SwiperSlide className="rounded-[24px]">
-              <BundleCard cardData={bundleA} />
-            </SwiperSlide>
-            <SwiperSlide className="rounded-[24px] w-[334px]">
+            {bundles.map(bundle => (
+              <SwiperSlide key={bundle.id} className="rounded-[24px]">
+                <BundleCard
+                  cardData={{
+                    benefits: bundleA.benefits,
+                    cost: bundle.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0,
+                    entry: bundle.number_of_entries,
+                    selected: products.some(prod => prod.id === bundle.id),
+                    quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
+                    onSelect: () => {
+                      addProduct(bundle)
+                    },
+                    onIncrease: () => increaseProductQuantity(bundle.id),
+                    onDecrease: () => decreaseProductQuantity(bundle.id)
+                  }}
+                />
+              </SwiperSlide>
+            ))}
+            {/* <SwiperSlide className="rounded-[24px] w-[334px]">
               <BundleCard cardData={bundleB} />
             </SwiperSlide>
             <SwiperSlide className="rounded-[24px] w-[334px]">
@@ -75,22 +95,37 @@ export function Bundle() {
             </SwiperSlide>
             <SwiperSlide className="rounded-[24px] w-[334px]">
               <BundleCard cardData={bundleF} />
-            </SwiperSlide>
+            </SwiperSlide> */}
 
           </Swiper>
-          : <div className="grid grid-cols-3 gap-8">
-            <BundleCard cardData={bundleA} />
+        ) : (
+          <div className="grid grid-cols-3 gap-8">
+            {bundles.map(bundle => (
+              <BundleCard
+                key={bundle.id}
+                cardData={{
+                  benefits: bundleA.benefits,
+                  cost: bundle.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0,
+                  entry: bundle.number_of_entries,
+                  selected: products.some(prod => prod.id === bundle.id),
+                  quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
+                  onSelect: () => {
+                    addProduct(bundle)
+                  },
+                  onIncrease: () => increaseProductQuantity(bundle.id),
+                  onDecrease: () => decreaseProductQuantity(bundle.id)
+                }}
+              />
+            ))}
+            {/* <BundleCard cardData={bundleA} />
             <BundleCard cardData={bundleB} />
             <BundleCard cardData={bundleC} />
             <BundleCard cardData={bundleD} />
             <BundleCard cardData={bundleE} />
-            <BundleCard cardData={bundleF} />
-          </div>}
+            <BundleCard cardData={bundleF} /> */}
+          </div>
+        )}
       </div>
-
-      {/* <div className="bg-[#171614] py-3 px-6 items-center rounded-[30px] cursor-pointer flex flex-row gap-2">
-        <span className="font-medium text-white text-base leading-6">{continueWithSelected} </span> <HiArrowUpRight size={24} color="white" />
-      </div> */}
     </section>
   )
 }

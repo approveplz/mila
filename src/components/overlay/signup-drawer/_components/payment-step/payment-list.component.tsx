@@ -22,7 +22,7 @@ type K = keyof {};
 
 export function PaymentList() {
     const { nextStep } = useStepperContext();
-    const { products } = useCheckOutStore();
+    const { products, increaseProductQuantity, decreaseProductQuantity, removeProduct } = useCheckOutStore();
     const form = useFormContext<{
         coupon: string
         hasCompletedMemberShip: boolean
@@ -84,11 +84,13 @@ export function PaymentList() {
                                 <tr key={subscription.id}>
                                     <td className="font-semibold py-2 w-full">{subscription.data.name}</td>
                                     <td className="align-middle" valign="middle" align="right">
-                                        <Button className="w-6 h-5 p-1 mt-1" variant="fatal">
-                                            <HiMinus />
-                                        </Button>
+                                        {bundles.length > 0 && (
+                                            <Button className="w-6 h-5 p-1 mt-1" variant="fatal" onClick={() => removeProduct(subscription.id)}>
+                                                <HiMinus />
+                                            </Button>
+                                        )}
                                     </td>
-                                    <td className="font-normal py-2" align="right">$9.99</td>
+                                    <td className="font-normal py-2" align="right">${subscription.data.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0}</td>
                                 </tr>
                             ))}
 
@@ -143,6 +145,19 @@ export function PaymentList() {
                         </td>
                         <td className="font-normal py-2" align="right">$9.99</td>
                     </tr> */}
+                    {bundles.map(bundle => (
+                        <tr key={bundle.id}>
+                            <td className="font-semibold py-2">{bundle.data.number_of_entries} Entires</td>
+                            <td className="align-middle py-2" valign="middle" align="right">
+                                <Button className="mt-1 p-1 gap-1 cursor-default" variant="fatal">
+                                    <HiMinus className="cursor-pointer" onClick={() => decreaseProductQuantity(bundle.id)} />
+                                    <span className="font-medium text-sm">{bundle.quantity}</span>
+                                    <HiPlus className="cursor-pointer" onClick={() => increaseProductQuantity(bundle.id)} />
+                                </Button>
+                            </td>
+                            <td className="font-normal py-2" align="right">${(bundle.data.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0) * bundle.quantity}</td>
+                        </tr>
+                    ))}
 
                     {/* Total */}
                     <tr>

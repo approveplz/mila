@@ -39,7 +39,7 @@ export function PaymentForm() {
 
     const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
 
-    const handlePayment = () => {
+    const handlePayment = async () => {
         if (!stripe || !elements) {
             return;
         }
@@ -49,15 +49,29 @@ export function PaymentForm() {
                 coupon: couponForm.getValues("coupon") || null,
                 user: session.data?.user.user.id,
                 prices: products
-                    .map(product => product.data.prices[0])
-                    .map(price => ({
-                        price: price.id,
-                        quantity: 1
+                    // .map(product => product.data.prices[0])
+                    // .map(price => ({
+                    //     price: price.id,
+                    //     quantity: 1
+                    // }))
+                    .map(product => ({
+                        price: product.data.prices[0].id,
+                        quantity: product.quantity
                     }))
             }
 
+            // create a payment method
+            const { paymentMethod } = await stripe.createPaymentMethod({
+                type: "card",
+                card: elements.getElement(CardNumberElement)!,
+                // billing_details: {
+                //     name,
+                //     email,
+                // },
+            })
+
             if (couponForm.getValues("hasCompletedMemberShip")) {
-                generateMembership(payload)
+                generateMembership({ ...payload, payment_method: paymentMethod?.id })
                     .then(async (res) => {
                         const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
                             payment_method: {
@@ -76,7 +90,7 @@ export function PaymentForm() {
                     })
             } else {
                 confirmMembership(payload)
-                    .then(async (res) => generateMembership(payload))
+                    .then(async (res) => generateMembership({ ...payload, payment_method: paymentMethod?.id }))
                     .then(async (res) => {
                         const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
                             payment_method: {

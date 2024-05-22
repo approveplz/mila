@@ -20,7 +20,7 @@ export function ProductPriceSelector({
     product: CheckoutProduct,
     view: (props: { defaultPrice: number }) => React.ReactNode
 }) {
-    const defaultPrice = product.data.prices.sort((a, b) => a.sort_order - a.sort_order)[0]?.unit_amount || 0
+    const defaultPrice = product.data.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0
 
     return (
         <>
