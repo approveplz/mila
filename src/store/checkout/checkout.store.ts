@@ -24,7 +24,20 @@ export const useCheckOutStore = create<CheckOutStore>()(
                                 data: payload
                             });
                         })
+                    } else {
+                        set(state => {
+                            state.products.push({
+                                quantity: 1,
+                                id: payload.id,
+                                data: payload
+                            });
+                        })
                     }
+                },
+                removeProduct(id) {
+                    set(state => {
+                        state.products = state.products.filter(prod => prod.id !== id)
+                    })
                 },
                 increaseProductQuantity(id) {
                     set(state => {
@@ -63,6 +76,14 @@ useCheckOutStore.subscribe(
         } else {
             useCheckOutStore.setState({
                 checkoutFlow: "paid"
+            })
+        }
+
+        const zeroQuantityProduct = products.find(prod => prod.quantity === 0);
+
+        if (zeroQuantityProduct) {
+            useCheckOutStore.setState({
+                products: products.filter(prod => prod.id !== zeroQuantityProduct.id)
             })
         }
     }

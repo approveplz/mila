@@ -387,7 +387,7 @@ export function Subscription({
                   title={subscription.name}
                   duration={subscription.access_duration}
                   type={subscription.tier as any}
-                  amount={subscription.prices.sort((a, b) => a.sort_order - a.sort_order)[0]?.unit_amount || 0}
+                  amount={subscription.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0}
                   entries={subscription.number_of_entries}
                   selected={products.some(prod => prod.id === subscription.id)}
                   onSelect={() => {

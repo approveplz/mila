@@ -13,6 +13,7 @@ type State = {
 
 type Actions = {
     addProduct: (payload: Product) => void
+    removeProduct: (id: string) => void
     increaseProductQuantity: (id: string) => void
     decreaseProductQuantity: (id: string) => void
 }
