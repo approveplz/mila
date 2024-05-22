@@ -8,6 +8,9 @@ function isRedirectError(error: Error & { digest?: string }) {
 }
 
 export async function authSignOut() {
+    // await signOut({
+    //     redirect: false
+    // });
     await signOut();
 }
 
