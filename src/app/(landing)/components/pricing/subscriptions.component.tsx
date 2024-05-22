@@ -41,6 +41,7 @@ export function Subscription({
 
   const [isMobile, setIsMobile] = useState(false);
 
+  console.log("subscriptions: ", subscriptions);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1000);
@@ -378,19 +379,22 @@ export function Subscription({
           </Swiper>
         ) : (
           <div className="flex flex-row gap-8">
-            {subscriptions.sort((a, b) => a.sort_order - b.sort_order).map(subscription => (
-              <SubscriptionInfoCard
-                key={subscription.id}
-                title={subscription.name}
-                duration={subscription.access_duration}
-                amount={12}
-                entries={subscription.number_of_entries}
-                selected={products.some(prod => prod.id === subscription.id)}
-                onSelect={() => {
-                  addProduct(subscription)
-                }}
-              />
-            ))}
+            {subscriptions
+              .sort((a, b) => a.sort_order - b.sort_order)
+              .map(subscription => (
+                <SubscriptionInfoCard
+                  key={subscription.id}
+                  title={subscription.name}
+                  duration={subscription.access_duration}
+                  type={subscription.tier as any}
+                  amount={subscription.prices.sort((a, b) => a.sort_order - a.sort_order)[0]?.unit_amount || 0}
+                  entries={subscription.number_of_entries}
+                  selected={products.some(prod => prod.id === subscription.id)}
+                  onSelect={() => {
+                    addProduct(subscription)
+                  }}
+                />
+              ))}
 
             {/* <div className="relative overflow-hidden bg-white rounded-[24px] h-[579px] border-[#CDCDCD]">
               <div className="z-0 cardA opacity-[0.02] absolute bg-[url('/images/subscription.png')] !w-[304px] !h-[579px]" />

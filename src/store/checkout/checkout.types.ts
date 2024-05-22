@@ -1,21 +1,20 @@
 import { Product, ProductType } from "@/entities"
 
-type CheckoutProduct = {
+export type CheckoutProduct = {
     id: string
-    name: string
     quantity: number
-    productType: ProductType
-    units: number
-    price: number
+    data: Product
 }
 
 type State = {
     checkoutFlow: "free" | "paid"
-    products: Array<Product>
+    products: Array<CheckoutProduct>
 }
 
 type Actions = {
     addProduct: (payload: Product) => void
+    increaseProductQuantity: (id: string) => void
+    decreaseProductQuantity: (id: string) => void
 }
 
 export type CheckOutStore = State & Actions

@@ -29,8 +29,8 @@ export function PaymentList() {
     }>();
     const session = useSession();
 
-    const subscriptions = products.filter(product => product.type === "subscription");
-    const bundles = products.filter(product => product.type === "bundle");
+    const subscriptions = products.filter(product => product.data.type === "subscription");
+    const bundles = products.filter(product => product.data.type === "bundle");
 
     const handleNext = () => {
         if (session.data?.user.user) {
@@ -38,7 +38,7 @@ export function PaymentList() {
                 coupon: form.getValues("coupon") || null,
                 user: session.data?.user.user.id,
                 prices: products
-                    .map(product => product.prices[0])
+                    .map(product => product.data.prices[0])
                     .map(price => ({
                         price: price.id,
                         quantity: 1
@@ -82,7 +82,7 @@ export function PaymentList() {
                         <>
                             {subscriptions.map(subscription => (
                                 <tr key={subscription.id}>
-                                    <td className="font-semibold py-2 w-full">{subscription.name}</td>
+                                    <td className="font-semibold py-2 w-full">{subscription.data.name}</td>
                                     <td className="align-middle" valign="middle" align="right">
                                         <Button className="w-6 h-5 p-1 mt-1" variant="fatal">
                                             <HiMinus />

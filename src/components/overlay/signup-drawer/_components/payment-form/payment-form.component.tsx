@@ -49,7 +49,7 @@ export function PaymentForm() {
                 coupon: couponForm.getValues("coupon") || null,
                 user: session.data?.user.user.id,
                 prices: products
-                    .map(product => product.prices[0])
+                    .map(product => product.data.prices[0])
                     .map(price => ({
                         price: price.id,
                         quantity: 1
