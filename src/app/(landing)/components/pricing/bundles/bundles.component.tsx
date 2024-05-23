@@ -1,6 +1,5 @@
 'use client'
 
-import { HiArrowUpRight } from "react-icons/hi2";
 import { messages } from "@/shared/constants/messages";
 import { useEffect, useState } from "react";
 import { BundleCard } from "./card.component";
@@ -9,6 +8,7 @@ import { Pagination } from 'swiper/modules';
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { getDefaultPrice } from "@/utils";
+import { SubscriptionCard } from "@/components/overlay/signup-drawer/_components/sub-card/sub-card.component";
 
 export function Bundle({
   bundles
@@ -82,25 +82,10 @@ export function Bundle({
                     onIncrease: () => increaseProductQuantity(bundle.id),
                     onDecrease: () => decreaseProductQuantity(bundle.id)
                   }}
+                  selected={products.some(prod => prod.id === bundle.id)}
                 />
               </SwiperSlide>
             ))}
-            {/* <SwiperSlide className="rounded-[24px] w-[334px]">
-              <BundleCard cardData={bundleB} />
-            </SwiperSlide>
-            <SwiperSlide className="rounded-[24px] w-[334px]">
-              <BundleCard cardData={bundleC} />
-            </SwiperSlide>
-            <SwiperSlide className="rounded-[24px] w-[334px]">
-              <BundleCard cardData={bundleD} />
-            </SwiperSlide>
-            <SwiperSlide className="rounded-[24px] w-[334px]">
-              <BundleCard cardData={bundleE} />
-            </SwiperSlide>
-            <SwiperSlide className="rounded-[24px] w-[334px]">
-              <BundleCard cardData={bundleF} />
-            </SwiperSlide> */}
-
           </Swiper>
         ) : (
           <div className="grid grid-cols-3 gap-8">
@@ -117,14 +102,9 @@ export function Bundle({
                   onIncrease: () => increaseProductQuantity(bundle.id),
                   onDecrease: () => decreaseProductQuantity(bundle.id)
                 }}
+                selected={products.some(prod => prod.id === bundle.id)}
               />
             ))}
-            {/* <BundleCard cardData={bundleA} />
-            <BundleCard cardData={bundleB} />
-            <BundleCard cardData={bundleC} />
-            <BundleCard cardData={bundleD} />
-            <BundleCard cardData={bundleE} />
-            <BundleCard cardData={bundleF} /> */}
           </div>
         )}
       </div>
