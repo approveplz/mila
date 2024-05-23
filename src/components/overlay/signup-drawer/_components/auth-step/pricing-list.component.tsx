@@ -8,7 +8,7 @@ function calculateTotal(products: Array<CheckoutProduct>) {
     const getPrice = (product: Product) => {
         let price = 0;
 
-        if(product.prices.length > 0) {
+        if (product.prices.length > 0) {
             price = getDiscountedPrice(product.prices);
         } else {
             price = getDefaultPrice(product.prices)
@@ -51,23 +51,30 @@ export function PricingList({
                     key={product.id}
                     className="flex justify-end [&>*]:flex-1"
                 >
-                    <ProductPriceSelector
+                    {/* <ProductPriceSelector
                         product={product}
                         view={({ defaultPrice }) => (
                             <SubscriptionCard type={product.data.tier as any} count={defaultPrice} />
                         )}
-                    />
+                    /> */}
+
+                    <SubscriptionCard type={product.data.tier as any} count={product.data.number_of_entries} />
                 </div>
             ))}
 
             {bundles.length > 0 && (
                 <>
-                    <div className="flex justify-center">
-                        <HiPlus className="h-6 w-6" />
-                    </div>
+                    {subscriptions.length > 0 && (
+                        <div className="flex justify-center">
+                            <HiPlus className="h-6 w-6" />
+                        </div>
+                    )}
 
                     <div className="flex justify-end [&>*]:flex-1">
-                        <BundleCard type="bronze" count={40} />
+                        <BundleCard
+                            type="bronze"
+                            count={bundles.reduce((total, bundle) => total + bundle.data.number_of_entries, 0)}
+                        />
                     </div>
                 </>
             )}

@@ -8,10 +8,10 @@ import { HiOutlineGift } from "react-icons/hi2";
 const cardClasses = cva("relative py-8 px-6 rounded-3xl price-card before:rounded-3xl before:-z-10 z-20", {
     variants: {
         type: {
-            free: "after:bg-white",
-            bronze: "after:bg-[#EFECE5]",
-            silver: "after:bg-[#DFD7C9]",
-            gold: "after:bg-[#C7B8A3]"
+            free: "after:bg-white [&>.hr]:border-red-500",
+            bronze: "after:bg-[#EFECE5] [&>.hr]:border-red-500",
+            silver: "after:bg-[#DFD7C9] [&>.hr]:border-red-500",
+            gold: "after:bg-[#C7B8A3] [&>.hr]:border-red-500"
         }
     }
 });
@@ -35,7 +35,18 @@ const SubscriptionCard = React.forwardRef<
             <header className="text-center">
                 <h2 className="text-3xl capitalize leading-[46.8px] font-tt-ramillas font-medium">{type}</h2>
             </header>
-            <hr className="my-4" />
+            <hr
+                className={cn(cva(" my-4 w-full border-t", {
+                    variants: {
+                        type: {
+                            free: "border-[#D1D5DB]",
+                            bronze: "border-[#9CA3AF]",
+                            silver: "border-[#9CA3AF]",
+                            gold: "border-[#D1D5DB]"
+                        }
+                    }
+                })({ type }))}
+            />
             <section className="text-center">
                 <p>What you’ll get:</p>
                 <h2 className="text-3xl capitalize leading-[46.8px] font-tt-ramillas font-medium">

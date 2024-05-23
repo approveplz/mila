@@ -29,10 +29,11 @@ const cardClasses = cva("relative overflow-hidden py-8 px-6 rounded-3xl z-20", {
 
 type Props = VariantProps<typeof cardClasses> & {
     title: string
-    amount: number
-    discounted: number
     duration: number
     entries: number
+    defaultPrice: number
+    discountedPrice: number
+    isDiscounted: boolean
     onSelect: () => void
 }
 
@@ -60,11 +61,12 @@ type K = keyof typeof tiersBenefits
 
 export function SubscriptionInfoCard({
     title,
-    amount,
-    discounted,
     duration,
     entries,
     type = "free",
+    defaultPrice,
+    discountedPrice,
+    isDiscounted,
     selected = false,
     onSelect,
 }: Props) {
@@ -90,18 +92,18 @@ export function SubscriptionInfoCard({
 
                         <div className="relative flex flex-col gap-8 items-center pt-[72px] w-full">
                             <div className="flex flex-col items-center gap-1">
-                                {(discounted !== 0) && (
+                                {isDiscounted && (
                                     <h6
                                         className={cn("absolute top-8 left-1/2 -translate-x-1/2 font-semibold text-3xl line-through", {
                                             "text-[#C7B8A3]": type !== "gold",
                                             "text-[#DFD7C9]": type === "gold"
                                         })}
                                     >
-                                        ${discounted}
+                                        ${defaultPrice}
                                     </h6>
                                 )}
                                 <h6 className="font-semibold text-4xl">
-                                    ${amount}
+                                    ${isDiscounted ? discountedPrice : defaultPrice}
                                 </h6>
                                 <p className="font-normal text-base leading-6">
                                     per {duration} days
