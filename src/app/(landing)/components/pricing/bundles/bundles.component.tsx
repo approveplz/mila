@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
+import { getDefaultPrice } from "@/utils";
 
 export function Bundle({
   bundles
@@ -35,6 +36,7 @@ export function Bundle({
   } = useCheckOutStore();
   const [isMobile, setIsMobile] = useState(false);
 
+  console.log("bundles: ", bundles);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1000);
@@ -72,7 +74,7 @@ export function Bundle({
                 <BundleCard
                   cardData={{
                     benefits: bundleA.benefits,
-                    cost: bundle.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0,
+                    cost: getDefaultPrice(bundle.prices),
                     entry: bundle.number_of_entries,
                     selected: products.some(prod => prod.id === bundle.id),
                     quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
@@ -107,7 +109,7 @@ export function Bundle({
                 key={bundle.id}
                 cardData={{
                   benefits: bundleA.benefits,
-                  cost: bundle.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0,
+                  cost: getDefaultPrice(bundle.prices),
                   entry: bundle.number_of_entries,
                   selected: products.some(prod => prod.id === bundle.id),
                   quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
