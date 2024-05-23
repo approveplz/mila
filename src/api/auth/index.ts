@@ -2,8 +2,13 @@ import api from "@/api";
 import {
     ConfirmMembershipPayload,
     ConfirmMembershipResponse,
+    CouponResponse,
     GenerateMembershipPayload,
     GenerateMembershipResponse,
+    GetCouponCategoriesResponse,
+    GetCouponDetailParams,
+    GetCouponsParams,
+    GetCouponsResponse,
     SendVerificationSmsResponse,
     SignInWithCredentialsPayload,
     SignInWithCredentialsResponse,
@@ -48,4 +53,23 @@ export const generateMembership = (payload: GenerateMembershipPayload) => {
     return api
         .put<GenerateMembershipResponse>(`/users/v0/user/${payload.user}/generate-membership`, payload)
         .then(res => res.data)
+}
+
+export const getCouponCategories = () => {
+    return api
+        .get<GetCouponCategoriesResponse>(`/coupons/v0/coupon-categories`)
+        .then(res => res.data);
+}
+
+
+export const getCoupons = (params: GetCouponsParams) => {
+    return api
+        .get<GetCouponsResponse>(`/coupons/v0/coupons`, { params })
+        .then(res => res.data);
+}
+
+export const getCouponDetail = (payload: GetCouponDetailParams) => {
+    return api
+        .get<CouponResponse>(`/coupons/v0/coupons/${payload.couponId}`)
+        .then(res => res.data);
 }

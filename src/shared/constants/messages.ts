@@ -399,16 +399,5 @@ export const messages = {
         }
       }
     },
-    couponsList: {
-      headings: {
-        fashionAndRetail: 'FASHION & RETAIL',
-        beautyAndWellness: 'BEAUTY & WELLNESS',
-        foodAndBeverage: 'FOOD & BEVERAGE',
-        services: 'SERVICES',
-        pets: 'PETS',
-        recreation: 'RECREATION',
-        other: 'OTHER'
-      }
-    }
   }
 }

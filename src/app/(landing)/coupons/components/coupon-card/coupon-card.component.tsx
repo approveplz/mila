@@ -8,13 +8,15 @@ import {
   DialogTrigger,
 } from "@/components"
 import SelectCoupons from '../select-coupon/select-coupon.component';
+import { CouponResponse } from '@/api/auth/auth.types';
 
 type CoupenCardData = {
   isLoggedIn: boolean,
-  upgrade: boolean
+  upgrade?: boolean,
+  coupon?: CouponResponse
 }
 
-export function CouponCard({ isLoggedIn, upgrade }: CoupenCardData) {
+export function CouponCard({ isLoggedIn, upgrade = false, coupon }: CoupenCardData) {
 
   return (
     <div className="relative flex flex-col bg-white rounded-[24px] w-40 h-[345px] sm:w-[205px] sm:h-[329px] shadow-lg">
@@ -40,34 +42,29 @@ export function CouponCard({ isLoggedIn, upgrade }: CoupenCardData) {
       <div className={`relative h-full flex flex-col ${(upgrade || !isLoggedIn) ? 'blur-[9px]' : 'blur-[0px]'}`}>
         <div className="absolute right-4 top-4 rounded-[24px] bg-[#171614]">
           <div className="px-2 py-1 font-semibold text-base leading-6 text-[#FFFFFF]">
-            BOGO
+            {coupon?.off_label ? coupon?.off_label : 'BOGO'}
           </div>
         </div>
 
         <div className="h-1/2 flex flex-col justify-center items-center">
           <Image
-            src="/images/peloton.png"
-            alt="peloton"
+            src={coupon?.business?.logo ? coupon?.business?.logo?.file_url : "/images/peloton.png"}
+            alt="logo"
             width={114}
             height={15}
-            className="w-[114px] h-[15px] mt-10"
+            className={`w-[114px] ${!coupon?.business?.logo ? 'h-[15px]' : ''} mt-10`}
           />
         </div>
         <hr />
         <div className="h-1/2 p-4 flex flex-col gap-2">
 
           <div className="font-bold text-[14px] leading-[20px]">
-            Brand Name
+            {coupon?.business?.name ? coupon?.business?.name : 'Brand Name'}
           </div>
 
-          <div className="flex flex-col gap-1">
-
-            <div className="font-semibold leading-4 text-xs">
-              Product Name
-            </div>
-
-            <div className="font-normal leading-4 text-xs">
-              Sed ut perspiciatis unde omnis iste natus error sit.
+          <div className="flex flex-col gap-1 h-[55px]">
+            <div className="font-normal leading-4 text-xs text-ellipsis line-clamp-3">
+              {coupon?.business?.description ? coupon?.business?.description : 'Sed ut perspiciatis unde omnis iste natus error sit.'}
             </div>
 
           </div>
@@ -76,7 +73,7 @@ export function CouponCard({ isLoggedIn, upgrade }: CoupenCardData) {
             <Dialog>
               <DialogTrigger className="w-[88px] py-2 px-5 rounded-[50px] bg-[#B06E6A] border-[#B06E6A] text-white inline-flex items-center justify-center whitespace-nowrap text-base font-normal ring-offset-background border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Select</DialogTrigger>
               <DialogContent className='w-[365px] sm:!w-[543px] !py-0 pb-4' withClose={true} >
-                <SelectCoupons />
+                <SelectCoupons coupon={coupon} />
               </DialogContent>
             </Dialog>
           </div>

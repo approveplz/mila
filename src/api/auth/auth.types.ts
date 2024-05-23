@@ -72,3 +72,92 @@ export type GenerateMembershipPayload = MembershipPayload & {
 export type GenerateMembershipResponse = {
     client_secret: string
 };
+
+export type GetCouponCategoriesResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: CouponCategory[]
+};
+
+export type CouponCategory = {
+    id: string;
+    name: string;
+    created: string;
+    modified: string;
+}
+
+export type GetCouponsParams = {
+    category: string,
+    page?: number
+};
+
+export type GetCouponDetailParams = {
+    couponId: string
+};
+
+
+
+export type BusinessLogo = {
+    id: string;
+    title: string;
+    description: string | null;
+    filename: string;
+    type: string;
+    size: number;
+    mime_type: string;
+    file_url: string;
+    linked: boolean;
+    is_internal: boolean;
+    created: string;
+    modified: string;
+    created_by: any;
+}
+
+export type Business = {
+    id: string;
+    logo: BusinessLogo;
+    name: string;
+    description?: string;
+    address?: string | null;
+    phone?: string;
+    email?: string;
+    category: string;
+    categorical_hierarchy?: string;
+    socials?: Social[];
+    created?: string;
+    modified?: string;
+}
+
+
+export type CouponResponse = {
+    id: string | null;
+    minimum_plan?: string
+    business: Business;
+    off_label?: string;
+    description: string;
+    clip?: string | null;
+    link?: string | null;
+    instructions?: string;
+    is_active?: boolean;
+    created?: string;
+    modified?: string;
+}
+
+
+export type GetCouponsResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: CouponResponse[];
+}
+
+export type Social = {
+    id: string;
+    business: string;
+    url: string;
+    platform: string;
+    created: string;
+    modified: string;
+}
+
