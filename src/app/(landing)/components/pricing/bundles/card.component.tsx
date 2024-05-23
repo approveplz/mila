@@ -1,7 +1,7 @@
-'use client'
 import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
-import { useState } from "react";
+import { cn } from "@/utils";
+import { VariantProps, cva } from "class-variance-authority";
 
 import { HiCheck } from "react-icons/hi2";
 import { HiXMark } from "react-icons/hi2";
@@ -27,9 +27,16 @@ type bundleCard = {
   },
 }
 
-export function BundleCard({ cardData }: bundleCard) {
-  const [counter, setCounter] = useState<number>(0);
+const bundleCardClasses = cva("relative py-8 px-6 rounded-3xl shadow-lg z-20 sm:min-w-[416px]", {
+  variants: {
+    selected: {
+      true: "border-4 border-primary bg-white",
+      false: "price-card before:rounded-3xl before:-z-10"
+    }
+  }
+})
 
+export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typeof bundleCardClasses>) {
   const { pricing: {
     bundleData: {
       oneOff,
@@ -39,8 +46,8 @@ export function BundleCard({ cardData }: bundleCard) {
   } } = messages;
 
   return (
-    <div className="relative overflow-hidden bg-white rounded-[24px] border-[#CDCDCD]">
-      <div className="flex flex-col items-left gap-8  px-6 py-8 border-2 rounded-[24px]  sm:w-[416px] ">
+    <figure className={cn(bundleCardClasses({ selected }))}>
+      <div className="flex flex-col items-left gap-8">
         <div className="flex flex-col items-left">
           <div className="flex flex-row gap-2 items-center">
             <HiOutlineGift size={24} color="#BE7B62" />
@@ -73,8 +80,14 @@ export function BundleCard({ cardData }: bundleCard) {
           </div>
         </div>
 
-        <div className="w-full flex justify-between ">
-          <Button className="w-[88px] h-[40px]" variant={cardData.selected ? "primary" : "tertiary"} onClick={cardData.onSelect}>{select}</Button>
+        <div className="w-full flex justify-between">
+          <Button
+            className="px-5 py-2"
+            variant={cardData.selected ? "primary" : "tertiary"}
+            onClick={cardData.onSelect}
+          >
+            {cardData.selected ? "Selected" : "Select"}
+          </Button>
 
           {cardData.selected && (
             <div className="flex flex-row gap-2 items-center">
@@ -99,6 +112,6 @@ export function BundleCard({ cardData }: bundleCard) {
           )}
         </div>
       </div>
-    </div>
+    </figure>
   )
 }
