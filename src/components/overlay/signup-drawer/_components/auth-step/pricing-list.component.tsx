@@ -2,22 +2,27 @@ import { Product, ProductType } from "@/entities"
 import { SubscriptionCard, BundleCard } from "../sub-card/sub-card.component"
 import { HiPlus } from "react-icons/hi2";
 import { CheckoutProduct } from "@/store/checkout/checkout.types";
-import { getDefaultPrice, getDiscountedPrice } from "@/utils";
+import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
 
 function calculateTotal(products: Array<CheckoutProduct>) {
-    const getPrice = (product: Product) => {
+    const getPrice = (prices: Product["prices"]) => {
         let price = 0;
 
-        if (product.prices.length > 0) {
-            price = getDiscountedPrice(product.prices);
-        } else {
-            price = getDefaultPrice(product.prices)
-        }
+        const actualPrice = getProductPrice(prices);
+        // if (product.prices.length > 0) {
+        //     price = getDiscountedPrice(product.prices);
+        // } else {
+        //     price = getDefaultPrice(product.prices)
+        // }
 
-        return price;
+        if (actualPrice.isDiscounted) {
+            return actualPrice.discountedPrice
+        } else {
+            return actualPrice.defaultPrice
+        }
     }
 
-    return products.reduce((accumulator, currentValue) => getPrice(currentValue.data) + accumulator, 0);
+    return products.reduce((accumulator, currentValue) => getPrice(currentValue.data.prices) + accumulator, 0);
 }
 
 export function ProductPriceSelector({
@@ -44,6 +49,7 @@ export function PricingList({
     const subscriptions = products.filter(product => product.data.type === "subscription");
     const bundles = products.filter(product => product.data.type === "bundle");
 
+    console.log("calculateTotal(products): ", calculateTotal(products));
     return (
         <div className="flex flex-col items-center gap-8 [&>*]:self-stretch w-full">
             {subscriptions.map(product => (
