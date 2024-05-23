@@ -2,12 +2,19 @@ import { Product, ProductType } from "@/entities"
 import { SubscriptionCard, BundleCard } from "../sub-card/sub-card.component"
 import { HiPlus } from "react-icons/hi2";
 import { CheckoutProduct } from "@/store/checkout/checkout.types";
+import { getDefaultPrice, getDiscountedPrice } from "@/utils";
 
 function calculateTotal(products: Array<CheckoutProduct>) {
     const getPrice = (product: Product) => {
-        const defaultPrice = product.prices[0].unit_amount;
+        let price = 0;
 
-        return defaultPrice;
+        if(product.prices.length > 0) {
+            price = getDiscountedPrice(product.prices);
+        } else {
+            price = getDefaultPrice(product.prices)
+        }
+
+        return price;
     }
 
     return products.reduce((accumulator, currentValue) => getPrice(currentValue.data) + accumulator, 0);
@@ -20,7 +27,7 @@ export function ProductPriceSelector({
     product: CheckoutProduct,
     view: (props: { defaultPrice: number }) => React.ReactNode
 }) {
-    const defaultPrice = product.data.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0
+    const defaultPrice = getDefaultPrice(product.data.prices)
 
     return (
         <>
