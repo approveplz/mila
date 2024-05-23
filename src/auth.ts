@@ -20,7 +20,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
             },
             async authorize(credentials) {
-                console.log("credentials: ", credentials);
                 const { response, error } = await withAsync(() => signInWithCredentials({
                     email: credentials.email as string,
                     password: credentials.password as string
@@ -43,7 +42,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             id: "register",
             name: "register",
             async authorize(credentials) {
-                console.log("credentials: ", credentials);
                 const response = JSON.parse(JSON.stringify(credentials));
                 const user = removePrefixFromObjectKeys(response, "userpre_")
 

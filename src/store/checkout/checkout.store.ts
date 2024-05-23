@@ -39,6 +39,27 @@ export const useCheckOutStore = create<CheckOutStore>()(
                         state.products = state.products.filter(prod => prod.id !== id)
                     })
                 },
+                clearProducts(type) {
+                    if (type === "subscription") {
+                        set(state => {
+                            state.products = state.products
+                                .filter(product => product.data.type !== "subscription")
+                        })
+                    }
+
+                    if (type === "bundle") {
+                        set(state => {
+                            state.products = state.products
+                                .filter(product => product.data.type !== "bundle")
+                        })
+                    }
+
+                    if (type === "all") {
+                        set(state => {
+                            state.products = []
+                        })
+                    }
+                },
                 increaseProductQuantity(id) {
                     set(state => {
                         state.products = state.products.map(prod => {

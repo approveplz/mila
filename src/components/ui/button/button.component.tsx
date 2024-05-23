@@ -19,7 +19,7 @@ const buttonVariants = cva(
                 secondary: "bg-white border-white text-[#171614]",
                 "secondary-outline": "border-white text-white hover:bg-white hover:border-white hover:text-[#171614]",
                 fatal: "bg-fatal text-white",
-                "fatal-outline": "bg-white text-fatal border-fatal hover:bg-fatal hover:text-white",
+                "fatal-outline": "bg-transparent text-fatal border-fatal hover:bg-fatal hover:text-white",
                 tertiary:"bg-transparent border-[#171614] text-[#171614]"
 
             },

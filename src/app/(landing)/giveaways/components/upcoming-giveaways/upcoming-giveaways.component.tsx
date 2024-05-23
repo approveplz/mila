@@ -22,7 +22,6 @@ export function UpcomingGiveAways() {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log(isMobile);
       setIsMobile(window.innerWidth <= 1000);
     };
 

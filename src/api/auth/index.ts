@@ -20,7 +20,6 @@ export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => 
 }
 
 export const signUpWithPrices = (payload: SignUpWithPricesPayload) => {
-    console.log("payload: ", payload);
     return api
         .post<SignUpWithPricesResponse>("/users/v0/sign-up", payload)
         .then(res => res.data)
