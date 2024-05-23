@@ -6,11 +6,6 @@ import { useEffect, useState } from "react";
 import { BundleCard } from "./card.component";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 

@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${ttRamillasTrlVar.variable} ${inter.className} text-[#171614]`}>
-        <Providers>
+        <Providers >
           {children}
           {auth}
         </Providers>

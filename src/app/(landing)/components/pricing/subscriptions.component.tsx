@@ -6,10 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import './styles.css';
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
 import { SubscriptionInfoCard } from "../subscription-card/subscription-card.comonent";
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";

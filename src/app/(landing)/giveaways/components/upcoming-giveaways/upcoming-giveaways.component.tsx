@@ -8,12 +8,6 @@ import { HiOutlineGift, HiOutlineShoppingBag } from "react-icons/hi2";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
-
-
 
 
 export function UpcomingGiveAways() {
