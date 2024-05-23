@@ -1,3 +1,4 @@
+import { Timer } from "@/components/common/timer/timer.component";
 import { Button } from "@/components/ui/button/button.component";
 import { messages } from "@/shared/constants/messages";
 import Image from 'next/image'
@@ -53,28 +54,13 @@ export function GiveAway() {
                     <div className="font-semibold text-[30px] leading-9 text-[#171614]">
                       {cardHeading}
                     </div>
-                    <div className="flex flex-row gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                    </div>
+                    <Timer
+                      containerClass="flex flex-row gap-2"
+                      boxClass="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center"
+                      textClass="text-[14px] leading-[20px] font-semibold text-white"
+                      labelClass=""
+                      labelPosition="none"
+                    />
                   </div>
                   <div className="text-[#9CA3AF] font-medium text-base leading-6">
                     {cardSubHeading}
