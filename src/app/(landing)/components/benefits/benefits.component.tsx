@@ -20,9 +20,11 @@ export function Benefits() {
           className="sm:min-w-[656px] sm:min-h-[632px] !w-[100vh]"
         />
       </div>
+
       <div className="text-[#171614] sm:absolute items-center px-6 sm:px-0 flex font-tt-ramillas font-normal text-4xl leading-[43.2px] sm:text-[72px] sm:leading-[86.4px] sm:font-light sm:w-[815px] sm:left-[562px] sm:top-[176px]">
         {heading}
       </div>
+      
       <div className="sm:mt-[310px] sm:px-0 px-6 flex flex-col gap-8">
         <div className="font-normal text-lg leading-7">
           {description}

@@ -14,7 +14,7 @@ export default async function Home() {
   const products = await getProducts();
 
   return (
-    <div>
+    <>
       <Header />
       <Brands />
       <Benefits />
@@ -25,6 +25,6 @@ export default async function Home() {
       <MinorGiveaways />
       <FollowUs />
       <FAQ />
-    </div>
+    </>
   )
 }

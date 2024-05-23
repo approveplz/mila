@@ -16,8 +16,9 @@ export interface Price {
     type: "recurring" | "one_time"
     unit_amount: number
     unit_amount_decimal: string
-    is_default: boolean
     sort_order: number
+    is_default: boolean
+    is_discounted: boolean
     livemode: boolean
 }
 

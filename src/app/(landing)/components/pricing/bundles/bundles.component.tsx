@@ -26,7 +26,13 @@ export function Bundle({
     },
     continueWithSelected
   } } = messages;
-  const { products, addProduct, increaseProductQuantity, decreaseProductQuantity } = useCheckOutStore();
+  const {
+    products,
+    addProduct,
+    increaseProductQuantity,
+    decreaseProductQuantity,
+    clearProducts
+  } = useCheckOutStore();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -43,7 +49,10 @@ export function Bundle({
   return (
     <section className="flex flex-col items-center gap-12 bg-[#F3F3F3] mt-12">
       <div className="flex flex-col items-center gap-6 w-full">
-        <button className="font-medium text-primary text-lg leading-7 cursor-pointer">
+        <button
+          className="font-medium text-primary text-lg leading-7 cursor-pointer"
+          onClick={() => clearProducts("bundle")}
+        >
           {clear}
         </button>
 
@@ -67,9 +76,7 @@ export function Bundle({
                     entry: bundle.number_of_entries,
                     selected: products.some(prod => prod.id === bundle.id),
                     quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
-                    onSelect: () => {
-                      addProduct(bundle)
-                    },
+                    onSelect: () => addProduct(bundle),
                     onIncrease: () => increaseProductQuantity(bundle.id),
                     onDecrease: () => decreaseProductQuantity(bundle.id)
                   }}
@@ -104,9 +111,7 @@ export function Bundle({
                   entry: bundle.number_of_entries,
                   selected: products.some(prod => prod.id === bundle.id),
                   quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
-                  onSelect: () => {
-                    addProduct(bundle)
-                  },
+                  onSelect: () => addProduct(bundle),
                   onIncrease: () => increaseProductQuantity(bundle.id),
                   onDecrease: () => decreaseProductQuantity(bundle.id)
                 }}

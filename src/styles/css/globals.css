@@ -48,7 +48,7 @@
         border: 2px solid transparent;
         border-radius: 22px;
         z-index: -8;
-        opacity: 0.01
+        opacity: 0.01;
     }
 }
 
@@ -60,7 +60,6 @@
 .swiper-slide {
     text-align: left;
     font-size: 18px;
-    background: #fff;
 
     display: flex;
     justify-content: center;
