@@ -77,22 +77,22 @@ export type GetCouponCategoriesResponse = {
     count: number;
     next: string | null;
     previous: string | null;
-    results: results[]
+    results: CouponCategory[]
 };
 
-export type results = {
+export type CouponCategory = {
     id: string;
     name: string;
     created: string;
     modified: string;
 }
 
-export type GetCouponsPayload = {
+export type GetCouponsParams = {
     category: string,
     page?: number
 };
 
-export type GetCoupondetail = {
+export type GetCouponDetailParams = {
     couponId: string
 };
 
@@ -114,7 +114,7 @@ export type BusinessLogo = {
     created_by: any;
 }
 
-interface Business {
+export type Business = {
     id: string;
     logo: BusinessLogo;
     name: string;
@@ -132,7 +132,7 @@ interface Business {
 
 export type CouponResponse = {
     id: string | null;
-    minimum_plan?:string
+    minimum_plan?: string
     business: Business;
     off_label?: string;
     description: string;

@@ -52,7 +52,7 @@ export function CouponCard({ isLoggedIn, upgrade = false, coupon }: CoupenCardDa
             alt="logo"
             width={114}
             height={15}
-            className={`w-[114px] ${!coupon?.business?.logo && 'h-[15px]'} mt-10`}
+            className={`w-[114px] ${!coupon?.business?.logo ? 'h-[15px]' : ''} mt-10`}
           />
         </div>
         <hr />

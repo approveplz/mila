@@ -4,93 +4,64 @@ import { CouponCard } from "../coupon-card/coupon-card.component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HiMiniArrowLeft, HiMiniArrowRight } from "react-icons/hi2";
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getCouponCategories, getCoupons } from "@/api/auth";
-import { CouponResponse, GetCouponsResponse, results } from "@/api/auth/auth.types";
-
-
+import { CouponResponse, GetCouponsResponse, GetCouponCategoriesResponse } from "@/api/auth/auth.types";
+import {
+  useQuery,
+  UseQueryResult
+} from '@tanstack/react-query'
 
 export function CoupensList() {
 
-  const [isLoggedIn, setIsloggedIn] = useState<boolean>(true);
-  const [isCategoryLoading, setIsCategoryLoading] = useState<boolean>(false);
-  const [isCouponLoading, setIsCouponLoading] = useState<boolean>(false);
-
-  const [categoryData, setCategoriesData] = useState<results[]>();
-  const [coupons, setCoupons] = useState<GetCouponsResponse>();
-  const [page, setPage] = useState<number>(1)
-  const [selectedCategory, setSelectedCategory] = useState<string>();
-
   const session = useSession();
-
-  useEffect(() => {
-    if (session.data) {
-      setIsloggedIn(true);
-      fetchCategoriesData();
-    } else {
-      setIsloggedIn(false);
-    }
-  }, [session]);
-
-  useEffect(() => {
-    if (categoryData && categoryData?.length > 0) {
-      fetchCouponsData(categoryData[0]?.id);
-    }
-  }, [categoryData])
-
-  const fetchCategoriesData = async () => {
-    setIsCategoryLoading(true);
-    try {
-      if (!categoryData) {
-        const categoriesData = await getCouponCategories();
-        setCategoriesData(categoriesData?.results);
-        setSelectedCategory(categoriesData?.results[0]?.id)
-      }
-    } catch (error) {
-      console.error("Error fetching coupon categories:", error);
-    } finally {
-      setIsCategoryLoading(false)
-    }
-  };
-
-  const fetchCouponsData = async (categoryId: string) => {
-    setIsCouponLoading(true);
-    try {
-      const couponsData = await getCoupons({ category: categoryId, page });
-      setCoupons(couponsData);
-    } catch (error) {
-      console.error("Error fetching coupons data:", error);
-    } finally {
-      setIsCouponLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchCouponsData(selectedCategory as string)
-  }, [page])
+  const isLoggedIn = !!session?.data;
+  const [page, setPage] = useState<number>(1)
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
 
+  const { data: categoryData, isLoading: isCategoryLoading }: UseQueryResult<GetCouponCategoriesResponse> =
+    useQuery({
+      queryKey: ['couponCategories'],
+      queryFn: () =>
+        getCouponCategories().then((res) => {
+          setSelectedCategory(res?.results[0]?.id)
+          return res;
+        }),
+      enabled: !!isLoggedIn
+    })
+
+  const { data: coupons, isLoading: isCouponLoading }: UseQueryResult<GetCouponsResponse> =
+    useQuery({
+      queryKey: ['coupons', selectedCategory, page],
+      queryFn: () =>
+        getCoupons({ category: selectedCategory as string, page }).then((res) => {
+          return res;
+        }),
+      enabled: !!selectedCategory,
+    })
   const couponCards = Array.from({ length: 10 });
 
   return (
     <div className="sm:py-20 sm:px-[175px] px-6 py-12 bg-[#F9FAFB] flex flex-col items-center justify-center gap-12">
-      {categoryData && !isCategoryLoading && <Tabs defaultValue={categoryData && categoryData[0]?.name} className="w-full">
+      {categoryData && !isCategoryLoading && <Tabs defaultValue={categoryData && categoryData?.results[0]?.name} className="w-full">
         <TabsList className="flex flex-row justify-center">
           <div className="flex flex-row gap-[30.17px] bg-[#F9FAFB] rounded-[30px] p-1 overflow-x-auto ">
-            {categoryData?.map((category, index) => (
-              <TabsTrigger key={index} onClick={() => {
-                setPage(1);
-                setCoupons(undefined)
-                setSelectedCategory(category.id)
-                fetchCouponsData(category.id)
-              }} value={category.name}>{category.name.toUpperCase()}</TabsTrigger>
+            {categoryData?.results?.map((category, index) => (
+              <TabsTrigger key={index}
+                onClick={() => {
+                  setPage(1);
+                  setSelectedCategory(category.id)
+                }}
+                value={category.name}
+              >{category.name.toUpperCase()}</TabsTrigger>
             ))}
           </div>
         </TabsList>
 
         {(coupons && coupons?.results?.length > 0 && !isCouponLoading) &&
           <div className="mt-12 flex justify-center">
-            {categoryData?.map((category, index) => (
+            {categoryData?.results?.map((category, index) => (
               <TabsContent key={index} value={category?.name}>
                 <div className="grid sm:grid-cols-5 grid-cols-2  gap-4">
                   {coupons?.results.map((coupon: CouponResponse, index) => (

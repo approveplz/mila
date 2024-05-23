@@ -6,8 +6,8 @@ import {
     GenerateMembershipPayload,
     GenerateMembershipResponse,
     GetCouponCategoriesResponse,
-    GetCoupondetail,
-    GetCouponsPayload,
+    GetCouponDetailParams,
+    GetCouponsParams,
     GetCouponsResponse,
     SendVerificationSmsResponse,
     SignInWithCredentialsPayload,
@@ -61,13 +61,14 @@ export const getCouponCategories = () => {
         .then(res => res.data);
 }
 
-export const getCoupons = (payload: GetCouponsPayload) => {
+
+export const getCoupons = (params: GetCouponsParams) => {
     return api
-        .get<GetCouponsResponse>(`/coupons/v0/coupons?category=${payload.category}&page=${payload?.page}`)
+        .get<GetCouponsResponse>(`/coupons/v0/coupons`, { params })
         .then(res => res.data);
 }
 
-export const getCouponDetail = (payload: GetCoupondetail) => {
+export const getCouponDetail = (payload: GetCouponDetailParams) => {
     return api
         .get<CouponResponse>(`/coupons/v0/coupons/${payload.couponId}`)
         .then(res => res.data);
