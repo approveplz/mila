@@ -9,7 +9,7 @@ import './styles.css';
 import { SubscriptionInfoCard } from "../subscription-card/subscription-card.comonent";
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
-import { getDefaultPrice, getDiscountedPrice } from "@/utils";
+import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
 
 export function Subscription({
   subscriptions
@@ -73,10 +73,9 @@ export function Subscription({
                   title={subscription.name}
                   duration={subscription.access_duration}
                   type={subscription.tier as any}
-                  amount={getDefaultPrice(subscription.prices)}
-                  discounted={getDiscountedPrice(subscription.prices)}
                   entries={subscription.number_of_entries}
                   selected={products.some(prod => prod.id === subscription.id)}
+                  {...getProductPrice(subscription.prices)}
                   onSelect={() => {
                     addProduct(subscription)
                   }}
@@ -94,10 +93,9 @@ export function Subscription({
                 title={subscription.name}
                 duration={subscription.access_duration}
                 type={subscription.tier as any}
-                amount={getDefaultPrice(subscription.prices)}
-                discounted={getDiscountedPrice(subscription.prices)}
                 entries={subscription.number_of_entries}
                 selected={products.some(prod => prod.id === subscription.id)}
+                {...getProductPrice(subscription.prices)}
                 onSelect={() => {
                   addProduct(subscription)
                 }}
