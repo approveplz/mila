@@ -7,7 +7,7 @@ import { HiOutlineGift, HiOutlineShoppingBag } from "react-icons/hi2";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-
+import { Timer } from "@/components/common/timer/timer.component";
 
 
 export function UpcomingGiveAways() {
@@ -85,28 +85,13 @@ export function UpcomingGiveAways() {
                     <div className="font-bold text-[38px] leading-9 text-[#171614] tracking-[8px]">
                       PELOTON
                     </div>
-                    <div className="flex flex-row gap-2">
-                      <div className="w-[34px] h-[34px] rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-[34px] h-[34px] rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-[34px] h-[34px] rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-[34px] h-[34px] rounded-lg bg-[#171614] flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                    </div>
+                    <Timer
+                      containerClass="flex flex-row gap-2"
+                      boxClass="w-[34px] h-[34px] rounded-lg bg-[#171614] flex flex-row items-center justify-center"
+                      textClass="text-[14px] leading-[20px] font-semibold text-white"
+                      labelClass=""
+                      labelPosition="none"
+                    />
                   </div>
                   <div className="text-[#6B7280] font-medium text-[30px] leading-9">
                     Backpack
@@ -242,28 +227,13 @@ export function UpcomingGiveAways() {
                         <div className="font-black text-[40px] leading-9 text-[#171614] ">
                           YETI
                         </div>
-                        <div className="flex flex-row gap-2">
-                          <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                            <div className="text-[14px] leading-[20px] font-semibold text-white">
-                              00
-                            </div>
-                          </div>
-                          <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                            <div className="text-[14px] leading-[20px] font-semibold text-white">
-                              00
-                            </div>
-                          </div>
-                          <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                            <div className="text-[14px] leading-[20px] font-semibold text-white">
-                              00
-                            </div>
-                          </div>
-                          <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                            <div className="text-[14px] leading-[20px] font-semibold text-white">
-                              00
-                            </div>
-                          </div>
-                        </div>
+                        <Timer
+                          containerClass="flex flex-row gap-2"
+                          boxClass="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center"
+                          textClass="text-[14px] leading-[20px] font-semibold text-white"
+                          labelClass=""
+                          labelPosition="none"
+                        />
                       </div>
                       <div className="text-[#6B7280] font-medium text-[24px] leading-8">
                         Backpack
@@ -365,28 +335,13 @@ export function UpcomingGiveAways() {
                             <div className="font-black text-[40px] leading-9 text-[#171614] ">
                               YETI
                             </div>
-                            <div className="flex flex-row gap-2">
-                              <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                                <div className="text-[14px] leading-[20px] font-semibold text-white">
-                                  00
-                                </div>
-                              </div>
-                              <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                                <div className="text-[14px] leading-[20px] font-semibold text-white">
-                                  00
-                                </div>
-                              </div>
-                              <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                                <div className="text-[14px] leading-[20px] font-semibold text-white">
-                                  00
-                                </div>
-                              </div>
-                              <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                                <div className="text-[14px] leading-[20px] font-semibold text-white">
-                                  00
-                                </div>
-                              </div>
-                            </div>
+                            <Timer
+                              containerClass="flex flex-row gap-2"
+                              boxClass="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center"
+                              textClass="text-[14px] leading-[20px] font-semibold text-white"
+                              labelClass=""
+                              labelPosition="none"
+                            />
                           </div>
                           <div className="text-[#6B7280] font-medium text-[24px] leading-8">
                             Backpack

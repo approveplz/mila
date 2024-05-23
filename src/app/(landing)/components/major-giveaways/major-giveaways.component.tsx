@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { Timer } from "@/components/common/timer/timer.component";
 
 export function MajorGiveaways() {
   const { majorGiveaways: {
@@ -81,47 +82,14 @@ export function MajorGiveaways() {
                   <div className="flex flex-row gap-2 items-center justify-between">
                     <div>
 
-                      <div className="flex flex-row gap-1">
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
-                            00
-                          </div>
+                      <Timer
+                        containerClass="flex flex-row gap-1"
+                        boxClass="flex flex-col gap-[6px] items-center justify-center"
+                        textClass="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]"
+                        labelClass="font-normal text-lg leading-7"
+                        labelPosition="bottom"
+                      />
 
-                          <div className="font-normal text-lg leading-7">
-                            {day}
-                          </div>
-                        </div>
-
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
-                            00
-                          </div>
-
-                          <div className="font-normal text-lg leading-7">
-                            {hrs}
-                          </div>
-                        </div>
-
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
-                            00
-                          </div>
-
-                          <div className="font-normal text-lg leading-7">
-                            {min}
-                          </div>
-                        </div>
-                        
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]">
-                            00
-                          </div>
-
-                          <div className="font-normal text-lg leading-7">
-                            {sec}
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -167,48 +135,13 @@ export function MajorGiveaways() {
                   <div className="flex flex-row gap-2">
                     <div>
 
-                      <div className="flex flex-row gap-2">
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
-                            00
-                          </div>
-
-                          <div className="font-normal text-lg leading-7">
-                            {day}
-                          </div>
-                        </div>
-
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
-                            00
-                          </div>
-
-                          <div className="font-normal text-lg leading-7">
-                            {hrs}
-                          </div>
-                        </div>
-
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
-                            00
-                          </div>
-
-                          <div className="font-normal text-lg leading-7">
-                            {min}
-                          </div>
-                        </div>
-
-                        <div className=" flex flex-col gap-[6px]  items-center justify-center">
-                          <div className="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]">
-                            00
-                          </div>
-
-                          <div className="font-normal text-lg leading-7">
-                            {sec}
-                          </div>
-                        </div>
-
-                      </div>
+                      <Timer
+                        containerClass="flex flex-row gap-2"
+                        boxClass="flex flex-col gap-[6px] items-center justify-center"
+                        textClass="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]"
+                        labelClass="font-normal text-lg leading-7"
+                        labelPosition="bottom"
+                      />
                     </div>
                   </div>
 

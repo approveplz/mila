@@ -8,6 +8,7 @@ import { HiMiniArrowRight } from "react-icons/hi2";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { Timer } from "@/components/common/timer/timer.component";
 
 export function MinorGiveaways() {
   const { minorGiveways: {
@@ -73,28 +74,13 @@ export function MinorGiveaways() {
                   </div>
                 </div>
 
-                <div className="flex flex-row gap-2">
-                  <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                    <div className="text-[14px] leading-[20px] font-semibold text-white">
-                      00
-                    </div>
-                  </div>
-                  <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                    <div className="text-[14px] leading-[20px] font-semibold text-white">
-                      00
-                    </div>
-                  </div>
-                  <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                    <div className="text-[14px] leading-[20px] font-semibold text-white">
-                      00
-                    </div>
-                  </div>
-                  <div className="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center">
-                    <div className="text-[14px] leading-[20px] font-semibold text-white">
-                      00
-                    </div>
-                  </div>
-                </div>
+                <Timer
+                  containerClass="flex flex-row gap-2"
+                  boxClass="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center"
+                  textClass="text-[14px] leading-[20px] font-semibold text-white"
+                  labelClass=""
+                  labelPosition="none"
+                />
 
 
                 <div className="font-normal text-[14px] leading-[20px] text-[#171614]">

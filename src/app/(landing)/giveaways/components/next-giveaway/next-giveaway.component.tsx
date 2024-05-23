@@ -1,5 +1,6 @@
 'use client'
 
+import { Timer } from "@/components/common/timer/timer.component";
 import { Button } from "@/components/ui/button/button.component";
 import Image from 'next/image'
 import { useEffect, useState } from "react";
@@ -60,31 +61,16 @@ export function NextGiveAway() {
                 <div className="w-full flex flex-col gap-4">
 
                   <div className="w-full flex flex-col sm:flex-row gap-6 justify-between sm:items-center">
-                  <div className="font-bold text-[38px] leading-9 text-[#171614] tracking-[8px]">
+                    <div className="font-bold text-[38px] leading-9 text-[#171614] tracking-[8px]">
                       PELOTON
                     </div>
-                    <div className="flex flex-row gap-2">
-                      <div className="w-[34px] h-[34px] rounded-lg bg-primary flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-[34px] h-[34px] rounded-lg bg-primary flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-[34px] h-[34px] rounded-lg bg-primary flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                      <div className="w-[34px] h-[34px] rounded-lg bg-primary flex flex-row items-center justify-center">
-                        <div className="text-[14px] leading-[20px] font-semibold text-white">
-                          00
-                        </div>
-                      </div>
-                    </div>
+                    <Timer
+                      containerClass="flex flex-row gap-2"
+                      boxClass="w-[34px] h-[34px] rounded-lg bg-primary flex flex-row items-center justify-center"
+                      textClass="text-[14px] leading-[20px] font-semibold text-white"
+                      labelClass=""
+                      labelPosition="none"
+                    />
                   </div>
                   <div className="text-[#6B7280] font-medium text-[30px] leading-9">
                     Backpack
