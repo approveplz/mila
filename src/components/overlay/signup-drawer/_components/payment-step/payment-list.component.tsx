@@ -17,8 +17,20 @@ import { useFormContext } from "react-hook-form";
 import { useCheckOutStore } from "@/store";
 import { confirmMembership, generateMembership } from '@/api/auth';
 import { useSession } from "next-auth/react";
+import { getProductPrice } from "@/utils";
+import { Price } from "@/entities";
 
 type K = keyof {};
+
+function PriceSelector({ prices, view }: { prices: Array<Price>, view: (price: number) => React.ReactNode }) {
+    const { isDiscounted, defaultPrice, discountedPrice } = getProductPrice(prices);
+
+    return (
+        <>
+            {view(isDiscounted ? discountedPrice : defaultPrice)}
+        </>
+    )
+}
 
 export function PaymentList() {
     const { nextStep } = useStepperContext();
@@ -90,7 +102,10 @@ export function PaymentList() {
                                             </Button>
                                         )}
                                     </td>
-                                    <td className="font-normal py-2" align="right">${subscription.data.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0}</td>
+                                    <PriceSelector
+                                        prices={subscription.data.prices}
+                                        view={price => <td className="font-normal py-2" align="right">${price}</td>}
+                                    />
                                 </tr>
                             ))}
 
@@ -123,28 +138,6 @@ export function PaymentList() {
                     )}
 
                     {/* Bundles */}
-                    {/* <tr>
-                        <td className="font-semibold py-2">45 Entires</td>
-                        <td className="align-middle py-2" valign="middle" align="right">
-                            <Button className="mt-1 p-1 gap-1 cursor-default" variant="fatal">
-                                <HiMinus className="cursor-pointer" />
-                                <span className="font-medium text-sm">02</span>
-                                <HiPlus className="cursor-pointer" />
-                            </Button>
-                        </td>
-                        <td className="font-normal py-2" align="right">$9.99</td>
-                    </tr>
-                    <tr>
-                        <td className="font-semibold py-2">45 Entires</td>
-                        <td className="align-middle py-2" valign="middle" align="right">
-                            <Button className="mt-1 p-1 gap-1 cursor-default" variant="fatal">
-                                <HiMinus className="cursor-pointer" />
-                                <span className="font-medium text-sm">02</span>
-                                <HiPlus className="cursor-pointer" />
-                            </Button>
-                        </td>
-                        <td className="font-normal py-2" align="right">$9.99</td>
-                    </tr> */}
                     {bundles.map(bundle => (
                         <tr key={bundle.id}>
                             <td className="font-semibold py-2">{bundle.data.number_of_entries} Entires</td>
@@ -155,7 +148,10 @@ export function PaymentList() {
                                     <HiPlus className="cursor-pointer" onClick={() => increaseProductQuantity(bundle.id)} />
                                 </Button>
                             </td>
-                            <td className="font-normal py-2" align="right">${(bundle.data.prices.sort((a, b) => a.sort_order - b.sort_order)[0]?.unit_amount || 0) * bundle.quantity}</td>
+                            <PriceSelector
+                                prices={bundle.data.prices}
+                                view={price => <td className="font-normal py-2" align="right">${price * bundle.quantity}</td>}
+                            />
                         </tr>
                     ))}
 

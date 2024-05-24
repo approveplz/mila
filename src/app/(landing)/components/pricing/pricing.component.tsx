@@ -6,10 +6,9 @@ import { Bundle } from "./bundles/bundles.component";
 import { Subscription } from "./subscriptions.component";
 import { Product } from "@/entities";
 import { Button, Container } from "@/components";
-import { HiArrowUpLeft, HiArrowUpRight } from "react-icons/hi2";
+import { HiArrowUpRight } from "react-icons/hi2";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerTrigger
 } from "@/components";
@@ -18,14 +17,14 @@ import { useCheckOutStore } from "@/store";
 
 function SignUpAction() {
   return (
-    <Drawer dismissible={false}>
+    <Drawer dismissible={false} modal={false}>
       <DrawerTrigger asChild>
         <Button variant="fatal">
           Continue With Selected
           <HiArrowUpRight className="ml-3 h-6 w-4" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="bg-white h-full rounded-none">
+      <DrawerContent className="bg-white h-full rounded-none z-[9999]">
         <SignUpDrawer />
       </DrawerContent>
     </Drawer>

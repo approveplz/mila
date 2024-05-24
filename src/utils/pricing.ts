@@ -36,3 +36,17 @@ export const getProductPrice = (prices: Array<Price>, is_free: boolean | undefin
         discountedPrice: discountedPrice
     }
 }
+
+export const getProductPriceInfo = (prices: Array<Price>, is_free: boolean | undefined = false) => {
+    const sortedPrices = [...prices]
+        .sort((priceA, priceB) => priceA.sort_order - priceB.sort_order);
+
+    const discountedPrice = sortedPrices.find(price => price.is_discounted);
+    const defaultPrice = sortedPrices.find(price => price.is_default);
+
+    return {
+        isDiscounted: !!discountedPrice,
+        defaultPrice: defaultPrice!,
+        discountedPrice: discountedPrice
+    }
+}
