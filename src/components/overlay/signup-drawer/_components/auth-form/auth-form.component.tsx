@@ -13,7 +13,6 @@ import {
     FormMessage,
     Input,
 } from "@/components";
-import { signIn } from "next-auth/react";
 import { useCheckOutStore } from "@/store";
 import { signUpWithPrices } from "@/api/auth";
 import {
@@ -23,13 +22,15 @@ import {
 import { useStepperContext } from "../stepper/stepper.context";
 import { getProductPriceInfo, prefixObjectKeys } from "@/utils";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { authRegisterSigIn } from "@/actions";
+import { serialize } from "object-to-formdata";
 
 type K = keyof SignUpFormData;
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products } = useCheckOutStore();
-
+    
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
         resolver: zodResolver(signUpSchema),
@@ -52,7 +53,7 @@ export function AuthForm() {
             .map(product => {
                 const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices)
 
-                if(!!discountedPrice) {
+                if (!!discountedPrice) {
                     return {
                         price: discountedPrice.id,
                         quantity: product.quantity
@@ -70,21 +71,17 @@ export function AuthForm() {
             prices
         })
             .then(res => {
-                // return signIn("credentials", {
-                //     email: data.email,
-                //     password: data.password,
-                //     redirect: false
-                // })
                 const user = prefixObjectKeys(res.user, "userpre_")
+                const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
 
                 const payload = JSON.parse(JSON.stringify(res));
                 delete payload.user;
 
-                return signIn("register", {
+                return authRegisterSigIn(serialize({
                     ...payload,
                     ...user,
-                    redirect: false
-                })
+                    ...metadata,
+                }))
             })
             .then(() => {
                 nextStep()
@@ -238,7 +235,7 @@ export function AuthForm() {
                     render={({ field }) => (
                         <FormItem className="flex justify-center w-full z-[99999]">
                             <FormControl>
-                                <HCaptcha 
+                                <HCaptcha
                                     sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
                                     onVerify={(token) => field.onChange(token)}
                                 />

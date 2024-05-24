@@ -16,6 +16,7 @@ import { useCheckOutStore } from '@/store';
 import { useSession } from 'next-auth/react';
 import { useFormContext } from 'react-hook-form';
 import { getProductPriceInfo } from '@/utils';
+import { Session } from 'next-auth';
 
 type K = keyof {};
 
@@ -31,13 +32,12 @@ const inputStylesBase: StripeElementStyleVariant = {
     }
 }
 
-export function PaymentForm() {
+export function PaymentForm({ session }: { session: Session | null }) {
     const { products } = useCheckOutStore();
     const { nextStep } = useStepperContext();
-    const session = useSession();
     const stripe = useStripe();
     const elements = useElements();
-
+    
     const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
 
     const handlePayment = async () => {
@@ -45,10 +45,10 @@ export function PaymentForm() {
             return;
         }
 
-        if (session.data?.user.user) {
+        if (session?.user.user) {
             const payload = {
                 coupon: couponForm.getValues("coupon") || null,
-                user: session.data?.user.user.id,
+                user: session?.user.user.id,
                 prices: products
                     .map(product => {
                         const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices)

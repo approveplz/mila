@@ -3,6 +3,7 @@ import { CentralizedContent, Container } from "@/components";
 import { PaymentForm } from "../payment-form/payment-form.component";
 import { PaymentList } from "./payment-list.component";
 import { FormProvider, useForm } from "react-hook-form";
+import { StepperComponentProps } from "../stepper/stepper.types";
 
 export function PaymentListFormProvider({ children }: React.PropsWithChildren) {
     const form = useForm<{
@@ -23,7 +24,7 @@ export function PaymentListFormProvider({ children }: React.PropsWithChildren) {
     )
 }
 
-export function PaymentStep() {
+export function PaymentStep({ session }: StepperComponentProps) {
     return (
         <PaymentListFormProvider>
             <div className="mx-auto grid max-w-lg grid-cols-1 gap-x-[11.63rem] gap-y-16 min-h-screen lg:max-w-none lg:grid-cols-2">
@@ -38,7 +39,7 @@ export function PaymentStep() {
                 <div className="w-full max-w-[375px]">
                     <div className="flex min-h-full flex-col justify-center">
                         <h2 className="text-[32px] font-tt-ramillas text-center mb-[32px]">Select payment method</h2>
-                        <PaymentForm />
+                        <PaymentForm session={session} />
                     </div>
                 </div>
             </div>
@@ -46,7 +47,7 @@ export function PaymentStep() {
     )
 }
 
-export function PaymentListStep() {
+export function PaymentListStep({ session }: StepperComponentProps) {
     return (
         <Container>
             <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0">
@@ -58,12 +59,12 @@ export function PaymentListStep() {
     )
 }
 
-export function PaymentFormStep() {
+export function PaymentFormStep({ session }: StepperComponentProps) {
     return (
         <Container>
             <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0">
                 <PaymentListFormProvider>
-                    <PaymentForm />
+                    <PaymentForm session={session} />
                 </PaymentListFormProvider>
             </CentralizedContent>
         </Container>

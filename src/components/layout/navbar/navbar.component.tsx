@@ -7,7 +7,7 @@ export async function NavBar() {
     const session = await auth();
     
     return (
-        <nav className="py-[21px] bg-[#F3F3F3] fixed w-full min-h-[92px] z-[999]">
+        <nav className="py-[21px] bg-[#F3F3F3] fixed w-full min-h-[92px] z-[99]">
             <Container>
                 <NavContent session={session} />
             </Container>

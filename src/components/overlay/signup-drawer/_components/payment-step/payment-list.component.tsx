@@ -89,82 +89,84 @@ export function PaymentList() {
 
             <main>
                 <table className="w-full">
-                    {/* Subscriptions */}
-                    {subscriptions.length > 0 && (
-                        <>
-                            {subscriptions.map(subscription => (
-                                <tr key={subscription.id}>
-                                    <td className="font-semibold py-2 w-full">{subscription.data.name}</td>
-                                    <td className="align-middle" valign="middle" align="right">
-                                        {bundles.length > 0 && (
-                                            <Button className="w-6 h-5 p-1 mt-1" variant="fatal" onClick={() => removeProduct(subscription.id)}>
-                                                <HiMinus />
-                                            </Button>
-                                        )}
+                    <tbody>
+                        {/* Subscriptions */}
+                        {subscriptions.length > 0 && (
+                            <>
+                                {subscriptions.map(subscription => (
+                                    <tr key={subscription.id}>
+                                        <td className="font-semibold py-2 w-full">{subscription.data.name}</td>
+                                        <td className="align-middle" valign="middle" align="right">
+                                            {bundles.length > 0 && (
+                                                <Button className="w-6 h-5 p-1 mt-1" variant="fatal" onClick={() => removeProduct(subscription.id)}>
+                                                    <HiMinus />
+                                                </Button>
+                                            )}
+                                        </td>
+                                        <PriceSelector
+                                            prices={subscription.data.prices}
+                                            view={price => <td className="font-normal py-2" align="right">${price}</td>}
+                                        />
+                                    </tr>
+                                ))}
+
+                                <tr>
+                                    <td colSpan={3} className="pt-2 pb-8">
+                                        <Form {...form}>
+                                            <form>
+                                                <FormField
+                                                    control={form.control}
+                                                    name="coupon"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel htmlFor="coupon">Subscription Coupon Code</FormLabel>
+                                                            <FormControl>
+                                                                <Input
+                                                                    id="coupon"
+                                                                    placeholder="e.g.35639234"
+                                                                    {...field}
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </form>
+                                        </Form>
                                     </td>
-                                    <PriceSelector
-                                        prices={subscription.data.prices}
-                                        view={price => <td className="font-normal py-2" align="right">${price}</td>}
-                                    />
                                 </tr>
-                            ))}
+                            </>
+                        )}
 
-                            <tr>
-                                <td colSpan={3} className="pt-2 pb-8">
-                                    <Form {...form}>
-                                        <form>
-                                            <FormField
-                                                control={form.control}
-                                                name="coupon"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel htmlFor="coupon">Subscription Coupon Code</FormLabel>
-                                                        <FormControl>
-                                                            <Input
-                                                                id="coupon"
-                                                                placeholder="e.g.35639234"
-                                                                {...field}
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </form>
-                                    </Form>
+                        {/* Bundles */}
+                        {bundles.map(bundle => (
+                            <tr key={bundle.id}>
+                                <td className="font-semibold py-2">{bundle.data.number_of_entries} Entires</td>
+                                <td className="align-middle py-2" valign="middle" align="right">
+                                    <Button className="mt-1 p-1 gap-1 cursor-default" variant="fatal">
+                                        <HiMinus className="cursor-pointer" onClick={() => decreaseProductQuantity(bundle.id)} />
+                                        <span className="font-medium text-sm">{bundle.quantity}</span>
+                                        <HiPlus className="cursor-pointer" onClick={() => increaseProductQuantity(bundle.id)} />
+                                    </Button>
                                 </td>
+                                <PriceSelector
+                                    prices={bundle.data.prices}
+                                    view={price => <td className="font-normal py-2" align="right">${price * bundle.quantity}</td>}
+                                />
                             </tr>
-                        </>
-                    )}
+                        ))}
 
-                    {/* Bundles */}
-                    {bundles.map(bundle => (
-                        <tr key={bundle.id}>
-                            <td className="font-semibold py-2">{bundle.data.number_of_entries} Entires</td>
-                            <td className="align-middle py-2" valign="middle" align="right">
-                                <Button className="mt-1 p-1 gap-1 cursor-default" variant="fatal">
-                                    <HiMinus className="cursor-pointer" onClick={() => decreaseProductQuantity(bundle.id)} />
-                                    <span className="font-medium text-sm">{bundle.quantity}</span>
-                                    <HiPlus className="cursor-pointer" onClick={() => increaseProductQuantity(bundle.id)} />
-                                </Button>
+                        {/* Total */}
+                        <tr>
+                            <td className="py-2" colSpan={3}>
+                                <hr />
                             </td>
-                            <PriceSelector
-                                prices={bundle.data.prices}
-                                view={price => <td className="font-normal py-2" align="right">${price * bundle.quantity}</td>}
-                            />
                         </tr>
-                    ))}
-
-                    {/* Total */}
-                    <tr>
-                        <td className="py-2" colSpan={3}>
-                            <hr />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="font-bold pt-2" colSpan={2}>TOTAL:</td>
-                        <td className="font-bold pt-2" align="right">$99.96</td>
-                    </tr>
+                        <tr>
+                            <td className="font-bold pt-2" colSpan={2}>TOTAL:</td>
+                            <td className="font-bold pt-2" align="right">$99.96</td>
+                        </tr>
+                    </tbody>
                 </table>
             </main>
 

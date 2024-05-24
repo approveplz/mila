@@ -1,52 +1,22 @@
-"use client"
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import * as React from "react";
 import { messages } from "@/shared/constants/messages";
-import { Bundle } from "./bundles/bundles.component";
-import { Subscription } from "./subscriptions.component";
 import { Product } from "@/entities";
-import { Button, Container } from "@/components";
-import { HiArrowUpRight } from "react-icons/hi2";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTrigger
-} from "@/components";
-import { SignUpDrawer } from "@/components";
-import { useCheckOutStore } from "@/store";
-
-function SignUpAction() {
-  return (
-    <Drawer dismissible={false} modal={false}>
-      <DrawerTrigger asChild>
-        <Button variant="fatal">
-          Continue With Selected
-          <HiArrowUpRight className="ml-3 h-6 w-4" />
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent className="bg-white h-full rounded-none z-[9999]">
-        <SignUpDrawer />
-      </DrawerContent>
-    </Drawer>
-  )
-}
+import { Container } from "@/components";
+import PricingTabs from "./pricing-tabs.component";
+import { PricingAction } from "./pricing-action.component";
+import { SignUpAction } from "../signup-action/signup-action.component";
 
 export function Pricing({
-  products
+  products,
+  children
 }: {
   products: Array<Product>
-}) {
-  const { products: selectedProducts } = useCheckOutStore();
+} & React.PropsWithChildren) {
   const { pricing: {
     headingA,
     headingB,
     description,
-    subscription,
-    bundle,
   } } = messages;
-
-  const subscriptions = products.filter(product => product.type === "subscription");
-  const bundles = products.filter(product => product.type === "bundle");
 
   return (
     <section className="py-[66px] bg-[#F3F3F3]">
@@ -62,24 +32,11 @@ export function Pricing({
             </div>
           </div>
 
-          <Tabs defaultValue="subscription" className="w-full">
-            <TabsList className="flex flex-row justify-center">
-              <div className="bg-white rounded-[30px] p-1">
-                <TabsTrigger value="subscription">{subscription}</TabsTrigger>
-                <TabsTrigger value="bundle">{bundle}</TabsTrigger>
-              </div>
-            </TabsList>
-            <TabsContent value="subscription">
-              <Subscription subscriptions={subscriptions} />
-            </TabsContent>
-            <TabsContent value="bundle">
-              <Bundle bundles={bundles} />
-            </TabsContent>
-          </Tabs>
+          <PricingTabs products={products} />
 
-          {selectedProducts.length > 0 && (
+          <PricingAction>
             <SignUpAction />
-          )}
+          </PricingAction>
         </div>
       </Container>
     </section>
