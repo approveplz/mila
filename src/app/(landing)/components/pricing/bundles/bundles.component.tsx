@@ -36,7 +36,6 @@ export function Bundle({
   } = useCheckOutStore();
   const [isMobile, setIsMobile] = useState(false);
 
-  console.log("bundles: ", bundles);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1000);

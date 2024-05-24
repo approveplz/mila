@@ -49,7 +49,6 @@ export function PricingList({
     const subscriptions = products.filter(product => product.data.type === "subscription");
     const bundles = products.filter(product => product.data.type === "bundle");
 
-    console.log("calculateTotal(products): ", calculateTotal(products));
     return (
         <div className="flex flex-col items-center gap-8 [&>*]:self-stretch w-full">
             {subscriptions.map(product => (
