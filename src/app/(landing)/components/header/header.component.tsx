@@ -1,9 +1,10 @@
 
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button/button.component"
 import { messages } from "@/shared/constants/messages";
 import Link from "next/link";
 
-export function Header() {
+export async function Header() {
   const { header: {
     headingA,
     headingB,
@@ -12,6 +13,7 @@ export function Header() {
     learnMore,
     signUp
   } } = messages;
+  const session = await auth();
 
   return (
     <header>
@@ -23,14 +25,20 @@ export function Header() {
           <div className="font-normal text-[20px] text-white leading-[30px] ">
             {subHeading}
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mt-4">
-            <Button variant="secondary" asChild>
-              <Link href="/#how-it-works">
-                {learnMore}
-              </Link>
-            </Button>
-            <Button variant="secondary-outline">{signUp}</Button>
-          </div>
+          {!session && (
+            <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mt-4">
+              <Button variant="secondary" asChild>
+                <Link href="/#how-it-works">
+                  {learnMore}
+                </Link>
+              </Button>
+              <Button variant="secondary-outline" asChild>
+                <Link href="/#pricing">
+                  {signUp}
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </header>
