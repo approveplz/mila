@@ -1,5 +1,5 @@
 import { HiOutlineHeart } from "react-icons/hi2";
-import { Button } from "@/components";
+import { Button, DrawerClose } from "@/components";
 
 export function ThankYou({
     type,
@@ -23,16 +23,19 @@ export function ThankYou({
                         <h2 className="text-7xl font-tt-ramillas">Thank you!</h2>
                     )}
                 </header>
-                
+
                 {type === "narrow" ? (
                     <p className="text-center mt-6">{info}</p>
-                ): (
+                ) : (
                     <p className="text-center text-xl mt-6">{info}</p>
                 )}
             </main>
+
             {onFinish && (
                 <footer className="min-w-[346px]">
-                    <Button full onClick={onFinish}>Home</Button>
+                    <DrawerClose className="w-full">
+                        <Button full onClick={onFinish}>Home</Button>
+                    </DrawerClose>
                 </footer>
             )}
         </article>
