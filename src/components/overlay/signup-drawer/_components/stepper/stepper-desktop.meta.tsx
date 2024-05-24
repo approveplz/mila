@@ -9,8 +9,8 @@ import { Session } from "next-auth";
 import { StepperComponent } from "./stepper.types";
 
 const stepsMetaWithPayment: Array<StepperComponent> = [
-    // AuthStep,
-    // PaymentStep,
+    AuthStep,
+    PaymentStep,
     FinishPayment
 ];
 

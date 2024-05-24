@@ -19,7 +19,7 @@ export function Pricing({
   } } = messages;
 
   return (
-    <section className="py-[66px] bg-[#F3F3F3]">
+    <section id="pricing" className="py-[66px] bg-[#F3F3F3]">
       <Container>
         <div className="flex flex-col items-center gap-12">
           <div className="flex flex-col gap-6 items-center">

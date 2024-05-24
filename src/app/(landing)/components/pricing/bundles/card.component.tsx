@@ -51,7 +51,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
         <div className="flex flex-col items-left">
           <div className="flex flex-row gap-2 items-center">
             <HiOutlineGift size={24} color="#BE7B62" />
-            <span className="font-tt-ramillas text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry}</span>
+            <span className="font-tt-ramillas text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry} Entries</span>
           </div>
           <div className="font-medium text-base leading-6 text-[#171614]">
             {draw}
@@ -61,7 +61,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
         <div className="flex flex-col gap-6 items-left w-full">
           <div className="flex flex-col items-left">
             <div className="font-light text-5xl leading-[40px]">
-              {cardData?.cost}
+              ${cardData?.cost}
             </div>
             <div className="font-normal text-base leading-[48px]">
               {oneOff}

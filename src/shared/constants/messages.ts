@@ -207,7 +207,7 @@ export const messages = {
     headingB: 'Plan',
     description: "Join as a member to get more entries, otherwise buy a bundle for limited access to the site and entry to the upcoming prize.",
     subscription: 'Subscription',
-    bundle: 'bundle',
+    bundle: 'Bundle',
     clearSelection: 'Clear Selection',
     subscriptionData: {
       free: {
@@ -275,7 +275,7 @@ export const messages = {
         ]
       },
       getMessageA: "What you'll get",
-      getMessageB: 'into every giveaway',
+      getMessageB: 'into EVERY giveaway',
       select: 'Select',
       days: 'per 30 days',
 

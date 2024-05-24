@@ -69,9 +69,33 @@ export function Bundle({
             modules={[Pagination]}
             className="mySwiper"
           >
-            {bundles.map(bundle => (
-              <SwiperSlide key={bundle.id} className="rounded-[24px]">
+            {[...bundles]
+              .sort((bundleA, bundleB) => bundleA.number_of_entries - bundleB.number_of_entries)
+              .map(bundle => (
+                <SwiperSlide key={bundle.id} className="rounded-[24px]">
+                  <BundleCard
+                    cardData={{
+                      benefits: bundleA.benefits,
+                      cost: getDefaultPrice(bundle.prices),
+                      entry: bundle.number_of_entries,
+                      selected: products.some(prod => prod.id === bundle.id),
+                      quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
+                      onSelect: () => addProduct(bundle),
+                      onIncrease: () => increaseProductQuantity(bundle.id),
+                      onDecrease: () => decreaseProductQuantity(bundle.id)
+                    }}
+                    selected={products.some(prod => prod.id === bundle.id)}
+                  />
+                </SwiperSlide>
+              ))}
+          </Swiper>
+        ) : (
+          <div className="grid grid-cols-3 gap-8">
+            {[...bundles]
+              .sort((bundleA, bundleB) => bundleA.number_of_entries - bundleB.number_of_entries)
+              .map(bundle => (
                 <BundleCard
+                  key={bundle.id}
                   cardData={{
                     benefits: bundleA.benefits,
                     cost: getDefaultPrice(bundle.prices),
@@ -84,27 +108,7 @@ export function Bundle({
                   }}
                   selected={products.some(prod => prod.id === bundle.id)}
                 />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        ) : (
-          <div className="grid grid-cols-3 gap-8">
-            {bundles.map(bundle => (
-              <BundleCard
-                key={bundle.id}
-                cardData={{
-                  benefits: bundleA.benefits,
-                  cost: getDefaultPrice(bundle.prices),
-                  entry: bundle.number_of_entries,
-                  selected: products.some(prod => prod.id === bundle.id),
-                  quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
-                  onSelect: () => addProduct(bundle),
-                  onIncrease: () => increaseProductQuantity(bundle.id),
-                  onDecrease: () => decreaseProductQuantity(bundle.id)
-                }}
-                selected={products.some(prod => prod.id === bundle.id)}
-              />
-            ))}
+              ))}
           </div>
         )}
       </div>

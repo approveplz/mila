@@ -40,7 +40,7 @@ export function NavContent({
                         ) : (
                             <div className="flex gap-4">
                                 <Button asChild>
-                                    <Link href="/">Sign Up</Link>
+                                    <Link href="/#pricing">Sign Up</Link>
                                 </Button>
                                 <Button variant="primary-outline" asChild>
                                     <Link href="/signin">Sign In</Link>

@@ -130,7 +130,7 @@ export function SubscriptionInfoCard({
 
                                 <div className="flex flex-row gap-2 items-center">
                                     <HiOutlineGift size={24} className="text-primary" />
-                                    <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{entries}</span>
+                                    <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{entries} {entries > 1 ? "Entries" : "Entry"}</span>
                                 </div>
                                 <div className="font-normal text-base">
                                     {getMessageB}
