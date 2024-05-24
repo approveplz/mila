@@ -19,6 +19,7 @@ export function VerifyEmail() {
         <Container>
             <CentralizedContent>
                 <EmailVerificationContent
+                    type="wider"
                     onReSend={() => { }}
                     action={checkoutFlow === "free" && <Button full onClick={handleVerifyPhone}>Verify Your Phone Number</Button>}
                 />
