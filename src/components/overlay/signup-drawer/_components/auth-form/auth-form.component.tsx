@@ -45,7 +45,9 @@ export function AuthForm() {
         }
     });
 
-    const onSubmit = (data: SignUpFormData) => {
+    const onSubmit = (signUpFormData: SignUpFormData) => {
+        const { token: _, ...data } = signUpFormData;
+
         const prices = products
             .map(product => {
                 const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices)
