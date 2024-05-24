@@ -15,6 +15,7 @@ import { confirmMembership, generateMembership } from '@/api/auth';
 import { useCheckOutStore } from '@/store';
 import { useSession } from 'next-auth/react';
 import { useFormContext } from 'react-hook-form';
+import { getProductPriceInfo } from '@/utils';
 
 type K = keyof {};
 
@@ -49,15 +50,21 @@ export function PaymentForm() {
                 coupon: couponForm.getValues("coupon") || null,
                 user: session.data?.user.user.id,
                 prices: products
-                    // .map(product => product.data.prices[0])
-                    // .map(price => ({
-                    //     price: price.id,
-                    //     quantity: 1
-                    // }))
-                    .map(product => ({
-                        price: product.data.prices[0].id,
-                        quantity: product.quantity
-                    }))
+                    .map(product => {
+                        const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices)
+
+                        if (!!discountedPrice) {
+                            return {
+                                price: discountedPrice.id,
+                                quantity: product.quantity
+                            }
+                        } else {
+                            return {
+                                price: defaultPrice.id,
+                                quantity: product.quantity
+                            }
+                        }
+                    })
             }
 
             // create a payment method

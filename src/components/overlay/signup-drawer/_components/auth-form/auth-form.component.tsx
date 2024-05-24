@@ -21,7 +21,8 @@ import {
     signUpSchema
 } from "./auth-form.schema";
 import { useStepperContext } from "../stepper/stepper.context";
-import { prefixObjectKeys } from "@/utils";
+import { getProductPriceInfo, prefixObjectKeys } from "@/utils";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 type K = keyof SignUpFormData;
 
@@ -39,17 +40,28 @@ export function AuthForm() {
             phone: "",
             state: "",
             is_outside_of_us: false,
-            is_over_18: false
+            is_over_18: false,
+            token: ""
         }
     });
 
     const onSubmit = (data: SignUpFormData) => {
         const prices = products
-            .map(product => product.data.prices[0])
-            .map(price => ({
-                price: price.id,
-                quantity: 1
-            }))
+            .map(product => {
+                const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices)
+
+                if(!!discountedPrice) {
+                    return {
+                        price: discountedPrice.id,
+                        quantity: product.quantity
+                    }
+                } else {
+                    return {
+                        price: defaultPrice.id,
+                        quantity: product.quantity
+                    }
+                }
+            })
 
         signUpWithPrices({
             ...data,
@@ -218,10 +230,26 @@ export function AuthForm() {
                     )}
                 />
 
+                <FormField
+                    control={form.control}
+                    name="token"
+                    render={({ field }) => (
+                        <FormItem className="flex justify-center w-full z-[99999]">
+                            <FormControl>
+                                <HCaptcha 
+                                    sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                                    onVerify={(token) => field.onChange(token)}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 <Button
                     className="mt-auto sm:mt-0"
                     type="submit"
-                    disabled={!form.watch("is_over_18")}
+                    disabled={!form.watch("is_over_18") || !!!form.watch("token")}
                 >
                     Sign Up
                 </Button>

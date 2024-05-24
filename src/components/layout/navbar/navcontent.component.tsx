@@ -29,7 +29,9 @@ export function NavContent({
                     <NavList />
 
                     <div className="relative h-12 w-[90px]">
-                        <Image src="/images/logo-fatal.svg" alt="logo" fill />
+                        <Link href="/">
+                            <Image src="/images/logo-fatal.svg" alt="logo" fill />
+                        </Link>
                     </div>
 
                     <div className="hidden sm:flex">
