@@ -19,7 +19,7 @@ export function Finish() {
                 <ThankYou
                     type="narrow"
                     info="Your information was verified!"
-                    onFinish={() => router.push("/")}
+                    onFinish={() => {}}
                 />
             </CentralizedContent>
         </Container>
