@@ -42,8 +42,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             id: "register",
             name: "register",
             async authorize(credentials) {
+                console.log("credentials: ", credentials);
+                
                 const response = JSON.parse(JSON.stringify(credentials));
                 const user = removePrefixFromObjectKeys(response, "userpre_")
+                const metadata = removePrefixFromObjectKeys(response, "metadatapre_")
+                user.metadata = metadata;
 
                 return {
                     ...response,

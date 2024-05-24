@@ -48,3 +48,7 @@ export async function authSignIn(prevState: any, data: FormData) {
         throw error;
     }
 }
+
+export async function authRegisterSigIn(data: FormData) {
+    await signIn("register", data);
+}

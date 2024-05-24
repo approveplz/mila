@@ -5,9 +5,9 @@ import { useStepperContext } from "../stepper/stepper.context";
 
 export function VerifyEmail() {
     const { nextStep } = useStepperContext();
+    const { checkoutFlow } = useCheckOutStore();
 
     const handleVerifyPhone = () => {
-        // nextStep();
         sendVerificationSms().then(res => {
             nextStep();
         }).catch(err => {
@@ -20,7 +20,7 @@ export function VerifyEmail() {
             <CentralizedContent>
                 <EmailVerificationContent
                     onReSend={() => { }}
-                    action={<Button full onClick={handleVerifyPhone}>Verify Your Phone Number</Button>}
+                    action={checkoutFlow === "free" && <Button full onClick={handleVerifyPhone}>Verify Your Phone Number</Button>}
                 />
             </CentralizedContent>
         </Container>

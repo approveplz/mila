@@ -1,13 +1,13 @@
-// import dynamic from "next/dynamic";
+import { auth } from "@/auth";
 import { Provider } from "./_components/provider/provider.component";
 import Stepper from "./_components/stepper/stepper.component";
 
-// const Stepper = dynamic(() => import('./_components/stepper/stepper.component'), { ssr: false })
+export async function SignUpDrawer() {
+    const session = await auth();
 
-export function SignUpDrawer() {
     return (
         <Provider>
-            <Stepper />
+            <Stepper session={session} />
         </Provider>
     )
 }

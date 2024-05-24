@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, CentralizedContent, Container, EmailVerificationContent, ThankYou } from "@/components";
+import {
+    Button,
+    CentralizedContent,
+    Container,
+    DrawerClose,
+    EmailVerificationContent,
+    ThankYou
+} from "@/components";
 import { useRouter } from "next/navigation";
 
 export function Finish() {
@@ -10,6 +17,7 @@ export function Finish() {
         <Container>
             <CentralizedContent>
                 <ThankYou
+                    type="narrow"
                     info="Your information was verified!"
                     onFinish={() => router.push("/")}
                 />
@@ -19,22 +27,24 @@ export function Finish() {
 }
 
 export function FinishPayment() {
-    const router = useRouter();
-
     return (
         <Container>
             <CentralizedContent>
-                <div className="flex flex-col justify-between h-full py-[124px]">
+                <div className="flex flex-col gap-24 justify-center h-full">
                     <ThankYou
+                        type="wider"
                         info="Your payment was successful."
                     />
 
                     <EmailVerificationContent
+                        type="narrow"
                         onReSend={() => { }}
                     />
 
                     <div className="min-w-[304px] self-center">
-                        <Button full onClick={() => router.push("/")}>Home</Button>
+                        <DrawerClose className="w-full">
+                            <Button full>Home</Button>
+                        </DrawerClose>
                     </div>
                 </div>
             </CentralizedContent>
