@@ -42,8 +42,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             id: "register",
             name: "register",
             async authorize(credentials) {
-                console.log("credentials: ", credentials);
-
                 const response = JSON.parse(JSON.stringify(credentials));
                 const user = removePrefixFromObjectKeys(response, "userpre_")
                 const metadata = removePrefixFromObjectKeys(response, "metadatapre_")
@@ -74,9 +72,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         signIn: "/signin",
         newUser: "/",
     },
-    session: {
-        updateAge: 0
-    },
     secret: process.env.AUTH_SECRET,
-    trustHost: true
+    trustHost: true,
 })

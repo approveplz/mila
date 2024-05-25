@@ -2,16 +2,18 @@
 
 import { signOut, signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { cookies } from "next/headers";
 
 function isRedirectError(error: Error & { digest?: string }) {
     return !!error.digest?.startsWith("NEXT_REDIRECT")
 }
 
 export async function authSignOut() {
-    // await signOut({
-    //     redirect: false
-    // });
     await signOut();
+
+    if(process.env.NODE_ENV === "production") {
+        cookies().delete('__Secure-authjs.session-token');
+    }
 }
 
 export async function authSignIn(prevState: any, data: FormData) {
