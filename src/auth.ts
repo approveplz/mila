@@ -43,7 +43,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             name: "register",
             async authorize(credentials) {
                 console.log("credentials: ", credentials);
-                
+
                 const response = JSON.parse(JSON.stringify(credentials));
                 const user = removePrefixFromObjectKeys(response, "userpre_")
                 const metadata = removePrefixFromObjectKeys(response, "metadatapre_")
@@ -74,6 +74,37 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         signIn: "/signin",
         newUser: "/",
     },
+    session: {
+        updateAge: 0
+    },
     secret: process.env.AUTH_SECRET,
     trustHost: true,
+    cookies: {
+        sessionToken: {
+            name: `next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: true
+            }
+        },
+        callbackUrl: {
+            name: `next-auth.callback-url`,
+            options: {
+                sameSite: 'lax',
+                path: '/',
+                secure: true
+            }
+        },
+        csrfToken: {
+            name: `next-auth.csrf-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: true
+            }
+        },
+    }
 })
