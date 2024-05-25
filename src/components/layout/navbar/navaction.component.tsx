@@ -1,6 +1,6 @@
 "use client";
 
-import { authSignIn, authSignOut } from "@/actions";
+import { authSignOut } from "@/actions";
 import {
     Button,
     DropdownMenu,
@@ -29,11 +29,13 @@ export function NavAction() {
                     </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-20 z-[9999]">
-                    <DropdownMenuItem onClick={async () => {
-                        await authSignOut()
-                    }}>
-                        <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
+                    <DropdownMenuItem>
+                        <form action={authSignOut}>
+                            <button className="flex">
+                                <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
+                                <span>Log out</span>
+                            </button>
+                        </form>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
