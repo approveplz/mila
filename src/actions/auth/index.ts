@@ -9,21 +9,8 @@ function isRedirectError(error: Error & { digest?: string }) {
 }
 
 export async function authSignOut() {
-    if (process.env.NODE_ENV === "production") {
-        // Retrieve all cookies
-        const allCookies = cookies().getAll();
-
-        // Iterate through each cookie
-        allCookies.forEach((cookie) => {
-            // Delete the cookie
-            cookies().delete(cookie.name);
-        });
-
-    }
-
-    console.log("cookies: ", cookies().getAll())
-
-    await signOut({ redirectTo: "/" });
+    await signOut({ redirect: false });
+    console.log('cookies: ', cookies().getAll());
 }
 
 export async function authSignIn(prevState: any, data: FormData) {
