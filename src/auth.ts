@@ -78,33 +78,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         updateAge: 0
     },
     secret: process.env.AUTH_SECRET,
-    trustHost: true,
-    cookies: {
-        sessionToken: {
-            name: `next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: true
-            }
-        },
-        callbackUrl: {
-            name: `next-auth.callback-url`,
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: true
-            }
-        },
-        csrfToken: {
-            name: `next-auth.csrf-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: true
-            }
-        },
-    }
+    trustHost: true
 })
