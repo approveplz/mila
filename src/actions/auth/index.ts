@@ -9,11 +9,18 @@ function isRedirectError(error: Error & { digest?: string }) {
 }
 
 export async function authSignOut() {
-    if(process.env.NODE_ENV === "production") {
-        console.log("process.env: ", process.env.NODE_ENV);
-        cookies().set('__Secure-authjs.session-token', 'value', { maxAge: 0 });
+    if (process.env.NODE_ENV === "production") {
+        // Retrieve all cookies
+        const allCookies = cookies().getAll();
+
+        // Iterate through each cookie
+        allCookies.forEach((cookie) => {
+            // Delete the cookie
+            cookies().delete(cookie.name);
+        });
+
     }
-    
+
     console.log("cookies: ", cookies().getAll())
 
     await signOut({ redirectTo: "/" });
