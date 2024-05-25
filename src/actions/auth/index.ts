@@ -2,15 +2,13 @@
 
 import { signOut, signIn } from "@/auth";
 import { AuthError } from "next-auth";
-import { cookies } from "next/headers";
 
 function isRedirectError(error: Error & { digest?: string }) {
     return !!error.digest?.startsWith("NEXT_REDIRECT")
 }
 
 export async function authSignOut() {
-    await signOut({ redirect: false });
-    console.log('cookies: ', cookies().getAll());
+    await signOut();
 }
 
 export async function authSignIn(prevState: any, data: FormData) {
