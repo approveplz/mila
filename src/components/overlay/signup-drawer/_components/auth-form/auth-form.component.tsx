@@ -1,5 +1,7 @@
 "use client";
 
+import * as React from "react";
+import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -20,9 +22,9 @@ import {
     signUpSchema
 } from "./auth-form.schema";
 import { useStepperContext } from "../stepper/stepper.context";
-import { getProductPriceInfo, prefixObjectKeys } from "@/utils";
+import { getProductPriceInfo, prefixObjectKeys, withAsync } from "@/utils";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { authRegisterSigIn } from "@/actions";
+import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
 
 type K = keyof SignUpFormData;
@@ -30,7 +32,13 @@ type K = keyof SignUpFormData;
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products } = useCheckOutStore();
-    
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    const [result, authSignUp] = useFormState(actions.authRegisterSigIn, {
+        status: 'idle',
+        error: ''
+    });
+
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
         resolver: zodResolver(signUpSchema),
@@ -70,22 +78,19 @@ export function AuthForm() {
             ...data,
             prices
         })
-            .then(res => {
+            .then(async (res) => {
                 const user = prefixObjectKeys(res.user, "userpre_")
                 const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
 
                 const payload = JSON.parse(JSON.stringify(res));
                 delete payload.user;
 
-                return authRegisterSigIn(serialize({
+                authSignUp(serialize({
                     ...payload,
                     ...user,
                     ...metadata,
                     redirect: false
                 }))
-            })
-            .then(() => {
-                nextStep()
             })
             .catch(err => {
                 const errors = err.response.data;
@@ -99,6 +104,17 @@ export function AuthForm() {
                 });
             });
     }
+
+    React.useEffect(() => {
+        if (result) {
+            if (result.status === "success") {
+                setIsLoading(false);
+                nextStep();
+            } else if (result.status === "failed") {
+                setIsLoading(false);
+            }
+        }
+    }, [result, nextStep]);
 
     return (
         <Form {...form}>
