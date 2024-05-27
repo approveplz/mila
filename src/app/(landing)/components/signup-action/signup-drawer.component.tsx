@@ -11,7 +11,7 @@ import { HiArrowUpRight } from "react-icons/hi2";
 
 export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
     return (
-        <Drawer dismissible={false} modal={false}>
+        <Drawer dismissible={false} nested={true}>
             <DrawerTrigger asChild>
                 <Button variant="fatal">
                     Continue With Selected

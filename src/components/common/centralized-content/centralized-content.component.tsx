@@ -8,20 +8,27 @@ const centralizedContentClasses = cva("flex h-screen", {
             h: "items-center",
             v: "justify-center",
             hv: "items-center justify-center"
+        },
+        fullHeight: {
+            true: "h-screen",
+            false: "h-auto"
         }
     },
     defaultVariants: {
-        centralized: "hv"
+        centralized: "hv",
+        fullHeight: true
     }
 })
 
 
-type Props = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof centralizedContentClasses>;
+type Props = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof centralizedContentClasses> & {
+    as?: React.ElementType;
+};
 
-export function CentralizedContent({ className, centralized, ...props }: Props) {
+export function CentralizedContent({ as: Component = "div", className, centralized, fullHeight, ...props }: Props) {
     return (
-        <div
-            className={cn(centralizedContentClasses({ centralized, className }))}
+        <Component
+            className={cn(centralizedContentClasses({ centralized, fullHeight, className }))}
             {...props}
         />
     )

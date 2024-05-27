@@ -3,6 +3,7 @@ import "@/styles/css/globals.css";
 import type { Metadata } from "next";
 import { inter, ttRamillasTrlVar } from "@/styles/fonts";
 import { Providers } from "./providers";
+import { cn } from "@/utils";
 
 export const metadata: Metadata = {
   title: "MilaCollective",
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${ttRamillasTrlVar.variable} ${inter.className} text-[#171614]`}>
+      <body className={cn(inter.variable, ttRamillasTrlVar.variable, inter.className, "text-fatal")}>
         <Providers >
           {children}
           {auth}
