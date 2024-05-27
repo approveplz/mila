@@ -8,10 +8,10 @@ type TimerType = {
   textClass?: string;
   labelClass?: string;
   labelPosition?: 'top' | 'bottom' | 'none';
+  drawDate?: string
 }
 
-export function Timer({ containerClass, boxClass, textClass, labelClass, labelPosition }: TimerType) {
-
+export function Timer({ containerClass, boxClass, textClass, labelClass, labelPosition, drawDate }: TimerType) {
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -29,7 +29,8 @@ export function Timer({ containerClass, boxClass, textClass, labelClass, labelPo
 
   const updateCountdown = () => {
     const now = new Date().getTime();
-    const distance = new Date('2024-06-01T00:00:00').getTime() - now;
+    const tempDrawDate = new Date('2024-06-01T00:00:00').getTime();
+    const distance = (drawDate ? new Date(drawDate).getTime() : tempDrawDate) - now;
 
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -47,7 +48,11 @@ export function Timer({ containerClass, boxClass, textClass, labelClass, labelPo
   const renderBox = (value: number, label: string) => (
     <div className={`flex flex-col ${boxClass}`}>
       {labelPosition === 'top' && <div className={labelClass}>{label}</div>}
-      <div className={textClass}>{value < 10 ? `0${value}` : value}</div>
+      {
+
+      }
+      <div className={textClass}>{value < 0 ? '00' : value < 10 ? `0${value}` : value}</div>
+
       {labelPosition === 'bottom' && <div className={labelClass}>{label}</div>}
     </div>
   );

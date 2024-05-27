@@ -174,32 +174,6 @@ export const messages = {
   majorGiveaways: {
     heading: 'YOU will be IN to WIN the FOLLOWING',
     subHeading: 'MAJOR giveaways',
-    cards: [
-      {
-        title: 'Poduct Name',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit.',
-        entry: '200 entries'
-      },
-      {
-        title: 'Poduct Name',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit.',
-        entry: '200 entries'
-      },
-      {
-        title: 'Poduct Name',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit.',
-        entry: '200 entries'
-      },
-      {
-        title: 'Poduct Name',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit.',
-        entry: '200 entries'
-      }
-    ],
-    day: 'Day',
-    hrs: 'Hrs',
-    min: 'Min',
-    sec: 'Sec'
   },
 
   pricing: {
