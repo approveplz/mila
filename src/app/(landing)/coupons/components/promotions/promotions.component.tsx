@@ -37,7 +37,7 @@ export function Promotions() {
               <Image
                 src="/images/promotions.png"
                 alt="promotions"
-                layout="cover"
+                // layout="cover"
                 width={319}
                 height={267}
                 className={`w-full`}
