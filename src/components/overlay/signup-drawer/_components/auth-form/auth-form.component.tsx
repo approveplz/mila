@@ -31,6 +31,7 @@ type K = keyof SignUpFormData;
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products } = useCheckOutStore();
+    const formRef = React.useRef<HTMLFormElement>(null);
 
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
@@ -108,6 +109,7 @@ export function AuthForm() {
         <Form {...form}>
             <form
                 className="flex flex-col flex-1 sm:flex-initial justify-center gap-6"
+                ref={formRef}
                 onSubmit={form.handleSubmit(onSubmit)}
             >
                 <FormField
