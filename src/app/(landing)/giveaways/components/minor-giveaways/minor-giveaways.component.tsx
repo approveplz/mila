@@ -106,8 +106,6 @@ export function MinorGiveaways() {
         </div> :
 
           <div className="w-full h-full">
-
-
             {giveAwayData &&
               <Swiper
                 style={{
@@ -121,7 +119,7 @@ export function MinorGiveaways() {
               >
                 {giveAwayData?.map((giveAway, index) => (
                   <SwiperSlide key={index} className="rounded-[20px]">
-                    <div key={index} className="relative overflow-hidden flex-shrink-0 shadow-lg rounded-[20px] flex flex-col gap-6 border border-[#9CA3AF] max-w-[310px]">
+                    <div key={index} className="relative overflow-hidden flex-shrink-0 shadow-lg rounded-[20px] flex flex-col gap-6 border border-[#9CA3AF] w-full">
 
                       <div className="z-10 opacity-[0.08] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
 

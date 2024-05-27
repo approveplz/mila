@@ -3,7 +3,6 @@
 import { CouponCard } from "../coupon-card/coupon-card.component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HiMiniArrowLeft, HiMiniArrowRight } from "react-icons/hi2";
-import { useSession } from 'next-auth/react';
 import { useState } from "react";
 import { getCouponCategories, getCoupons } from "@/api/auth";
 import { CouponResponse, GetCouponsResponse, GetCouponCategoriesResponse } from "@/api/auth/auth.types";
@@ -12,15 +11,14 @@ import {
   UseQueryResult
 } from '@tanstack/react-query'
 import { NoCouponsFound } from "../no-coupons-found/no-coupons-found.component";
+import { Session } from "next-auth";
 
-export function CoupensList() {
+export function CoupensList({ session }: { session: Session | null }) {
 
-  const session = useSession();
-  const isLoggedIn = !!session?.data;
+  const isLoggedIn = !!session;
   const [page, setPage] = useState<number>(1)
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-
-
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
+  
   const { data: categoryData, isLoading: isCategoryLoading }: UseQueryResult<GetCouponCategoriesResponse> =
     useQuery({
       queryKey: ['couponCategories'],
@@ -29,7 +27,7 @@ export function CoupensList() {
           setSelectedCategory(res?.results[0]?.id)
           return res;
         }),
-      enabled: !!isLoggedIn
+        enabled: isLoggedIn,
     })
 
   const { data: coupons, isLoading: isCouponLoading }: UseQueryResult<GetCouponsResponse> =
@@ -45,7 +43,7 @@ export function CoupensList() {
 
   return (
     <div className="sm:py-20 sm:px-[175px] px-6 py-12 bg-[#F9FAFB] flex flex-col items-center justify-center gap-12">
-      {categoryData && !isCategoryLoading && <Tabs defaultValue={categoryData && categoryData?.results[0]?.name} className="w-full">
+      {isLoggedIn && categoryData && !isCategoryLoading && <Tabs defaultValue={categoryData && categoryData?.results[0]?.name} className="w-full">
         <TabsList className="flex flex-row justify-center">
           <div className="flex flex-row gap-[30.17px] bg-[#F9FAFB] rounded-[30px] p-1 overflow-x-auto ">
             {categoryData?.results?.map((category, index) => (
@@ -87,7 +85,7 @@ export function CoupensList() {
         </div>
       </div>}
 
-      {coupons && !isCouponLoading && coupons?.results?.length > 0
+      {isLoggedIn && coupons && !isCouponLoading && coupons?.results?.length > 0
         && <div className="hidden sm:flex justify-center flex-row gap-2 items-center w-full">
 
           {coupons?.previous && < HiMiniArrowLeft onClick={() => setPage(page - 1)} className="w-[20px] font-bold cursor-pointer" />}
