@@ -15,6 +15,7 @@ import {
 } from '@tanstack/react-query'
 import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
+import { useCheckOutStore } from "@/store";
 
 export function MinorGiveaways() {
   const { minorGiveways: {
@@ -48,7 +49,8 @@ export function MinorGiveaways() {
       queryFn: () =>
         getGiveaways('small', 'minor')
     })
-    
+
+
   return (
     <section className={`sm:py-20 px-6 flex flex-col justify-center w-full items-center gap-12 ${isMobile ? 'bg-[#F3F3F3]' : 'bg-white'}`}>
 
@@ -61,11 +63,11 @@ export function MinorGiveaways() {
           {giveAwayData.slice(0, 8).map((giveAway, index) => (
             <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[310px] flex flex-col gap-4">
 
-              {/* <div className="absolute bg-white rounded-full px-2 top-4 right-4 ">
+              {/* {products?.length > 0 && <div className="absolute bg-white rounded-full px-2 top-4 right-4 ">
                 <div className="font-semibold text-base leading-6">
-                  {card?.entry}
+                  {products[0]?.data?.number_of_entries} entries
                 </div>
-              </div> */}
+              </div>} */}
 
               <Image
                 src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
@@ -127,12 +129,12 @@ export function MinorGiveaways() {
 
 
 
-
-                      {/* <div className="absolute bg-white rounded-full px-2 top-4 left-[10px]">
-                      <div className="font-semibold text-base leading-6">
-                        {card?.entry}
-                      </div>
-                    </div> */}
+{/* 
+                      {products?.length > 0 && <div className="absolute bg-white rounded-full px-2 top-4 left-[10px]">
+                        <div className="font-semibold text-base leading-6">
+                          {products[0]?.data?.number_of_entries} entries
+                        </div>
+                      </div>} */}
 
                       <Image
                         src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}

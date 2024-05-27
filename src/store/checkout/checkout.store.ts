@@ -9,6 +9,12 @@ export const useCheckOutStore = create<CheckOutStore>()(
             (set) => ({
                 checkoutFlow: "paid",
                 products: [],
+                pricingType: "subscription",
+                setPricingType(type: "subscription" | "bundle") {
+                    set(state => {
+                        state.pricingType = type;
+                    });
+                },
                 addProduct(payload) {
                     if (payload.type === "subscription") {
                         set(state => {
@@ -109,3 +115,8 @@ useCheckOutStore.subscribe(
         }
     }
 )
+
+useCheckOutStore.subscribe(
+    (state) => state.pricingType,
+    (type) => {}
+);
