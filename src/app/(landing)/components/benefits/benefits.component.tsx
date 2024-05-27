@@ -14,7 +14,7 @@ export function Benefits() {
         <Image
           src="/images/benefits.png"
           alt="benefits"
-          layout="responsive"
+          // layout="responsive"
           width={656}
           height={632}
           className="sm:min-w-[656px] sm:min-h-[632px] !w-[100vh]"
@@ -35,7 +35,7 @@ export function Benefits() {
               <Image
                 src="/images/cube.png"
                 alt="benefits"
-                layout="responsive"
+                // layout="responsive"
                 width={15}
                 height={16}
                 className="max-w-[15px] max-h-[16px]"

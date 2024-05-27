@@ -6,10 +6,16 @@ import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Timer } from "@/components/common/timer/timer.component";
+import {
+  useQuery,
+  UseQueryResult
+} from '@tanstack/react-query'
+import { getGiveaways } from "@/actions";
+import { GiveawayItem } from "@/entities";
 
 export function MajorGiveaways() {
   const { majorGiveaways: {
-    heading, subHeading, day, hrs, min, sec, cards
+    heading, subHeading
   } } = messages;
 
   const [isMobile, setIsMobile] = useState(false);
@@ -25,6 +31,12 @@ export function MajorGiveaways() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem[]> =
+    useQuery({
+      queryKey: ['majorGiveAways'],
+      queryFn: () =>
+        getGiveaways('large', 'major')
+    })
 
   return (
     <section className={`${isMobile ? '!py-[33px]' : 'py-[66px]'} py-[66px] ${isMobile ? 'px-6' : 'px-16'} flex flex-col items-center gap-12 bg-[#F3F3F3]`}>
@@ -37,7 +49,7 @@ export function MajorGiveaways() {
         {subHeading}
       </div>
 
-      {isMobile &&
+      {isMobile && giveAwayData &&
         <Swiper
           style={{
             paddingBottom: "48px"
@@ -48,34 +60,35 @@ export function MajorGiveaways() {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {cards?.map((card, index) => (
+          {giveAwayData?.map((giveAway, index) => (
             <SwiperSlide key={index} className="rounded-[20px]">
               <div
                 className="relative border-2 shadow-lg border-[#E5E7EB] bg-white flex flex-col items-left sm:flex-row rounded-[20px]"
               >
                 <Image
-                  src="/images/bagpack-2.jpeg"
+                  src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
                   layout="responsive"
                   width={319}
                   height={280}
-                  className={` !rounded-t-[20px]`}
+                  className={`!rounded-t-[20px]`}
                 />
 
-                <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                {/* <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                   <HiOutlineGift size={24} color="#B06E6A" />
                   <div className="font-semibold text-base leading text-primary">
                     {card?.entry}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="py-8 px-6 flex flex-col gap-8">
                   <div className="flex flex-col gap-2">
                     <div className="font-semibold text-[30px] leading-9 text-[#171614]">
-                      {card?.title}
+                      {giveAway?.brand}
                     </div>
                     <div className="font-normal text-lg leading-[28px]">
-                      {card?.description}
+                      {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
+
                     </div>
                   </div>
 
@@ -88,6 +101,7 @@ export function MajorGiveaways() {
                         textClass="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]"
                         labelClass="font-normal text-lg leading-7"
                         labelPosition="bottom"
+                        drawDate={giveAway?.draw_time}
                       />
 
                     </div>
@@ -102,33 +116,33 @@ export function MajorGiveaways() {
       {
         !isMobile && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {cards?.map((card, index) => (
+            {giveAwayData && giveAwayData?.map((giveAway, index) => (
               <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[280] rounded-[20px]" >
 
                 <Image
-                  src="/images/bagpack-2.jpeg"
+                  src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
                   layout="responsive"
                   width={319}
                   height={280}
-                  className="!w-[319px] !h-[280px] !rounded-l-[20px]"
+                  className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"
                 />
 
-                <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                {/* <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                   <HiOutlineGift size={24} color="#B06E6A" />
                   <div className="font-semibold text-base leading text-primary">
                     {card?.entry}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="py-8 px-6 flex flex-col gap-8">
 
                   <div className="flex flex-col gap-2">
                     <div className="font-semibold text-[30px] leading-9 text-[#171614]">
-                      {card?.title}
+                      {giveAway?.brand}
                     </div>
                     <div className="font-normal text-lg leading-[28px]">
-                      {card?.description}
+                      {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
                     </div>
                   </div>
 
@@ -141,6 +155,7 @@ export function MajorGiveaways() {
                         textClass="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]"
                         labelClass="font-normal text-lg leading-7"
                         labelPosition="bottom"
+                        drawDate={giveAway?.draw_time}
                       />
                     </div>
                   </div>

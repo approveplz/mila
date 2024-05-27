@@ -40,7 +40,7 @@ export function HowItWorks() {
           <Image
             src="/images/pointer.png"
             alt="pointer"
-            layout="responsive"
+            // layout="responsive"
             width={99}
             height={96}
             className="max-w-[99px] max-h-[96px]"
@@ -59,7 +59,7 @@ export function HowItWorks() {
           <Image
             src="/images/gift.png"
             alt="gift"
-            layout="responsive"
+            // layout="responsive"
             width={77}
             height={96}
             className="max-w-[77px] max-h-[96px]"
@@ -78,7 +78,7 @@ export function HowItWorks() {
           <Image
             src="/images/bag.png"
             alt="bag"
-            layout="responsive"
+            // layout="responsive"
             width={73}
             height={96}
             className="max-w-[73px] max-h-[96px]"
