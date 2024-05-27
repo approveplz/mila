@@ -25,6 +25,7 @@ import { getProductPriceInfo, prefixObjectKeys, withAsync } from "@/utils";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
+import { signIn } from "next-auth/react";
 
 type K = keyof SignUpFormData;
 
@@ -84,11 +85,19 @@ export function AuthForm() {
                 //     ...user,
                 //     ...metadata,
                 // }))
-                const { response, error } = await withAsync(() => actions.signUp(serialize({
+                // const { response, error } = await withAsync(() => actions.signUp(serialize({
+                //     ...payload,
+                //     ...user,
+                //     ...metadata,
+                // })));
+                const data = {
                     ...payload,
                     ...user,
                     ...metadata,
-                })));
+                    redirect: false
+                };
+
+                const { response, error } = await withAsync(() => actions.signUp(serialize(data)));
 
                 nextStep();
             })

@@ -20,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
             },
             async authorize(credentials) {
+                console.log("credentials: ", credentials);
                 const { response, error } = await withAsync(() => signInWithCredentials({
                     email: credentials.email as string,
                     password: credentials.password as string
@@ -39,6 +40,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         Credentials({
             id: "register",
             name: "register",
+            credentials: {
+                email: {
+                    label: "Email"
+                },
+                password: {
+                    label: "Password",
+                    type: "password"
+                }
+            },
             async authorize(credentials) {
                 const response = JSON.parse(JSON.stringify(credentials));
                 const user = removePrefixFromObjectKeys(response, "userpre_")
@@ -69,7 +79,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     pages: {
         signIn: "/",
-        newUser: "/",
     },
     secret: process.env.AUTH_SECRET,
     trustHost: true,
