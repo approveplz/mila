@@ -18,7 +18,7 @@ export function FollowUs() {
         <Image
           src="/images/girls.png"
           alt="girls"
-          layout="responsive"
+          // layout="responsive"
           width={360}
           height={360}
           className="!w-full !h-full"
@@ -27,7 +27,7 @@ export function FollowUs() {
         <Image
           src="/images/jewelery.png"
           alt="jewelery"
-          layout="responsive"
+          // layout="responsive"
           width={360}
           height={360}
           className="!w-full !h-full"
@@ -36,7 +36,7 @@ export function FollowUs() {
         <Image
           src="/images/shirt.png"
           alt="shirt"
-          layout="responsive"
+          // layout="responsive"
           width={360}
           height={360}
           className="!w-full !h-full"

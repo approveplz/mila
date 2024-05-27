@@ -28,7 +28,7 @@ export function GiveAway() {
     useQuery({
       queryKey: ['upcomingGiveAway'],
       queryFn: () =>
-        getGiveaways('large', 'upcoming').then((res) => { return res })
+        getGiveaways('large', 'upcoming')
     })
 
   return (

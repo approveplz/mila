@@ -40,7 +40,7 @@ export function UpcomingGiveAways() {
     useQuery({
       queryKey: ['majorGiveAways'],
       queryFn: () =>
-        getGiveaways('large', 'major').then((res) => { return res })
+        getGiveaways('large', 'major')
     })
 
   return (

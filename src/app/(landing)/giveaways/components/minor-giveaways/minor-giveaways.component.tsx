@@ -46,7 +46,7 @@ export function MinorGiveaways() {
     useQuery({
       queryKey: ['minorGiveAways'],
       queryFn: () =>
-        getGiveaways('small', 'minor').then((res) => { return res })
+        getGiveaways('small', 'minor')
     })
     
   return (
