@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -32,12 +31,6 @@ type K = keyof SignUpFormData;
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products } = useCheckOutStore();
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    const [result, authSignUp] = useFormState(actions.authRegisterSigIn, {
-        status: 'idle',
-        error: ''
-    });
 
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
@@ -85,12 +78,18 @@ export function AuthForm() {
                 const payload = JSON.parse(JSON.stringify(res));
                 delete payload.user;
 
-                authSignUp(serialize({
+                // authSignUp(serialize({
+                //     ...payload,
+                //     ...user,
+                //     ...metadata,
+                // }))
+                const { response, error } = await withAsync(() => actions.signUp(serialize({
                     ...payload,
                     ...user,
                     ...metadata,
-                    redirect: false
-                }))
+                })));
+
+                nextStep();
             })
             .catch(err => {
                 const errors = err.response.data;
@@ -104,17 +103,6 @@ export function AuthForm() {
                 });
             });
     }
-
-    React.useEffect(() => {
-        if (result) {
-            if (result.status === "success") {
-                setIsLoading(false);
-                nextStep();
-            } else if (result.status === "failed") {
-                setIsLoading(false);
-            }
-        }
-    }, [result, nextStep]);
 
     return (
         <Form {...form}>
