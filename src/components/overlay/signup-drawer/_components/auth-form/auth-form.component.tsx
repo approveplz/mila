@@ -81,6 +81,7 @@ export function AuthForm() {
                     ...payload,
                     ...user,
                     ...metadata,
+                    redirect: false
                 }))
             })
             .then(() => {
