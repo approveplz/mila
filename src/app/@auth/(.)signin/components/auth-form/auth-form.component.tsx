@@ -53,7 +53,7 @@ export function AuthForm() {
             <form
                 ref={formRef}
                 className="flex flex-col gap-6"
-                action={formAction}
+                // action={formAction}
                 onSubmit={(evt) => {
                     evt.preventDefault();
                     setIsLoading(true);

@@ -82,5 +82,6 @@ export async function authRegisterSigIn(prevState: any, data: FormData) {
 }
 
 export async function signUp(data: FormData) {
+    data.append("redirect", "false");
     await signIn('register', data);
 }

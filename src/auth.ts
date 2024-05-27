@@ -33,9 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     }
                 }
 
-                return {
-                    ...response
-                };
+                return response as {}
             },
         }),
         Credentials({
@@ -48,9 +46,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 user.metadata = metadata;
 
                 return {
-                    ...response,
+                    access: response.access,
+                    refresh: response.refresh,
                     user
-                }
+                } as {}
             },
         })
     ],
