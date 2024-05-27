@@ -80,3 +80,7 @@ export async function authRegisterSigIn(prevState: any, data: FormData) {
         throw error;
     }
 }
+
+export async function signUp(data: FormData) {
+    await signIn('register', data);
+}
