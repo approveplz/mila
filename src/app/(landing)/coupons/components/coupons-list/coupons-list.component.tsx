@@ -11,6 +11,7 @@ import {
   useQuery,
   UseQueryResult
 } from '@tanstack/react-query'
+import { NoCouponsFound } from "../no-coupons-found/no-coupons-found.component";
 
 export function CoupensList() {
 
@@ -59,19 +60,23 @@ export function CoupensList() {
           </div>
         </TabsList>
 
-        {(coupons && coupons?.results?.length > 0 && !isCouponLoading) &&
+        {(coupons && !isCouponLoading) &&
           <div className="mt-12 flex justify-center">
-            {categoryData?.results?.map((category, index) => (
-              <TabsContent key={index} value={category?.name}>
-                <div className="grid sm:grid-cols-5 grid-cols-2  gap-4">
-                  {coupons?.results.map((coupon: CouponResponse, index) => (
-                    <CouponCard coupon={coupon} isLoggedIn={isLoggedIn} key={index} />
-                  ))}
-                </div>
-              </TabsContent>
-            ))}
+            {
+              coupons?.results?.length > 0 ? categoryData?.results?.map((category, index) => (
+                <TabsContent key={index} value={category?.name}>
+                  <div className="grid sm:grid-cols-5 grid-cols-2  gap-4">
+                    {coupons?.results.map((coupon: CouponResponse, index) => (
+                      <CouponCard coupon={coupon} isLoggedIn={isLoggedIn} key={index} />
+                    ))}
+                  </div>
+                </TabsContent>
+              )) :
+                <NoCouponsFound />
+            }
 
-          </div>}
+          </div>
+        }
       </Tabs>}
 
       {!isLoggedIn && <div className=" flex justify-center">
