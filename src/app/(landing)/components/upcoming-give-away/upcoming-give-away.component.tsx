@@ -55,7 +55,7 @@ export function GiveAway() {
                   layout="responsive"
                   width={457}
                   height={399}
-                  className="w-auto h-auto sm:min-w-[457px] sm:min-h-[399px]"
+                  className="w-auto h-auto sm:min-w-[457px] sm:min-h-[399px] rounded-[24px]"
                 />
 
               </div>

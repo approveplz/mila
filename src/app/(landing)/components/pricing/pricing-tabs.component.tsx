@@ -27,8 +27,14 @@ export default function PricingTabs({
         <Tabs defaultValue={pricingType} className="w-full">
             <TabsList className="flex flex-row justify-center">
                 <div className="bg-white rounded-[30px] p-1">
-                    <TabsTrigger onClick={() => useCheckOutStore.getState().setPricingType("subscription")} value="subscription">{subscription}</TabsTrigger>
-                    <TabsTrigger onClick={() => useCheckOutStore.getState().setPricingType("bundle")} value="bundle">{bundle}</TabsTrigger>
+                    <TabsTrigger onClick={() => {
+                        useCheckOutStore.getState().setPricingType("subscription");
+                        useCheckOutStore.getState().clearProducts("all");
+                    }} value="subscription">{subscription}</TabsTrigger>
+                    <TabsTrigger onClick={() => {
+                        useCheckOutStore.getState().setPricingType("bundle");
+                        useCheckOutStore.getState().clearProducts("all");
+                    }} value="bundle">{bundle}</TabsTrigger>
                 </div>
             </TabsList>
             <TabsContent value="subscription">

@@ -10,6 +10,7 @@ type State = {
     checkoutFlow: "free" | "paid"
     products: Array<CheckoutProduct>
     pricingType?: "subscription" | "bundle"
+    closestGiveAwayDate?: string
 }
 
 type Actions = {
@@ -19,6 +20,7 @@ type Actions = {
     increaseProductQuantity: (id: string) => void
     decreaseProductQuantity: (id: string) => void
     setPricingType: (type: "subscription" | "bundle") => void
+    setClosestGiveAwayDate: (date:string) => void
 }
 
 export type CheckOutStore = State & Actions

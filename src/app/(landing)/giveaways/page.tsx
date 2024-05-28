@@ -7,14 +7,14 @@ import { NextGiveAway } from "./components/next-giveaway/next-giveaway.component
 import { UpcomingGiveAways } from "./components/upcoming-giveaways/upcoming-giveaways.component";
 
 export default async function Giveaways() {
-  const products = await getProducts();
+  const product = await getProducts()
   return (
     <div>
       <Header />
       <NextGiveAway />
       <UpcomingGiveAways />
       <MinorGiveaways />
-      <Pricing products={products} />
+      <Pricing products={product} />
       <FollowUs />
     </div>
   )
