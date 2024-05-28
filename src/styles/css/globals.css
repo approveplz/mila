@@ -7,7 +7,6 @@
 @import 'swiper/css/navigation';
 @import 'swiper/css/scrollbar';
 
-
 @layer components {
     .price-card::before {
         content: '';
@@ -50,6 +49,26 @@
         z-index: -8;
         opacity: 0.01;
     }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #9CA3AF;
+    border-radius: 4px;
+    opacity: 0.2;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5b6371;
 }
 
 .swiper {

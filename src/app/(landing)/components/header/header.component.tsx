@@ -1,5 +1,6 @@
 
 import { auth } from "@/auth";
+import { AmoeDrawer } from "@/components";
 import { Button } from "@/components/ui/button/button.component"
 import { messages } from "@/shared/constants/messages";
 import Link from "next/link";
@@ -25,6 +26,7 @@ export async function Header() {
           <div className="font-normal text-[20px] text-white leading-[30px] ">
             {subHeading}
           </div>
+          
           {!session && (
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mt-4">
               <Button variant="secondary" asChild>
@@ -37,6 +39,8 @@ export async function Header() {
                   {signUp}
                 </Link>
               </Button>
+
+              <AmoeDrawer />
             </div>
           )}
         </div>

@@ -4,7 +4,6 @@ import Stepper from "./_components/stepper/stepper.component";
 
 export async function SignUpDrawer() {
     const session = await auth();
-    console.log("session: ", session);
 
     return (
         <Provider>

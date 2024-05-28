@@ -9,6 +9,7 @@ import { MinorGiveaways } from "./components/minor-giveaways/minor-giveaways.com
 import { MajorGiveaways } from "./components/major-giveaways/major-giveaways.component";
 import { Pricing } from "./components/pricing/pricing.component";
 import { getProducts } from "@/actions";
+import { AmoeDrawer } from "@/components";
 
 export default async function Home() {
   const products = await getProducts();
@@ -25,6 +26,7 @@ export default async function Home() {
       <MinorGiveaways />
       <FollowUs />
       <FAQ />
+      {/* <AmoeDrawer /> */}
     </>
   )
 }

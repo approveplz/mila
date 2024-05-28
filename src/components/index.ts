@@ -10,6 +10,8 @@ export * from "./ui/alert/alert.component";
 export * from "./ui/dropdown-menu/dropdown-menu.component";
 export * from "./ui/input-otp/input-otp.component";
 export * from "./ui/drawer/drawer.component";
+export * from "./ui/select/select.component";
+export * from "./ui/stepper/stepper.components";
 
 // Layout
 export * from "./layout/navbar";
@@ -29,3 +31,4 @@ export * from "./common/thank-you/thank-you.component"
 
 // Overlay
 export * from "./overlay/signup-drawer/signup-drawer.component"
+export * from "./overlay/amoe-drawer/amoe-drawer.component"
