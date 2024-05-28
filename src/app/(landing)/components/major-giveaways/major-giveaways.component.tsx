@@ -42,6 +42,29 @@ export function MajorGiveaways() {
   const { products } = useCheckOutStore();
   const pricingType = useCheckOutStore((state) => state.pricingType);
 
+  const [entries, setEntries] = useState<number>();
+
+  useEffect(() => {
+    if (pricingType === 'bundle') {
+      let tempEntries = 0;
+      products?.forEach(product => {
+        tempEntries += (product.quantity * product.data.number_of_entries)
+      })
+      setEntries(tempEntries)
+    } else {
+      setEntries(products[0]?.data?.number_of_entries);
+    }
+  }, [pricingType, products])
+
+  useEffect(() => {
+    if (giveAwayData && pricingType === 'bundle') {
+      console.log(giveAwayData[0])
+      useCheckOutStore.getState().setClosestGiveAwayDate(giveAwayData[0]?.draw_time);
+    }
+  }, [giveAwayData,pricingType])
+
+
+
   return (
     <section className={`${isMobile ? '!py-[33px]' : 'py-[66px]'} py-[66px] ${isMobile ? 'px-6' : 'px-16'} flex flex-col items-center gap-12 bg-[#F3F3F3]`}>
 
@@ -69,6 +92,8 @@ export function MajorGiveaways() {
               <div
                 className="relative border-2 shadow-lg border-[#E5E7EB] bg-white flex flex-col items-left sm:flex-row rounded-[20px]"
               >
+                {pricingType === 'bundle' && index !== 0 && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[20px]"></div>}
+
                 <Image
                   src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
@@ -78,12 +103,13 @@ export function MajorGiveaways() {
                   className={`!rounded-t-[20px]`}
                 />
 
-                {/* <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
-                  <HiOutlineGift size={24} color="#B06E6A" />
-                  <div className="font-semibold text-base leading text-primary">
-                    {card?.entry}
-                  </div>
-                </div> */}
+                {products?.length > 0 && ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
+                  && <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                    <HiOutlineGift size={24} color="#B06E6A" />
+                    <div className="font-semibold text-base leading text-primary">
+                      {entries} entries
+                    </div>
+                  </div>}
 
                 <div className="py-8 px-6 flex flex-col gap-8">
                   <div className="flex flex-col gap-2">
@@ -122,6 +148,7 @@ export function MajorGiveaways() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {giveAwayData && giveAwayData?.map((giveAway, index) => (
               <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[280] rounded-[20px]" >
+                {pricingType === 'bundle' && index !== 0 && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[20px]"></div>}
 
                 <Image
                   src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
@@ -132,12 +159,13 @@ export function MajorGiveaways() {
                   className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"
                 />
 
-                {products?.length > 0 && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
-                  <HiOutlineGift size={24} color="#B06E6A" />
-                  <div className="font-semibold text-base leading text-primary">
-                    {products[0]?.data?.number_of_entries} entries
-                  </div>
-                </div>}
+                {products?.length > 0 && ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
+                  && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                    <HiOutlineGift size={24} color="#B06E6A" />
+                    <div className="font-semibold text-base leading text-primary">
+                      {entries} entries
+                    </div>
+                  </div>}
 
                 <div className="py-8 px-6 flex flex-col gap-8">
 

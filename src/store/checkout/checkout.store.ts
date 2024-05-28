@@ -10,9 +10,15 @@ export const useCheckOutStore = create<CheckOutStore>()(
                 checkoutFlow: "paid",
                 products: [],
                 pricingType: "subscription",
+                closestGiveAwayDate: "",
                 setPricingType(type: "subscription" | "bundle") {
                     set(state => {
                         state.pricingType = type;
+                    });
+                },
+                setClosestGiveAwayDate(date: string) {
+                    set(state => {
+                        state.closestGiveAwayDate = date;
                     });
                 },
                 addProduct(payload) {
@@ -115,8 +121,3 @@ useCheckOutStore.subscribe(
         }
     }
 )
-
-useCheckOutStore.subscribe(
-    (state) => state.pricingType,
-    (type) => {}
-);
