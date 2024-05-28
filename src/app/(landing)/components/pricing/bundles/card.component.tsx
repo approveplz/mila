@@ -21,6 +21,7 @@ type bundleCard = {
     benefits: benefit[]
     selected: boolean,
     quantity: number,
+    duration: number,
     onSelect: () => void
     onIncrease: () => void
     onDecrease: () => void
@@ -73,7 +74,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
               <div key={index} className="flex flex-row gap-[7px] items-center">
                 {benefit?.included ? <HiCheck size={16} color="black" /> : <HiXMark size={16} color="black" />}
                 <div className="font-normal text-base leading-6">
-                  {benefit?.benefit}
+                  {benefit?.benefit.includes('{access_duration}') ? benefit?.benefit.replace('{access_duration}', cardData.duration.toString()) : benefit?.benefit}
                 </div>
               </div>
             ))}

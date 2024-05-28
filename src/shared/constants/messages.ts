@@ -264,7 +264,7 @@ export const messages = {
             included: true
           },
           {
-            benefit: '2 days access',
+            benefit: '{access_duration} days access',
             included: true
           },
         ]
