@@ -60,7 +60,7 @@ const INITIAL_STEP = 1;
 const STEP_OFFSET = 1;
 
 export function AmoeDrawer() {
-    const { step, nextStep, prevStep } = useStepper(INITIAL_STEP, MAX_STEPS);
+    const { step, nextStep, prevStep } = useStepper(2, MAX_STEPS);
     const CurrentStep = stepsMeta[step - STEP_OFFSET].component;
 
     return (
