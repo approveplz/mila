@@ -2,10 +2,13 @@
 
 import * as React from "react";
 import {
+    Button,
     CentralizedContent,
     Drawer,
     DrawerContent,
+    DrawerTrigger,
     Step,
+    StepLabel,
     Stepper
 } from "@/components";
 import { CaptchaStep } from "./_components/captcha-step/captcha-step.component";
@@ -62,27 +65,35 @@ const INITIAL_STEP = 1;
 const STEP_OFFSET = 1;
 
 export function AmoeDrawer() {
-    const { step, nextStep, prevStep } = useStepper(1, MAX_STEPS);
-    const CurrentStep = stepsMeta[step - STEP_OFFSET].component;
+    const { step, nextStep, prevStep } = useStepper(INITIAL_STEP, MAX_STEPS);
+    const currentStep = stepsMeta[step - STEP_OFFSET];
+    const currentTitle = currentStep.name;
+    const CurrentComponent = currentStep.component;
 
     return (
-        <Drawer open={true} dismissible={false} nested={true}>
-            <DrawerContent className="bg-white h-full rounded-none z-[9999] pt-24">
+        <Drawer dismissible={false} nested={true}>
+            <DrawerTrigger asChild>
+                <Button variant="secondary">
+                    AMOE
+                </Button>
+            </DrawerTrigger>
+            <DrawerContent className="bg-white h-full rounded-none z-[9999] pt-[52px] pl-6 pr-6 sm:pt-24 sm:pl-0 sm:pr-0">
                 <CentralizedContent centralized="v" fullHeight={false}>
                     <Stepper
                         className="w-[896px]"
                         activeStep={step}
+                        activeTitle={currentTitle}
                     >
-                        {stepsMeta.map((step) => (
-                            <Step key={step.name}>
-                                {step.name}
+                        {stepsMeta.map((st, idx) => (
+                            <Step key={st.name} active={(idx + 1) <= step}>
+                                {st.name}
                             </Step>
                         ))}
                     </Stepper>
                 </CentralizedContent>
 
                 <StepperForm>
-                    <CurrentStep
+                    <CurrentComponent
                         actions={(isValid, isLoading) => (
                             <StepperAction
                                 isValid={isValid}

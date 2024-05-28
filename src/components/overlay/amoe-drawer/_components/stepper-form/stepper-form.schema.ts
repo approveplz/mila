@@ -26,7 +26,7 @@ export const amoeSchema = z.object({
     last_name: z
         .string()
         .min(1, { message: "Last name is required" }),
-    address: z
+    line_1: z
         .string()
         .min(1, { message: "Address is required" }),
     region: z

@@ -15,7 +15,7 @@ export function StepperForm({ children }: React.PropsWithChildren) {
             phone: "",
             first_name: "",
             last_name: "",
-            address: "",
+            line_1: "",
             region: "",
             city: "",
             postal_code: "",
@@ -25,7 +25,7 @@ export function StepperForm({ children }: React.PropsWithChildren) {
 
     return (
         <Form {...form}>
-            <CentralizedContent as="form" centralized="v" fullHeight={false} className="mt-24">
+            <CentralizedContent as="form" centralized="v" fullHeight={false} className="mt-24 h-full sm:h-auto">
                 {children}
             </CentralizedContent>
         </Form>

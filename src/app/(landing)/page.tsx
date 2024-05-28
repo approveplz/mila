@@ -26,7 +26,7 @@ export default async function Home() {
       <MinorGiveaways />
       <FollowUs />
       <FAQ />
-      <AmoeDrawer />
+      {/* <AmoeDrawer /> */}
     </>
   )
 }

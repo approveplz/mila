@@ -16,12 +16,15 @@ import {
     Input
 } from "@/components";
 import states from "@/data/state.data.json" with { type: "json" };
+import { withAsync } from "@/utils";
 
 export function AddressStep({ actions }: AmoeStepType) {
     const { control, trigger, getValues } = useFormContext<AMOEFormData>();
 
     const isValid = async () => {
-        return false;
+        const { response: valid } = await withAsync(() => trigger(["line_1", "region", "city", "postal_code"]));
+
+        return valid as boolean;
     }
 
     return (
@@ -32,7 +35,7 @@ export function AddressStep({ actions }: AmoeStepType) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                         control={control}
-                        name="address"
+                        name="line_1"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel htmlFor="address">Address</FormLabel>

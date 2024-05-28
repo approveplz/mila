@@ -45,3 +45,43 @@ export type SendVerificationSMSPayload = {
 export type SendVerificationSMSResponse = {
     sent_sms: boolean
 }
+
+export type CreateAMOEPayload = {
+    secret: string
+    giveaway: string
+    user: {
+        first_name: string
+        last_name: string
+        email: string
+        phone: string
+    }
+    address: {
+        line_1: string
+        line_2?: string
+        postal_code: string
+        city: string
+        region: string
+        country: string
+    }
+    is_over_18_and_agrees_tc: boolean
+}
+
+export type CreateAMOEResponse = {
+    id: string
+    giveaway: string
+    user: {
+        first_name: string
+        last_name: string
+        email: string
+        phone: string
+    }
+    address: {
+        line_1: string
+        line_2: string
+        postal_code: string
+        city: string
+        region: string
+        country: string
+    }
+    is_over_18_and_agrees_tc: boolean
+}

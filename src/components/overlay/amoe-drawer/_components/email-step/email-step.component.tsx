@@ -121,7 +121,7 @@ export function EmailStep({ actions }: AmoeStepType) {
                 </>
             ) : (
                 <>
-                    <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
+                    <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-auto">
                         <header className="flex flex-col gap-8 items-center">
                             <HiOutlineEnvelopeOpen className="h-12 w-12 text-primary" />
                             <h2 className="text-3xl text-center font-tt-ramillas">Email verification</h2>

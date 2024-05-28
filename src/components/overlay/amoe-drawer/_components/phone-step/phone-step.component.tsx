@@ -125,10 +125,10 @@ export function PhoneStep({ actions }: AmoeStepType) {
                 </>
             ) : (
                 <>
-                    <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
+                    <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-auto">
                         <header className="flex flex-col gap-8 items-center">
                             <HiOutlineDevicePhoneMobile className="h-12 w-12 text-primary" />
-                            <h2 className="text-4xl font-tt-ramillas">Phone number verification</h2>
+                            <h2 className="text-4xl font-tt-ramillas text-center">Phone number verification</h2>
                         </header>
 
                         <main className="flex flex-col gap-8 items-center text-center">

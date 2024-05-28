@@ -2,6 +2,8 @@ import api from "@/api";
 import {
     CheckEligibilityPayload,
     CheckEligibilityResponse,
+    CreateAMOEPayload,
+    CreateAMOEResponse,
     ListUpcomingGiveawaysResponse,
     SendVerificationEmailPayload,
     SendVerificationEmailResponse,
@@ -38,5 +40,11 @@ export const sendVerificationSMS = (payload: SendVerificationSMSPayload) => {
 export const validateCode = (payload: ValidateCodePayload) => {
     return api
         .post<ValidateCodeResponse>("/amoes/v0/validate-code", payload)
+        .then(res => res.data)
+}
+
+export const createAMOE = (payload: CreateAMOEPayload) => {
+    return api
+        .post<CreateAMOEResponse>("/amoes/v0/amoes", payload)
         .then(res => res.data)
 }
