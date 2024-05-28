@@ -35,7 +35,7 @@ export function Bundle({
     clearProducts
   } = useCheckOutStore();
   const [isMobile, setIsMobile] = useState(false);
-
+  console.log("bundles: ", bundles);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1000);
@@ -79,6 +79,7 @@ export function Bundle({
                       entry: bundle.number_of_entries,
                       selected: products.some(prod => prod.id === bundle.id),
                       quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
+                      duration: bundle.access_duration,
                       onSelect: () => addProduct(bundle),
                       onIncrease: () => increaseProductQuantity(bundle.id),
                       onDecrease: () => decreaseProductQuantity(bundle.id)
@@ -101,6 +102,7 @@ export function Bundle({
                     entry: bundle.number_of_entries,
                     selected: products.some(prod => prod.id === bundle.id),
                     quantity: products.find(prod => prod.id === bundle.id)?.quantity || 0,
+                    duration: bundle.access_duration,
                     onSelect: () => addProduct(bundle),
                     onIncrease: () => increaseProductQuantity(bundle.id),
                     onDecrease: () => decreaseProductQuantity(bundle.id)
