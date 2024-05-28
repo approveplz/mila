@@ -9,6 +9,7 @@ import {
 } from '@tanstack/react-query'
 import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
+import { useCheckOutStore } from "@/store";
 
 export function MinorGiveaways() {
   const { minorGiveways: {
@@ -22,6 +23,8 @@ export function MinorGiveaways() {
         getGiveaways('small', 'minor')
     })
 
+    const { products } = useCheckOutStore();
+
   return (
     <section className="py-8 flex flex-col justify-center w-full items-center gap-12 bg-[#F3F3F3]">
 
@@ -34,11 +37,11 @@ export function MinorGiveaways() {
           {giveAwayData?.map((giveAway, index) => (
             <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[240px] flex flex-col gap-4">
 
-              {/* <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+              {products?.length > 0 && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
                 <div className="font-semibold text-base leading-6">
-                  {card?.entry}
+                {products[0]?.data?.number_of_entries} entries
                 </div>
-              </div> */}
+              </div>}
 
               <Image
                 src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
