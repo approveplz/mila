@@ -3,36 +3,73 @@ import {
     SelectTrigger,
     SelectValue,
     SelectContent,
-    SelectItem
+    SelectItem,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage
 } from "@/components";
 import { AmoeStepType } from "../../amoe-drawer.type";
-import { useQuery } from "react-query";
-import { listUpcomingGiveaways } from "@/api/amoes";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { checkEligibility, listUpcomingGiveaways } from "@/api/amoes";
+import { useFormContext } from "react-hook-form";
+import { AMOEFormData } from "../stepper-form/stepper-form.schema";
+import { withAsync } from "@/utils";
+import { CheckEligibilityPayload } from "@/api/amoes/amoe.types";
 
 export function GiveawayStep({ actions }: AmoeStepType) {
-    const { data: giveAways } = useQuery({
-        queryFn: () => listUpcomingGiveaways(),
-        select: (data) => data.results
+    const { control, trigger } = useFormContext<AMOEFormData>();
+    const { data: giveAwaysData } = useQuery({
+        queryKey: ["ListUpcomingGiveaways"],
+        queryFn: async () => await listUpcomingGiveaways(),
     });
 
-    const isValid = () => Promise.reject(false);
+    // const { mutateAsync } = useMutation({
+    //     mutationFn: (payload: CheckEligibilityPayload) => checkEligibility(payload),
+    //     onSuccess(data, variables, context) {
+    //         console.log("success: ", { data, variables, context })
+    //     },
+    //     onError(error, variables, context) {
+    //         console.log("error: ", { error, variables, context })
+    //     },
+    // })
 
-    console.log("giveAways: ", giveAways);
+    const isValid = async () => {
+        const { response: valid } = await withAsync(() => trigger("giveaway"));
+
+        return valid as boolean;
+    };
+
+    const giveAways = giveAwaysData?.results || [];
+
     return (
         <div className="flex flex-col gap-12">
-            <p>GiveawayStep</p>
+            <p className="font-bold text-center">Select the Giveaway you wish</p>
 
-            <Select>
-                <SelectTrigger>
-                    <SelectValue placeholder="e.g. Lorem ipsum" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-            </Select>
+            <FormField
+                control={control}
+                name="giveaway"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Select Giveaway</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="e.g. Lorem ipsum" />
+                                </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                                {giveAways.map(giveAway => (
+                                    <SelectItem key={giveAway.id} value={giveAway.id}>{giveAway.prize}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+
 
             {actions && actions(isValid, false)}
         </div>

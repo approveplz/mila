@@ -8,25 +8,31 @@ import {
     Input
 } from "@/components";
 import { AmoeStepType } from "../../amoe-drawer.type";
+import { AMOEFormData } from "../stepper-form/stepper-form.schema";
+import { withAsync } from "@/utils";
 
 export function PersonalStep({ actions }: AmoeStepType) {
-    const form = useFormContext();
+    const { control, trigger } = useFormContext<AMOEFormData>();
 
-    const isValid = () => Promise.reject(false);
+    const isValid = async () => {
+        const { response: valid } = await withAsync(() => trigger(["first_name", "last_name"]));
+
+        return valid as boolean
+    };
 
     return (
         <div className="flex flex-col gap-12">
-            <p>Verify your Email Address</p>
+            <p className="text-center font-bold">Enter your Name</p>
 
             <FormField
-                control={form.control}
+                control={control}
                 name="first_name"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel htmlFor="email">First Name</FormLabel>
+                        <FormLabel htmlFor="first_name">First Name</FormLabel>
                         <FormControl>
                             <Input
-                                id="email"
+                                id="first_name"
                                 placeholder="e.g.John"
                                 {...field}
                             />
@@ -37,14 +43,14 @@ export function PersonalStep({ actions }: AmoeStepType) {
             />
 
             <FormField
-                control={form.control}
+                control={control}
                 name="last_name"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel htmlFor="email">Last Name</FormLabel>
+                        <FormLabel htmlFor="last_name">Last Name</FormLabel>
                         <FormControl>
                             <Input
-                                id="email"
+                                id="last_name"
                                 placeholder="e.g.Doe"
                                 {...field}
                             />

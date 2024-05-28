@@ -5,10 +5,12 @@ export function StepperAction({
     isValid,
     isLoading,
     onBack,
-    onNext
+    onNext,
+    showBack
 }: {
     isValid: () => Promise<boolean>
     isLoading: boolean,
+    showBack: boolean,
     onNext: () => void,
     onBack: () => void
 }) {
@@ -19,14 +21,16 @@ export function StepperAction({
 
     return (
         <div className="flex flex-col items-center">
-            <div className="flex gap-4 [&>*]:flex-1 w-full">
-                <Button
-                    variant="primary-outline"
-                    full
-                    onClick={onBack}
-                >
-                    Back
-                </Button>
+            <div className="flex gap-4 [&>*]:flex-1 w-full max-w-[346px]">
+                {showBack && (
+                    <Button
+                        variant="primary-outline"
+                        full
+                        onClick={onBack}
+                    >
+                        Back
+                    </Button>
+                )}
                 <Button
                     full
                     onClick={handleNext}

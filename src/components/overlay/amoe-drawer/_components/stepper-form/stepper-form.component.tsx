@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Form } from "@/components";
+import { CentralizedContent, Form } from "@/components";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { amoeSchema, AMOEFormData } from "./stepper-form.schema";
@@ -16,18 +16,18 @@ export function StepperForm({ children }: React.PropsWithChildren) {
             first_name: "",
             last_name: "",
             address: "",
-            state: "",
+            region: "",
             city: "",
-            post_code: "",
-            is_over_18: false,
+            postal_code: "",
+            is_over_18_and_agrees_tc: false,
         }
     });
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(() => { })}>
+            <CentralizedContent as="form" centralized="v" fullHeight={false} className="mt-24">
                 {children}
-            </form>
+            </CentralizedContent>
         </Form>
     )
 }
