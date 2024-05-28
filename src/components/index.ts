@@ -11,6 +11,7 @@ export * from "./ui/dropdown-menu/dropdown-menu.component";
 export * from "./ui/input-otp/input-otp.component";
 export * from "./ui/drawer/drawer.component";
 export * from "./ui/select/select.component";
+export * from "./ui/stepper/stepper.components";
 
 // Layout
 export * from "./layout/navbar";
