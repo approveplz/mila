@@ -13,24 +13,19 @@ import {
 import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
 import { useCheckOutStore } from "@/store";
+import { useWidth } from "@/hooks";
 
 export function MajorGiveaways() {
+
   const { majorGiveaways: {
     heading, subHeading
   } } = messages;
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [entries, setEntries] = useState<number>();
+  const { products } = useCheckOutStore();
+  const pricingType = useCheckOutStore((state) => state.pricingType);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1000);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { width } = useWidth()
 
   const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem[]> =
     useQuery({
@@ -39,10 +34,6 @@ export function MajorGiveaways() {
         getGiveaways('large', 'major')
     })
 
-  const { products } = useCheckOutStore();
-  const pricingType = useCheckOutStore((state) => state.pricingType);
-
-  const [entries, setEntries] = useState<number>();
 
   useEffect(() => {
     if (pricingType === 'bundle') {
@@ -56,17 +47,17 @@ export function MajorGiveaways() {
     }
   }, [pricingType, products])
 
+
   useEffect(() => {
     if (giveAwayData && pricingType === 'bundle') {
-      console.log(giveAwayData[0])
       useCheckOutStore.getState().setClosestGiveAwayDate(giveAwayData[0]?.draw_time);
     }
-  }, [giveAwayData,pricingType])
+  }, [giveAwayData, pricingType])
 
 
 
   return (
-    <section className={`${isMobile ? '!py-[33px]' : 'py-[66px]'} py-[66px] ${isMobile ? 'px-6' : 'px-16'} flex flex-col items-center gap-12 bg-[#F3F3F3]`}>
+    <section className={`${width < 640 ? '!py-[33px]' : 'py-[66px]'} py-[66px] ${width < 640 ? 'px-6' : 'px-16'} flex flex-col items-center gap-12 bg-[#F3F3F3]`}>
 
       <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[410px]">
         {heading}
@@ -76,7 +67,7 @@ export function MajorGiveaways() {
         {subHeading}
       </div>
 
-      {isMobile && giveAwayData &&
+      {width < 640 && giveAwayData &&
         <Swiper
           style={{
             paddingBottom: "48px"
@@ -144,7 +135,7 @@ export function MajorGiveaways() {
       }
 
       {
-        !isMobile && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
+        width >= 640 && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {giveAwayData && giveAwayData?.map((giveAway, index) => (
               <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[280] rounded-[20px]" >
