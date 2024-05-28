@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -20,17 +21,19 @@ import {
     signUpSchema
 } from "./auth-form.schema";
 import { useStepperContext } from "../stepper/stepper.context";
-import { getProductPriceInfo, prefixObjectKeys } from "@/utils";
+import { getProductPriceInfo, prefixObjectKeys, withAsync } from "@/utils";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { authRegisterSigIn } from "@/actions";
+import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
+import { signIn } from "next-auth/react";
 
 type K = keyof SignUpFormData;
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products } = useCheckOutStore();
-    
+    const formRef = React.useRef<HTMLFormElement>(null);
+
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
         resolver: zodResolver(signUpSchema),
@@ -70,21 +73,33 @@ export function AuthForm() {
             ...data,
             prices
         })
-            .then(res => {
+            .then(async (res) => {
                 const user = prefixObjectKeys(res.user, "userpre_")
                 const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
 
                 const payload = JSON.parse(JSON.stringify(res));
                 delete payload.user;
 
-                return authRegisterSigIn(serialize({
+                // authSignUp(serialize({
+                //     ...payload,
+                //     ...user,
+                //     ...metadata,
+                // }))
+                // const { response, error } = await withAsync(() => actions.signUp(serialize({
+                //     ...payload,
+                //     ...user,
+                //     ...metadata,
+                // })));
+                const data = {
                     ...payload,
                     ...user,
                     ...metadata,
-                }))
-            })
-            .then(() => {
-                nextStep()
+                    redirect: false
+                };
+
+                const { response, error } = await withAsync(() => actions.signUp(serialize(data)));
+
+                nextStep();
             })
             .catch(err => {
                 const errors = err.response.data;
@@ -103,6 +118,7 @@ export function AuthForm() {
         <Form {...form}>
             <form
                 className="flex flex-col flex-1 sm:flex-initial justify-center gap-6"
+                ref={formRef}
                 onSubmit={form.handleSubmit(onSubmit)}
             >
                 <FormField

@@ -10,7 +10,9 @@ export type SignInWithCredentialsPayload = {
     password: string;
 };
 
-export type SignInWithCredentialsResponse = User
+export type SignInWithCredentialsResponse = AuthCredentials & {
+    user: User
+}
 
 export type SignInWithCredentialsErrorResponse = {
     detail: string

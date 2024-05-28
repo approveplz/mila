@@ -13,6 +13,7 @@ import {
 } from '@tanstack/react-query'
 import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
+import { useCheckOutStore } from '@/store';
 
 
 export function UpcomingGiveAways() {
@@ -43,6 +44,9 @@ export function UpcomingGiveAways() {
         getGiveaways('large', 'major')
     })
 
+  
+
+
   return (
     <section className="pb-[64px] sm:pb-20 sm:pt-0 px-[24px] sm:px-16 bg-[#F3F3F3]">
       <div className="flex flex-col gap-12 items-center">
@@ -58,13 +62,12 @@ export function UpcomingGiveAways() {
             </div>
             <div className="relative border flex flex-col sm:flex-row z-20">
 
-              {/* <div className="z-30 absolute flex flex-row gap-2 bg-[#FFFFFF] rounded-full py-2 px-4 top-4 left-[10px]">
-
+              {/* {products?.length > 0 && < div className="z-30 absolute flex flex-row gap-2 bg-[#FFFFFF] rounded-full py-2 px-4 top-4 left-[10px]">
                 <HiOutlineGift size={24} color="#BE7B62" />
                 <div className="font-semibold text-base leading-6 text-primary">
-                  200 entries
+                  {products[0]?.data?.number_of_entries} entries
                 </div>
-              </div> */}
+              </div>} */}
 
               <div className="w-full sm:w-1/2 h-full">
                 {
@@ -80,7 +83,7 @@ export function UpcomingGiveAways() {
                     <Image
                       src={giveAwayData[0]?.image ? giveAwayData[0]?.image?.file_url : "/images/giveaway-backpack.png"}
                       alt="giveaway-backpack"
-                      layout="responsive"
+                      // layout="responsive"
                       width={656}
                       height={399}
                     />
@@ -211,13 +214,13 @@ export function UpcomingGiveAways() {
 
                 </div>
                 <div className="relative border flex flex-col sm:flex-row z-20 h-[292px]">
-                  {/* <div className="absolute flex flex-row gap-2 bg-[#FFFFFF] rounded-full py-2 px-4 top-4 left-[10px]">
+                  {/* {products?.length > 0 && <div className="z-[10] absolute flex flex-row gap-2 bg-[#FFFFFF] rounded-full py-2 px-4 top-4 left-[10px]">
 
                     <HiOutlineGift size={24} color="#BE7B62" />
                     <div className="font-semibold text-base leading-6 text-primary">
-                      200 entries
+                      {products[0]?.data?.number_of_entries} entries
                     </div>
-                  </div> */}
+                  </div>} */}
                   <div className="w-full sm:w-1/2 h-full">
                     <Image
                       src={giveAway?.image ? giveAway?.image?.file_url : "/images/giveaway-backpack.png"}
@@ -319,13 +322,13 @@ export function UpcomingGiveAways() {
 
                       <div className="relative border flex flex-col sm:flex-row z-20">
 
-                        {/* <div className="absolute flex flex-row gap-2 bg-[#FFFFFF] rounded-full py-2 px-4 top-4 left-[10px]">
+                        {/* {products?.length > 0 && <div className="absolute flex flex-row gap-2 bg-[#FFFFFF] rounded-full py-2 px-4 top-4 left-[10px]">
 
                           <HiOutlineGift size={24} color="#BE7B62" />
                           <div className="font-semibold text-base leading-6 text-primary">
-                            200 entries
+                            {products[0]?.data?.number_of_entries} entries
                           </div>
-                        </div> */}
+                        </div>} */}
 
                         <div className="w-full !sm:w-1/2 !h-full">
 
@@ -409,14 +412,7 @@ export function UpcomingGiveAways() {
             </Swiper>}
           </div>
         }
-
-
-
-
-
-
-
       </div>
-    </section>
+    </section >
   )
 }

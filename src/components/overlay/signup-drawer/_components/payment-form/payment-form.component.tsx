@@ -41,6 +41,8 @@ export function PaymentForm({ session }: { session: Session | null }) {
     const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
 
     const handlePayment = async () => {
+        console.log("session: ", session);
+        
         if (!stripe || !elements) {
             return;
         }

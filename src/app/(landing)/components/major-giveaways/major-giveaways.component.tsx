@@ -12,6 +12,7 @@ import {
 } from '@tanstack/react-query'
 import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
+import { useCheckOutStore } from "@/store";
 
 export function MajorGiveaways() {
   const { majorGiveaways: {
@@ -37,6 +38,9 @@ export function MajorGiveaways() {
       queryFn: () =>
         getGiveaways('large', 'major')
     })
+
+  const { products } = useCheckOutStore();
+  const pricingType = useCheckOutStore((state) => state.pricingType);
 
   return (
     <section className={`${isMobile ? '!py-[33px]' : 'py-[66px]'} py-[66px] ${isMobile ? 'px-6' : 'px-16'} flex flex-col items-center gap-12 bg-[#F3F3F3]`}>
@@ -128,12 +132,12 @@ export function MajorGiveaways() {
                   className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"
                 />
 
-                {/* <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                {products?.length > 0 && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                   <HiOutlineGift size={24} color="#B06E6A" />
                   <div className="font-semibold text-base leading text-primary">
-                    {card?.entry}
+                    {products[0]?.data?.number_of_entries} entries
                   </div>
-                </div> */}
+                </div>}
 
                 <div className="py-8 px-6 flex flex-col gap-8">
 
