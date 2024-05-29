@@ -14,6 +14,7 @@ import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { useWidth } from "@/hooks";
+import useCalculateEntries from "@/hooks/useEntries";
 
 export function MajorGiveaways() {
 
@@ -21,7 +22,6 @@ export function MajorGiveaways() {
     heading, subHeading
   } } = messages;
 
-  const [entries, setEntries] = useState<number>();
   const { products } = useCheckOutStore();
   const pricingType = useCheckOutStore((state) => state.pricingType);
 
@@ -34,19 +34,7 @@ export function MajorGiveaways() {
         getGiveaways('large', 'major')
     })
 
-
-  useEffect(() => {
-    if (pricingType === 'bundle') {
-      let tempEntries = 0;
-      products?.forEach(product => {
-        tempEntries += (product.quantity * product.data.number_of_entries)
-      })
-      setEntries(tempEntries)
-    } else {
-      setEntries(products[0]?.data?.number_of_entries);
-    }
-  }, [pricingType, products])
-
+  const entries = useCalculateEntries(pricingType as "subscription" | "bundle", products);
 
   useEffect(() => {
     if (giveAwayData && pricingType === 'bundle') {
@@ -94,8 +82,10 @@ export function MajorGiveaways() {
                   className={`!rounded-t-[20px]`}
                 />
 
-                {products?.length > 0 && ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
-                  && <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                {products?.length > 0 &&
+                  entries > 0 &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
+                  <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
                       {entries} entries
@@ -150,7 +140,9 @@ export function MajorGiveaways() {
                   className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"
                 />
 
-                {products?.length > 0 && ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
+                {products?.length > 0 &&
+                  entries > 0 &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
                   && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
