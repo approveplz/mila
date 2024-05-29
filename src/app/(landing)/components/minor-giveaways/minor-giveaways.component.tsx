@@ -11,6 +11,7 @@ import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { useEffect, useState } from "react";
+import useCalculateEntries from "@/hooks/useEntries";
 
 export function MinorGiveaways() {
   const { minorGiveways: {
@@ -25,21 +26,10 @@ export function MinorGiveaways() {
     })
 
   const { products } = useCheckOutStore();
-  const [entries, setEntries] = useState<number>();
   const pricingType = useCheckOutStore((state) => state.pricingType);
   const closestMajorGiveaway = useCheckOutStore(state => state.closestGiveAwayDate)
 
-  useEffect(() => {
-    if (pricingType === 'bundle') {
-      let tempEntries = 0;
-      products?.forEach(product => {
-        tempEntries += (product.quantity * product.data.number_of_entries)
-      })
-      setEntries(tempEntries)
-    } else {
-      setEntries(products[0]?.data?.number_of_entries);
-    }
-  }, [pricingType, products])
+  const entries = useCalculateEntries(pricingType as "subscription" | "bundle", products);
 
   const calculateGiveAwayDate = (minorGiveAwayDate: string) => {
     return new Date(minorGiveAwayDate) < new Date(closestMajorGiveaway as string)
@@ -60,7 +50,7 @@ export function MinorGiveaways() {
               {pricingType === 'bundle' && !calculateGiveAwayDate(giveAway?.draw_time) && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[30px]"></div>}
 
 
-              {products?.length > 0 && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+              {products?.length > 0 && entries > 0 && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
                 <div className="font-semibold text-base leading-6">
                   {entries} entries
                 </div>
