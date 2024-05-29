@@ -5,8 +5,9 @@ import { Container } from "@/components";
 import PricingTabs from "./pricing-tabs.component";
 import { PricingAction } from "./pricing-action.component";
 import { SignUpAction } from "../signup-action/signup-action.component";
+import { auth } from "@/auth";
 
-export function Pricing({
+export async function Pricing({
   products,
   children
 }: {
@@ -17,6 +18,9 @@ export function Pricing({
     headingB,
     description,
   } } = messages;
+
+  const session = await auth();
+  
 
   return (
     <section id="pricing" className="py-[66px] bg-[#F3F3F3]">
@@ -32,7 +36,7 @@ export function Pricing({
             </div>
           </div>
 
-          <PricingTabs products={products} />
+          <PricingTabs session={session}  products={products} />
 
           <PricingAction>
             <SignUpAction />

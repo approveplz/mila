@@ -6,9 +6,11 @@ import { Bundle } from "./bundles/bundles.component";
 import { Subscription } from "./subscriptions.component";
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
+import { Session } from "next-auth";
 
 type PricingTabsProps = {
     products: Array<Product>
+    session: Session | null
 }
 
 const { pricing: {
@@ -17,7 +19,8 @@ const { pricing: {
 } } = messages;
 
 export default function PricingTabs({
-    products
+    products,
+    session
 }: PricingTabsProps) {
     const subscriptions = products.filter(product => product.type === "subscription");
     const bundles = products.filter(product => product.type === "bundle");
@@ -36,7 +39,7 @@ export default function PricingTabs({
                 </div>
             </TabsList>
             <TabsContent value="subscription">
-                <Subscription subscriptions={subscriptions} />
+                <Subscription session={session} subscriptions={subscriptions} />
             </TabsContent>
             <TabsContent value="bundle">
                 <Bundle bundles={bundles} />

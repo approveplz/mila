@@ -2,6 +2,7 @@ import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
 import { cn } from "@/utils";
 import { VariantProps, cva } from "class-variance-authority"
+import { Session } from "next-auth";
 import { HiCheck, HiOutlineGift, HiXMark } from "react-icons/hi2";
 
 // const cardClasses = cva("relative overflow-hidden rounded-[24px] max-h-[579px] price-card before:rounded-3xl before:-z-10 z-20", {
@@ -35,6 +36,7 @@ type Props = VariantProps<typeof cardClasses> & {
     discountedPrice: number
     isDiscounted: boolean
     onSelect: () => void
+    session: Session | null
 }
 
 const { pricing: {
@@ -69,7 +71,11 @@ export function SubscriptionInfoCard({
     isDiscounted,
     selected = false,
     onSelect,
+    session
 }: Props) {
+
+    console.log(session)
+
     return (
         <figure className={cn(cardClasses({ type, selected }))}>
             <div

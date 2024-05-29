@@ -10,12 +10,14 @@ import { SubscriptionInfoCard } from "../subscription-card/subscription-card.com
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
+import { Session } from "next-auth";
 
-export function Subscription({
-  subscriptions
-}: {
-  subscriptions: Array<Product>
-}) {
+type SubscriptionProps = {
+  subscriptions: Array<Product>;
+  session: Session | null
+};
+
+export function Subscription({ subscriptions, session }: SubscriptionProps) {
   const { addProduct, products, clearProducts } = useCheckOutStore();
   const { pricing: {
     subscriptionData: {
@@ -70,6 +72,7 @@ export function Subscription({
             .map(subscription => (
               <SwiperSlide key={subscription.id}>
                 <SubscriptionInfoCard
+                  session={session}
                   title={subscription.name}
                   duration={subscription.access_duration}
                   type={subscription.tier as any}
@@ -89,6 +92,7 @@ export function Subscription({
             .sort((a, b) => a.sort_order - b.sort_order)
             .map(subscription => (
               <SubscriptionInfoCard
+                session={session}
                 key={subscription.id}
                 title={subscription.name}
                 duration={subscription.access_duration}
