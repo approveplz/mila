@@ -31,6 +31,7 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
 import states from "@/data/state.data.json" with { type: "json" };
+import Link from "next/link";
 
 type K = keyof SignUpFormData;
 
@@ -233,7 +234,11 @@ export function AuthForm() {
                                     onCheckedChange={field.onChange}
                                 />
                             </FormControl>
-                            <FormLabel>I am over 18 and I agree to Terms of Use, Privacy Policy and Sweeps Rules</FormLabel>
+                            <FormLabel>I am over 18 and I agree to {" "}
+                                <Link href="/legal/terms-of-use" className="underline">Terms of Use</Link>, {" "}
+                                <Link href="/legal/privacy-policy" className="underline">Privacy Policy</Link> and {" "}
+                                <Link href="/legal/sweeps-rules" className="underline">Sweeps Rules</Link>
+                            </FormLabel>
                         </FormItem>
                     )}
                 />
