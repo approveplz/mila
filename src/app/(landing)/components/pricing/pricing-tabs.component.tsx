@@ -29,11 +29,9 @@ export default function PricingTabs({
                 <div className="bg-white rounded-[30px] p-1">
                     <TabsTrigger onClick={() => {
                         useCheckOutStore.getState().setPricingType("subscription");
-                        useCheckOutStore.getState().clearProducts("all");
                     }} value="subscription">{subscription}</TabsTrigger>
                     <TabsTrigger onClick={() => {
                         useCheckOutStore.getState().setPricingType("bundle");
-                        useCheckOutStore.getState().clearProducts("all");
                     }} value="bundle">{bundle}</TabsTrigger>
                 </div>
             </TabsList>
