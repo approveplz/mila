@@ -6,7 +6,17 @@ import { messages } from "@/shared/constants/messages";
 import { FBIcon } from "./facebook-icon.component";
 import { InstaIcon } from "./instagram-icon.component";
 import { TikTokIcon } from "./tiktok.component";
-import Image from "next/image"
+import Image from "next/image";
+import Link from "next/link";
+
+const links = [
+  { title: "Privacy Policy", to: "/legal/privacy-policy" },
+  { title: "Terms of Service", to: "/legal/terms-of-use" },
+  { title: "Sweeps Rules", to: "/legal/sweeps-rules" },
+  { title: "Cookies Settings", to: "/" },
+  { title: "About Us", to: "/" },
+  { title: "FAQ", to: "/" },
+];
 
 export function Footer() {
   const { footer: {
@@ -68,10 +78,10 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-6 mt-6">
-              {linkList?.map((point, index) => (
-                <div className="underline font-normal text-[14px] leading-[21px] cursor-pointer" key={index}>
-                  {point}
-                </div>
+              {links.map((link, index) => (
+                <Link className="underline font-normal text-[14px] leading-[21px] cursor-pointer" key={link.title} href={link.to}>
+                  {link.title}
+                </Link>
               ))}
             </div>
           </div>
