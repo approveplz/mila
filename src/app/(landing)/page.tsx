@@ -1,4 +1,4 @@
-import { FAQ } from "@/app/(landing)/components/faq/faq.component";
+import { FAQ } from "@/components/common/faq/faq.component";
 import { Benefits } from "@/app/(landing)/components/benefits/benefits.component";
 import { Brands } from "@/app/(landing)/components/brands/brands.component";
 import { FollowUs } from "@/app/(landing)/components/follow-us/follow-us.component";

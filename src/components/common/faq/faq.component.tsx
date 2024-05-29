@@ -20,7 +20,7 @@ export function FAQ() {
 
   const [openItem, setOpenItem] = useState(null);
 
-  const handleToggle = (value:any) => {
+  const handleToggle = (value: any) => {
     setOpenItem((prev) => (prev === value ? null : value));
   };
 
@@ -31,8 +31,13 @@ export function FAQ() {
         <div className="font-normal italic text-3xl sm:text-5xl leading-10 font-tt-ramillas text-[#171614] text-center">
           {heading}
         </div>
-        <div className="font-normal text-lg leading-7 text-center">
-          {subHeading}
+        <div>
+          <div className="font-normal text-lg leading-7 text-center">
+            Got any more questions?
+          </div>
+          <div className="font-normal text-lg leading-7 text-center">
+          Feel free to contact us at  <a className="underline" href="mailto:Support@MilaCollective.com">Support@MilaCollective.com</a>
+          </div>
         </div>
       </div>
 

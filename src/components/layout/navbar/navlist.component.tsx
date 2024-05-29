@@ -2,7 +2,7 @@ import { Session } from "next-auth";
 import Link from "next/link";
 
 const listItems = [
-    { id: "1", title: "About Us", href: "/" },
+    { id: "1", title: "About Us", href: "/about-us" },
     { id: "2", title: "Benefits", href: "/coupons" },
     { id: "3", title: "Giveaways", href: "/giveaways" },
 ];
