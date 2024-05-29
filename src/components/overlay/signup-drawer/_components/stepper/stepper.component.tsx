@@ -19,7 +19,9 @@ function Stepper({
             {width < 640 ? (
                 <StepperMobile session={session} />
             ) : (
-                <StepperMain session={session} />
+                <div className="overflow-auto py-3 tall:overflow-hidden tall:py-0 max-h-screen">
+                    <StepperMain session={session} />
+                </div>
             )}
         </StepperProvider>
     )

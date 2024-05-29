@@ -19,7 +19,8 @@ const config: Config = {
         "inter": ['var(--font-inter)']
       },
       screens: {
-        xs: '376px'
+        xs: '376px',
+        tall: { 'raw': '(min-height: 712px)' },
       },
       keyframes: {
         "accordion-down": {
