@@ -13,6 +13,11 @@ import {
     FormLabel,
     FormMessage,
     Input,
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
 } from "@/components";
 import { useCheckOutStore } from "@/store";
 import { signUpWithPrices } from "@/api/auth";
@@ -25,7 +30,7 @@ import { getProductPriceInfo, prefixObjectKeys, withAsync } from "@/utils";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
-import { signIn } from "next-auth/react";
+import states from "@/data/state.data.json" with { type: "json" };
 
 type K = keyof SignUpFormData;
 
@@ -200,14 +205,19 @@ export function AuthForm() {
                     name="state"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel htmlFor="state">State</FormLabel>
-                            <FormControl>
-                                <Input
-                                    id="state"
-                                    placeholder="New York 12401"
-                                    {...field}
-                                />
-                            </FormControl>
+                            <FormLabel>State</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="e.g. New York" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {states.map(states => (
+                                        <SelectItem key={states.abbreviation} value={states.abbreviation}>{states.name}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                             <FormMessage />
                         </FormItem>
                     )}
