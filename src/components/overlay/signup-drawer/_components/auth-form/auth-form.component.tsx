@@ -48,8 +48,7 @@ export function AuthForm() {
             full_name: "",
             phone: "",
             state: "",
-            is_outside_of_us: false,
-            is_over_18: false,
+            is_over_18_and_agrees_tc: false,
             token: ""
         }
     });
@@ -122,7 +121,7 @@ export function AuthForm() {
     return (
         <Form {...form}>
             <form
-                className="flex flex-col flex-1 sm:flex-initial justify-center gap-6"
+                className="flex flex-col flex-1 sm:flex-initial justify-center gap-4"
                 ref={formRef}
                 onSubmit={form.handleSubmit(onSubmit)}
             >
@@ -214,7 +213,7 @@ export function AuthForm() {
                                 </FormControl>
                                 <SelectContent>
                                     {states.map(states => (
-                                        <SelectItem key={states.abbreviation} value={states.abbreviation}>{states.name}</SelectItem>
+                                        <SelectItem key={states.abbreviation} value={states.name}>{states.name}</SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
@@ -225,23 +224,7 @@ export function AuthForm() {
 
                 <FormField
                     control={form.control}
-                    name="is_outside_of_us"
-                    render={({ field }) => (
-                        <FormItem className="flex flex-row items-center space-x-2 space-y-0">
-                            <FormControl>
-                                <Checkbox
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
-                            </FormControl>
-                            <FormLabel>Out Side of US</FormLabel>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="is_over_18"
+                    name="is_over_18_and_agrees_tc"
                     render={({ field }) => (
                         <FormItem className="flex flex-row items-center space-x-2 space-y-0">
                             <FormControl>
@@ -274,7 +257,7 @@ export function AuthForm() {
                 <Button
                     className="mt-auto sm:mt-0"
                     type="submit"
-                    disabled={!form.watch("is_over_18") || !!!form.watch("token")}
+                    disabled={!form.watch("is_over_18_and_agrees_tc") || !!!form.watch("token")}
                 >
                     Sign Up
                 </Button>

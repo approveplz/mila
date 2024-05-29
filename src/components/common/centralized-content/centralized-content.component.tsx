@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/utils";
 import { VariantProps, cva } from "class-variance-authority";
 
-const centralizedContentClasses = cva("flex h-screen", {
+const centralizedContentClasses = cva("flex", {
     variants: {
         centralized: {
             h: "items-center",

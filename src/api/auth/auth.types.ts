@@ -24,8 +24,7 @@ export type SignUpWithPricesPayload = {
     phone: string
     password: string
     state: string
-    is_outside_of_us: boolean
-    is_over_18: boolean
+    is_over_18_and_agrees_tc: boolean
     prices: Array<{
         price: string
         quantity: number

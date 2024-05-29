@@ -10,7 +10,7 @@ import { AuthForm } from './components/auth-form/auth-form.component';
 export default function SignInForm() {
     return (
         <AuthDialog>
-            <DialogContent className="sm:max-w-[455px]">
+            <DialogContent className="sm:max-w-[455px] z-[99999]">
                 <DialogHeader>
                     <DialogTitle>Sign In</DialogTitle>
                 </DialogHeader>

@@ -198,5 +198,9 @@
     {
         "name": "Wyoming",
         "abbreviation": "WY"
+    },
+    {
+        "name": "Outside of US",
+        "abbreviation": "NONE"
     }
 ]

@@ -18,7 +18,7 @@ export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
                     <HiArrowUpRight className="ml-3 h-6 w-4" />
                 </Button>
             </DrawerTrigger>
-            <DrawerContent className="bg-white h-full rounded-none z-[9999]">
+            <DrawerContent className="bg-white h-full rounded-none z-[9999] max-h-screen">
                 {children}
             </DrawerContent>
         </Drawer>
