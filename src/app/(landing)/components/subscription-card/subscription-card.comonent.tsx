@@ -94,7 +94,6 @@ export function SubscriptionInfoCard({
 
     return (
         <figure
-            // style={{ minWidth: '284px' }}
             className={cn(cardClasses({ type, selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
             <div
                 className={cn(cva("price-card__bg h-full", {

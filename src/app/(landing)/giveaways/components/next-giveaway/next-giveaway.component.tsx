@@ -59,7 +59,7 @@ export function NextGiveAway() {
                 <Image
                   src={giveAwayData?.image ? giveAwayData?.image?.file_url : "/images/giveaway-backpack.png"}
                   alt="giveaway-backpack"
-                  layout="responsive"
+                  // layout="responsive"
                   width={656}
                   height={399}
                 />

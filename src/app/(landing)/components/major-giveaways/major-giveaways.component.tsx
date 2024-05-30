@@ -25,7 +25,7 @@ export function MajorGiveaways() {
   const { products } = useCheckOutStore();
   const pricingType = useCheckOutStore((state) => state.pricingType);
 
-  const { width } = useWidth()
+  const { width } = useWidth();
 
   const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem[]> =
     useQuery({
@@ -76,7 +76,7 @@ export function MajorGiveaways() {
                 <Image
                   src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
-                  layout="responsive"
+                  // layout="responsive"
                   width={319}
                   height={280}
                   className={`!rounded-t-[20px]`}
@@ -134,7 +134,7 @@ export function MajorGiveaways() {
                 <Image
                   src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
-                  layout="responsive"
+                  // layout="responsive"
                   width={319}
                   height={280}
                   className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"

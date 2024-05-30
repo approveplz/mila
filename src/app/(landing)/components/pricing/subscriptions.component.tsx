@@ -1,7 +1,6 @@
 'use client'
 
 import { messages } from "@/shared/constants/messages";
-import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import './styles.css';

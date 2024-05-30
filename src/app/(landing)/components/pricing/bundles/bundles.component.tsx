@@ -1,14 +1,12 @@
 'use client'
 
 import { messages } from "@/shared/constants/messages";
-import { useEffect, useState } from "react";
 import { BundleCard } from "./card.component";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { getDefaultPrice } from "@/utils";
-import { SubscriptionCard } from "@/components/overlay/signup-drawer/_components/sub-card/sub-card.component";
 import { useWidth } from "@/hooks";
 import { Session } from "next-auth";
 
