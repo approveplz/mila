@@ -18,7 +18,7 @@ const AccordionItem = AccordionPrimitive.Item;
 const AccordionTrigger = AccordionPrimitive.Trigger;
 const AccordionContent = AccordionPrimitive.Content;
 
-const cookies = new Cookies(null, { path: '/' });
+const cookies = new Cookies(process.env.NODE_ENV === 'production' ? '__Secure-authjs.session-token' : 'authjs.session-token', { path: '/' });
 
 export function NavContent({
     session

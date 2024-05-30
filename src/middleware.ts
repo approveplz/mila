@@ -128,15 +128,14 @@ export async function middleware(req: NextRequest) {
 
         if (token) {
             if (shouldUpdateToken(token)) {
-                const { response: res, error } = await withAsync(() => refreshTokenAPI(token))
+                try {
+                    const res = await refreshTokenAPI(token)
 
-                console.log("ref: ", sessionCookie);
-                console.log("res: ", res);
+                    console.log("ref: ", sessionCookie);
+                    console.log("res: ", res);
 
-                if (res) {
-                    if (res.detail) {
-                        response.cookies.delete(sessionCookie);
-                        // return NextResponse.redirect(new URL(req.url));
+                    if (res.code && res.code === "token_not_valid") {
+                        throw new Error('Token is blacklisted')
                     } else {
                         const newSessionToken = await encode({
                             secret: process.env.AUTH_SECRET!,
@@ -150,16 +149,9 @@ export async function middleware(req: NextRequest) {
                         console.log("newSessionToken: ", newSessionToken);
                         response.cookies.set(sessionCookie, newSessionToken);
                     }
-
-                    // response.cookies.set('ss', newSessionToken);
-                    // return NextResponse.redirect(new URL(req.url));
-                } else if (error) {
+                } catch (err) {
                     response.cookies.delete(sessionCookie);
-                    // return NextResponse.redirect(new URL(req.url));
                 }
-
-                // return NextResponse.redirect(new URL(req.url));
-                // return response;
             }
         }
     }
