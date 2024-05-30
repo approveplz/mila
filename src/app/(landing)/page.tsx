@@ -10,9 +10,11 @@ import { MajorGiveaways } from "./components/major-giveaways/major-giveaways.com
 import { Pricing } from "./components/pricing/pricing.component";
 import { getProducts } from "@/actions";
 import { AmoeDrawer } from "@/components";
+import { auth } from "@/auth";
 
 export default async function Home() {
   const products = await getProducts();
+  const session = await auth();
 
   return (
     <>
@@ -21,9 +23,9 @@ export default async function Home() {
       <Benefits />
       <GiveAway />
       <HowItWorks />
-      <Pricing products={products} />
-      <MajorGiveaways />
-      <MinorGiveaways />
+      <Pricing session={session} products={products} />
+      <MajorGiveaways session={session} />
+      <MinorGiveaways session={session} />
       <FollowUs />
       <FAQ />
       {/* <AmoeDrawer /> */}

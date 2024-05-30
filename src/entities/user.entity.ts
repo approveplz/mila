@@ -13,6 +13,7 @@ export type User = {
         has_a_pending_payment: boolean
         is_free_tier_subscriber: boolean
         subscribed_products: SubscribedProduct[]
+        total_entries_count:number
     }
 }
 

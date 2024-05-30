@@ -6,12 +6,15 @@ import PricingTabs from "./pricing-tabs.component";
 import { PricingAction } from "./pricing-action.component";
 import { SignUpAction } from "../signup-action/signup-action.component";
 import { auth } from "@/auth";
+import { Session } from "next-auth";
 
 export async function Pricing({
   products,
+  session,
   children
 }: {
-  products: Array<Product>
+  products: Array<Product>,
+  session?: Session | null
 } & React.PropsWithChildren) {
   const { pricing: {
     headingA,
@@ -19,9 +22,7 @@ export async function Pricing({
     description,
   } } = messages;
 
-  const session = await auth();
   const isLoggedIn = !!session;
-
 
   return (
     <section id="pricing" className="py-[66px] bg-[#F3F3F3]">
@@ -37,7 +38,7 @@ export async function Pricing({
             </div>
           </div>
 
-          <PricingTabs session={session} products={products} />
+          <PricingTabs session={session ? session : null} products={products} />
 
           {!isLoggedIn &&
             <PricingAction>
