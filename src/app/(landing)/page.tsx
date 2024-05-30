@@ -9,13 +9,13 @@ import { MinorGiveaways } from "./components/minor-giveaways/minor-giveaways.com
 import { MajorGiveaways } from "./components/major-giveaways/major-giveaways.component";
 import { Pricing } from "./components/pricing/pricing.component";
 import { getProducts } from "@/actions";
-import { AmoeDrawer } from "@/components";
 import { auth } from "@/auth";
 
 export default async function Home() {
   const products = await getProducts();
   const session = await auth();
 
+  console.log("session: ", session);
   return (
     <>
       <Header />
@@ -28,7 +28,6 @@ export default async function Home() {
       <MinorGiveaways session={session} />
       <FollowUs />
       <FAQ />
-      {/* <AmoeDrawer /> */}
     </>
   )
 }

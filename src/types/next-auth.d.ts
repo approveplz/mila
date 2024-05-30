@@ -9,7 +9,9 @@ declare module "next-auth" {
         user: {
             /** The user's postal address. */
             access: string
+            refresh: string
             user: User
-        }
+        },
+        error?: "RefreshAccessTokenError"
     }
 }

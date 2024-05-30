@@ -14,6 +14,9 @@ export type SignInWithCredentialsResponse = AuthCredentials & {
     user: User
 }
 
+export type RefreshTokenPayload = AuthCredentials;
+export type RefreshTokenResponse = AuthCredentials;
+
 export type SignInWithCredentialsErrorResponse = {
     detail: string
 }

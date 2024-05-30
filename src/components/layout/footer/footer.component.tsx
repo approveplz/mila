@@ -65,9 +65,9 @@ export function Footer() {
           </div>
 
           <div className="max-w-[500px]">
-            <span className="font-normal text-xs leading-[18px]" > {messageA} </span>
-            <span className="underline cursor-pointer font-normal text-xs leading-[18px]"> {messageB} </span>
-            <span className="font-normal text-xs leading-[18px]"> {messageC} </span>
+            <span className="font-normal text-xs leading-[18px]">{messageA}</span>{" "}
+            <Link className="underline cursor-pointer font-normal text-xs leading-[18px]" href="/legal/privacy-policy">{messageB}</Link>{" "}
+            <span className="font-normal text-xs leading-[18px]">{messageC}</span>
           </div>
         </div>
 

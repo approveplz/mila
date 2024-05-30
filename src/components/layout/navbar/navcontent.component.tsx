@@ -11,17 +11,32 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { HiBars3, HiOutlineGift, HiXMark } from "react-icons/hi2";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import Cookies from 'universal-cookie';
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
 const AccordionTrigger = AccordionPrimitive.Trigger;
 const AccordionContent = AccordionPrimitive.Content;
 
+const cookies = new Cookies(null, { path: '/' });
+
 export function NavContent({
     session
 }: {
     session: Session | null
 }) {
+    React.useEffect(() => {
+        const cookieChangeListener = (params: unknown) => {
+            console.log('The cookie ', params);
+        }
+
+        cookies.removeChangeListener(cookieChangeListener);
+
+        return () => {
+            cookies.removeChangeListener(cookieChangeListener);
+        }
+    }, []);
+
     return (
         <Accordion type="single" collapsible>
             <AccordionItem value="nav">
@@ -36,7 +51,7 @@ export function NavContent({
 
                     <div className="hidden sm:flex">
                         {session ? (
-                            <NavAction />
+                            <NavAction session={session} />
                         ) : (
                             <div className="flex gap-4">
                                 <Button asChild>
@@ -52,7 +67,7 @@ export function NavContent({
                     <div className="flex flex-1 justify-end items-center sm:hidden">
                         {session && (
                             <Button variant="fatal" className="p-3 mr-3 max-h-10">
-                                <HiOutlineGift className="h-4 w-4 mr-1" /> 53
+                                <HiOutlineGift className="h-4 w-4 mr-1" /> {session.user?.user.metadata.total_entries_count || 0}
                             </Button>
                         )}
                         <Button type="button" asChild variant="fatal" className="p-2 max-h-10 max-w-10 data-[state=open]:hidden">

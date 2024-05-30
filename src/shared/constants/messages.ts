@@ -95,7 +95,7 @@ export const messages = {
         placeholder: 'Enter your email',
         subscribe: 'Subscribe',
         messageA: 'By subscribing you agree to with our',
-        messageB: ' Privacy Policy',
+        messageB: 'Privacy Policy',
         messageC: 'and provide consent to receive updates from our company.'
       }
     },

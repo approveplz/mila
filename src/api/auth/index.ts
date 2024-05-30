@@ -9,6 +9,8 @@ import {
     GetCouponDetailParams,
     GetCouponsParams,
     GetCouponsResponse,
+    RefreshTokenPayload,
+    RefreshTokenResponse,
     SendVerificationSmsResponse,
     SignInWithCredentialsPayload,
     SignInWithCredentialsResponse,
@@ -22,6 +24,16 @@ export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => 
     return api
         .post<SignInWithCredentialsResponse>("/auth/v0/token", payload)
         .then(res => res.data)
+}
+
+export const refreshToken = (payload: RefreshTokenPayload) => {
+    console.log("refreshToken: ", payload);
+    return api
+        .post<RefreshTokenResponse>("/auth/v0/token/refresh", payload)
+        .then(res => {
+            console.log("res: ", res);
+            return res.data
+        })
 }
 
 export const signUpWithPrices = (payload: SignUpWithPricesPayload) => {
