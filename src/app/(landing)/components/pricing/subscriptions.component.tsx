@@ -47,12 +47,14 @@ export function Subscription({
 
   return (
     <div className="flex flex-col gap-6 w-full mt-12">
-      <button
-        className="font-medium text-primary text-lg leading-7 cursor-pointer"
-        onClick={() => clearProducts("subscription")}
-      >
-        {clearSelection}
-      </button>
+      {products.filter(product => product.data.type === "subscription").length > 0 && (
+        <button
+          className="font-medium text-primary text-lg leading-7 cursor-pointer"
+          onClick={() => clearProducts("subscription")}
+        >
+          {clearSelection}
+        </button>
+      )}
 
       {isMobile ? (
         <Swiper

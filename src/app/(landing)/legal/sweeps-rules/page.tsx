@@ -1,4 +1,6 @@
-import { Container, Heading, Link } from "../_components";
+import Link from "next/link";
+import { Container, Heading } from "../_components";
+import { AmoeDrawer } from "@/components";
 
 export default function Page() {
     return (
@@ -8,7 +10,7 @@ export default function Page() {
 
             <div className="flex flex-col gap-2">
                 <p>Edgeaways, LLC is the owner and operator of www.MilaCollective.com and all affiliated websites and mobile versions (“Mila Collective”), a discount club that sells Memberships to exclusive discounts and information about shopping and consumer savings. We are the sponsor and promoter of the sweepstakes that we may choose to operate to promote the sale of the Memberships (“Sweeps”). During the Sweeps, we offer free sweepstakes entries (“Entries”) that provide eligible users who purchase a Membership or otherwise engage in certain qualifying activities (“AMOE(s)”) with an opportunity to win a variety of prizes described on Mila Collective (“Prize(s)”) by random drawing (“Drawing(s)”), according to these Sweeps Rules. Entries are not available for purchase, and Entries are non-transferrable. Eligibility to participate in the Sweeps and to redeem a Prize is contingent upon fulfilling the requirements set forth in these Sweeps Rules.</p>
-                <p>By obtaining Entries, you agree to these Sweeps Rules and our [Link: Terms of Use]. These Sweeps Rules are intended to be read in conjunction with the Terms of Use, and the Terms of Use are incorporated herein by reference. The capitalized words used in these Sweeps Rules have the same meaning as assigned to those words in the Terms of Use. The Sweeps and your participation therein are subject to all applicable federal, state, and local laws and regulations. </p>
+                <p>By obtaining Entries, you agree to these Sweeps Rules and our <Link href="/legal/privacy-policy" className="text-primary font-medium">Terms of Use</Link>. These Sweeps Rules are intended to be read in conjunction with the Terms of Use, and the Terms of Use are incorporated herein by reference. The capitalized words used in these Sweeps Rules have the same meaning as assigned to those words in the Terms of Use. The Sweeps and your participation therein are subject to all applicable federal, state, and local laws and regulations. </p>
                 <p>NO PURCHASE OR PAYMENT IS NECESSARY TO PARTICIPATE IN THESE SWEEPS. A PURCHASE OR PAYMENT OF ANY KIND WILL NOT INCREASE YOUR ODDS OF WINNING. WE DO NOT OFFER ANY REAL MONEY GAMING. </p>
                 <p>We reserve the right to revise these Sweeps Rules at any time by updating this agreement and the Last Updated date above. Whenever we amend these Sweeps Rules, we will notify you upon your next visit to Mila Collective, and you will be required to re-confirm your acceptance prior to participating in the Sweeps. If you do not agree to the amended Sweeps Rules, you are not eligible to participate in the Sweeps.</p>
                 <p><b>We are not a gambling service, we do not take or place illegal bets, and we do not recommend or encourage illegal gambling.</b> Instead, we offer sweepstakes which do not trigger the prohibitions imposed by state and federal gambling laws. Gambling, whether in-person or online, is not legal in all areas. If you seek information regarding any illegal activity, you must leave Mila Collective immediately. You agree not to use Mila Collective if doing so would violate the laws of your state, province, or country. Please consult with your local authorities or legal advisors before participating in online gaming of any kind. It is your sole and absolute responsibility to comply with all applicable laws, and you assume all risk in using Mila Collective. Nothing published on Mila Collective shall be construed as legal advice on any issue. <b>You assume all risk and responsibility for your access to and use of Mila Collective. We bear no responsibility for your access to or use of Mila Collective in connection with illegal gambling activities, and we do not condone illegal gambling. You understand and agree that Mila Collective is for entertainment purposes only. We make no guarantee that Mila Collective is legal in your jurisdiction.</b></p>
@@ -31,7 +33,11 @@ export default function Page() {
 
             <ul className="my-2">
                 <li className="relative pl-8 before:content-['\00B7'] before:absolute before:left-2 before:-top-[14px] before:text-5xl before:text-[#D9D9D9]">
-                    Ten (10) Entries by filling out the online [Link: AMOE Form] associated with that Drawing. You may fill out the online AMOE form up to four (4) times for each Drawing which lasts less than one month.
+                    Ten (10) Entries by filling out the online{" "}
+                    <AmoeDrawer>
+                        <button className="text-primary font-medium">AMOE Form</button>
+                    </AmoeDrawer>{" "}
+                    associated with that Drawing. You may fill out the online AMOE form up to four (4) times for each Drawing which lasts less than one month.
                 </li>
                 <li className="relative pl-8 before:content-['\00B7'] before:absolute before:left-2 before:-top-[14px] before:text-5xl before:text-[#D9D9D9]">
                     From time to time, we may offer additional entries by engaging with our social media posts or referring a friend. The terms and conditions of these additional AMOEs will be prominently displayed on our social media accounts or Mila Collective.

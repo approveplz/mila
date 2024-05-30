@@ -20,6 +20,7 @@ export const isApiError = (error: unknown): error is ApiError => {
 const noAuthUrls = [
     /^\/users\/v0\/sign-up$/,
     /^\/users\/v0\/token$/,
+    // /^\/users\/v0\/auth\/refresh\/$/,
     /^\/users\/v0\/user\/[^/]+\/confirm-membership-details$/,
     /^\/users\/v0\/user\/[^/]+\/generate-membership$/
 ];

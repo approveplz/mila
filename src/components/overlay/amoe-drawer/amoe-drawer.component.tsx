@@ -64,7 +64,7 @@ const MAX_STEPS = stepsMeta.length;
 const INITIAL_STEP = 1;
 const STEP_OFFSET = 1;
 
-export function AmoeDrawer() {
+export function AmoeDrawer({ children }: React.PropsWithChildren) {
     const { step, nextStep, prevStep } = useStepper(INITIAL_STEP, MAX_STEPS);
     const currentStep = stepsMeta[step - STEP_OFFSET];
     const currentTitle = currentStep.name;
@@ -73,9 +73,7 @@ export function AmoeDrawer() {
     return (
         <Drawer dismissible={false} nested={true}>
             <DrawerTrigger asChild>
-                <Button variant="secondary">
-                    AMOE
-                </Button>
+                {children}
             </DrawerTrigger>
             <DrawerContent className="bg-white h-full rounded-none z-[9999] pt-[52px] pl-6 pr-6 sm:pt-24 sm:pl-0 sm:pr-0">
                 <CentralizedContent centralized="v" fullHeight={false}>

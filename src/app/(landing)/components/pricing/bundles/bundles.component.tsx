@@ -50,12 +50,14 @@ export function Bundle({
   return (
     <section className="flex flex-col items-center gap-12 bg-[#F3F3F3] mt-12">
       <div className="flex flex-col items-center gap-6 w-full">
-        <button
-          className="font-medium text-primary text-lg leading-7 cursor-pointer"
-          onClick={() => clearProducts("bundle")}
-        >
-          {clear}
-        </button>
+        {products.filter(product => product.data.type === "bundle").length > 0 && (
+          <button
+            className="font-medium text-primary text-lg leading-7 cursor-pointer"
+            onClick={() => clearProducts("bundle")}
+          >
+            {clear}
+          </button>
+        )}
 
         {isMobile ? (
           <Swiper

@@ -12,5 +12,7 @@ export type User = {
         is_phone_verified: boolean
         has_a_pending_payment: boolean
         is_free_tier_subscriber: boolean
+        total_entries_count: number
+        subscribed_products: Array<{ product: string, quantity: number }>
     }
 }
