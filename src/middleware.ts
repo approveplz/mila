@@ -150,7 +150,8 @@ export async function middleware(req: NextRequest) {
                         response.cookies.set(sessionCookie, newSessionToken);
                     }
                 } catch (err) {
-                    response.cookies.delete(sessionCookie);
+                    console.log("error token: ", err);
+                    response.cookies.set(sessionCookie, '', { maxAge: 0 });
                 }
             }
         }
