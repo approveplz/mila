@@ -12,8 +12,9 @@ import { GiveawayItem } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { useEffect, useState } from "react";
 import useCalculateEntries from "@/hooks/useEntries";
+import { Session } from "next-auth";
 
-export function MinorGiveaways() {
+export function MinorGiveaways({ session }: { session: Session | null }) {
   const { minorGiveways: {
     title,
   } } = messages;
@@ -30,6 +31,7 @@ export function MinorGiveaways() {
   const closestMajorGiveaway = useCheckOutStore(state => state.closestGiveAwayDate)
 
   const entries = useCalculateEntries(pricingType as "subscription" | "bundle", products);
+  const isLoggedIn = !!session;
 
   const calculateGiveAwayDate = (minorGiveAwayDate: string) => {
     return new Date(minorGiveAwayDate) < new Date(closestMajorGiveaway as string)
@@ -50,16 +52,22 @@ export function MinorGiveaways() {
               {pricingType === 'bundle' && !calculateGiveAwayDate(giveAway?.draw_time) && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[30px]"></div>}
 
 
-              {products?.length > 0 && entries > 0 && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+              {!isLoggedIn && products?.length > 0 && entries > 0 && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
                 <div className="font-semibold text-base leading-6">
                   {entries} entries
+                </div>
+              </div>}
+
+              {isLoggedIn && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+                <div className="font-semibold text-base leading-6">
+                  {session?.user?.user?.metadata?.total_entries_count} entries
                 </div>
               </div>}
 
               <Image
                 src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                 alt="bagpack"
-                layout="responsive"
+                // layout="responsive"
                 width={240}
                 height={210}
                 className="w-full h-full !rounded-t-[30px]"

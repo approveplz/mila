@@ -72,7 +72,7 @@ export function MinorGiveaways() {
               <Image
                 src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                 alt="bagpack"
-                layout="responsive"
+                // layout="responsive"
                 width={240}
                 height={210}
                 className="w-full h-full !rounded-t-[30px]"
@@ -139,7 +139,7 @@ export function MinorGiveaways() {
                       <Image
                         src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                         alt="bagpack"
-                        layout="responsive"
+                        // layout="responsive"
                         width={240}
                         height={210}
                         className="w-full !h-[328px] !rounded-t-[20px]"

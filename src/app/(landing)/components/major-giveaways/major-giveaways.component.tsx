@@ -15,9 +15,9 @@ import { GiveawayItem } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { useWidth } from "@/hooks";
 import useCalculateEntries from "@/hooks/useEntries";
+import { Session } from "next-auth";
 
-export function MajorGiveaways() {
-
+export function MajorGiveaways({ session }: { session: Session | null }) {
   const { majorGiveaways: {
     heading, subHeading
   } } = messages;
@@ -25,7 +25,7 @@ export function MajorGiveaways() {
   const { products } = useCheckOutStore();
   const pricingType = useCheckOutStore((state) => state.pricingType);
 
-  const { width } = useWidth()
+  const { width } = useWidth();
 
   const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem[]> =
     useQuery({
@@ -35,6 +35,7 @@ export function MajorGiveaways() {
     })
 
   const entries = useCalculateEntries(pricingType as "subscription" | "bundle", products);
+  const isLoggedIn = !!session;
 
   useEffect(() => {
     if (giveAwayData && pricingType === 'bundle') {
@@ -76,19 +77,28 @@ export function MajorGiveaways() {
                 <Image
                   src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
-                  layout="responsive"
+                  // layout="responsive"
                   width={319}
                   height={280}
                   className={`!rounded-t-[20px]`}
                 />
 
-                {products?.length > 0 &&
+                {!isLoggedIn && products?.length > 0 &&
                   entries > 0 &&
                   ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
                   <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
                       {entries} entries
+                    </div>
+                  </div>}
+
+                {isLoggedIn &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
+                  <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                    <HiOutlineGift size={24} color="#B06E6A" />
+                    <div className="font-semibold text-base leading text-primary">
+                      {session?.user?.user?.metadata?.total_entries_count} entries
                     </div>
                   </div>}
 
@@ -134,13 +144,13 @@ export function MajorGiveaways() {
                 <Image
                   src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
-                  layout="responsive"
+                  // layout="responsive"
                   width={319}
                   height={280}
                   className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"
                 />
 
-                {products?.length > 0 &&
+                {!isLoggedIn && products?.length > 0 &&
                   entries > 0 &&
                   ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
                   && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
@@ -149,6 +159,18 @@ export function MajorGiveaways() {
                       {entries} entries
                     </div>
                   </div>}
+
+
+                {isLoggedIn &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
+                  && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                    <HiOutlineGift size={24} color="#B06E6A" />
+                    <div className="font-semibold text-base leading text-primary">
+                      {session?.user?.user?.metadata?.total_entries_count} entries
+                    </div>
+                  </div>}
+
+
 
                 <div className="py-8 px-6 flex flex-col gap-8">
 

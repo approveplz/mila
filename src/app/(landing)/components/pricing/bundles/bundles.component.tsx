@@ -1,31 +1,26 @@
 'use client'
 
 import { messages } from "@/shared/constants/messages";
-import { useEffect, useState } from "react";
 import { BundleCard } from "./card.component";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { getDefaultPrice } from "@/utils";
-import { SubscriptionCard } from "@/components/overlay/signup-drawer/_components/sub-card/sub-card.component";
+import { useWidth } from "@/hooks";
+import { Session } from "next-auth";
 
-export function Bundle({
-  bundles
-}: {
-  bundles: Array<Product>
-}) {
+type BundleProps = {
+  bundles: Array<Product>;
+  session: Session | null
+};
+
+export function Bundle({ bundles, session }: BundleProps) {
   const { pricing: {
     bundleData: {
       bundleA,
-      bundleB,
-      bundleC,
-      bundleD,
-      bundleE,
-      bundleF,
       clear
-    },
-    continueWithSelected
+    }
   } } = messages;
   const {
     products,
@@ -34,30 +29,20 @@ export function Bundle({
     decreaseProductQuantity,
     clearProducts
   } = useCheckOutStore();
-  const [isMobile, setIsMobile] = useState(false);
-  console.log("bundles: ", bundles);
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1000);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { width } = useWidth()
+  const isLoggedIn = !!session;
 
   return (
     <section className="flex flex-col items-center gap-12 bg-[#F3F3F3] mt-12">
       <div className="flex flex-col items-center gap-6 w-full">
-        <button
+        {!isLoggedIn && <button
           className="font-medium text-primary text-lg leading-7 cursor-pointer"
           onClick={() => clearProducts("bundle")}
         >
           {clear}
-        </button>
+        </button>}
 
-        {isMobile ? (
+        {width < 768 ? (
           <Swiper
             style={{
               paddingBottom: "48px"
@@ -74,6 +59,8 @@ export function Bundle({
                 <SwiperSlide key={bundle.id} className="rounded-[24px]">
                   <BundleCard
                     cardData={{
+                      cardId: bundle.id,
+                      session: session,
                       benefits: bundleA.benefits,
                       cost: getDefaultPrice(bundle.prices),
                       entry: bundle.number_of_entries,
@@ -97,6 +84,8 @@ export function Bundle({
                 <BundleCard
                   key={bundle.id}
                   cardData={{
+                    cardId: bundle.id,
+                    session: session,
                     benefits: bundleA.benefits,
                     cost: getDefaultPrice(bundle.prices),
                     entry: bundle.number_of_entries,
