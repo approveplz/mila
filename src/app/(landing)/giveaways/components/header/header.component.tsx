@@ -24,7 +24,7 @@ export function Header() {
           <Image
             src="/images/bottle.png"
             alt="bottle"
-            layout="cover"
+            // layout="cover"
             width={237}
             height={300}
           />
@@ -35,7 +35,7 @@ export function Header() {
           <Image
             src="/images/cream.png"
             alt="cream"
-            layout="vocer"
+            // layout="cover"
             width={237}
             height={300}
           />
@@ -43,7 +43,7 @@ export function Header() {
           <Image
             src="/images/spray.png"
             alt="spray"
-            layout="cover"
+            // layout="cover"
             width={237}
             height={300}
           />
@@ -54,14 +54,14 @@ export function Header() {
           <Image
             src="/images/lipstick.png"
             alt="lipstick"
-            layout="cover"
+            // layout="cover"
             width={237}
             height={300}
           />
           <Image
             src="/images/brushes.png"
             alt="brushes"
-            layout="cover"
+            // layout="cover"
             width={237}
             height={300}
           />

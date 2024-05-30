@@ -12,8 +12,8 @@ import { getProducts } from "@/actions";
 import { auth } from "@/auth";
 
 export default async function Home() {
-  const session = await auth();
   const products = await getProducts();
+  const session = await auth();
 
   console.log("session: ", session);
   return (
@@ -23,9 +23,9 @@ export default async function Home() {
       <Benefits />
       <GiveAway />
       <HowItWorks />
-      <Pricing products={products} />
-      <MajorGiveaways />
-      <MinorGiveaways />
+      <Pricing session={session} products={products} />
+      <MajorGiveaways session={session} />
+      <MinorGiveaways session={session} />
       <FollowUs />
       <FAQ />
     </>

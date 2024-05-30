@@ -52,7 +52,7 @@ export function GiveAway() {
                 <Image
                   src={giveAwayData?.image ? giveAwayData?.image?.file_url : "/images/bagpack.png"}
                   alt="bagpack"
-                  layout="responsive"
+                  // layout="responsive"
                   width={457}
                   height={399}
                   className="w-auto h-auto sm:min-w-[457px] sm:min-h-[399px] rounded-[24px]"

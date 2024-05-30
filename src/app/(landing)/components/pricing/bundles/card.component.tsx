@@ -2,6 +2,8 @@ import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
 import { cn } from "@/utils";
 import { VariantProps, cva } from "class-variance-authority";
+import { Session } from "next-auth";
+import { useEffect, useState } from "react";
 
 import { HiCheck } from "react-icons/hi2";
 import { HiXMark } from "react-icons/hi2";
@@ -25,10 +27,12 @@ type bundleCard = {
     onSelect: () => void
     onIncrease: () => void
     onDecrease: () => void
+    session: Session | null
+    cardId: string
   },
 }
 
-const bundleCardClasses = cva("relative py-8 px-6 rounded-3xl shadow-lg z-20 sm:min-w-[416px]", {
+const bundleCardClasses = cva("relative py-8 px-6 rounded-3xl shadow-lg z-20 sm:min-w-[416px] min-h-[441px] sm:min-h-0", {
   variants: {
     selected: {
       true: "border-4 border-primary bg-white",
@@ -46,8 +50,25 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
     }
   } } = messages;
 
+  const isLoggedIn = !!cardData?.session;
+
+  const [isCardSelected, selectIsCardSelected] = useState<boolean>(false)
+  const [qunatity, setQuantity] = useState<number>(0)
+
+  useEffect(() => {
+    if (isLoggedIn && cardData?.session) {
+      cardData?.session?.user?.user?.metadata?.subscribed_products.forEach((item) => {
+        if (item.product === cardData?.cardId) {
+          selectIsCardSelected(true)
+          setQuantity(item.quantity)
+        }
+      })
+    }
+  }, [cardData?.session])
+
   return (
-    <figure className={cn(bundleCardClasses({ selected }))}>
+    <figure
+      className={cn(bundleCardClasses({ selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
       <div className="flex flex-col items-left gap-8">
         <div className="flex flex-col items-left">
           <div className="flex flex-row gap-2 items-center">
@@ -82,15 +103,15 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
         </div>
 
         <div className="w-full flex justify-between">
-          <Button
+          {!isLoggedIn && <Button
             className="px-5 py-2"
             variant={cardData.selected ? "primary" : "tertiary"}
             onClick={cardData.onSelect}
           >
             {cardData.selected ? "Selected" : "Select"}
-          </Button>
+          </Button>}
 
-          {cardData.selected && (
+          {cardData.selected && !isLoggedIn && (
             <div className="flex flex-row gap-2 items-center">
               <div>
                 <HiMiniMinus
@@ -111,6 +132,23 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
               </div>
             </div>
           )}
+
+
+          {(isLoggedIn && isCardSelected) &&
+            <Button
+              className="px-5 py-2"
+              variant="primary"
+            >
+              Selected
+            </Button>
+          }
+
+          {(isLoggedIn && isCardSelected) &&
+            <div className="flex flex-row gap-2 items-center">
+              <div className="border border-[#171614] rounded-[10px] py-2 px-3">
+                {qunatity}
+              </div>
+            </div>}
         </div>
       </div>
     </figure>

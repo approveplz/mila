@@ -1,7 +1,6 @@
 'use client'
 
 import { messages } from "@/shared/constants/messages";
-import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import './styles.css';
@@ -10,40 +9,22 @@ import { SubscriptionInfoCard } from "../subscription-card/subscription-card.com
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
+import { Session } from "next-auth";
+import { useWidth } from "@/hooks";
 
-export function Subscription({
-  subscriptions
-}: {
-  subscriptions: Array<Product>
-}) {
+type SubscriptionProps = {
+  subscriptions: Array<Product>;
+  session: Session | null
+};
+
+export function Subscription({ subscriptions, session }: SubscriptionProps) {
   const { addProduct, products, clearProducts } = useCheckOutStore();
   const { pricing: {
-    subscriptionData: {
-      free,
-      bronze,
-      silver,
-      gold,
-      days,
-      getMessageA,
-      getMessageB,
-      select
-    },
-    continueWithSelected,
     clearSelection,
   } } = messages;
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1000);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { width } = useWidth()
+  const isLoggedIn = !!session;
 
   return (
     <div className="flex flex-col gap-6 w-full mt-12">
@@ -56,7 +37,7 @@ export function Subscription({
         </button>
       )}
 
-      {isMobile ? (
+      {width < 768 ? (
         <Swiper
           style={{
             paddingBottom: "48px"
@@ -72,6 +53,8 @@ export function Subscription({
             .map(subscription => (
               <SwiperSlide key={subscription.id}>
                 <SubscriptionInfoCard
+                  cardId={subscription.id}
+                  session={session}
                   title={subscription.name}
                   duration={subscription.access_duration}
                   type={subscription.tier as any}
@@ -91,6 +74,8 @@ export function Subscription({
             .sort((a, b) => a.sort_order - b.sort_order)
             .map(subscription => (
               <SubscriptionInfoCard
+                cardId={subscription.id}
+                session={session}
                 key={subscription.id}
                 title={subscription.name}
                 duration={subscription.access_duration}
