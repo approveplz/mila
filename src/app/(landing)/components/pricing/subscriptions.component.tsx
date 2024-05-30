@@ -11,6 +11,7 @@ import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
 import { Session } from "next-auth";
+import { useWidth } from "@/hooks";
 
 type SubscriptionProps = {
   subscriptions: Array<Product>;
@@ -20,43 +21,22 @@ type SubscriptionProps = {
 export function Subscription({ subscriptions, session }: SubscriptionProps) {
   const { addProduct, products, clearProducts } = useCheckOutStore();
   const { pricing: {
-    subscriptionData: {
-      free,
-      bronze,
-      silver,
-      gold,
-      days,
-      getMessageA,
-      getMessageB,
-      select
-    },
-    continueWithSelected,
     clearSelection,
   } } = messages;
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1000);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { width } = useWidth()
+  const isLoggedIn = !!session;
 
   return (
     <div className="flex flex-col gap-6 w-full mt-12">
-      <button
+      {!isLoggedIn && <button
         className="font-medium text-primary text-lg leading-7 cursor-pointer"
         onClick={() => clearProducts("subscription")}
       >
         {clearSelection}
-      </button>
+      </button>}
 
-      {isMobile ? (
+      {width < 768 ? (
         <Swiper
           style={{
             paddingBottom: "48px"
@@ -72,6 +52,7 @@ export function Subscription({ subscriptions, session }: SubscriptionProps) {
             .map(subscription => (
               <SwiperSlide key={subscription.id}>
                 <SubscriptionInfoCard
+                  cardId={subscription.id}
                   session={session}
                   title={subscription.name}
                   duration={subscription.access_duration}
@@ -92,6 +73,7 @@ export function Subscription({ subscriptions, session }: SubscriptionProps) {
             .sort((a, b) => a.sort_order - b.sort_order)
             .map(subscription => (
               <SubscriptionInfoCard
+                cardId={subscription.id}
                 session={session}
                 key={subscription.id}
                 title={subscription.name}

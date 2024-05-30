@@ -12,5 +12,11 @@ export type User = {
         is_phone_verified: boolean
         has_a_pending_payment: boolean
         is_free_tier_subscriber: boolean
+        subscribed_products: SubscribedProduct[]
     }
+}
+
+type SubscribedProduct = {
+    product:String,
+    quantity:number
 }

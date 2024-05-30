@@ -3,11 +3,12 @@ import { messages } from "@/shared/constants/messages";
 import { cn } from "@/utils";
 import { VariantProps, cva } from "class-variance-authority"
 import { Session } from "next-auth";
+import { useEffect, useState } from "react";
 import { HiCheck, HiOutlineGift, HiXMark } from "react-icons/hi2";
 
 // const cardClasses = cva("relative overflow-hidden rounded-[24px] max-h-[579px] price-card before:rounded-3xl before:-z-10 z-20", {
 
-const cardClasses = cva("relative overflow-hidden py-8 px-6 rounded-3xl z-20", {
+const cardClasses = cva("relative overflow-hidden py-8 px-6 rounded-3xl z-20 w-full min-h-[600px] sm:min-h-0", {
     variants: {
         type: {
             free: "after:bg-white",
@@ -37,6 +38,7 @@ type Props = VariantProps<typeof cardClasses> & {
     isDiscounted: boolean
     onSelect: () => void
     session: Session | null
+    cardId: string
 }
 
 const { pricing: {
@@ -62,6 +64,7 @@ const tiersBenefits = {
 type K = keyof typeof tiersBenefits
 
 export function SubscriptionInfoCard({
+    cardId,
     title,
     duration,
     entries,
@@ -74,10 +77,25 @@ export function SubscriptionInfoCard({
     session
 }: Props) {
 
-    console.log(session)
+    const isLoggedIn = !!session;
+
+    const [isCardSelected, selectIsCardSelected] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (isLoggedIn && session) {
+            session?.user?.user?.metadata?.subscribed_products.forEach((item) => {
+                if (item.product === cardId) {
+                    selectIsCardSelected(true)
+                }
+            })
+        }
+    }, [session])
+
 
     return (
-        <figure className={cn(cardClasses({ type, selected }))}>
+        <figure
+            // style={{ minWidth: '284px' }}
+            className={cn(cardClasses({ type, selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
             <div
                 className={cn(cva("price-card__bg h-full", {
                     variants: {
@@ -156,11 +174,17 @@ export function SubscriptionInfoCard({
                         ))}
                     </div>
 
-                    <div className="w-full flex flex-col mt-auto">
+                    {!isLoggedIn && <div className="w-full flex flex-col mt-auto">
                         <Button variant={selected ? "primary" : "fatal-outline"} onClick={onSelect}>
                             {selected ? "Selected" : "Select"}
                         </Button>
-                    </div>
+                    </div>}
+
+                    {(isLoggedIn && isCardSelected) && <div className="w-full flex flex-col mt-auto">
+                        <Button variant="primary" >
+                            Selected
+                        </Button>
+                    </div>}
                 </div>
             </div>
         </figure>

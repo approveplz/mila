@@ -42,7 +42,7 @@ export default function PricingTabs({
                 <Subscription session={session} subscriptions={subscriptions} />
             </TabsContent>
             <TabsContent value="bundle">
-                <Bundle bundles={bundles} />
+                <Bundle session={session} bundles={bundles} />
             </TabsContent>
         </Tabs>
     )
