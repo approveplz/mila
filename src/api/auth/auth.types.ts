@@ -165,3 +165,35 @@ export type Social = {
     modified: string;
 }
 
+
+export type GetProfileParams = {
+    profileId: string;
+}
+
+export type Address = {
+    id?: string;
+    line_1?: string;
+    line_2?: string;
+    city?: string;
+    region?: string;
+    postal_code?: string;
+};
+
+export type GetProfileResponse = {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    address: Address;
+};
+
+
+export type UpdateProfilePayload = {
+    first_name?: string;
+    last_name?: string;
+    address?: Address;
+    current_password?: string;
+    new_password_1?: string;
+    new_password_2?: string;
+};

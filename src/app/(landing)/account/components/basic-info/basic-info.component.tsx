@@ -1,11 +1,32 @@
-import { Button } from "@/components";
+import { getProfileDetails } from "@/api/auth";
+import { GetProfileResponse } from "@/api/auth/auth.types";
+import { BecomeAPartnerForm } from "@/app/(landing)/coupons/components/become-a-partner/form.component";
+import { Button, Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components";
+import { Session } from "next-auth";
+import {
+    useQuery,
+    UseQueryResult
+  } from '@tanstack/react-query'
 import { AddressForm } from "../address/address-form.component";
+import { DeleteAccountForm } from "../delete-account/delete-account.component";
 import { PasswordForm } from "../password/password.form.component";
 import { BasicInfoForm } from "./basic-info-form.component";
 
-export default function BasicInfo() {
+export default function BasicInfo({ session }: { session: Session | null }) {
+    console.log(session)
 
+    const isLoggedIn = !!session;
 
+    const { data: profileDetails, isLoading: isProfileLoading }: UseQueryResult<GetProfileResponse> =
+        useQuery({
+            queryKey: ['profile'],
+            queryFn: () =>
+                getProfileDetails({ profileId: session?.user?.user?.id as string }),
+            enabled: isLoggedIn,
+        })
+        
+
+    // console.log(profileDetails);
 
     return (
         <section className="p-12 flex flex-col w-full rounded-[24px] bg-[#F3F3F3]" >
@@ -26,7 +47,7 @@ export default function BasicInfo() {
                     </div>
 
                     <div className="w-[376px]">
-                        <BasicInfoForm />
+                        <BasicInfoForm session={session} />
                     </div>
 
                 </div>
@@ -78,9 +99,33 @@ export default function BasicInfo() {
                             No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.
                         </div>
                     </div>
+                    {/* inline-flex items-center justify-center whitespace-nowrap text-base font-normal ring-offset-background border  rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 */}
 
                     <div className="w-[376px]">
-                        <Button className="bg-[#EF4444] text-[#FAFAF9] px-4 py-2 border border-[#EF4444]" >Yes, delete my Account</Button>
+
+                        <Dialog>
+                            <DialogTrigger className="w-fit bg-[#EF4444] border-[#EF4444] px-4 py-2 text-white rounded-full ">
+                                Yes, delete my Account
+                            </DialogTrigger>
+                            <DialogContent className="sm:w-[455px] w-[329px] z-[999999]">
+                                <DialogHeader>
+                                    <DialogTitle className="font-normal text-[30px] leading-9">Are you sure you want to delete your profile?</DialogTitle>
+                                </DialogHeader>
+
+
+                                <DeleteAccountForm
+                                    footer={
+                                        <DialogFooter className="flex flex-row justify-between w-full gap-4 sm:justify-start">
+                                            <DialogClose asChild>
+                                                <Button className="w-full bg-white text-[#171614] px-4 py-2 border border-[#171614]">Cancel</Button>
+                                            </DialogClose>
+
+                                            <Button type="submit" className="w-full bg-[#EF4444] text-[#FAFAF9] px-4 py-2 border border-[#EF4444]">Delete</Button>
+                                        </DialogFooter>
+                                    }
+                                />
+                            </DialogContent>
+                        </Dialog>
                     </div>
 
                 </div>

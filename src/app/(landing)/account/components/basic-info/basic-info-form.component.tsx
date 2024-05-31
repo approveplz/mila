@@ -23,8 +23,10 @@ import { useFormState } from "react-dom";
 import { WarningCircle } from "@phosphor-icons/react";
 import { BasicInfoFormData, BasicInfoSchema } from "./basic-info.schema";
 import { useEffect } from "react";
+import { Session } from "next-auth";
+import { updateProfileDetails } from "@/api/auth";
 
-export function BasicInfoForm() {
+export function BasicInfoForm({ session }: { session: Session | null }) {
     const [result, formAction] = useFormState(actions.authSignIn, {
         status: 'idle',
         error: ''
@@ -35,8 +37,16 @@ export function BasicInfoForm() {
 
     const form = useForm<BasicInfoFormData>({
         mode: "onTouched",
-        resolver: zodResolver(BasicInfoSchema)
+        resolver: zodResolver(BasicInfoSchema),
+        defaultValues: {
+            firstName: session?.user.user.full_name.split(' ')[0] || '',
+            lastName: session?.user.user.full_name.split(' ')[1] || '',
+            emailAddress: session?.user.user.email || '',
+            phone: session?.user.user.phone || '',
+        }
     });
+
+
 
     useEffect(() => {
         if (result) {
@@ -57,10 +67,16 @@ export function BasicInfoForm() {
                 action={formAction}
                 onSubmit={(evt) => {
                     evt.preventDefault();
-                    // setIsLoading(true);
-                    // form.handleSubmit(async () => {
-                    //     formAction(new FormData(formRef.current!));
-                    // })(evt);
+                    setIsLoading(true);
+                    form.handleSubmit(async (data) => {
+                        console.log(data);
+                        updateProfileDetails({
+                            first_name:data?.firstName,
+                            last_name:data?.lastName,
+                        })
+                        setIsLoading(false)
+                        // formAction(new FormData(formRef.current!));
+                    })(evt);
                 }}
             >
                 {result?.error && (

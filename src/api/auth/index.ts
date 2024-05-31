@@ -11,11 +11,14 @@ import {
     GetCouponsResponse,
     RefreshTokenPayload,
     RefreshTokenResponse,
+    GetProfileParams,
+    GetProfileResponse,
     SendVerificationSmsResponse,
     SignInWithCredentialsPayload,
     SignInWithCredentialsResponse,
     SignUpWithPricesPayload,
     SignUpWithPricesResponse,
+    UpdateProfilePayload,
     VerifyEmailOrSMSPayload,
     VerifyEmailOrSMSResponse
 } from "./auth.types";
@@ -83,4 +86,16 @@ export const getCouponDetail = (payload: GetCouponDetailParams) => {
     return api
         .get<CouponResponse>(`/coupons/v0/coupons/${payload.couponId}`)
         .then(res => res.data);
+}
+
+export const getProfileDetails = (params: GetProfileParams) => {
+    return api
+        .get<GetProfileResponse>(`/users/v0/user/${params.profileId}/account`)
+        .then(res => res.data)
+}
+
+export const updateProfileDetails = (payload: UpdateProfilePayload) => {
+    return api
+        .put<GetProfileResponse>("/auth/v0/token", payload)
+        .then(res => res.data)
 }
