@@ -80,7 +80,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   // layout="responsive"
                   width={319}
                   height={280}
-                  className={`!rounded-t-[20px]`}
+                  className={`!rounded-t-[20px] min-h-[313px]`}
                 />
 
                 {!isLoggedIn && products?.length > 0 &&
@@ -107,9 +107,8 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                     <div className="font-semibold text-[30px] leading-9 text-[#171614]">
                       {giveAway?.brand}
                     </div>
-                    <div className="font-normal text-lg leading-[28px]">
+                    <div title={giveAway?.description} className="font-normal text-lg leading-[28px]">
                       {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
-
                     </div>
                   </div>
 
@@ -147,7 +146,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   // layout="responsive"
                   width={319}
                   height={280}
-                  className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"
+                  className="!rounded-l-[20px] object-cover"
                 />
 
                 {!isLoggedIn && products?.length > 0 &&
@@ -178,7 +177,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                     <div className="font-semibold text-[30px] leading-9 text-[#171614]">
                       {giveAway?.brand}
                     </div>
-                    <div className="font-normal text-lg leading-[28px]">
+                    <div title={giveAway?.description} className="font-normal text-lg leading-[28px] line-clamp-4 overflow-hidden">
                       {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
                     </div>
                   </div>

@@ -5,6 +5,7 @@ import { inter, ttRamillasTrlVar } from "@/styles/fonts";
 import { Providers } from "./providers";
 import { cn } from "@/utils";
 import Script from "next/script";
+import { Toaster } from "@/components";
 
 export const metadata: Metadata = {
   title: "MilaCollective",
@@ -40,6 +41,7 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
+        <Toaster />
       </body>
     </html>
   );
