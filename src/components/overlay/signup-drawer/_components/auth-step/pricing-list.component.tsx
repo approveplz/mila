@@ -6,14 +6,7 @@ import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
 
 function calculateTotal(products: Array<CheckoutProduct>) {
     const getPrice = (prices: Product["prices"]) => {
-        let price = 0;
-
         const actualPrice = getProductPrice(prices);
-        // if (product.prices.length > 0) {
-        //     price = getDiscountedPrice(product.prices);
-        // } else {
-        //     price = getDefaultPrice(product.prices)
-        // }
 
         if (actualPrice.isDiscounted) {
             return actualPrice.discountedPrice
@@ -22,7 +15,7 @@ function calculateTotal(products: Array<CheckoutProduct>) {
         }
     }
 
-    return products.reduce((accumulator, currentValue) => getPrice(currentValue.data.prices) + accumulator, 0);
+    return products.reduce((accumulator, currentValue) => (getPrice(currentValue.data.prices) * currentValue.quantity) + accumulator, 0).toFixed(2);
 }
 
 export function ProductPriceSelector({
@@ -78,7 +71,7 @@ export function PricingList({
                     <div className="flex justify-end [&>*]:flex-1">
                         <BundleCard
                             type="bronze"
-                            count={bundles.reduce((total, bundle) => total + bundle.data.number_of_entries, 0)}
+                            count={bundles.reduce((total, bundle) => total + (bundle.data.number_of_entries * bundle.quantity), 0)}
                         />
                     </div>
                 </>

@@ -18,9 +18,24 @@ import { useCheckOutStore } from "@/store";
 import { confirmMembership, generateMembership } from '@/api/auth';
 import { useSession } from "next-auth/react";
 import { getProductPrice } from "@/utils";
-import { Price } from "@/entities";
+import { Price, Product } from "@/entities";
+import { CheckoutProduct } from "@/store/checkout/checkout.types";
 
 type K = keyof {};
+
+function calculateTotal(products: Array<CheckoutProduct>) {
+    const getPrice = (prices: Product["prices"]) => {
+        const actualPrice = getProductPrice(prices);
+
+        if (actualPrice.isDiscounted) {
+            return actualPrice.discountedPrice
+        } else {
+            return actualPrice.defaultPrice
+        }
+    }
+
+    return products.reduce((accumulator, currentValue) => (getPrice(currentValue.data.prices) * currentValue.quantity) + accumulator, 0).toFixed(2);
+}
 
 function PriceSelector({ prices, view }: { prices: Array<Price>, view: (price: number) => React.ReactNode }) {
     const { isDiscounted, defaultPrice, discountedPrice } = getProductPrice(prices);
@@ -151,7 +166,7 @@ export function PaymentList() {
                                 </td>
                                 <PriceSelector
                                     prices={bundle.data.prices}
-                                    view={price => <td className="font-normal py-2" align="right">${price * bundle.quantity}</td>}
+                                    view={price => <td className="font-normal py-2" align="right">${(price * bundle.quantity).toFixed(2)}</td>}
                                 />
                             </tr>
                         ))}
@@ -164,7 +179,7 @@ export function PaymentList() {
                         </tr>
                         <tr>
                             <td className="font-bold pt-2" colSpan={2}>TOTAL:</td>
-                            <td className="font-bold pt-2" align="right">$99.96</td>
+                            <td className="font-bold pt-2" align="right">${calculateTotal(products)}</td>
                         </tr>
                     </tbody>
                 </table>

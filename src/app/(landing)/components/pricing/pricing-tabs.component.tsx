@@ -3,10 +3,14 @@ import * as React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { messages } from "@/shared/constants/messages";
 import { Bundle } from "./bundles/bundles.component";
-import { Subscription } from "./subscriptions.component";
 import { Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { Session } from "next-auth";
+import dynamic from "next/dynamic";
+
+const Subscription = dynamic(() => import("./subscriptions.component"), {
+    ssr: false
+})
 
 type PricingTabsProps = {
     products: Array<Product>

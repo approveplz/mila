@@ -17,7 +17,7 @@ type SubscriptionProps = {
   session: Session | null
 };
 
-export function Subscription({ subscriptions, session }: SubscriptionProps) {
+export default function Subscription({ subscriptions, session }: SubscriptionProps) {
   const { addProduct, products, clearProducts } = useCheckOutStore();
   const { pricing: {
     clearSelection,

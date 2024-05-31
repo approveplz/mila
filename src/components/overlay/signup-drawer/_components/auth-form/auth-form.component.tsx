@@ -32,6 +32,8 @@ import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
 import states from "@/data/state.data.json" with { type: "json" };
 import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import { SignUpWithPricesPayload } from "@/api/auth/auth.types";
 
 type K = keyof SignUpFormData;
 
@@ -54,6 +56,31 @@ export function AuthForm() {
         }
     });
 
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: (payload: SignUpWithPricesPayload) => {
+            return signUpWithPrices(payload)
+                .then(async (res) => {
+                    const user = prefixObjectKeys(res.user, "userpre_")
+                    const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
+                    const payload = JSON.parse(JSON.stringify(res));
+                    delete payload.user;
+
+                    return actions.signUp(serialize({
+                        ...payload,
+                        ...user,
+                        ...metadata,
+                        redirect: false
+                    }))
+                })
+        },
+        onSuccess(data, variables, context) {
+            console.log("success: ", { data, variables, context })
+        },
+        onError(error, variables, context) {
+            console.log("error: ", { error, variables, context })
+        },
+    })
+
     const onSubmit = (signUpFormData: SignUpFormData) => {
         const { token: _, ...data } = signUpFormData;
 
@@ -74,39 +101,8 @@ export function AuthForm() {
                 }
             })
 
-        signUpWithPrices({
-            ...data,
-            prices
-        })
-            .then(async (res) => {
-                const user = prefixObjectKeys(res.user, "userpre_")
-                const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
-
-                const payload = JSON.parse(JSON.stringify(res));
-                delete payload.user;
-
-                // authSignUp(serialize({
-                //     ...payload,
-                //     ...user,
-                //     ...metadata,
-                // }))
-                // const { response, error } = await withAsync(() => actions.signUp(serialize({
-                //     ...payload,
-                //     ...user,
-                //     ...metadata,
-                // })));
-                const data = {
-                    ...payload,
-                    ...user,
-                    ...metadata,
-                    redirect: false
-                };
-
-                console.log("data: ", data);
-                const { response, error } = await withAsync(() => actions.signUp(serialize(data)));
-
-                nextStep();
-            })
+        mutateAsync({ ...data, prices })
+            .then(nextStep)
             .catch(err => {
                 const errors = err.response.data;
 
@@ -118,6 +114,50 @@ export function AuthForm() {
                     });
                 });
             });
+        // signUpWithPrices({
+        //     ...data,
+        //     prices
+        // })
+        //     .then(async (res) => {
+        //         const user = prefixObjectKeys(res.user, "userpre_")
+        //         const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
+
+        //         const payload = JSON.parse(JSON.stringify(res));
+        //         delete payload.user;
+
+        //         // authSignUp(serialize({
+        //         //     ...payload,
+        //         //     ...user,
+        //         //     ...metadata,
+        //         // }))
+        //         // const { response, error } = await withAsync(() => actions.signUp(serialize({
+        //         //     ...payload,
+        //         //     ...user,
+        //         //     ...metadata,
+        //         // })));
+        //         const data = {
+        //             ...payload,
+        //             ...user,
+        //             ...metadata,
+        //             redirect: false
+        //         };
+
+        //         console.log("data: ", data);
+        //         const { response, error } = await withAsync(() => actions.signUp(serialize(data)));
+
+        //         nextStep();
+        //     })
+        //     .catch(err => {
+        //         const errors = err.response.data;
+
+        //         Object.entries(errors).forEach((error) => {
+        //             const [key, val] = error as [K, [string]];
+
+        //             form.setError(key, {
+        //                 message: val[0]
+        //             });
+        //         });
+        //     });
     }
 
     return (
@@ -236,9 +276,9 @@ export function AuthForm() {
                                 />
                             </FormControl>
                             <FormLabel>I am over 18 and I agree to {" "}
-                                <Link href="/legal/terms-of-use" className="underline">Terms of Use</Link>, {" "}
-                                <Link href="/legal/privacy-policy" className="underline">Privacy Policy</Link> and {" "}
-                                <Link href="/legal/sweeps-rules" className="underline">Sweeps Rules</Link>
+                                <Link href="/legal/terms-of-use" target="_blank" className="underline">Terms of Use</Link>, {" "}
+                                <Link href="/legal/privacy-policy" target="_blank" className="underline">Privacy Policy</Link> and {" "}
+                                <Link href="/legal/sweeps-rules" target="_blank" className="underline">Sweeps Rules</Link>
                             </FormLabel>
                         </FormItem>
                     )}
@@ -263,7 +303,7 @@ export function AuthForm() {
                 <Button
                     className="mt-auto sm:mt-0"
                     type="submit"
-                    disabled={!form.watch("is_over_18_and_agrees_tc") || !!!form.watch("token")}
+                    disabled={!form.watch("is_over_18_and_agrees_tc") || !!!form.watch("token") || isPending}
                 >
                     Sign Up
                 </Button>

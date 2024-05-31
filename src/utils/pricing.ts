@@ -5,7 +5,7 @@ export const getDefaultPrice = (prices: Array<Price>, is_free: boolean | undefin
         .find(price => price.is_default)
 
     if (price) {
-        return price.unit_amount
+        return parseFloat(price.unit_amount)
     }
 
     return 0;
@@ -27,8 +27,11 @@ export const getProductPrice = (prices: Array<Price>, is_free: boolean | undefin
     const sortedPrices = [...prices]
         .sort((priceA, priceB) => priceA.sort_order - priceB.sort_order);
 
-    const discountedPrice = sortedPrices.find(price => price.is_discounted)?.unit_amount || 0;
-    const defaultPrice = sortedPrices.find(price => price.is_default)?.unit_amount || 0;
+    const discountedPrc = sortedPrices.find(price => price.is_discounted);
+    const defaultPrc = sortedPrices.find(price => price.is_default);
+
+    const discountedPrice = discountedPrc ? parseFloat(discountedPrc.unit_amount) : 0;
+    const defaultPrice = defaultPrc ? parseFloat(defaultPrc.unit_amount) : 0;
 
     return {
         isDiscounted: !!discountedPrice,
