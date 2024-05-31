@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { inter, ttRamillasTrlVar } from "@/styles/fonts";
 import { Providers } from "./providers";
 import { cn } from "@/utils";
+import { Toaster } from "@/components";
 
 export const metadata: Metadata = {
   title: "MilaCollective",
@@ -24,6 +25,7 @@ export default function RootLayout({
           {children}
           {auth}
         </Providers>
+        <Toaster />
       </body>
     </html>
   );
