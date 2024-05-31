@@ -78,7 +78,7 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
                   {giveAway?.brand}
                 </div>
 
-                <div className="font-normal text-xs leading-4">
+                <div title={giveAway?.description} className="font-normal text-xs leading-4 line-clamp-4 overflow-hidden">
                   {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
                 </div>
               </div>

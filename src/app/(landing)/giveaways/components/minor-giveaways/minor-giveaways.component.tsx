@@ -99,7 +99,7 @@ export function MinorGiveaways() {
                 />
 
 
-                <div className="font-normal text-[14px] leading-[20px] text-[#171614]">
+                <div title={giveAway?.description} className="font-normal text-[14px] leading-[20px] text-[#171614] line-clamp-4 overflow-hidden">
                   {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
                 </div>
               </div>
@@ -171,7 +171,7 @@ export function MinorGiveaways() {
                         />
 
 
-                        {!isCollapsed && <div className="font-normal text-[14px] leading-[20px] text-[#171614]">
+                        {!isCollapsed && <div className="font-normal text-[14px] leading-[20px] text-[#171614] ">
                           {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
                         </div>}
 
