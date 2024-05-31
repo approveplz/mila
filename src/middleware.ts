@@ -112,8 +112,6 @@ export const config = {
 // }
 
 export async function middleware(req: NextRequest) {
-    const response = NextResponse.next();
-
     if (req.method === "GET") {
         const sessionCookie = process.env.NODE_ENV === 'production' ? '__Secure-authjs.session-token' : 'authjs.session-token';
         const token = await getToken({
@@ -146,16 +144,38 @@ export async function middleware(req: NextRequest) {
                             salt: sessionCookie
                         });
 
+                        const response = NextResponse.next();
                         console.log("newSessionToken: ", newSessionToken);
-                        response.cookies.set(sessionCookie, newSessionToken);
+                        response.cookies.set(sessionCookie, newSessionToken, {
+                            httpOnly: true,
+                            secure: process.env.NODE_ENV === 'production',
+                            path: "/",
+                            sameSite: "lax"
+                        });
+
+                        console.log(response.cookies.getAll())
+
+                        return response;
                     }
                 } catch (err) {
                     console.log("error token: ", err);
-                    response.cookies.set(sessionCookie, '', { maxAge: 0 });
+
+                    const response = NextResponse.next();
+                    response.cookies.set(sessionCookie, '', {
+                        maxAge: 0,
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV === 'production',
+                        path: "/",
+                        sameSite: "lax"
+                    });
+
+                    console.log(response.cookies.getAll())
+
+                    return response;
                 }
             }
         }
     }
 
-    return response
+    return NextResponse.next();
 }
