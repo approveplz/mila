@@ -102,6 +102,7 @@ export function AuthForm() {
                     redirect: false
                 };
 
+                console.log("data: ", data);
                 const { response, error } = await withAsync(() => actions.signUp(serialize(data)));
 
                 nextStep();

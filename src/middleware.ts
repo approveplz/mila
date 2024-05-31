@@ -3,6 +3,7 @@ import { encode, getToken, type JWT } from "next-auth/jwt";
 import { jwtDecode } from "jwt-decode";
 import { withAsync } from "./utils";
 import { NextRequest, NextResponse } from "next/server";
+import { AUTH_CHECK_COOKIE } from "./shared/constants/constants";
 
 const shouldUpdateToken = (token: JWT) => {
     if (token.access) {
@@ -121,16 +122,10 @@ export async function middleware(req: NextRequest) {
             salt: sessionCookie
         });
 
-        // console.log("req: ", req.url);
-        // console.log('sessionCookie shouldUpdateToken: ', sessionCookie);
-
         if (token) {
             if (shouldUpdateToken(token)) {
                 try {
                     const res = await refreshTokenAPI(token)
-
-                    console.log("ref: ", sessionCookie);
-                    console.log("res: ", res);
 
                     if (res.code && res.code === "token_not_valid") {
                         throw new Error('Token is blacklisted')
@@ -145,7 +140,6 @@ export async function middleware(req: NextRequest) {
                         });
 
                         const response = NextResponse.next();
-                        console.log("newSessionToken: ", newSessionToken);
                         response.cookies.set(sessionCookie, newSessionToken, {
                             httpOnly: true,
                             secure: process.env.NODE_ENV === 'production',
@@ -153,13 +147,11 @@ export async function middleware(req: NextRequest) {
                             sameSite: "lax"
                         });
 
-                        console.log(response.cookies.getAll())
-
+                        response.cookies.delete(AUTH_CHECK_COOKIE);
+                        
                         return response;
                     }
                 } catch (err) {
-                    console.log("error token: ", err);
-
                     const response = NextResponse.next();
                     response.cookies.set(sessionCookie, '', {
                         maxAge: 0,
@@ -168,9 +160,8 @@ export async function middleware(req: NextRequest) {
                         path: "/",
                         sameSite: "lax"
                     });
-
-                    console.log(response.cookies.getAll())
-
+                    
+                    response.cookies.delete(AUTH_CHECK_COOKIE);
                     return response;
                 }
             }

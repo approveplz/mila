@@ -12,13 +12,14 @@ import { HiBars3, HiOutlineGift, HiXMark } from "react-icons/hi2";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import Cookies from 'universal-cookie';
+import { AUTH_CHECK_COOKIE } from "@/shared/constants/constants";
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
 const AccordionTrigger = AccordionPrimitive.Trigger;
 const AccordionContent = AccordionPrimitive.Content;
 
-const cookies = new Cookies(process.env.NODE_ENV === 'production' ? '__Secure-authjs.session-token' : 'authjs.session-token', { path: '/' });
+const cookies = new Cookies(AUTH_CHECK_COOKIE, { path: '/' });
 
 export function NavContent({
     session
@@ -26,6 +27,7 @@ export function NavContent({
     session: Session | null
 }) {
     React.useEffect(() => {
+        console.log(cookies.getAll());
         const cookieChangeListener = (params: unknown) => {
             console.log('The cookie ', params);
         }
