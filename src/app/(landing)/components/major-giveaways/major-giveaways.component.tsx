@@ -146,7 +146,7 @@ export function MajorGiveaways({ session }: { session: Session | null }) {
                   // layout="responsive"
                   width={319}
                   height={280}
-                  className="!w-[319px] !min-h-[280px] !rounded-l-[20px]"
+                  className="!rounded-l-[20px] object-cover"
                 />
 
                 {!isLoggedIn && products?.length > 0 &&
