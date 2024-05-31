@@ -83,7 +83,7 @@ export function SubscriptionInfoCard({
 
     useEffect(() => {
         if (isLoggedIn && session) {
-            session?.user?.user?.metadata?.subscribed_products.forEach((item) => {
+            session?.user?.user?.metadata?.subscribed_products?.forEach((item) => {
                 if (item.product === cardId) {
                     selectIsCardSelected(true)
                 }

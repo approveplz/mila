@@ -22,6 +22,10 @@ import {
 } from "@/components";
 import { useFormState, useFormStatus } from "react-dom";
 import { WarningCircle } from "@phosphor-icons/react";
+import { AUTH_CHECK_COOKIE } from "@/shared/constants/constants";
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies(null, { path: '/', maxAge: 2 * 24 * 60 * 60, httpOnly: false });
 
 export function AuthForm() {
     const [result, formAction] = useFormState(actions.authSignIn, {
@@ -41,6 +45,7 @@ export function AuthForm() {
         if (result) {
             if(result.status === "success") {
                 setIsLoading(false);
+                cookies.set(AUTH_CHECK_COOKIE, "true")
                 router.back()
             } else if(result.status === "failed"){
                 setIsLoading(false);

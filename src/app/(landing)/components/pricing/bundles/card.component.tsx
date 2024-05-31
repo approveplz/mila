@@ -57,7 +57,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
 
   useEffect(() => {
     if (isLoggedIn && cardData?.session) {
-      cardData?.session?.user?.user?.metadata?.subscribed_products.forEach((item) => {
+      cardData?.session?.user?.user?.metadata?.subscribed_products?.forEach((item) => {
         if (item.product === cardData?.cardId) {
           selectIsCardSelected(true)
           setQuantity(item.quantity)
