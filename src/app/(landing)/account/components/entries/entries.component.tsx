@@ -1,9 +1,31 @@
 
+import { getProfileEntries } from "@/api/auth";
+import { ProfileEntryResponse } from "@/api/auth/auth.types";
 import { Button } from "@/components";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { Session } from "next-auth";
 import { HiOutlineGift } from "react-icons/hi2";
 
 
-export default function Entries() {
+export default function Entries({ session }: { session: Session | null }) {
+
+    const isLoggedIn = !!session;
+
+    const { data: entryDetails, isLoading: isProfileLoading }: UseQueryResult<ProfileEntryResponse> =
+        useQuery({
+            queryKey: ['entries'],
+            queryFn: () =>
+                getProfileEntries({ profileId: session?.user?.user?.id as string }),
+            enabled: isLoggedIn,
+        })
+
+    const getDayOfMonth = (date: string) => {
+        const expiryDate = new Date(date);
+        return expiryDate.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+        });
+    }
 
     return (
         <section className="p-12 flex flex-col w-full rounded-[24px] bg-[#F3F3F3]" >
@@ -24,17 +46,6 @@ export default function Entries() {
                     </div>
 
                     <div className="w-[376px] flex flex-col gap-6">
-                        <div className="flex flex-row gap-2 items-center">
-                            <div >
-                                < HiOutlineGift color="#6B7280" size={16} />
-
-                            </div>
-
-                            <div className="font-medium text-base leading-6 text-[#6B7280]">
-                                Subscription Entries: 23
-                            </div>
-
-                        </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex flex-row gap-2 items-center">
                                 <div >
@@ -42,34 +53,45 @@ export default function Entries() {
 
                                 </div>
 
-                                <div>
-                                    <div className="font-medium text-base leading-6 text-[#6B7280]">
-                                        Bundle Entries: 23
-                                    </div>
-
+                                <div className="font-medium text-base leading-6 text-[#6B7280]">
+                                    Subscription Entries: {entryDetails?.entries?.subscription_count}
                                 </div>
 
                             </div>
                             <div className="font-medium text-xs leading-4 text-[#EF4444]">
-                                *Expire on 25th of May
+                                *Expire on {getDayOfMonth(entryDetails?.entries?.subscription_expiry as string)}
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex flex-row gap-2 items-center">
+                                <div >
+                                    < HiOutlineGift color="#6B7280" size={16} />
+                                </div>
+
+                                <div>
+                                    <div className="font-medium text-base leading-6 text-[#6B7280]">
+                                        Bundle Entries: {entryDetails?.entries?.subscription_count}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div className="font-medium text-xs leading-4 text-[#EF4444]">
+                                *Expire on {getDayOfMonth(entryDetails?.entries?.bundle_expiry as string)}
                             </div>
                         </div>
 
                         <div className="flex flex-row gap-2 items-center">
                             <div >
                                 < HiOutlineGift size={16} />
-
                             </div>
 
                             <div className="font-medium text-base leading-6 text-[#171614]">
-                                Total Entries: 23
+                                Total Entries: {entryDetails?.entries?.total_count}
                             </div>
 
                         </div>
-
-                        <Button className="w-fit py-2 px-4" >Get more entries</Button>
-
-                   
+                        {/* <Button className="w-fit py-2 px-4" >Get more entries</Button> */}
                     </div>
 
                 </div>

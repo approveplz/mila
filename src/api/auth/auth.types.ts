@@ -197,3 +197,14 @@ export type UpdateProfilePayload = {
     new_password_1?: string;
     new_password_2?: string;
 };
+
+export type ProfileEntryResponse = {
+    id: string;
+    entries: {
+        subscription_count: number;
+        subscription_expiry: string;
+        bundle_count: number;
+        bundle_expiry: string;
+        total_count: number;
+    };
+}

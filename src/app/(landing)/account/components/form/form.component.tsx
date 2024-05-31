@@ -27,7 +27,8 @@ export default function Form({ session }: { session: Session | null }) {
                     selectedStep={selectedStep}
                     setSelectedStep={(step: string) => setSelectedStep(step)}
                 />
-                {selectedStep === 'info' ? <BasicInfo session={session} /> : <Entries />}
+                <BasicInfo session={session} />
+                {/* {selectedStep === 'info' ? <BasicInfo session={session} /> : <Entries session={session}/>} */}
             </section>
         ) : null
     );

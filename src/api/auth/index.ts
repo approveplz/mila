@@ -20,7 +20,8 @@ import {
     SignUpWithPricesResponse,
     UpdateProfilePayload,
     VerifyEmailOrSMSPayload,
-    VerifyEmailOrSMSResponse
+    VerifyEmailOrSMSResponse,
+    ProfileEntryResponse
 } from "./auth.types";
 
 export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => {
@@ -94,8 +95,14 @@ export const getProfileDetails = (params: GetProfileParams) => {
         .then(res => res.data)
 }
 
-export const updateProfileDetails = (payload: UpdateProfilePayload) => {
+export const updateProfileDetails = (profileId: string, payload: UpdateProfilePayload) => {
     return api
-        .put<GetProfileResponse>("/auth/v0/token", payload)
+        .put<GetProfileResponse>(`/users/v0/user/${profileId}/account`, payload)
+        .then(res => res.data)
+}
+
+export const getProfileEntries = (params: GetProfileParams) => {
+    return api
+        .get<ProfileEntryResponse>(`/users/v0/user/${params?.profileId}/entries-details`)
         .then(res => res.data)
 }

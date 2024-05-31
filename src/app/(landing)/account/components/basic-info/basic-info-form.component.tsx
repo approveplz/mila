@@ -25,8 +25,16 @@ import { BasicInfoFormData, BasicInfoSchema } from "./basic-info.schema";
 import { useEffect } from "react";
 import { Session } from "next-auth";
 import { updateProfileDetails } from "@/api/auth";
+import { GetProfileResponse } from "@/api/auth/auth.types";
+import { toast } from "sonner"
+import { HiXMark } from "react-icons/hi2";
 
-export function BasicInfoForm({ session }: { session: Session | null }) {
+interface BasicInfoFormProps {
+    session: Session | null;
+    profileDetail: GetProfileResponse | undefined;
+}
+
+export function BasicInfoForm({ session, profileDetail }: BasicInfoFormProps) {
     const [result, formAction] = useFormState(actions.authSignIn, {
         status: 'idle',
         error: ''
@@ -38,13 +46,14 @@ export function BasicInfoForm({ session }: { session: Session | null }) {
     const form = useForm<BasicInfoFormData>({
         mode: "onTouched",
         resolver: zodResolver(BasicInfoSchema),
-        defaultValues: {
-            firstName: session?.user.user.full_name.split(' ')[0] || '',
-            lastName: session?.user.user.full_name.split(' ')[1] || '',
-            emailAddress: session?.user.user.email || '',
-            phone: session?.user.user.phone || '',
-        }
+        values: {
+            firstName: profileDetail?.first_name as string,
+            lastName: profileDetail?.last_name as string,
+            emailAddress: profileDetail?.email as string,
+            phone: profileDetail?.phone as string,
+        },
     });
+
 
 
 
@@ -69,13 +78,27 @@ export function BasicInfoForm({ session }: { session: Session | null }) {
                     evt.preventDefault();
                     setIsLoading(true);
                     form.handleSubmit(async (data) => {
-                        console.log(data);
-                        updateProfileDetails({
-                            first_name:data?.firstName,
-                            last_name:data?.lastName,
+                        updateProfileDetails(session?.user?.user?.id as string, {
+                            first_name: data?.firstName,
+                            last_name: data?.lastName,
+                        }).then(res => {
+                            toast("Information Updated", {
+                                action: {
+                                    label: "X",
+                                    onClick: () => console.log("Undo"),
+                                },
+                            })
+                            setIsLoading(false);
+                        }).catch(e => {
+                            toast("Error occured while updating information", {
+                                action: {
+                                    label: "X",
+                                    onClick: () => console.log("Undo"),
+                                },
+                            })
+                            setIsLoading(false);
                         })
-                        setIsLoading(false)
-                        // formAction(new FormData(formRef.current!));
+
                     })(evt);
                 }}
             >
@@ -114,6 +137,7 @@ export function BasicInfoForm({ session }: { session: Session | null }) {
                                     id="lastName"
                                     placeholder="e.g.JohnDoe"
                                     {...field}
+
                                 />
                             </FormControl>
                             <FormMessage />
@@ -132,6 +156,7 @@ export function BasicInfoForm({ session }: { session: Session | null }) {
                                     id="emailAddress"
                                     placeholder="e.g.JohnDoe@gmail.com"
                                     {...field}
+                                    disabled
                                 />
                             </FormControl>
                             <FormMessage />
@@ -150,6 +175,7 @@ export function BasicInfoForm({ session }: { session: Session | null }) {
                                     id="phone"
                                     placeholder="(555) 555-1234"
                                     {...field}
+                                    disabled
                                 />
                             </FormControl>
                             <FormMessage />

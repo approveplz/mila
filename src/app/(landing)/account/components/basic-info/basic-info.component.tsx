@@ -6,15 +6,14 @@ import { Session } from "next-auth";
 import {
     useQuery,
     UseQueryResult
-  } from '@tanstack/react-query'
+} from '@tanstack/react-query'
 import { AddressForm } from "../address/address-form.component";
 import { DeleteAccountForm } from "../delete-account/delete-account.component";
 import { PasswordForm } from "../password/password.form.component";
 import { BasicInfoForm } from "./basic-info-form.component";
+import { Link } from "@/app/(landing)/legal/_components/link/link.component";
 
 export default function BasicInfo({ session }: { session: Session | null }) {
-    console.log(session)
-
     const isLoggedIn = !!session;
 
     const { data: profileDetails, isLoading: isProfileLoading }: UseQueryResult<GetProfileResponse> =
@@ -24,9 +23,6 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                 getProfileDetails({ profileId: session?.user?.user?.id as string }),
             enabled: isLoggedIn,
         })
-        
-
-    // console.log(profileDetails);
 
     return (
         <section className="p-12 flex flex-col w-full rounded-[24px] bg-[#F3F3F3]" >
@@ -47,7 +43,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                     </div>
 
                     <div className="w-[376px]">
-                        <BasicInfoForm session={session} />
+                        <BasicInfoForm profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
@@ -65,7 +61,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                     </div>
 
                     <div className="w-[376px]">
-                        <AddressForm />
+                        <AddressForm profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
@@ -83,7 +79,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                     </div>
 
                     <div className="w-[376px]">
-                        <PasswordForm />
+                        <PasswordForm profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
@@ -99,11 +95,14 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                             No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.
                         </div>
                     </div>
-                    {/* inline-flex items-center justify-center whitespace-nowrap text-base font-normal ring-offset-background border  rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 */}
 
                     <div className="w-[376px]">
 
-                        <Dialog>
+                        <div className="font-normal leading-[20px] text-[14px]">
+                            No longer want to use our service? You can delete your account be emailing  <Link href="mailto:support@milacollective.com">support@milacollective.com</Link>
+                        </div>
+
+                        {/* <Dialog>
                             <DialogTrigger className="w-fit bg-[#EF4444] border-[#EF4444] px-4 py-2 text-white rounded-full ">
                                 Yes, delete my Account
                             </DialogTrigger>
@@ -125,7 +124,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                                     }
                                 />
                             </DialogContent>
-                        </Dialog>
+                        </Dialog> */}
                     </div>
 
                 </div>

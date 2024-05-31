@@ -8,7 +8,7 @@ export const AddressSchema = z.object({
     state: z
         .string(),
     postCode: z
-        .number()
+        .string()
 });
 
 export type AddressFormData = z.infer<typeof AddressSchema>

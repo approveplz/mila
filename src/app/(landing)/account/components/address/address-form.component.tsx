@@ -28,9 +28,19 @@ import { useFormState } from "react-dom";
 import { WarningCircle } from "@phosphor-icons/react";
 import { AddressFormData, AddressSchema } from "./address.schema";
 import { useEffect } from "react";
+import { Session } from "next-auth";
+import { GetProfileResponse } from "@/api/auth/auth.types";
+import { updateProfileDetails } from "@/api/auth";
 import states from "@/data/state.data.json" with { type: "json" };
+import { toast } from "sonner"
+import { HiXMark } from "react-icons/hi2";
 
-export function AddressForm() {
+interface BasicInfoFormProps {
+    session: Session | null;
+    profileDetail: GetProfileResponse | undefined;
+}
+
+export function AddressForm({ session, profileDetail }: BasicInfoFormProps) {
     const [result, formAction] = useFormState(actions.authSignIn, {
         status: 'idle',
         error: ''
@@ -41,7 +51,14 @@ export function AddressForm() {
 
     const form = useForm<AddressFormData>({
         mode: "onTouched",
-        resolver: zodResolver(AddressSchema)
+        resolver: zodResolver(AddressSchema),
+        values: {
+            address: profileDetail?.address?.line_1 as string,
+            city: profileDetail?.address?.city as string,
+            state: profileDetail?.address?.region as string,
+            postCode: profileDetail?.address?.postal_code as string
+
+        }
     });
 
     useEffect(() => {
@@ -63,10 +80,38 @@ export function AddressForm() {
                 action={formAction}
                 onSubmit={(evt) => {
                     evt.preventDefault();
-                    // setIsLoading(true);
-                    // form.handleSubmit(async () => {
-                    //     formAction(new FormData(formRef.current!));
-                    // })(evt);
+
+                    form.handleSubmit(async (data) => {
+                        setIsLoading(true);
+                        updateProfileDetails(session?.user?.user?.id as string, {
+                            first_name: profileDetail?.first_name,
+                            last_name: profileDetail?.last_name,
+                            address: {
+                                line_1: data?.address,
+                                line_2: data?.address,
+                                city: data?.city,
+                                region: data?.state,
+                                postal_code: data?.postCode
+                            }
+                        }).then(res => {
+                            toast("Information Updated", {
+                                action: {
+                                    // label: <HiXMark size={20} color="black" />,
+                                    label: "X",
+                                    onClick: () => console.log("Undo"),
+                                },
+                            })
+                            setIsLoading(false);
+                        }).catch(e => {
+                            toast("Error occured while updating information", {
+                                action: {
+                                    label: "X",
+                                    onClick: () => console.log("Undo"),
+                                },
+                            })
+                            setIsLoading(false);
+                        })
+                    })(evt);
                 }}
             >
                 {result?.error && (
@@ -118,7 +163,7 @@ export function AddressForm() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>State</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={field.onChange} value={field.value} >
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue placeholder="e.g. New York" />
@@ -140,7 +185,7 @@ export function AddressForm() {
                     name="postCode"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel htmlFor="postCode">Post COde</FormLabel>
+                            <FormLabel htmlFor="postCode">Post Code</FormLabel>
                             <FormControl>
                                 <Input
                                     id="postCode"

@@ -9,10 +9,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 import {
     HiOutlineGift,
     HiUserCircle,
-    HiMiniArrowRightOnRectangle
+    HiMiniArrowRightOnRectangle,
+    HiOutlineUserCircle
 } from "react-icons/hi2";
 
 export function NavAction({
@@ -20,8 +22,7 @@ export function NavAction({
 }: {
     session: Session | null
 }) {
-    console.log("session: ", session);
-    
+    const router = useRouter()
     return (
         <div className="flex items-center gap-4">
             <Button variant="fatal">
@@ -36,6 +37,12 @@ export function NavAction({
                     </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-20 z-[9999]">
+                    <DropdownMenuItem onClick={() => router.push('/account')}>
+                        <button className="flex">
+                            <HiOutlineUserCircle className="mr-2 h-4 w-4" />
+                            <span>Profile</span>
+                        </button>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>
                         <form action={authSignOut}>
                             <button className="flex">

@@ -16,20 +16,23 @@ import {
     FormLabel,
     FormMessage,
     Input,
-    Label,
-    Textarea,
-    Select,
-    SelectTrigger,
-    SelectValue,
-    SelectContent,
-    SelectItem
 } from "@/components";
 import { useFormState } from "react-dom";
 import { WarningCircle } from "@phosphor-icons/react";
 import { PasswordFormData, PasswordSchema } from "./password.schema";
 import { useEffect } from "react";
+import { Session } from "next-auth";
+import { GetProfileResponse } from "@/api/auth/auth.types";
+import { updateProfileDetails } from "@/api/auth";
+import { toast } from "sonner"
+import { HiXMark } from "react-icons/hi2";
 
-export function PasswordForm() {
+interface PasswordFormProps {
+    session: Session | null;
+    profileDetail: GetProfileResponse | undefined;
+}
+
+export function PasswordForm({ session, profileDetail }: PasswordFormProps) {
     const [result, formAction] = useFormState(actions.authSignIn, {
         status: 'idle',
         error: ''
@@ -40,7 +43,7 @@ export function PasswordForm() {
 
     const form = useForm<PasswordFormData>({
         mode: "onTouched",
-        resolver: zodResolver(PasswordSchema)
+        resolver: zodResolver(PasswordSchema),
     });
 
     useEffect(() => {
@@ -62,10 +65,51 @@ export function PasswordForm() {
                 action={formAction}
                 onSubmit={(evt) => {
                     evt.preventDefault();
-                    // setIsLoading(true);
-                    // form.handleSubmit(async () => {
-                    //     formAction(new FormData(formRef.current!));
-                    // })(evt);
+
+                    form.handleSubmit(async (data) => {
+                        if (
+                            !data?.currentPassword ||
+                            data.currentPassword.length < 8 ||
+                            !data?.newPassword ||
+                            data.newPassword.length < 8 ||
+                            !data?.confirmPassword ||
+                            data.confirmPassword.length < 8
+                        ) {
+                            return;
+                        }
+                        setIsLoading(true);
+                        updateProfileDetails(session?.user?.user?.id as string, {
+                            first_name: profileDetail?.first_name,
+                            last_name: profileDetail?.last_name,
+                            address: {
+                                line_1: profileDetail?.address?.line_1,
+                                line_2: profileDetail?.address?.line_2,
+                                city: profileDetail?.address?.city,
+                                region: profileDetail?.address?.region,
+                                postal_code: profileDetail?.address?.postal_code,
+                            },
+                            current_password: data?.currentPassword,
+                            new_password_1: data?.newPassword,
+                            new_password_2: data?.confirmPassword
+
+                        }).then(res => {
+                            toast("Information Updated", {
+                                action: {
+                                    label: "X",
+                                    onClick: () => console.log("Undo"),
+                                },
+                            })
+                            setIsLoading(false);
+                        }).catch(e => {
+                            toast("Error occured while updating information", {
+                                action: {
+                                    label: "X",
+                                    onClick: () => console.log("Undo"),
+                                },
+                            })
+                            setIsLoading(false);
+                        })
+                    })(evt);
                 }}
             >
                 {result?.error && (
