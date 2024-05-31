@@ -22,8 +22,6 @@ export async function Pricing({
     description,
   } } = messages;
 
-  const isLoggedIn = !!session;
-
   return (
     <section id="pricing" className="py-[66px] bg-[#F3F3F3]">
       <Container>
@@ -40,10 +38,9 @@ export async function Pricing({
 
           <PricingTabs session={session ? session : null} products={products} />
 
-          {!isLoggedIn &&
-            <PricingAction>
-              <SignUpAction />
-            </PricingAction>}
+          <PricingAction>
+            <SignUpAction />
+          </PricingAction>
         </div>
       </Container>
     </section>
