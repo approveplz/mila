@@ -17,7 +17,7 @@ import { useWidth } from "@/hooks";
 import useCalculateEntries from "@/hooks/useEntries";
 import { Session } from "next-auth";
 
-export function MajorGiveaways({ session }: { session: Session | null }) {
+export default function MajorGiveaways({ session }: { session: Session | null }) {
   const { majorGiveaways: {
     heading, subHeading
   } } = messages;

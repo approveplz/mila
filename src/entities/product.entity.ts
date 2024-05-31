@@ -14,7 +14,7 @@ export interface Price {
     interval: "day"
     interval_count: number
     type: "recurring" | "one_time"
-    unit_amount: number
+    unit_amount: string
     unit_amount_decimal: string
     sort_order: number
     is_default: boolean
