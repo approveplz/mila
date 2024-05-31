@@ -51,4 +51,16 @@ axiosInstance.interceptors.request.use(
     (err: any) => Promise.reject(err),
 );
 
+// axiosInstance.interceptors.response.use(null, (err) => {
+//     const isNoAuthUrl = noAuthUrls.some((pattern) => pattern.test(err.config.url));
+
+//     if(err.response.status === 401 && !isNoAuthUrl) {
+//         window.console.log("session expired");
+
+//         if(!isServer) {
+//             window.location.reload();
+//         }
+//     }
+// })
+
 export default axiosInstance;

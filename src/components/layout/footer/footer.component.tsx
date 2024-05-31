@@ -92,15 +92,15 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-6 mt-6">
-              <div className="flex flex-row gap-3 items-center cursor-pointer" >
-                <FBIcon /> <div className="font-normal text-[14px] leading-[21px]"> Facebook</div>
-              </div>
-              <div className="flex flex-row gap-3 items-center  cursor-pointer" >
-                <InstaIcon /> <div className="font-normal text-[14px] leading-[21px]"> Instagram</div>
-              </div>
-              <div className="flex flex-row gap-3 items-center cursor-pointer" >
+              <Link href="https://www.facebook.com/profile.php?id=61559624221155" className="flex flex-row gap-3 items-center cursor-pointer">
+                <FBIcon /> <div className="font-normal text-[14px] leading-[21px]">Facebook</div>
+              </Link>
+              <Link href="https://www.instagram.com/_milacollective_/" className="flex flex-row gap-3 items-center cursor-pointer">
+                <InstaIcon /> <div className="font-normal text-[14px] leading-[21px]">Instagram</div>
+              </Link>
+              <Link href="https://www.tiktok.com/@milacollective" className="flex flex-row gap-3 items-center cursor-pointer">
                 <TikTokIcon /> <div className="font-normal text-[14px] leading-[21px]">Tik Tok </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
