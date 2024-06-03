@@ -1,6 +1,6 @@
 import { getProfileDetails } from "@/api/auth";
 import { GetProfileResponse } from "@/api/auth/auth.types";
-import { BecomeAPartnerForm } from "@/app/(landing)/coupons/components/become-a-partner/form.component";
+import { BecomeAPartnerForm } from "@/app/(landing)/benefits/components/become-a-partner/form.component";
 import { Button, Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components";
 import { Session } from "next-auth";
 import {
