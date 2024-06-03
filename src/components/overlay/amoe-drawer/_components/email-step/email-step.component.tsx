@@ -150,7 +150,7 @@ export function EmailStep({ actions }: AmoeStepType) {
                             />
 
                             <div className="flex items-center">
-                                <p>Didn&apos;t’ get the email?</p>
+                                <p>Didn&apos;t get the email?</p>
                                 <button type="button" className="font-medium ml-1" onClick={() => { }}>Resend verification email</button>
                             </div>
                         </main>

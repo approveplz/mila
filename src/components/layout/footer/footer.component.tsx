@@ -13,9 +13,9 @@ const links = [
   { title: "Privacy Policy", to: "/legal/privacy-policy" },
   { title: "Terms of Service", to: "/legal/terms-of-use" },
   { title: "Sweeps Rules", to: "/legal/sweeps-rules" },
-  { title: "Cookies Settings", to: "/" },
-  { title: "About Us", to: "/" },
-  { title: "FAQ", to: "/" },
+  { title: "Support", to: "mailto:support@milacollective.com" },
+  { title: "About Us", to: "/about-us" },
+  { title: "FAQ", to: "/#frequently-asked-questions" },
 ];
 
 export function Footer() {

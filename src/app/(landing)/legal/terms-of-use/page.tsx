@@ -384,7 +384,7 @@ export default function Page() {
                 </li>
             </ol>
 
-            <p className="text-sm text-center mt-4">© <Link href="http://www.firstamendment.com/">Walters Law Group</Link> (2024). All rights reserved.</p>
+            <p className="text-sm text-center mt-4">© (2024). All rights reserved.</p>
         </Container>
     )
 }

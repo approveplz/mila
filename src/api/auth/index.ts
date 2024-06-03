@@ -31,7 +31,7 @@ export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => 
 }
 
 export const refreshToken = (payload: RefreshTokenPayload) => {
-    console.log("refreshToken: ", payload);
+
     return api
         .post<RefreshTokenResponse>("/auth/v0/token/refresh", payload)
         .then(res => {

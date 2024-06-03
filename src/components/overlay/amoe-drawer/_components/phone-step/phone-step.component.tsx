@@ -160,7 +160,7 @@ export function PhoneStep({ actions }: AmoeStepType) {
 
                         <footer className="flex flex-col items-center gap-8 min-w-[346px]">
                             <div className="flex items-center">
-                                <p>Didn&apos;t’ get the email?</p>
+                                <p>Didn&apos;t get the email?</p>
                                 <button className="font-medium ml-1" onClick={() => { }}>Resend verification email</button>
                             </div>
                         </footer>

@@ -106,7 +106,7 @@ export const messages = {
         'Privacy Policy',
         'Terms of Service',
         'Sweeps Rules',
-        'Cookies Settings',
+        'Support',
         'About Us',
         'FAQ'
       ]

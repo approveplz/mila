@@ -6,7 +6,7 @@ const AccordionTrigger = AccordionPrimitive.Trigger;
 
 const listItems = [
     { id: "1", title: "About Us", href: "/about-us" },
-    { id: "2", title: "Benefits", href: "/coupons" },
+    { id: "2", title: "Benefits", href: "/benefits" },
     { id: "3", title: "Giveaways", href: "/giveaways" },
 ];
 
