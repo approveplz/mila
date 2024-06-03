@@ -165,7 +165,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
-                    {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
+                    {session?.user?.user?.metadata?.total_entries_count} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
                     </div>
                   </div>}
 

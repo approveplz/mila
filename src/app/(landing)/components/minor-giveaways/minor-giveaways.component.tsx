@@ -54,13 +54,13 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
 
               {!isLoggedIn && products?.length > 0 && entries > 0 && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
                 <div className="font-semibold text-base leading-6">
-                  {entries} entries
+                  {entries} {entries > 1 ? 'entries' : 'entry'}
                 </div>
               </div>}
 
               {isLoggedIn && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
                 <div className="font-semibold text-base leading-6">
-                  {session?.user?.user?.metadata?.total_entries_count} entries
+                  {session?.user?.user?.metadata?.total_entries_count} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
                 </div>
               </div>}
 
@@ -86,16 +86,6 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
           ))}
         </div>
 
-        {/* <div className="hidden sm:flex flex-row gap-2 items-center">
-          <HiMiniArrowLeft className="w-[20px] font-bold cursor-pointer" />
-
-          <div className="text-base leading-6 font-normal text-[#171614] rounded-lg border border-[#171614] px-2 py-1">
-            01
-          </div>
-
-          <HiMiniArrowRight className="w-[20px] font-bold cursor-pointer" />
-
-        </div> */}
       </div>
       }
 
