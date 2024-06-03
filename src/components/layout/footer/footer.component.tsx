@@ -15,7 +15,7 @@ const links = [
   { title: "Sweeps Rules", to: "/legal/sweeps-rules" },
   { title: "Support", to: "mailto:support@milacollective.com" },
   { title: "About Us", to: "/about-us" },
-  { title: "FAQ", to: "/" },
+  { title: "FAQ", to: "/#frequently-asked-questions" },
 ];
 
 export function Footer() {
