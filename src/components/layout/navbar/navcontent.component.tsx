@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import Cookies from 'universal-cookie';
 import { AUTH_CHECK_COOKIE } from "@/shared/constants/constants";
+import { useSelectedLayoutSegment } from "next/navigation";
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
@@ -26,6 +27,10 @@ export function NavContent({
 }: {
     session: Session | null
 }) {
+    const [isOpened, setIsOpened] = React.useState(false);
+    const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+    const activeSegment = useSelectedLayoutSegment();
+
     React.useEffect(() => {
         const cookieChangeListener = (params: unknown) => {
             console.log('The cookie ', params);
@@ -38,8 +43,12 @@ export function NavContent({
         }
     }, []);
 
+    React.useEffect(() => {
+        console.log("activeSegment: ", activeSegment);
+    }, [activeSegment]);
+
     return (
-        <Accordion type="single" collapsible>
+        <Accordion type="single" collapsible onValueChange={val => console.log(val)}>
             <AccordionItem value="nav">
                 <div className="flex justify-between items-center">
                     <NavList />
@@ -87,6 +96,7 @@ export function NavContent({
                 <AccordionContent>
                     <div className="sm:hidden">
                         <NavListMobile session={session} />
+                        <AccordionTrigger ref={triggerRef} />
                     </div>
                 </AccordionContent>
             </AccordionItem>

@@ -102,7 +102,9 @@ export const useCheckOutStore = create<CheckOutStore>()(
 useCheckOutStore.subscribe(
     (state) => state.products,
     (products) => {
-        if (products.some(prod => prod.data.type === "subscription") && products.some(prod => prod.data.is_free)) {
+        const isFree = products.some(prod => prod.data.type === "subscription") && products.every(prod => prod.data.is_free);
+
+        if (isFree) {
             useCheckOutStore.setState({
                 checkoutFlow: "free"
             })
