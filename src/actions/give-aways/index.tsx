@@ -18,10 +18,6 @@ export async function getGiveaways(type: string, module: string = '') {
     const results = (await dbClient.send(
         new ScanCommand({
             TableName: process.env.DYNAMODB_GIVEAWAYS_TABLE_NAME,
-            FilterExpression: 'ttl > :now',
-            ExpressionAttributeValues: {
-                ':now': Date.now()
-            }
         })
     ));
     console.log(Date.now())
