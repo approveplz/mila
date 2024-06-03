@@ -104,7 +104,7 @@ export function AuthForm() {
                 }
             })
 
-        mutate({ ...data, prices })
+        mutate({ ...data, phone: `1 ${data.phone}`, prices })
     }
 
     return (
@@ -161,11 +161,11 @@ export function AuthForm() {
                                     <PatternFormat
                                         placeholder="+1 (555) 555-1234"
                                         className={cn(inputClasses())}
-                                        format="+1 (###) #### ###"
+                                        format="+1 (###)-####-###"
                                         allowEmptyFormatting
                                         mask="_"
-                                        {...field}
-                                        onValueChange={data => field.onChange(`1 ${data.value}`)}
+                                        value={field.value}
+                                        onValueChange={data => field.onChange(data.value)}
                                     />
                                 </>
                             </FormControl>
