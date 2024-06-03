@@ -17,10 +17,15 @@ const dbClient = new DynamoDBClient({
 export async function getGiveaways(type: string, module: string = '') {
     const results = (await dbClient.send(
         new ScanCommand({
-            TableName: process.env.DYNAMODB_GIVEAWAYS_TABLE_NAME
+            TableName: process.env.DYNAMODB_GIVEAWAYS_TABLE_NAME,
+            FilterExpression: 'ttl > :now',
+            ExpressionAttributeValues: {
+                ':now': Date.now()
+            }
         })
     ));
-
+    console.log(Date.now())
+    console.log(results.Items)
     let items = results.Items || [];
     items = items.map(item => JSON.parse(item.data)).filter(item => item.type === type);
     items.sort((a, b) => new Date(a.draw_time).getTime() - new Date(b.draw_time).getTime());

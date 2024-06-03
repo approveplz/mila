@@ -27,7 +27,6 @@ export function NavContent({
     session: Session | null
 }) {
     React.useEffect(() => {
-        console.log(cookies.getAll());
         const cookieChangeListener = (params: unknown) => {
             console.log('The cookie ', params);
         }
