@@ -18,16 +18,14 @@ export async function getGiveaways(type: string, module: string = '') {
     const results = (await dbClient.send(
         new ScanCommand({
             TableName: process.env.DYNAMODB_GIVEAWAYS_TABLE_NAME,
-            FilterExpression: 'ttl > :now',
-            ExpressionAttributeValues: {
-                ':now': Date.now()
-            }
         })
     ));
-    console.log(Date.now())
-    console.log(results.Items)
+    
     let items = results.Items || [];
+    items = items.filter(item => item.ttl >= Math.round(Date.now() / 1000));
+    console.log(items);
     items = items.map(item => JSON.parse(item.data)).filter(item => item.type === type);
+    console.log(items);
     items.sort((a, b) => new Date(a.draw_time).getTime() - new Date(b.draw_time).getTime());
     if (module === 'upcoming') {
         return items.length > 0 ? items[0] : null;
