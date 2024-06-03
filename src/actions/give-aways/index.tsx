@@ -24,7 +24,8 @@ export async function getGiveaways(type: string, module: string = '') {
             }
         })
     ));
-
+    console.log(Date.now())
+    console.log(results.items)
     let items = results.Items || [];
     items = items.map(item => JSON.parse(item.data)).filter(item => item.type === type);
     items.sort((a, b) => new Date(a.draw_time).getTime() - new Date(b.draw_time).getTime());
