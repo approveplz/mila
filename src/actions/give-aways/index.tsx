@@ -17,7 +17,11 @@ const dbClient = new DynamoDBClient({
 export async function getGiveaways(type: string, module: string = '') {
     const results = (await dbClient.send(
         new ScanCommand({
-            TableName: process.env.DYNAMODB_GIVEAWAYS_TABLE_NAME
+            TableName: process.env.DYNAMODB_GIVEAWAYS_TABLE_NAME,
+            FilterExpression: 'attribute_exists(ttl) AND ttl > :now',
+            ExpressionAttributeValues: {
+                ':now': Math.floor(Date.now() / 1000)
+            }
         })
     ));
 
