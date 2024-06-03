@@ -99,7 +99,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                     <div className="w-[376px]">
 
                         <div className="font-normal leading-[20px] text-[14px]">
-                            No longer want to use our service? You can delete your account be emailing  <Link href="mailto:support@milacollective.com">support@milacollective.com</Link>
+                            No longer want to use our service? You can delete your account by emailing  <Link href="mailto:support@milacollective.com">support@milacollective.com</Link>
                         </div>
 
                         {/* <Dialog>
