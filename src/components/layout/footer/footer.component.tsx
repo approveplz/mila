@@ -14,7 +14,7 @@ const links = [
   { title: "Terms of Service", to: "/legal/terms-of-use" },
   { title: "Sweeps Rules", to: "/legal/sweeps-rules" },
   { title: "Support", to: "mailto:support@milacollective.com" },
-  { title: "About Us", to: "/" },
+  { title: "About Us", to: "/about-us" },
   { title: "FAQ", to: "/" },
 ];
 
