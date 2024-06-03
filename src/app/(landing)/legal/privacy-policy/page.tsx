@@ -173,7 +173,7 @@ export default function Page() {
             <h6 className="text-xl font-semibold mt-8 mb-2">12. No Third-Party Rights</h6>
             <p>This Policy does not create rights enforceable by third parties or require disclosure of any personal information relating to users of the Services.</p>
 
-            <p className="text-sm text-center mt-4">© <Link href="http://www.firstamendment.com/">Walters Law Group</Link> (2024). All rights reserved.</p>
+            <p className="text-sm text-center mt-4">© (2024). All rights reserved.</p>
         </Container>
     )
 }
