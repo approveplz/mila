@@ -19,6 +19,7 @@ import {
     SelectContent,
     SelectItem,
     inputClasses,
+    Spinner,
 } from "@/components";
 import { useCheckOutStore } from "@/store";
 import { signUpWithPrices } from "@/api/auth";
@@ -259,6 +260,7 @@ export function AuthForm() {
                     disabled={!form.watch("is_over_18_and_agrees_tc") || !!!form.watch("token") || isPending}
                 >
                     Sign Up
+                    {/* <Spinner className="w-4 h-4 ml-4" /> */}
                 </Button>
             </form>
         </Form>

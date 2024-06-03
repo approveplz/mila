@@ -12,7 +12,8 @@ export * from "./ui/input-otp/input-otp.component";
 export * from "./ui/drawer/drawer.component";
 export * from "./ui/select/select.component";
 export * from "./ui/stepper/stepper.components";
-export * from "./ui/sonner/sonner.component"
+export * from "./ui/sonner/sonner.component";
+export * from "./ui/spinner/spinner.component";
 
 // Layout
 export * from "./layout/navbar";

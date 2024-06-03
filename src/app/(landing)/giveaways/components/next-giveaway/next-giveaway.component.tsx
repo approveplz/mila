@@ -11,11 +11,14 @@ import {
 } from '@tanstack/react-query'
 import { GiveawayItem } from "@/entities";
 import { getGiveaways } from "@/actions";
+import { useRouter } from "next/navigation";
+import { useCheckOutStore } from "@/store";
 
 
 export function NextGiveAway() {
-
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const { setPricingType } = useCheckOutStore();
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,6 +43,11 @@ export function NextGiveAway() {
       queryFn: () =>
         getGiveaways('large', 'upcoming')
     })
+  
+  const handleWin = () => {
+    setPricingType("bundle")
+    router.push("/giveaways/#pricing")
+  }
 
   return (
     <section className="py-[64px] sm:py-[112px] px-[24px] sm:px-16 bg-[#F3F3F3]">
@@ -172,7 +180,7 @@ export function NextGiveAway() {
                     <div className="font-semibold text-base leading-[24px] underline" onClick={toggleCollapse}> See less</div>}
                 </div>
                 }
-                <Button variant="primary">Win me</Button>
+                <Button variant="primary" onClick={handleWin}>Win me</Button>
               </div>
             </div>
 
