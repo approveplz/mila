@@ -31,7 +31,7 @@ export default function PricingTabs({
     const pricingType = useCheckOutStore((state) => state.pricingType);
 
     return (
-        <Tabs defaultValue={pricingType} className="w-full">
+        <Tabs value={pricingType} defaultValue={pricingType} className="w-full">
             <TabsList className="flex flex-row justify-center">
                 <div className="bg-white rounded-[30px] p-1">
                     <TabsTrigger onClick={() => {

@@ -9,9 +9,10 @@ import {
   UseQueryResult
 } from '@tanstack/react-query'
 import { GiveawayItem } from "@/entities";
+import { useCheckOutStore } from "@/store";
+import { useRouter } from "next/navigation";
 
 export function GiveAway() {
-
   const { giveAway: {
     heading,
     subHeading,
@@ -23,6 +24,8 @@ export function GiveAway() {
     },
     winMe
   } } = messages;
+  const { setPricingType } = useCheckOutStore();
+  const router = useRouter();
 
   const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem> =
     useQuery({
@@ -30,6 +33,11 @@ export function GiveAway() {
       queryFn: () =>
         getGiveaways('large', 'upcoming')
     })
+  
+  const handleWin = () => {
+    setPricingType("bundle")
+    router.push("/#pricing")
+  }
 
   return (
     <section className="py-[112px] px-[24px] sm:px-[192.5px] bg-[#F3F3F3]">
@@ -88,7 +96,7 @@ export function GiveAway() {
                     {author}
                   </div> */}
                 </div>
-                <Button variant="primary">{winMe}</Button>
+                <Button variant="primary" onClick={handleWin}>{winMe}</Button>
               </div>
             </div>
 
