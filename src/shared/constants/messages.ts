@@ -35,8 +35,8 @@ export const messages = {
         isOpen: "close",
       },
     ],
-    heading: 'Frequently Asked QUESTIONS',
-    subHeading: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    heading: 'Frequently Asked Questions',
+    subHeading: ''
   },
   followUs: {
     followUs: "Follow Us",
