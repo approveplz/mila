@@ -1,6 +1,9 @@
 import { Session } from "next-auth";
 import Link from "next/link";
 
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+const AccordionTrigger = AccordionPrimitive.Trigger;
+
 const listItems = [
     { id: "1", title: "About Us", href: "/about-us" },
     { id: "2", title: "Benefits", href: "/coupons" },
@@ -47,14 +50,14 @@ export function NavListMobile({ session }: { session: Session | null }) {
                 <>
                     {listItems.map(item => (
                         <NavItem key={item.id}>
-                            <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
+                            <Link className=" text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                         </NavItem>
                     ))}
 
                     <hr />
 
                     <NavItem>
-                        <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/signup">Sign Up</Link>
+                        <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/#pricing">Sign Up</Link>
                     </NavItem>
                 </>
             )}

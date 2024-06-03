@@ -18,6 +18,7 @@ import {
     SelectValue,
     SelectContent,
     SelectItem,
+    inputClasses,
 } from "@/components";
 import { useCheckOutStore } from "@/store";
 import { signUpWithPrices } from "@/api/auth";
@@ -26,7 +27,7 @@ import {
     signUpSchema
 } from "./auth-form.schema";
 import { useStepperContext } from "../stepper/stepper.context";
-import { getProductPriceInfo, prefixObjectKeys, withAsync } from "@/utils";
+import { cn, getProductPriceInfo, prefixObjectKeys, setFormError, withAsync } from "@/utils";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
@@ -34,8 +35,8 @@ import states from "@/data/state.data.json" with { type: "json" };
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { SignUpWithPricesPayload } from "@/api/auth/auth.types";
-
-type K = keyof SignUpFormData;
+import { isApiError } from "@/api";
+import { PatternFormat } from "react-number-format";
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
@@ -56,7 +57,7 @@ export function AuthForm() {
         }
     });
 
-    const { mutateAsync, isPending } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: (payload: SignUpWithPricesPayload) => {
             return signUpWithPrices(payload)
                 .then(async (res) => {
@@ -73,11 +74,13 @@ export function AuthForm() {
                     }))
                 })
         },
-        onSuccess(data, variables, context) {
-            console.log("success: ", { data, variables, context })
+        onSuccess(data) {
+            nextStep()
         },
-        onError(error, variables, context) {
-            console.log("error: ", { error, variables, context })
+        onError(error) {
+            if (isApiError(error) && error.response) {
+                setFormError<SignUpFormData>(error.response.data, form.setError)
+            }
         },
     })
 
@@ -101,63 +104,7 @@ export function AuthForm() {
                 }
             })
 
-        mutateAsync({ ...data, prices })
-            .then(nextStep)
-            .catch(err => {
-                const errors = err.response.data;
-
-                Object.entries(errors).forEach((error) => {
-                    const [key, val] = error as [K, [string]];
-
-                    form.setError(key, {
-                        message: val[0]
-                    });
-                });
-            });
-        // signUpWithPrices({
-        //     ...data,
-        //     prices
-        // })
-        //     .then(async (res) => {
-        //         const user = prefixObjectKeys(res.user, "userpre_")
-        //         const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
-
-        //         const payload = JSON.parse(JSON.stringify(res));
-        //         delete payload.user;
-
-        //         // authSignUp(serialize({
-        //         //     ...payload,
-        //         //     ...user,
-        //         //     ...metadata,
-        //         // }))
-        //         // const { response, error } = await withAsync(() => actions.signUp(serialize({
-        //         //     ...payload,
-        //         //     ...user,
-        //         //     ...metadata,
-        //         // })));
-        //         const data = {
-        //             ...payload,
-        //             ...user,
-        //             ...metadata,
-        //             redirect: false
-        //         };
-
-        //         console.log("data: ", data);
-        //         const { response, error } = await withAsync(() => actions.signUp(serialize(data)));
-
-        //         nextStep();
-        //     })
-        //     .catch(err => {
-        //         const errors = err.response.data;
-
-        //         Object.entries(errors).forEach((error) => {
-        //             const [key, val] = error as [K, [string]];
-
-        //             form.setError(key, {
-        //                 message: val[0]
-        //             });
-        //         });
-        //     });
+        mutate({ ...data, prices })
     }
 
     return (
@@ -210,11 +157,17 @@ export function AuthForm() {
                         <FormItem>
                             <FormLabel htmlFor="phone">Phone</FormLabel>
                             <FormControl>
-                                <Input
-                                    id="phone"
-                                    placeholder="(555) 555-1234"
-                                    {...field}
-                                />
+                                <>
+                                    <PatternFormat
+                                        placeholder="+1 (555) 555-1234"
+                                        className={cn(inputClasses())}
+                                        format="+1 (###) #### ###"
+                                        allowEmptyFormatting
+                                        mask="_"
+                                        {...field}
+                                        onValueChange={data => field.onChange(`1 ${data.value}`)}
+                                    />
+                                </>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
