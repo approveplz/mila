@@ -58,7 +58,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
         }),
         onSuccess(data, variables) {
             if (authUser) {
-                actions.mAuthSignIn(serialize({
+                await actions.mAuthSignIn(serialize({
                     email: authUser.email,
                     password: authUser.password,
                     redirect: false
@@ -88,7 +88,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
         onSuccess(data, variables) {
             if (data.is_paid) {
                 if (authUser) {
-                    actions.mAuthSignIn(serialize({
+                    await actions.mAuthSignIn(serialize({
                         email: authUser.email,
                         password: authUser.password,
                         redirect: false
