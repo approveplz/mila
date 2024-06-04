@@ -56,7 +56,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
                 throw new Error("User is inactive")
             }
         }),
-        onSuccess(data, variables) {
+        async onSuccess(data, variables) {
             if (authUser) {
                 await actions.mAuthSignIn(serialize({
                     email: authUser.email,
