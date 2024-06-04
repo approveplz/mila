@@ -81,17 +81,19 @@ export function AuthForm() {
                     return user;
                 })
         },
-        onSuccess(user) {
+        async onSuccess(user) {
             const withPayment = checkoutFlow === "paid";
 
             if(withPayment) {
                 nextStep()
             } else {
-                actions.mAuthSignIn(serialize({
+                await actions.mAuthSignIn(serialize({
                     email: user.email,
                     password: user.password,
                     redirect: false
                 }))
+
+                nextStep()
             }
         },
         onError(error) {
