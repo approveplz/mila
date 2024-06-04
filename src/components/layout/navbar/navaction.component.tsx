@@ -8,6 +8,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components";
+import { useAuthStore } from "@/store";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import {
@@ -22,12 +23,14 @@ export function NavAction({
 }: {
     session: Session | null
 }) {
-    const router = useRouter()
+    const router = useRouter();
+    const { user } = useAuthStore();
+
     return (
         <div className="flex items-center gap-4">
             <Button variant="fatal">
                 <HiOutlineGift className="h-4 w-4 mr-2" />
-                Your entries: {session?.user?.user?.metadata.total_entries_count || 0}
+                Your entries: {user?.metadata.total_entries_count || 0}
             </Button>
 
             <DropdownMenu>

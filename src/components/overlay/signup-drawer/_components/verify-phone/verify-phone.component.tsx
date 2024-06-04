@@ -1,13 +1,17 @@
-import { verifyEmailOrSMS } from "@/api/auth";
+"use client";
+
+import { sendVerificationSms, verifyEmailOrSMS } from "@/api/auth";
 import { CentralizedContent, Container } from "@/components";
 import { PhoneVerificationContent } from "@/components";
 import { useStepperContext } from "../stepper/stepper.context";
+// import { useFormContext } from "react-hook-form";
+import { StepperComponentProps } from "../stepper/stepper.types";
 
-export function VerifyPhone() {
+export function VerifyPhone({ session }: StepperComponentProps) {
     const { nextStep } = useStepperContext();
+    // const { getValues } = useFormContext();
 
     const handleVerifyPhone = (pin: string) => {
-        // nextStep()
         verifyEmailOrSMS({ server_code: pin })
             .then(res => {
                 nextStep();
@@ -16,12 +20,22 @@ export function VerifyPhone() {
             })
     }
 
+    const handleSendVerifyPhone = () => {
+        sendVerificationSms().then(res => {
+            console.log("res: ", res);
+        }).catch(err => {
+            console.log("err: ", err);
+        })
+    }
+
+    console.log(session)
     return (
         <Container>
             <CentralizedContent>
                 <PhoneVerificationContent
-                    onReSend={() => { }}
+                    onReSend={handleSendVerifyPhone}
                     onVerify={handleVerifyPhone}
+                    phone={session?.user.user.phone || ""}
                 />
             </CentralizedContent>
         </Container>

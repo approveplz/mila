@@ -16,6 +16,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { PatternFormat } from "react-number-format";
 
 const pinFormSchema = z.object({
     pin: z.string().min(6, {
@@ -26,9 +27,11 @@ const pinFormSchema = z.object({
 type PinFormData = z.infer<typeof pinFormSchema>
 
 export function PhoneVerificationContent({
+    phone,
     onReSend,
-    onVerify,
+    onVerify
 }: {
+    phone: string,
     onReSend: () => void,
     onVerify: (pin: string) => void,
 }) {
@@ -52,7 +55,14 @@ export function PhoneVerificationContent({
             <main className="flex flex-col gap-8 items-center text-center">
                 <HiOutlineDevicePhoneMobile className="h-12 w-12 text-primary" />
                 <h2 className="text-4xl font-tt-ramillas">Phone number verification</h2>
-                <p>Please enter the 6 digit code that we sent to: <br /> +385-846-588-952</p>
+                <p>Please enter the 6 digit code that we sent to: <br />
+                    <PatternFormat
+                        displayType="text"
+                        format="+1 (###)-####-###"
+                        allowEmptyFormatting
+                        mask="_"
+                        value={phone.split(" ")[1] || ""} />
+                </p>
 
                 <Form {...form}>
                     <form id="phone-pin-form" onSubmit={form.handleSubmit(onSubmit)}>

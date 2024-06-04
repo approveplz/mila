@@ -38,6 +38,8 @@ export type SignUpWithPricesResponse = AuthCredentials & {
     user: User
 }
 
+export type SendUserVerificationEmailResponse = User;
+
 export type SendVerificationSmsResponse = User;
 
 export type VerifyEmailOrSMSPayload = {
@@ -208,3 +210,5 @@ export type ProfileEntryResponse = {
         total_count: number;
     };
 }
+
+export type GetMeResponse = User;

@@ -14,6 +14,7 @@ import { Session } from "next-auth";
 import Cookies from 'universal-cookie';
 import { AUTH_CHECK_COOKIE } from "@/shared/constants/constants";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { useAuthStore } from "@/store";
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
@@ -30,6 +31,8 @@ export function NavContent({
     const [isOpened, setIsOpened] = React.useState(false);
     const triggerRef = React.useRef<HTMLButtonElement | null>(null);
     const activeSegment = useSelectedLayoutSegment();
+    const { user } = useAuthStore();
+    console.log("user: ", user);
 
     React.useEffect(() => {
         const cookieChangeListener = (params: unknown) => {
@@ -77,7 +80,7 @@ export function NavContent({
                     <div className="flex flex-1 justify-end items-center sm:hidden">
                         {session && (
                             <Button variant="fatal" className="p-3 mr-3 max-h-10">
-                                <HiOutlineGift className="h-4 w-4 mr-1" /> {session.user?.user.metadata.total_entries_count || 0}
+                                <HiOutlineGift className="h-4 w-4 mr-1" /> {user?.metadata.total_entries_count || 0}
                             </Button>
                         )}
                         <Button type="button" asChild variant="fatal" className="p-2 max-h-10 max-w-10 data-[state=open]:hidden">

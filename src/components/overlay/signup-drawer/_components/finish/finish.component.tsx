@@ -9,6 +9,8 @@ import {
     ThankYou
 } from "@/components";
 import { useRouter } from "next/navigation";
+import { StepperComponentProps } from "../stepper/stepper.types";
+import { sendVerificationEmail } from "@/api/auth";
 
 export function Finish() {
     const router = useRouter();
@@ -26,7 +28,15 @@ export function Finish() {
     )
 }
 
-export function FinishPayment() {
+export function FinishPayment({ session }: StepperComponentProps) {
+    const handleVerifyEmail = () => {
+        sendVerificationEmail().then(res => {
+            console.log("res: ", res);
+        }).catch(err => {
+            console.log("err: ", err);
+        })
+    }
+
     return (
         <Container>
             <CentralizedContent>
@@ -37,8 +47,9 @@ export function FinishPayment() {
                     />
 
                     <EmailVerificationContent
+                        session={session}
                         type="narrow"
-                        onReSend={() => { }}
+                        onReSend={handleVerifyEmail}
                     />
 
                     <div className="min-w-[304px] self-center">
