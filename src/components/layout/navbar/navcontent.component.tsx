@@ -77,7 +77,7 @@ export function NavContent({
                     <div className="flex flex-1 justify-end items-center sm:hidden">
                         {session && (
                             <Button variant="fatal" className="p-3 mr-3 max-h-10">
-                                <HiOutlineGift className="h-4 w-4 mr-1" /> {session.user?.user.metadata.total_entries_count || 0}
+                                <HiOutlineGift className="h-4 w-4 mr-1" /> {session.user?.user?.metadata?.total_entries_count || 0}
                             </Button>
                         )}
                         <Button type="button" asChild variant="fatal" className="p-2 max-h-10 max-w-10 data-[state=open]:hidden">
