@@ -56,9 +56,9 @@ export function PaymentForm({ session }: { session: Session | null }) {
                 throw new Error("User is inactive")
             }
         }),
-        onSuccess(data, variables) {
+        async onSuccess(data, variables) {
             if (authUser) {
-                actions.mAuthSignIn(serialize({
+                await actions.mAuthSignIn(serialize({
                     email: authUser.email,
                     password: authUser.password,
                     redirect: false
@@ -85,10 +85,10 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
     const { mutate: latestInvoicePaymentStatusMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
-        onSuccess(data, variables) {
+        async onSuccess(data, variables) {
             if (data.is_paid) {
                 if (authUser) {
-                    actions.mAuthSignIn(serialize({
+                    await actions.mAuthSignIn(serialize({
                         email: authUser.email,
                         password: authUser.password,
                         redirect: false
