@@ -85,7 +85,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
     const { mutate: latestInvoicePaymentStatusMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
-        onSuccess(data, variables) {
+        async onSuccess(data, variables) {
             if (data.is_paid) {
                 if (authUser) {
                     await actions.mAuthSignIn(serialize({
