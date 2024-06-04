@@ -15,10 +15,10 @@ export function Header() {
 
 
                 <div className="font-normal text-[20px] leading-[30px] px-3">
-                    Mila Collective is America&rsquo;s first benefits club for high end shoppers who are looking to get access to some of the most premium benefits to high end luxury providers. We have established a wide network of partners to offer you, our members, exclusive deals and discounts that can save you thousands.
+                    Mila Collective is America&rsquo;s fastest growing loyalty rewards program and benefits club for high end shoppers who are looking to get access to some of the most premium benefits to high end luxury providers. We have established a wide network of partners to offer you, our members, exclusive deals and discounts that can save you thousands.
                 </div>
                 <div className="font-normal text-[20px] leading-[30px] px-3">
-                    By supporting us we want to give back, which is why giveaways are fundamental to Mila Collective. We look forward to continue to give away amazing prizes and experiences to our loyal members. We thank you for all your support so far and can&rsquo;t wait to show you what&rsquo;s next!
+                By supporting us we want to give back, which is why giveaways are fundamental to Mila Collective. We look forward to continuing to give away amazing prizes and experiences to our loyal members. We thank you for all your support so far and can&rsquo;t wait to show you what&rsquo;s next!!
                 </div>
 
             </div>

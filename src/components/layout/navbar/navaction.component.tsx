@@ -30,7 +30,7 @@ export function NavAction({
         <div className="flex items-center gap-4">
             <Button variant="fatal">
                 <HiOutlineGift className="h-4 w-4 mr-2" />
-                Your entries: {user?.metadata.total_entries_count || 0}
+                Your entries: {session?.user?.user?.metadata?.total_entries_count || 0}
             </Button>
 
             <DropdownMenu>

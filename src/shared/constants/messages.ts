@@ -35,8 +35,8 @@ export const messages = {
         isOpen: "close",
       },
     ],
-    heading: 'Frequently Asked QUESTIONS',
-    subHeading: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    heading: 'Frequently Asked Questions',
+    subHeading: ''
   },
   followUs: {
     followUs: "Follow Us",
@@ -64,18 +64,18 @@ export const messages = {
   },
   howItWorks: {
     heading: "HOW it WORKS",
-    description: "Become a member and join Americas fastest growing benefits club. Get access to incredible discounts while being entered to win amazing prizes",
+    description: "Become a member and join Americas fastest growing benefits club. Get access to incredible discounts while being entered to win amazing prizes!",
     subscribe: {
-      title: "Subscribe",
-      description: "Sign up for our newsletter. Lorem ipsum dolor sit amet.",
+      title: "BECOME A MEMBER",
+      description: "Become a member, or choose a bundle for limited-time access, to enjoy our amazing benefits!",
     },
     accessBenefits: {
-      title: "Access Benefits",
-      description: "Unlock the best of what Mila Collective has to offer."
+      title: "ACCESS MILA BENEFITS",
+      description: "After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save $$$"
     },
     giveAways: {
-      title: "Win Giveaways",
-      description: "That’s it, you’re entered into all our giveaways.Including monthly and smaller giveaways."
+      title: "WIN PRIZES",
+      description: "That’s it, you’re entered into all our giveaways. If you're a member, you'll be automatically entered into EVERY single giveaway!!!"
     }
   },
   benefits: {
