@@ -11,11 +11,14 @@ import {
 } from '@stripe/react-stripe-js';
 import { StripeElementStyleVariant } from '@stripe/stripe-js';
 import { useStepperContext } from '../stepper/stepper.context';
-import { confirmMembership, generateMembership } from '@/api/auth';
-import { useCheckOutStore } from '@/store';
+import { confirmMembership, generateMembership, latestInvoicePaymentStatus, markLatestInvoicePaid } from '@/api/auth';
+import { useAuthStore, useCheckOutStore } from '@/store';
 import { useFormContext } from 'react-hook-form';
 import { getProductPriceInfo, setFormError, withAsync } from '@/utils';
 import { Session } from 'next-auth';
+import { useMutation } from "@tanstack/react-query";
+import { serialize } from "object-to-formdata";
+import * as actions from "@/actions";
 
 type K = keyof {};
 
@@ -34,20 +37,85 @@ const inputStylesBase: StripeElementStyleVariant = {
 export function PaymentForm({ session }: { session: Session | null }) {
     const { products } = useCheckOutStore();
     const { nextStep } = useStepperContext();
+    const { authUser } = useAuthStore();
+    const isLoading = React.useRef(false);
     const stripe = useStripe();
     const elements = useElements();
 
     const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
+
+    const setLoading = (status: boolean) => {
+        isLoading.current = status;
+    }
+
+    const { mutate: checkInvoicePaymentStatusMutate } = useMutation({
+        mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload).then(res => {
+            if (res.is_paid) {
+                return res;
+            } else {
+                throw new Error("User is inactive")
+            }
+        }),
+        onSuccess(data, variables) {
+            if (authUser) {
+                actions.mAuthSignIn(serialize({
+                    email: authUser.email,
+                    password: authUser.password,
+                    redirect: false
+                }))
+
+                setLoading(false);
+                nextStep();
+            }
+        },
+        retry(failureCount, error) {
+            if (failureCount > 3) return false;
+
+            return true;
+        },
+        retryDelay: 2000
+    });
+
+    const { mutate: markLatestInvoicePaidMutate } = useMutation({
+        mutationFn: (payload: { secret: string, userId: string }) => markLatestInvoicePaid(payload),
+        onSuccess(data, variables) {
+            checkInvoicePaymentStatusMutate(variables);
+        },
+    });
+
+    const { mutate: latestInvoicePaymentStatusMutate } = useMutation({
+        mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
+        onSuccess(data, variables) {
+            if (data.is_paid) {
+                if (authUser) {
+                    actions.mAuthSignIn(serialize({
+                        email: authUser.email,
+                        password: authUser.password,
+                        redirect: false
+                    }))
+                    
+                    setLoading(false);
+                    nextStep();
+                }
+            } else {
+                markLatestInvoicePaidMutate(variables)
+            }
+        },
+    });
+
+    console.log(isLoading)
 
     const handlePayment = async () => {
         if (!stripe || !elements) {
             return;
         }
 
-        if (session?.user.user) {
+        if (authUser) {
+            setLoading(true);
+            
             const payload = {
                 coupon: couponForm.getValues("coupon") || null,
-                user: session?.user.user.id,
+                user: authUser.id,
                 prices: products
                     .map(product => {
                         const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices)
@@ -87,12 +155,14 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
                         if (error) {
                             console.log("error: ", error);
+                            setLoading(false);
                         } else {
-                            nextStep();
+                            latestInvoicePaymentStatusMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
                         }
                     })
                     .catch(err => {
                         console.log("err: ", err);
+                        setLoading(false);
                     })
             } else {
                 confirmMembership(payload)
@@ -105,9 +175,9 @@ export function PaymentForm({ session }: { session: Session | null }) {
                         })
 
                         if (error) {
-                            console.log("error: ", error);
+                            setLoading(false);
                         } else {
-                            nextStep();
+                            latestInvoicePaymentStatusMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
                         }
                     })
                     .catch(err => {
@@ -124,6 +194,8 @@ export function PaymentForm({ session }: { session: Session | null }) {
                                 }
                             });
                         }
+
+                        setLoading(false);
                     })
             }
         }
@@ -203,7 +275,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
             <Button
                 type="button"
-                disabled={false}
+                disabled={isLoading.current}
                 onClick={handlePayment}
             >
                 Pay
