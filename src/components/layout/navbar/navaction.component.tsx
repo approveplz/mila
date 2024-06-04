@@ -8,6 +8,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components";
+import { useAuthStore } from "@/store";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import {
@@ -22,7 +23,9 @@ export function NavAction({
 }: {
     session: Session | null
 }) {
-    const router = useRouter()
+    const router = useRouter();
+    const { user } = useAuthStore();
+
     return (
         <div className="flex items-center gap-4">
             <Button variant="fatal">

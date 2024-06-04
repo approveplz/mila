@@ -1,25 +1,26 @@
 "use client";
-import { useSession } from "next-auth/react";
+
+import { Session } from "next-auth";
 import { HiOutlineEnvelopeOpen } from "react-icons/hi2"
 
 export function EmailVerificationContent({
     type,
+    session,
     onReSend,
     action
 }: {
     type: "wider" | "narrow",
+    session: Session | null,
     onReSend: () => void,
     action?: React.ReactNode
 }) {
-    const { data: session } = useSession();
-
     return (
         <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
             <header className="flex flex-col gap-8 items-center">
                 {type === "narrow" ? (
-                    <h2 className="text-3xl font-tt-ramillas">Welcome {session?.user.user.full_name}!</h2>
+                    <h2 className="text-3xl font-tt-ramillas text-center">Welcome {session?.user.user.full_name}!</h2>
                 ) : (
-                    <h2 className="text-4xl font-tt-ramillas">Welcome {session?.user.user.full_name}!</h2>
+                    <h2 className="text-4xl font-tt-ramillas text-center">Welcome {session?.user.user.full_name}!</h2>
                 )}
             </header>
 
