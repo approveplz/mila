@@ -12,7 +12,38 @@ export async function authSignOut() {
 }
 
 export async function mAuthSignIn( data: FormData) {
-    await signIn('credentials', data);
+    try {
+        await signIn('credentials', data);
+
+        return {
+            status: 'success',
+            error: ''
+        }
+    } catch (error) {
+        if (isRedirectError(error as Error)) {
+            return {
+                status: 'success',
+                error: ''
+            }
+        };
+
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case 'CredentialsSignin':
+                    return {
+                        status: 'failed',
+                        error: 'Invalid email or password.'
+                    };
+                default:
+                    return {
+                        status: 'failed',
+                        error: 'Something went wrong.'
+                    };
+            }
+        }
+
+        throw error;
+    }
 }
 
 export async function authSignIn(prevState: any, data: FormData) {

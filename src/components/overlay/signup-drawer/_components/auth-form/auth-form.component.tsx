@@ -41,7 +41,7 @@ import { PatternFormat } from "react-number-format";
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
-    const { products } = useCheckOutStore();
+    const { products, checkoutFlow } = useCheckOutStore();
     const { setAuthUser } = useAuthStore()
     const formRef = React.useRef<HTMLFormElement>(null);
 
@@ -78,11 +78,23 @@ export function AuthForm() {
                     user.password = payload.password;
 
                     setAuthUser(user);
-                    return res;
+                    return user;
                 })
         },
-        onSuccess(data) {
-            nextStep()
+        async onSuccess(user) {
+            const withPayment = checkoutFlow === "paid";
+
+            if(withPayment) {
+                nextStep()
+            } else {
+                await actions.mAuthSignIn(serialize({
+                    email: user.email,
+                    password: user.password,
+                    redirect: false
+                }))
+
+                nextStep()
+            }
         },
         onError(error) {
             if (isApiError(error) && error.response) {
