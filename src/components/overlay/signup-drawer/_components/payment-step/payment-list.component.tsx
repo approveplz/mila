@@ -156,7 +156,7 @@ export function PaymentList() {
                         {/* Bundles */}
                         {bundles.map(bundle => (
                             <tr key={bundle.id}>
-                                <td className="font-semibold py-2">{bundle.data.number_of_entries} Entires</td>
+                                <td className="font-semibold py-2">{bundle.data.number_of_entries} Entries</td>
                                 <td className="align-middle py-2" valign="middle" align="right">
                                     <Button className="mt-1 p-1 gap-1 cursor-default" variant="fatal">
                                         <HiMinus className="cursor-pointer" onClick={() => decreaseProductQuantity(bundle.id)} />
