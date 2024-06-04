@@ -43,6 +43,7 @@ export type SendUserVerificationEmailResponse = User;
 export type SendVerificationSmsResponse = User;
 
 export type VerifyEmailOrSMSPayload = {
+    client_code?: string
     server_code: string
 }
 

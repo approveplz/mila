@@ -11,7 +11,7 @@ export async function authSignOut() {
     await signOut();
 }
 
-export async function mAuthSignIn( data: FormData) {
+export async function mAuthSignIn(data: FormData) {
     try {
         await signIn('credentials', data);
 

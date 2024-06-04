@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 export function Providers({ children, session }: Props) {
     return (
         <QueryClientProvider client={queryClient}>
-            <SessionProvider session={session}>
+            <SessionProvider>
                 <AuthProvider session={session}>
                     {children}
                 </AuthProvider>

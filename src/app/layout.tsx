@@ -13,19 +13,19 @@ export const metadata: Metadata = {
   description: "Over 500+ stores available — rewards at your own pace.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   auth,
   children
 }: Readonly<{
   auth: React.ReactNode,
   children: React.ReactNode
 }>) {
-  const session = await authSession();
+  // const session = await authSession();
 
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn(inter.variable, ttRamillasTrlVar.variable, inter.className, "text-fatal")}>
-        <Providers session={session}>
+        <Providers session={null}>
           {children}
           {auth}
         </Providers>
