@@ -21,7 +21,7 @@ import {
     inputClasses,
     Spinner,
 } from "@/components";
-import { useCheckOutStore } from "@/store";
+import { useAuthStore, useCheckOutStore } from "@/store";
 import { signUpWithPrices } from "@/api/auth";
 import {
     SignUpFormData,
@@ -42,6 +42,7 @@ import { PatternFormat } from "react-number-format";
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products } = useCheckOutStore();
+    const { setAuthUser } = useAuthStore()
     const formRef = React.useRef<HTMLFormElement>(null);
 
     const form = useForm<SignUpFormData>({
@@ -62,17 +63,22 @@ export function AuthForm() {
         mutationFn: (payload: SignUpWithPricesPayload) => {
             return signUpWithPrices(payload)
                 .then(async (res) => {
-                    const user = prefixObjectKeys(res.user, "userpre_")
-                    const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
-                    const payload = JSON.parse(JSON.stringify(res));
-                    delete payload.user;
+                    // const user = prefixObjectKeys(res.user, "userpre_")
+                    // const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
+                    // const payload = JSON.parse(JSON.stringify(res));
+                    // delete payload.user;
 
-                    return actions.signUp(serialize({
-                        ...payload,
-                        ...user,
-                        ...metadata,
-                        redirect: false
-                    }))
+                    // return actions.signUp(serialize({
+                    //     ...payload,
+                    //     ...user,
+                    //     ...metadata,
+                    //     redirect: false
+                    // }))
+                    const user = JSON.parse(JSON.stringify(res.user));
+                    user.password = payload.password;
+
+                    setAuthUser(user);
+                    return res;
                 })
         },
         onSuccess(data) {
@@ -162,7 +168,7 @@ export function AuthForm() {
                                     <PatternFormat
                                         placeholder="+1 (555) 555-1234"
                                         className={cn(inputClasses())}
-                                        format="+1 (###)-####-###"
+                                        format="+1 (###)-###-####"
                                         allowEmptyFormatting
                                         mask="_"
                                         value={field.value}
@@ -260,7 +266,7 @@ export function AuthForm() {
                     disabled={!form.watch("is_over_18_and_agrees_tc") || !!!form.watch("token") || isPending}
                 >
                     Sign Up
-                    {/* <Spinner className="w-4 h-4 ml-4" /> */}
+                    {isPending && <Spinner className="w-4 h-4 ml-4" />}
                 </Button>
             </form>
         </Form>
