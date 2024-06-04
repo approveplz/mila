@@ -81,7 +81,7 @@ export function CouponCard({ isLoggedIn, upgrade = false, coupon }: CoupenCardDa
           <div className="flex flex-col justify-center">
             <Dialog>
               <DialogTrigger className="w-[88px] py-2 px-5 rounded-[50px] bg-[#B06E6A] border-[#B06E6A] text-white inline-flex items-center justify-center whitespace-nowrap text-base font-normal ring-offset-background border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">View</DialogTrigger>
-              <DialogContent className='w-[365px] sm:!w-[543px] !py-0 pb-4' withClose={true} >
+              <DialogContent className='w-[365px] z-[99999] sm:!w-[543px] !py-0 pb-4' withClose={true} >
                 <SelectCoupons coupon={coupon} />
               </DialogContent>
             </Dialog>

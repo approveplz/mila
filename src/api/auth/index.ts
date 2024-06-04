@@ -21,7 +21,9 @@ import {
     UpdateProfilePayload,
     VerifyEmailOrSMSPayload,
     VerifyEmailOrSMSResponse,
-    ProfileEntryResponse
+    ProfileEntryResponse,
+    GetMeResponse,
+    SendUserVerificationEmailResponse
 } from "./auth.types";
 
 export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => {
@@ -43,6 +45,12 @@ export const refreshToken = (payload: RefreshTokenPayload) => {
 export const signUpWithPrices = (payload: SignUpWithPricesPayload) => {
     return api
         .post<SignUpWithPricesResponse>("/users/v0/sign-up", payload)
+        .then(res => res.data)
+}
+
+export const sendVerificationEmail = () => {
+    return api
+        .put<SendUserVerificationEmailResponse>("/users/v0/send-verification-email")
         .then(res => res.data)
 }
 
@@ -104,5 +112,11 @@ export const updateProfileDetails = (profileId: string, payload: UpdateProfilePa
 export const getProfileEntries = (params: GetProfileParams) => {
     return api
         .get<ProfileEntryResponse>(`/users/v0/user/${params?.profileId}/entries-details`)
+        .then(res => res.data)
+}
+
+export const getMe = () => {
+    return api
+        .get<GetMeResponse>("/users/v0/me")
         .then(res => res.data)
 }

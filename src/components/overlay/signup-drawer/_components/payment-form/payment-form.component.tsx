@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { Button, Input, Label } from '@/components';
 import {
     CardNumberElement,
@@ -9,13 +10,11 @@ import {
     useElements
 } from '@stripe/react-stripe-js';
 import { StripeElementStyleVariant } from '@stripe/stripe-js';
-import * as React from "react";
 import { useStepperContext } from '../stepper/stepper.context';
 import { confirmMembership, generateMembership } from '@/api/auth';
 import { useCheckOutStore } from '@/store';
-import { useSession } from 'next-auth/react';
 import { useFormContext } from 'react-hook-form';
-import { getProductPriceInfo } from '@/utils';
+import { getProductPriceInfo, setFormError, withAsync } from '@/utils';
 import { Session } from 'next-auth';
 
 type K = keyof {};
@@ -37,12 +36,10 @@ export function PaymentForm({ session }: { session: Session | null }) {
     const { nextStep } = useStepperContext();
     const stripe = useStripe();
     const elements = useElements();
-    
+
     const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
 
     const handlePayment = async () => {
-        console.log("session: ", session);
-        
         if (!stripe || !elements) {
             return;
         }
@@ -128,7 +125,6 @@ export function PaymentForm({ session }: { session: Session | null }) {
                             });
                         }
                     })
-
             }
         }
     }

@@ -6,23 +6,26 @@ import { Providers } from "./providers";
 import { cn } from "@/utils";
 import Script from "next/script";
 import { Toaster } from "@/components";
+import { auth as authSession } from "@/auth";
 
 export const metadata: Metadata = {
   title: "MilaCollective",
   description: "Over 500+ stores available — rewards at your own pace.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   auth,
   children
 }: Readonly<{
   auth: React.ReactNode,
   children: React.ReactNode
 }>) {
+  const session = await authSession();
+
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn(inter.variable, ttRamillasTrlVar.variable, inter.className, "text-fatal")}>
-        <Providers>
+        <Providers session={session}>
           {children}
           {auth}
         </Providers>
