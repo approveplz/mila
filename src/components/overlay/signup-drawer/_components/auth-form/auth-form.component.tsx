@@ -39,17 +39,19 @@ import { SignUpWithPricesPayload } from "@/api/auth/auth.types";
 import { isApiError } from "@/api";
 import { PatternFormat } from "react-number-format";
 import { useFormState } from "react-dom";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products, checkoutFlow } = useCheckOutStore();
     const { setAuthUser } = useAuthStore()
     const formRef = React.useRef<HTMLFormElement>(null);
+    const { resultAuthFormAction, authFormAction } = useAuthContext();
 
-    const [resultAuthFormAction, authFormAction] = useFormState(actions.authSignIn, {
-        status: 'idle',
-        error: ''
-    });
+    // const [resultAuthFormAction, authFormAction] = useFormState(actions.authSignIn, {
+    //     status: 'idle',
+    //     error: ''
+    // });
 
     const form = useForm<SignUpFormData>({
         mode: "onTouched",

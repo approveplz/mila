@@ -29,7 +29,6 @@ export function StepperMain({
     const { step } = useStepperContext();
     const { checkoutFlow } = useCheckOutStore();
     const withPayment = checkoutFlow === "paid";
-    console.log({ withPayment, checkoutFlow })
 
     if (withPayment) {
         const Component = stepsMetaWithPayment[step - 1];

@@ -16,9 +16,9 @@ export function Providers({ children, session }: Props) {
     return (
         <QueryClientProvider client={queryClient}>
             <SessionProvider session={session}>
-                {/* <AuthProvider session={session}> */}
+                <AuthProvider>
                     {children}
-                {/* </AuthProvider> */}
+                </AuthProvider>
             </SessionProvider>
         </QueryClientProvider>
     )
