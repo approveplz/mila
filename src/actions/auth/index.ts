@@ -13,7 +13,6 @@ export async function authSignOut() {
 
 export async function mAuthSignIn(data: FormData) {
     try {
-        console.log("data: ", data)
         await signIn('credentials', data);
 
         return {
@@ -21,7 +20,6 @@ export async function mAuthSignIn(data: FormData) {
             error: ''
         }
     } catch (error) {
-        console.log("error: ", error)
         if (isRedirectError(error as Error)) {
             return {
                 status: 'success',
@@ -57,7 +55,6 @@ export async function authSignIn(prevState: any, data: FormData) {
             error: ''
         }
     } catch (error) {
-        console.log("error: ", error);
         if (isRedirectError(error as Error)) {
             return {
                 status: 'success',
