@@ -28,10 +28,14 @@ type PinFormData = z.infer<typeof pinFormSchema>
 
 export function PhoneVerificationContent({
     phone,
+    showHeader = true,
+    error,
     onReSend,
     onVerify
 }: {
     phone: string,
+    showHeader?: boolean,
+    error?: string,
     onReSend: () => void,
     onVerify: (pin: string) => void,
 }) {
@@ -40,6 +44,9 @@ export function PhoneVerificationContent({
         defaultValues: {
             pin: "",
         },
+        errors: {
+            ...(error && { pin: { message: error, type: "validate" } })
+        }
     });
 
     function onSubmit(data: PinFormData) {
@@ -48,9 +55,11 @@ export function PhoneVerificationContent({
 
     return (
         <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
-            <header className="flex flex-col gap-8 items-center">
-                <h2 className="text-4xl font-tt-ramillas">Just one more step!</h2>
-            </header>
+            {showHeader && (
+                <header className="flex flex-col gap-8 items-center">
+                    <h2 className="text-4xl font-tt-ramillas">Just one more step!</h2>
+                </header>
+            )}
 
             <main className="flex flex-col gap-8 items-center text-center">
                 <HiOutlineDevicePhoneMobile className="h-12 w-12 text-primary" />

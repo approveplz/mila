@@ -1,16 +1,17 @@
 import * as React from "react";
 import { Container } from "@/components";
 import { NavContent } from "./navcontent.component";
-import { auth } from "@/auth";
+import { NavBanner } from "./banner.component";
 
-export async function NavBar() {
-    const session = await auth();
-    
+export function NavBar() {
     return (
-        <nav className="py-[21px] bg-[#F3F3F3] fixed w-full min-h-[92px] z-[99]">
-            <Container>
-                <NavContent session={session} />
-            </Container>
-        </nav>
+        <div className="fixed w-full z-[999]">
+            <NavBanner />
+            <nav className="py-[21px] bg-[#F3F3F3] min-h-[92px]">
+                <Container>
+                    <NavContent />
+                </Container>
+            </nav>
+        </div>
     )
 }
