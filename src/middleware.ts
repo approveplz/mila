@@ -1,6 +1,6 @@
 import { encode, getToken, type JWT } from "next-auth/jwt";
 import { jwtDecode } from "jwt-decode";
-import { NextRequest, NextResponse } from "next/server";
+import { NextFetchEvent, NextMiddleware, NextRequest, NextResponse } from "next/server";
 import { AUTH_CHECK_COOKIE } from "./shared/constants/constants";
 
 const shouldUpdateToken = (token: JWT) => {
@@ -29,6 +29,12 @@ const refreshTokenAPI = async (user: JWT) => {
         .then(res => res.json())
         .then(res => res);
 }
+
+// function withRefreshToken(middleware: NextMiddleware) {
+//     return async function(request: NextRequest, event: NextFetchEvent) {
+//         return middleware(request, event);
+//     }
+// }
 
 export const config = {
     matcher: "/((?!api|static|.*\\..*|_next).*)",

@@ -15,10 +15,10 @@ const queryClient = new QueryClient();
 export function Providers({ children, session }: Props) {
     return (
         <QueryClientProvider client={queryClient}>
-            <SessionProvider>
-                <AuthProvider session={session}>
+            <SessionProvider session={session}>
+                {/* <AuthProvider session={session}> */}
                     {children}
-                </AuthProvider>
+                {/* </AuthProvider> */}
             </SessionProvider>
         </QueryClientProvider>
     )
