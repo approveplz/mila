@@ -266,7 +266,7 @@ export function AuthForm() {
                         <FormItem className="flex justify-center w-full z-[99999]">
                             <FormControl>
                                 <HCaptcha
-                                    sitekey={process.env.HCAPTCHA_EASY_SITE_KEY!}
+                                    sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_EASY_SITE_KEY!}
                                     onVerify={(token) => field.onChange(token)}
                                 />
                             </FormControl>
