@@ -2,6 +2,7 @@ import { Session } from "next-auth";
 import Link from "next/link";
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { signOut } from "next-auth/react";
 const AccordionTrigger = AccordionPrimitive.Trigger;
 
 const listItems = [
@@ -12,9 +13,9 @@ const listItems = [
 
 const listItemsSignedIn = [
     { id: "1", title: "Profile", href: "/" },
-    { id: "2", title: "About Us", href: "/" },
-    { id: "3", title: "Benefits", href: "/" },
-    { id: "4", title: "Giveaways", href: "/" },
+    { id: "2", title: "About Us", href: "/about-us" },
+    { id: "3", title: "Benefits", href: "/benefits" },
+    { id: "4", title: "Giveaways", href: "/giveaways" },
 ];
 
 function NavItem({ children }: React.PropsWithChildren) {
@@ -36,6 +37,9 @@ export function NavList() {
 }
 
 export function NavListMobile({ session }: { session: Session | null }) {
+    function handleSignOut() {
+        signOut({ redirect: true });
+    }
     return (
         <ul className="space-y-6 py-6">
             {session ? (
@@ -45,6 +49,9 @@ export function NavListMobile({ session }: { session: Session | null }) {
                             <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                         </NavItem>
                     ))}
+                    <NavItem >
+                        <div onClick={handleSignOut} className="text-base leading-[23px] md:text-lg md:leading-[27px]" >Log out</div>
+                    </NavItem>
                 </>
             ) : (
                 <>

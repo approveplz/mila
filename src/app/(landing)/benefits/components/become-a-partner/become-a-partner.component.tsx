@@ -41,7 +41,6 @@ export function BecomeAPartner() {
           <Image
             src="/images/commercial.png"
             alt="pointer"
-            // layout="responsive"
             width={100}
             height={100}
             className="max-w-[100px] max-h-[100px]"
@@ -55,9 +54,8 @@ export function BecomeAPartner() {
 
         <div className="flex flex-col items-center gap-4 sm:w-1/3">
           <Image
-            src="/images/Shopping-Bag.png"
+            src="/images/shopping-bag.png"
             alt="Shopping-Bag"
-            // layout="responsive"
             width={100}
             height={100}
             className="max-w-[100px] max-h-[100px]"
@@ -73,7 +71,6 @@ export function BecomeAPartner() {
           <Image
             src="/images/meeting.png"
             alt="meeting"
-            // layout="responsive"
             width={100}
             height={100}
             className="max-w-[100px] max-h-[100px]"
@@ -87,7 +84,15 @@ export function BecomeAPartner() {
       </div>
 
       <div className="flex flex-col justify-center items-center sm:mx-[336px]">
-        <Dialog>
+        <div>
+          <div className="font-normal text-lg leading-7 text-center text-white">
+           Want to become a partner?
+          </div>
+          <div className="font-normal text-lg leading-7 text-center text-white">
+            Feel free to contact us at  <a className="underline" href="mailto:Support@MilaCollective.com">partner@milacollective.com</a>
+          </div>
+        </div>
+        {/* <Dialog>
           <DialogTrigger className="w-[185px] bg-[#B06E6A] border-[#B06E6A] text-white inline-flex items-center justify-center whitespace-nowrap text-base font-normal ring-offset-background border px-6 py-3 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">{button}</DialogTrigger>
           <DialogContent className="sm:w-[455px] w-[329px]">
             <DialogHeader>
@@ -95,7 +100,7 @@ export function BecomeAPartner() {
             </DialogHeader>
             <BecomeAPartnerForm />
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </div>
 
 

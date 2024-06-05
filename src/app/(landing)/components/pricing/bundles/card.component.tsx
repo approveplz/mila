@@ -70,27 +70,27 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
     <figure
       className={cn(bundleCardClasses({ selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
       <div className="flex flex-col items-left gap-8">
-        <div className="flex flex-col items-left">
-          <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-col items-left ">
+          <div className="flex flex-row gap-2 items-center select-none">
             <HiOutlineGift size={24} color="#BE7B62" />
             <span className="font-tt-ramillas text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry} Entries</span>
           </div>
-          <div className="font-medium text-base leading-6 text-[#171614]">
+          <div className="select-none font-medium text-base leading-6 text-[#171614]">
             {draw}
           </div>
         </div>
 
         <div className="flex flex-col gap-6 items-left w-full">
           <div className="flex flex-col items-left">
-            <div className="font-light text-5xl leading-[40px]">
+            <div className="select-none font-light text-5xl leading-[40px]">
               ${cardData?.cost}
             </div>
-            <div className="font-normal text-base leading-[48px]">
+            <div className="select-none font-normal text-base leading-[48px]">
               {oneOff}
             </div>
           </div>
 
-          <div className="flex flex-col items-left gap-1">
+          <div className="flex flex-col items-left gap-1 select-none">
             {cardData?.benefits.map((benefit: benefit, index: number) => (
               <div key={index} className="flex flex-row gap-[7px] items-center">
                 {benefit?.included ? <HiCheck size={16} color="black" /> : <HiXMark size={16} color="black" />}
@@ -104,7 +104,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
 
         <div className="w-full flex justify-between">
           {!isLoggedIn && <Button
-            className="px-5 py-2"
+            className="px-5 py-2 select-none"
             variant={cardData.selected ? "primary" : "tertiary"}
             onClick={cardData.onSelect}
           >
@@ -120,7 +120,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
                   size={24} />
               </div>
 
-              <div className="border border-[#171614] rounded-[10px] py-2 px-3">
+              <div className="select-none border border-[#171614] rounded-[10px] py-2 px-3">
                 {cardData.quantity < 10 ? `0${cardData.quantity}` : cardData.quantity}
               </div>
 

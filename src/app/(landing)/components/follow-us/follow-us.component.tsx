@@ -1,7 +1,12 @@
 
+import { FBIcon } from "@/components/layout/footer/facebook-icon.component";
+import { InstaIcon } from "@/components/layout/footer/instagram-icon.component";
+import { TikTokIcon } from "@/components/layout/footer/tiktok.component";
 import { Button } from "@/components/ui/button/button.component"
 import { messages } from "@/shared/constants/messages";
 import Image from 'next/image'
+import Link from "next/link";
+
 
 
 export function FollowUs() {
@@ -48,7 +53,18 @@ export function FollowUs() {
           <div className="text-base font-normal leading-6 text-white px-[75px] text-center">
             {description}
           </div>
-          <Button variant="secondary">{learnMore}</Button>
+
+          <div className="flex flex-row gap-4">
+            <Link href="https://www.facebook.com/profile.php?id=61559624221155" className="flex flex-row gap-3 items-center cursor-pointer">
+              <FBIcon color="#FFFFFF" />
+            </Link>
+            <Link href="https://www.instagram.com/_milacollective_/" className="flex flex-row gap-3 items-center cursor-pointer">
+              <InstaIcon color="#FFFFFF"/>
+            </Link>
+            <Link href="https://www.tiktok.com/@milacollective" className="flex flex-row gap-3 items-center cursor-pointer">
+              <TikTokIcon color="#FFFFFF"/> 
+            </Link>
+          </div>
         </div>
       </div>
     </section>

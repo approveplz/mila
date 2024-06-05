@@ -1,13 +1,12 @@
 "use client"
 
-import { Button } from "@/components/ui/button/button.component";
-import { Input } from "@/components/ui/input/input.component";
 import { messages } from "@/shared/constants/messages";
 import { FBIcon } from "./facebook-icon.component";
 import { InstaIcon } from "./instagram-icon.component";
 import { TikTokIcon } from "./tiktok.component";
 import Image from "next/image";
 import Link from "next/link";
+import { SubscribeToNewsletter } from "./subscribe-to-newsletter.component";
 
 const links = [
   { title: "Privacy Policy", to: "/legal/privacy-policy" },
@@ -53,16 +52,7 @@ export function Footer() {
             {description}
           </div>
 
-          <div className="flex flex-row gap-4">
-            <Input
-              id="email"
-              name="email"
-              placeholder={placeholder}
-              className="sm:w-[360px] h-12 border-[#171614]"
-            />
-
-            <Button variant="primary">{subscribe}</Button>
-          </div>
+          <SubscribeToNewsletter />
 
           <div className="max-w-[500px]">
             <span className="font-normal text-xs leading-[18px]">{messageA}</span>{" "}

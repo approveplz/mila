@@ -9,7 +9,6 @@ import { Button } from "@/components";
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { HiBars3, HiOutlineGift, HiXMark } from "react-icons/hi2";
-import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import Cookies from 'universal-cookie';
 import { AUTH_CHECK_COOKIE } from "@/shared/constants/constants";
@@ -44,10 +43,6 @@ export function NavContent({ }: {
             cookies.removeChangeListener(cookieChangeListener);
         }
     }, []);
-
-    React.useEffect(() => {
-        console.log("activeSegment: ", activeSegment);
-    }, [activeSegment]);
 
     return (
         <Accordion type="single" collapsible onValueChange={val => console.log(val)}>
