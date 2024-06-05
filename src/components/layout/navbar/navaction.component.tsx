@@ -8,8 +8,10 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components";
+import { useCurrentSession } from "@/hooks";
 import { useAuthStore } from "@/store";
 import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
     HiOutlineGift,
@@ -18,11 +20,8 @@ import {
     HiOutlineUserCircle
 } from "react-icons/hi2";
 
-export function NavAction({
-    session
-}: {
-    session: Session | null
-}) {
+export function NavAction({ session }:{ session: Session | null }) {
+    // const { session } = useCurrentSession();
     const router = useRouter();
     const { user } = useAuthStore();
 
@@ -47,12 +46,12 @@ export function NavAction({
                         </button>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <form action={authSignOut}>
-                            <button className="flex">
+                        {/* <form> */}
+                            <button className="flex" onClick={() => signOut({ redirect: true })}>
                                 <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
                                 <span>Log out</span>
                             </button>
-                        </form>
+                        {/* </form> */}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

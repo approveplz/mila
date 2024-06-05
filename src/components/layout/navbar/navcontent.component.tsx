@@ -15,6 +15,7 @@ import Cookies from 'universal-cookie';
 import { AUTH_CHECK_COOKIE } from "@/shared/constants/constants";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useAuthStore } from "@/store";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
 const Accordion = AccordionPrimitive.Root;
 const AccordionItem = AccordionPrimitive.Item;
@@ -23,16 +24,14 @@ const AccordionContent = AccordionPrimitive.Content;
 
 const cookies = new Cookies(AUTH_CHECK_COOKIE, { path: '/' });
 
-export function NavContent({
-    session
-}: {
+export function NavContent({ }: {
     session: Session | null
 }) {
     const [isOpened, setIsOpened] = React.useState(false);
     const triggerRef = React.useRef<HTMLButtonElement | null>(null);
     const activeSegment = useSelectedLayoutSegment();
     const { user } = useAuthStore();
-    console.log("user: ", user);
+    const { session } = useAuthContext();
 
     React.useEffect(() => {
         const cookieChangeListener = (params: unknown) => {

@@ -6,10 +6,11 @@ import { PhoneVerificationContent } from "@/components";
 import { useStepperContext } from "../stepper/stepper.context";
 // import { useFormContext } from "react-hook-form";
 import { StepperComponentProps } from "../stepper/stepper.types";
+import { useCurrentSession } from "@/hooks";
 
-export function VerifyPhone({ session }: StepperComponentProps) {
+export function VerifyPhone() {
     const { nextStep } = useStepperContext();
-    // const { getValues } = useFormContext();
+    const { session } = useCurrentSession();
 
     const handleVerifyPhone = (pin: string) => {
         verifyEmailOrSMS({ server_code: pin })
