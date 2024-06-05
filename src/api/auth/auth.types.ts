@@ -231,3 +231,12 @@ export type MarkLatestInvoicePaidPayload = {
 export type MarkLatestInvoicePaidResponse = {
     processing: boolean
 }
+
+export type SubscribeToNewsletterPayload = {
+    secret: string,
+    email: string
+}
+
+export type SubscribeToNewsletterResponse = {
+    email: string
+}

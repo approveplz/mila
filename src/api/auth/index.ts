@@ -27,7 +27,9 @@ import {
     LatestInvoicePaymentStatusPayload,
     LatestInvoicePaymentStatusResponse,
     MarkLatestInvoicePaidPayload,
-    MarkLatestInvoicePaidResponse
+    MarkLatestInvoicePaidResponse,
+    SubscribeToNewsletterPayload,
+    SubscribeToNewsletterResponse
 } from "./auth.types";
 
 export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => {
@@ -134,5 +136,11 @@ export const latestInvoicePaymentStatus = ({ userId, ...payload }: LatestInvoice
 export const markLatestInvoicePaid = ({ userId, ...payload }: MarkLatestInvoicePaidPayload) => {
     return api
         .put<MarkLatestInvoicePaidResponse>(`/users/v0/user/${userId}/mark-latest-invoice-paid`, payload)
+        .then(res => res.data)
+}
+
+export const subscribeToNewsletter = (payload: SubscribeToNewsletterPayload) => {
+    return api
+        .post<SubscribeToNewsletterResponse>("/users/v0/subscribe-to-newsletter", payload)
         .then(res => res.data)
 }

@@ -25,6 +25,10 @@ export function NavAction({ session }:{ session: Session | null }) {
     const router = useRouter();
     const { user } = useAuthStore();
 
+    function handleSignOut() {
+        signOut({ redirect: true });
+    }
+
     return (
         <div className="flex items-center gap-4">
             <Button variant="fatal">
@@ -45,13 +49,11 @@ export function NavAction({ session }:{ session: Session | null }) {
                             <span>Profile</span>
                         </button>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        {/* <form> */}
-                            <button className="flex" onClick={() => signOut({ redirect: true })}>
-                                <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
-                                <span>Log out</span>
-                            </button>
-                        {/* </form> */}
+                    <DropdownMenuItem onClick={handleSignOut}>
+                        <button className="flex">
+                            <HiMiniArrowRightOnRectangle className="mr-2 h-4 w-4" />
+                            <span>Log out</span>
+                        </button>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

@@ -78,71 +78,71 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                   alt="bagpack"
                   // layout="responsive"
-                    width={319}
-                    height={280}
-                    className={`!rounded-t-[20px] min-h-[313px]`}
-                  />
+                  width={319}
+                  height={280}
+                  className={`!rounded-t-[20px] min-h-[313px]`}
+                />
 
-                  {!isLoggedIn && products?.length > 0 &&
-                    entries > 0 &&
-                    ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
-                    <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                {!isLoggedIn && products?.length > 0 &&
+                  entries > 0 &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
+                  <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
-                      {entries} {entries > 1 ? 'entries' : 'entry'}
+                      {entries < 1000 ? entries : `${(entries / 1000).toFixed(1)}k`} {entries > 1 ? 'entries' : 'entry'}
                     </div>
-                    </div>}
+                  </div>}
 
-                  {isLoggedIn &&
-                    ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
-                    <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                {isLoggedIn &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
+                  <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
-                      {session?.user?.user?.metadata?.total_entries_count} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
+                      {session?.user?.user?.metadata?.total_entries_count < 1000 ? session?.user?.user?.metadata?.total_entries_count : `${(session?.user?.user?.metadata?.total_entries_count / 1000).toFixed(1)}k`} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
                     </div>
-                    </div>}
+                  </div>}
 
-                  <div className="py-8 px-6 flex flex-col gap-8">
-                    <div className="flex flex-col gap-2">
+                <div className="py-8 px-6 flex flex-col gap-8">
+                  <div className="flex flex-col gap-2">
                     <div className="font-semibold text-[30px] leading-9 text-[#171614]">
                       {giveAway?.brand}
                     </div>
                     <div title={giveAway?.description} className="font-normal text-lg leading-[28px]">
                       {giveAway?.description ? giveAway?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
                     </div>
-                    </div>
+                  </div>
 
-                    <div className="flex flex-row gap-2 items-center justify-between">
+                  <div className="flex flex-row gap-2 items-center justify-between">
                     <div>
 
                       <Timer
-                      containerClass="flex flex-row gap-1"
-                      boxClass="flex flex-col gap-[6px] items-center justify-center"
-                      textClass="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[5px]"
-                      labelClass="font-normal text-lg leading-7"
-                      labelPosition="bottom"
-                      drawDate={giveAway?.draw_time}
+                        containerClass="flex flex-row gap-2"
+                        boxClass="flex flex-col gap-[6px] items-center justify-center"
+                        textClass="text-center w-[54px] text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]"
+                        labelClass="font-normal text-lg leading-7"
+                        labelPosition="bottom"
+                        drawDate={giveAway?.draw_time}
                       />
 
                     </div>
-                    </div>
                   </div>
-                  </div>
-                </SwiperSlide>
-                ))}
-              </Swiper>
-              }
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      }
 
-              {
-              width >= 640 && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {giveAwayData && giveAwayData?.map((giveAway, index) => (
-                  <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[280] rounded-[20px]" >
-                  {pricingType === 'bundle' && index !== 0 && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[20px]"></div>}
+      {
+        width >= 640 && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {giveAwayData && giveAwayData?.map((giveAway, index) => (
+              <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[280] rounded-[20px]" >
+                {pricingType === 'bundle' && index !== 0 && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[20px]"></div>}
 
-                  <Image
-                    src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
-                    alt="bagpack"
+                <Image
+                  src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
+                  alt="bagpack"
                   // layout="responsive"
                   width={319}
                   height={280}
@@ -155,7 +155,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
-                      {entries} {entries > 1 ? 'entries' : 'entry'}
+                      {entries < 1000 ? entries : `${(entries / 1000).toFixed(1)}k`} {entries > 1 ? 'entries' : 'entry'}
                     </div>
                   </div>}
 
@@ -165,7 +165,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
-                    {session?.user?.user?.metadata?.total_entries_count} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
+                      {session?.user?.user?.metadata?.total_entries_count < 1000 ? session?.user?.user?.metadata?.total_entries_count : `${(session?.user?.user?.metadata?.total_entries_count / 1000).toFixed(1)}k`} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
                     </div>
                   </div>}
 
@@ -188,7 +188,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                       <Timer
                         containerClass="flex flex-row gap-2"
                         boxClass="flex flex-col gap-[6px] items-center justify-center"
-                        textClass="text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]"
+                        textClass="text-center w-[54px] text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]"
                         labelClass="font-normal text-lg leading-7"
                         labelPosition="bottom"
                         drawDate={giveAway?.draw_time}

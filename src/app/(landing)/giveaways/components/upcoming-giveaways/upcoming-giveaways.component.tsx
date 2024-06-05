@@ -44,7 +44,7 @@ export function UpcomingGiveAways() {
         getGiveaways('large', 'major')
     })
 
-  
+
 
 
   return (
@@ -102,10 +102,10 @@ export function UpcomingGiveAways() {
                     </div>
                     <Timer
                       containerClass="flex flex-row gap-2"
-                      boxClass="w-[34px] h-[34px] rounded-lg bg-[#171614] flex flex-row items-center justify-center"
-                      textClass="text-[14px] leading-[20px] font-semibold text-white"
-                      labelClass=""
-                      labelPosition="none"
+                      boxClass="w-[34px] h-[34px] flex flex-col items-center justify-center"
+                      textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#171614] border border-[#171614]"
+                      labelClass="font-normal text-base leading-7"
+                      labelPosition="bottom"
                       drawDate={giveAwayData[0]?.draw_time}
                     />
                   </div>
@@ -126,7 +126,7 @@ export function UpcomingGiveAways() {
                     </div> */}
                   </div>
 
-                  <div className="flex flex-col gap-[10px]">
+                  {/* <div className="flex flex-col gap-[10px]">
 
                     <div className="flex flex-row gap-8 items-center">
                       <HiOutlineShoppingBag className="text-[#6B7280]" size={24} />
@@ -149,7 +149,7 @@ export function UpcomingGiveAways() {
                       </div>
                     </div>
 
-                  </div>
+                  </div> */}
                 </div>}
 
                 {
@@ -165,7 +165,7 @@ export function UpcomingGiveAways() {
                       </div> */}
                     </div>
 
-                    <div className="flex flex-col gap-[10px]">
+                    {/* <div className="flex flex-col gap-[10px]">
 
                       <div className="flex flex-row gap-8 items-center">
                         <HiOutlineShoppingBag className="text-[#6B7280]" size={24} />
@@ -188,7 +188,7 @@ export function UpcomingGiveAways() {
                         </div>
                       </div>
 
-                    </div>
+                    </div> */}
                   </div>
                 }
 
@@ -232,7 +232,7 @@ export function UpcomingGiveAways() {
                     />
 
                   </div>
-                  <div className="p-6 flex flex-col gap-8 items-start sm:w-1/2 w-full">
+                  <div className="p-6 flex flex-col gap-8 items-start sm:w-1/2 w-full mt-5">
                     <div className="sm:hidden bg-primary border border-[#9CA3AF] px-2 rounded-[16px] w-fit">
                       <div className="font-semibold text-base leading-6 text-[#FFFFFF]">MAJOR</div>
                     </div>
@@ -242,14 +242,16 @@ export function UpcomingGiveAways() {
                         <div className="font-black text-[40px] leading-9 text-[#171614] ">
                           {giveAway?.brand}
                         </div>
+
                         <Timer
                           containerClass="flex flex-row gap-2"
-                          boxClass="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center"
-                          textClass="text-[14px] leading-[20px] font-semibold text-white"
-                          labelClass=""
-                          labelPosition="none"
-                          drawDate={giveAway?.draw_time}
+                          boxClass="w-[34px] h-[34px] flex flex-col items-center justify-center"
+                          textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#6B7280] border border-[#6B7280]"
+                          labelClass="font-normal text-base leading-7"
+                          labelPosition="bottom"
+                          drawDate={giveAwayData[0]?.draw_time}
                         />
+
                       </div>
                       <div className="text-[#6B7280] font-medium text-[24px] leading-8">
                         {giveAway?.prize ? giveAway?.prize : 'Backpack'}
@@ -354,12 +356,11 @@ export function UpcomingGiveAways() {
                               </div>
                               <Timer
                                 containerClass="flex flex-row gap-2"
-                                boxClass="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center"
-                                textClass="text-[14px] leading-[20px] font-semibold text-white"
-                                labelClass=""
-                                labelPosition="none"
-                                drawDate={giveAway?.draw_time}
-
+                                boxClass="w-[34px] h-[34px] flex flex-col items-center justify-center"
+                                textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#6B7280] border border-[#6B7280]"
+                                labelClass="font-normal text-base leading-7"
+                                labelPosition="bottom"
+                                drawDate={giveAwayData[0]?.draw_time}
                               />
                             </div>
                             <div className="text-[#6B7280] font-medium text-[24px] leading-8">

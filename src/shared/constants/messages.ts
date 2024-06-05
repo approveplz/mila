@@ -96,7 +96,7 @@ export const messages = {
         subscribe: 'Subscribe',
         messageA: 'By subscribing you agree to with our',
         messageB: 'Privacy Policy',
-        messageC: 'and provide consent to receive updates from our company.'
+        messageC: 'and provide consent to receive updates from our company. See sweeps rules for details on our sweepstakes. No purchase necessary. Void Where Prohibited by Law. '
       }
     },
     tradeMark: '© 2024 Mila Collective. All rights reserved.',

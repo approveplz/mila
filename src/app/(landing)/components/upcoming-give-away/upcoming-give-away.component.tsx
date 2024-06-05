@@ -33,7 +33,7 @@ export function GiveAway() {
       queryFn: () =>
         getGiveaways('large', 'upcoming')
     })
-  
+
   const handleWin = () => {
     setPricingType("bundle")
     router.push("/#pricing")
@@ -41,12 +41,12 @@ export function GiveAway() {
 
   return (
     <section className="py-[112px] px-[24px] sm:px-[192.5px] bg-[#F3F3F3]">
-       <div className="flex flex-col gap-20 items-center">
+      <div className="flex flex-col gap-20 items-center">
         <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-[72px] text-4xl leading-[43.2px] sm:leading-[86.4px] text-[#171614] px-[26px] sm:px-0">
           {heading}
         </div>
 
-        {giveAwayData &&<div className="flex flex-col gap-12 items-center rounded-[24px]">
+        {giveAwayData && <div className="flex flex-col gap-12 items-center rounded-[24px]">
           <div className="font-tt-ramillas text-center font-normal text-[30px] leading-9 text-[#171614] px-[26px] sm:px-0">
             {subHeading}
           </div>
@@ -69,17 +69,17 @@ export function GiveAway() {
               </div>
               <div className="pb-[61.5px] sm:pb-0 sm:py-[61.5px] flex flex-col gap-8 items-start">
 
-                <div className="w-full flex flex-col gap-2">
-                  <div className="w-full flex flex-col sm:flex-row gap-2 justify-between sm:items-center">
-                    <div className="font-semibold text-[30px] leading-9 text-[#171614]">
+                <div className="w-full flex flex-col gap-6 sm:gap-2">
+                  <div className="w-full flex flex-col sm:flex-row gap-6 sm:gap-2 justify-between sm:items-center">
+                    <div className="font-semibold text-base sm:text-[30px] leading-9 text-[#171614]">
                       {giveAwayData?.brand}
                     </div>
                     <Timer
                       containerClass="flex flex-row gap-2"
-                      boxClass="w-8 h-8 rounded-lg bg-[#171614] flex flex-row items-center justify-center"
-                      textClass="text-[14px] leading-[20px] font-semibold text-white"
-                      labelClass=""
-                      labelPosition="none"
+                      boxClass="w-8 h-8 flex flex-col items-center justify-center"
+                      textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#171614] border border-[#171614]"
+                      labelClass="font-normal text-base leading-7"
+                      labelPosition="bottom"
                       drawDate={giveAwayData?.draw_time}
                     />
                   </div>

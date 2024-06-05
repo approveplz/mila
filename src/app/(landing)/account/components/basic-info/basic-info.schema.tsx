@@ -3,13 +3,13 @@ import * as z from "zod";
 export const BasicInfoSchema = z.object({
     firstName: z
         .string()
-        .min(1, { message: "Business Name is required" }),
+        .min(1, { message: "First Name is required" }),
     lastName: z
         .string()
-        .min(1, { message: "Contact Name is required" }),
+        .min(1, { message: "Last Name is required" }),
     emailAddress: z
         .string()
-        .min(1, { message: "Cntact Email is required" })
+        .min(1, { message: "Email Address is required" })
         .email({ message: "Enter a valid email" }),
     phone: z
         .string()

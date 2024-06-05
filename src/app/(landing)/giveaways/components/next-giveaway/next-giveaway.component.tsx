@@ -83,12 +83,14 @@ export function NextGiveAway() {
                     <div className="font-bold text-[38px] leading-9 text-[#171614]">
                       {giveAwayData?.brand}
                     </div>
+
+
                     <Timer
                       containerClass="flex flex-row gap-2"
-                      boxClass="w-[34px] h-[34px] rounded-lg bg-primary flex flex-row items-center justify-center"
-                      textClass="text-[14px] leading-[20px] font-semibold text-white"
-                      labelClass=""
-                      labelPosition="none"
+                      boxClass="w-[34px] h-[34px] rounded-lg flex flex-col items-center justify-center"
+                      textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-primary border border-primary"
+                      labelClass="font-normal text-base leading-7"
+                      labelPosition="bottom"
                       drawDate={giveAwayData?.draw_time}
                     />
                   </div>
@@ -108,7 +110,7 @@ export function NextGiveAway() {
                     </div> */}
                   </div>
 
-                  <div className="flex flex-col gap-[10px]">
+                  {/* <div className="flex flex-col gap-[10px]">
 
                     <div className="flex flex-row gap-8 items-center">
                       <HiOutlineShoppingBag className="text-[#6B7280]" size={24} />
@@ -131,7 +133,7 @@ export function NextGiveAway() {
                       </div>
                     </div>
 
-                  </div>
+                  </div> */}
                 </div>}
 
                 {
@@ -148,7 +150,7 @@ export function NextGiveAway() {
                       </div> */}
                     </div>
 
-                    <div className="flex flex-col gap-[10px]">
+                    {/* <div className="flex flex-col gap-[10px]">
 
                       <div className="flex flex-row gap-8 items-center">
                         <HiOutlineShoppingBag className="text-[#6B7280]" size={24} />
@@ -171,7 +173,7 @@ export function NextGiveAway() {
                         </div>
                       </div>
 
-                    </div>
+                    </div> */}
                   </div>
                 }
 

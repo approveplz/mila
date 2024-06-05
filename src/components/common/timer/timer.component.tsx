@@ -48,9 +48,6 @@ export function Timer({ containerClass, boxClass, textClass, labelClass, labelPo
   const renderBox = (value: number, label: string) => (
     <div className={`flex flex-col ${boxClass}`}>
       {labelPosition === 'top' && <div className={labelClass}>{label}</div>}
-      {
-
-      }
       <div className={textClass}>{value < 0 ? '00' : value < 10 ? `0${value}` : value}</div>
 
       {labelPosition === 'bottom' && <div className={labelClass}>{label}</div>}

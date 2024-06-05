@@ -75,7 +75,7 @@ export function MinorGiveaways() {
                 // layout="responsive"
                 width={240}
                 height={210}
-                className="w-full h-full !rounded-t-[30px]"
+                className="w-full h-full max-h-[387px] !rounded-t-[30px]"
               />
 
               <div className="flex flex-col gap-6 px-6 pb-6">
@@ -91,10 +91,10 @@ export function MinorGiveaways() {
 
                 <Timer
                   containerClass="flex flex-row gap-2"
-                  boxClass="w-[34px] h-[34px] rounded-lg bg-[#6B7280] flex flex-row items-center justify-center"
-                  textClass="text-[14px] leading-[20px] font-semibold text-white"
-                  labelClass=""
-                  labelPosition="none"
+                  boxClass="w-[34px] h-[34px] flex flex-col items-center justify-center"
+                  textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#6B7280] border border-[#6B7280]"
+                  labelClass="font-normal text-base leading-7"
+                  labelPosition="bottom"
                   drawDate={giveAway?.draw_time}
                 />
 
@@ -129,7 +129,7 @@ export function MinorGiveaways() {
 
 
 
-{/* 
+                      {/* 
                       {products?.length > 0 && <div className="absolute bg-white rounded-full px-2 top-4 left-[10px]">
                         <div className="font-semibold text-base leading-6">
                           {products[0]?.data?.number_of_entries} entries
@@ -162,12 +162,11 @@ export function MinorGiveaways() {
 
                         <Timer
                           containerClass="flex flex-row gap-2"
-                          boxClass="w-[34px] h-[34px] rounded-lg bg-[#D1D5DB] flex flex-row items-center justify-center"
-                          textClass="text-[14px] leading-[20px] font-semibold text-[#171614]"
-                          labelClass=""
-                          labelPosition="none"
+                          boxClass="w-[34px] h-[34px] flex flex-col items-center justify-center"
+                          textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-[#171614] rounded-lg bg-[#D1D5DB] border border-[#D1D5DB]"
+                          labelClass="font-normal text-base leading-7"
+                          labelPosition="bottom"
                           drawDate={giveAway?.draw_time}
-
                         />
 
 

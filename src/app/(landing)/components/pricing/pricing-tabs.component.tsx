@@ -36,10 +36,10 @@ export default function PricingTabs({
                 <div className="bg-white rounded-[30px] p-1">
                     <TabsTrigger onClick={() => {
                         useCheckOutStore.getState().setPricingType("subscription");
-                    }} value="subscription">{subscription}</TabsTrigger>
+                    }} value="subscription">Membership</TabsTrigger>
                     <TabsTrigger onClick={() => {
                         useCheckOutStore.getState().setPricingType("bundle");
-                    }} value="bundle">{bundle}</TabsTrigger>
+                    }} value="bundle">One-time</TabsTrigger>
                 </div>
             </TabsList>
             <TabsContent value="subscription">
