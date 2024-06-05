@@ -17,7 +17,7 @@ export default withSentryConfig(nextConfig, {
 // For all available options, see:
 // https://github.com/getsentry/sentry-webpack-plugin#options
 
-org: "precision-ge",
+org: "edgeaways",
 project: "milacollective",
 
 // Only print logs for uploading source maps in CI
