@@ -43,6 +43,7 @@ export type SendUserVerificationEmailResponse = User;
 export type SendVerificationSmsResponse = User;
 
 export type VerifyEmailOrSMSPayload = {
+    client_code?: string
     server_code: string
 }
 
@@ -212,3 +213,21 @@ export type ProfileEntryResponse = {
 }
 
 export type GetMeResponse = User;
+
+export type LatestInvoicePaymentStatusPayload = {
+    secret: string
+    userId: string
+}
+
+export type LatestInvoicePaymentStatusResponse = {
+    is_paid: boolean
+}
+
+export type MarkLatestInvoicePaidPayload = {
+    secret: string
+    userId: string
+}
+
+export type MarkLatestInvoicePaidResponse = {
+    processing: boolean
+}

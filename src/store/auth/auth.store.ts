@@ -8,9 +8,15 @@ export const useAuthStore = create<AuthStore>()(
         immer(
             (set) => ({
                 user: null,
+                authUser: null,
                 setUser(user) {
                     set(state => {
                         state.user = user; 
+                    })
+                },
+                setAuthUser(user) {
+                    set(state => {
+                        state.authUser = user; 
                     })
                 }
             }

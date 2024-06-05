@@ -23,7 +23,11 @@ import {
     VerifyEmailOrSMSResponse,
     ProfileEntryResponse,
     GetMeResponse,
-    SendUserVerificationEmailResponse
+    SendUserVerificationEmailResponse,
+    LatestInvoicePaymentStatusPayload,
+    LatestInvoicePaymentStatusResponse,
+    MarkLatestInvoicePaidPayload,
+    MarkLatestInvoicePaidResponse
 } from "./auth.types";
 
 export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => {
@@ -118,5 +122,17 @@ export const getProfileEntries = (params: GetProfileParams) => {
 export const getMe = () => {
     return api
         .get<GetMeResponse>("/users/v0/me")
+        .then(res => res.data)
+}
+
+export const latestInvoicePaymentStatus = ({ userId, ...payload }: LatestInvoicePaymentStatusPayload) => {
+    return api
+        .put<LatestInvoicePaymentStatusResponse>(`/users/v0/user/${userId}/latest-invoice-payment-status`, payload)
+        .then(res => res.data)
+}
+
+export const markLatestInvoicePaid = ({ userId, ...payload }: MarkLatestInvoicePaidPayload) => {
+    return api
+        .put<MarkLatestInvoicePaidResponse>(`/users/v0/user/${userId}/mark-latest-invoice-paid`, payload)
         .then(res => res.data)
 }
