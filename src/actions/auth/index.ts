@@ -8,7 +8,7 @@ function isRedirectError(error: Error & { digest?: string }) {
 }
 
 export async function authSignOut() {
-    await signOut();
+    await signOut({ redirect: true });
 }
 
 export async function mAuthSignIn(data: FormData) {
@@ -57,6 +57,7 @@ export async function authSignIn(prevState: any, data: FormData) {
             error: ''
         }
     } catch (error) {
+        console.log("error: ", error);
         if (isRedirectError(error as Error)) {
             return {
                 status: 'success',

@@ -47,7 +47,6 @@ export function FinishPayment({ session }: StepperComponentProps) {
                     />
 
                     <EmailVerificationContent
-                        session={session}
                         type="narrow"
                         onReSend={handleVerifyEmail}
                     />

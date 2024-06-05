@@ -29,7 +29,6 @@ export function VerifyEmail({ session }: StepperComponentProps) {
             <CentralizedContent>
                 <EmailVerificationContent
                     type="wider"
-                    session={session}
                     onReSend={handleVerifyEmail}
                     action={checkoutFlow === "free" && <Button full onClick={handleVerifyPhone}>Verify Your Phone Number</Button>}
                 />

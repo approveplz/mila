@@ -20,6 +20,7 @@ import { useMutation } from "@tanstack/react-query";
 import { serialize } from "object-to-formdata";
 import * as actions from "@/actions";
 import { useFormState } from "react-dom";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
 type K = keyof {};
 
@@ -40,14 +41,15 @@ export function PaymentForm({ session }: { session: Session | null }) {
     const { nextStep } = useStepperContext();
     const { authUser } = useAuthStore();
     const isLoading = React.useRef(false);
+    const { authFormAction, resultAuthFormAction } = useAuthContext();
     const stripe = useStripe();
     const elements = useElements();
 
     const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
-    const [resultAuthFormAction, authFormAction] = useFormState(actions.authSignIn, {
-        status: 'idle',
-        error: ''
-    });
+    // const [resultAuthFormAction, authFormAction] = useFormState(actions.authSignIn, {
+    //     status: 'idle',
+    //     error: ''
+    // });
 
     const setLoading = (status: boolean) => {
         isLoading.current = status;

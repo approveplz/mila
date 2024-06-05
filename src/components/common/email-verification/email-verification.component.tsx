@@ -1,22 +1,19 @@
 "use client";
 
+import { useCurrentSession } from "@/hooks";
 import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
 import { HiOutlineEnvelopeOpen } from "react-icons/hi2"
 
 export function EmailVerificationContent({
     type,
-    session,
     onReSend,
     action
 }: {
     type: "wider" | "narrow",
-    session: Session | null,
     onReSend: () => void,
     action?: React.ReactNode
 }) {
-    const usesession = useSession();
-    console.log("use session: ", usesession);
+    const { session } = useCurrentSession();
 
     return (
         <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
