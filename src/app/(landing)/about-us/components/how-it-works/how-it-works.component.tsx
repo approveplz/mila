@@ -33,7 +33,7 @@ export function HowItWorks() {
                         className="max-w-[99px] max-h-[96px]"
                     />
                     <div className="font-tt-ramillas text-light text-[32px] leading-[41.6px] text-white">
-                        1. Become a Member
+                        1. Become A Member
                     </div>
 
                     <div className="font-normal text-base leading-6 text-white text-center">
@@ -51,7 +51,7 @@ export function HowItWorks() {
                         className="max-w-[77px] max-h-[96px]"
                     />
                     <div className="font-tt-ramillas text-light text-[32px] leading-[41.6px] text-white text-center">
-                        2. ACCESS MILA BENEFITS
+                        2. Access Mila Benefits
                     </div>
 
                     <div className="font-normal text-base leading-6 text-white text-center">
@@ -70,7 +70,7 @@ export function HowItWorks() {
                     />
 
                     <div className="font-tt-ramillas text-light text-[32px] leading-[41.6px] text-white">
-                        3. Win Giveaways
+                        3. Win Prizes
                     </div>
 
                     <div className="font-normal text-base leading-6 text-white text-center">
