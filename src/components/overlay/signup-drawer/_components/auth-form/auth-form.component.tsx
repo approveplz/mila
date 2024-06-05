@@ -38,12 +38,18 @@ import { useMutation } from "@tanstack/react-query";
 import { SignUpWithPricesPayload } from "@/api/auth/auth.types";
 import { isApiError } from "@/api";
 import { PatternFormat } from "react-number-format";
+import { useFormState } from "react-dom";
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
     const { products, checkoutFlow } = useCheckOutStore();
     const { setAuthUser } = useAuthStore()
     const formRef = React.useRef<HTMLFormElement>(null);
+
+    const [resultAuthFormAction, authFormAction] = useFormState(actions.authSignIn, {
+        status: 'idle',
+        error: ''
+    });
 
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
@@ -63,17 +69,6 @@ export function AuthForm() {
         mutationFn: (payload: SignUpWithPricesPayload) => {
             return signUpWithPrices(payload)
                 .then(async (res) => {
-                    // const user = prefixObjectKeys(res.user, "userpre_")
-                    // const metadata = prefixObjectKeys(res.user.metadata, "metadatapre_")
-                    // const payload = JSON.parse(JSON.stringify(res));
-                    // delete payload.user;
-
-                    // return actions.signUp(serialize({
-                    //     ...payload,
-                    //     ...user,
-                    //     ...metadata,
-                    //     redirect: false
-                    // }))
                     const user = JSON.parse(JSON.stringify(res.user));
                     user.password = payload.password;
 
@@ -84,16 +79,14 @@ export function AuthForm() {
         async onSuccess(user) {
             const withPayment = checkoutFlow === "paid";
 
-            if(withPayment) {
+            if (withPayment) {
                 nextStep()
             } else {
-                await actions.mAuthSignIn(serialize({
+                authFormAction(serialize({
                     email: user.email,
                     password: user.password,
                     redirect: false
-                }))
-
-                nextStep()
+                }));
             }
         },
         onError(error) {
@@ -125,6 +118,14 @@ export function AuthForm() {
 
         mutate({ ...data, phone: `1 ${data.phone}`, prices })
     }
+
+    React.useEffect(() => {
+        if (resultAuthFormAction) {
+            if (resultAuthFormAction.status === "success") {
+                nextStep();
+            }
+        }
+    }, [resultAuthFormAction, nextStep])
 
     return (
         <Form {...form}>

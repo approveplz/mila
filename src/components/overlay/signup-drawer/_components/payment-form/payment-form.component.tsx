@@ -19,6 +19,7 @@ import { Session } from 'next-auth';
 import { useMutation } from "@tanstack/react-query";
 import { serialize } from "object-to-formdata";
 import * as actions from "@/actions";
+import { useFormState } from "react-dom";
 
 type K = keyof {};
 
@@ -43,6 +44,10 @@ export function PaymentForm({ session }: { session: Session | null }) {
     const elements = useElements();
 
     const couponForm = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
+    const [resultAuthFormAction, authFormAction] = useFormState(actions.authSignIn, {
+        status: 'idle',
+        error: ''
+    });
 
     const setLoading = (status: boolean) => {
         isLoading.current = status;
@@ -58,14 +63,11 @@ export function PaymentForm({ session }: { session: Session | null }) {
         }),
         async onSuccess(data, variables) {
             if (authUser) {
-                await actions.mAuthSignIn(serialize({
+                authFormAction(serialize({
                     email: authUser.email,
                     password: authUser.password,
                     redirect: false
-                }))
-
-                setLoading(false);
-                nextStep();
+                }));
             }
         },
         retry(failureCount, error) {
@@ -88,14 +90,11 @@ export function PaymentForm({ session }: { session: Session | null }) {
         async onSuccess(data, variables) {
             if (data.is_paid) {
                 if (authUser) {
-                    await actions.mAuthSignIn(serialize({
+                    authFormAction(serialize({
                         email: authUser.email,
                         password: authUser.password,
                         redirect: false
-                    }))
-                    
-                    setLoading(false);
-                    nextStep();
+                    }));
                 }
             } else {
                 markLatestInvoicePaidMutate(variables)
@@ -112,7 +111,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
         if (authUser) {
             setLoading(true);
-            
+
             const payload = {
                 coupon: couponForm.getValues("coupon") || null,
                 user: authUser.id,
@@ -200,6 +199,17 @@ export function PaymentForm({ session }: { session: Session | null }) {
             }
         }
     }
+
+    React.useEffect(() => {
+        if (resultAuthFormAction) {
+            if (resultAuthFormAction.status === "success") {
+                setLoading(false);
+                nextStep();
+            } else if (resultAuthFormAction.status === "failed") {
+                setLoading(false);
+            }
+        }
+    }, [resultAuthFormAction, nextStep])
 
     return (
         <form className="flex flex-col flex-1 w-full sm:flex-initial justify-center gap-6">
