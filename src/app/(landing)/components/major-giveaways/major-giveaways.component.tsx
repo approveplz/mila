@@ -16,6 +16,7 @@ import { useCheckOutStore } from "@/store";
 import { useWidth } from "@/hooks";
 import useCalculateEntries from "@/hooks/useEntries";
 import { Session } from "next-auth";
+import { getProductPrice } from "@/utils";
 
 type MajorGiveaways = {
   session: Session | null,
@@ -31,6 +32,7 @@ export default function MajorGiveaways({ session, showHeading = true }: MajorGiv
   const pricingType = useCheckOutStore((state) => state.pricingType);
 
   const { width } = useWidth();
+  const [amount, setAmount] = useState<number>();
 
   const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem[]> =
     useQuery({
@@ -48,16 +50,52 @@ export default function MajorGiveaways({ session, showHeading = true }: MajorGiv
     }
   }, [giveAwayData, pricingType])
 
+  useEffect(() => {
+    if (products?.length > 0 && pricingType === 'subscription') {
+      products.forEach(product => {
+        if (product?.data?.type === 'subscription') {
+          const quantity = product.quantity
+          const pricingData = getProductPrice(product?.data?.prices);
+          pricingData?.isDiscounted ? setAmount(quantity * pricingData?.discountedPrice) : setAmount(quantity * pricingData?.defaultPrice)
+        }
+      })
+    } else if (products?.length > 0 && pricingType === 'bundle') {
+      let amount = 0;
+      products.forEach(product => {
+        if (product?.data?.type === 'bundle') {
+          const quantity = product.quantity
+          const pricingData = product?.data?.prices[0]?.unit_amount;
+          amount += quantity * Number(pricingData)
+        }
+      })
+      setAmount(amount)
+    }
+  }, [products, pricingType])
+
+  useEffect(() => { console.log(session) }, [session])
+
+
 
 
   return (
     <section className={`${width < 640 ? '!py-[33px]' : 'pt-[66px]'} ${showHeading ? 'pb-0' : 'pb-[66px] pt-8'} ${width < 640 ? 'px-6' : 'px-[160px]'} flex flex-col items-center gap-8 bg-[#F3F3F3]`}>
 
-      {
-        showHeading && <div className="font-tt-ramillas select-none text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[310px]">
+      {showHeading && <div>
+        {!isLoggedIn && products?.length === 0 && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[410px]">
           {heading}
-        </div>
-      }
+        </div>}
+        {!isLoggedIn && products?.length > 0 && pricingType === 'subscription' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+          FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
+        </div>}
+        {!isLoggedIn && products?.length > 0 && pricingType === 'bundle' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+          FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
+        </div>}
+
+      </div>}
+
+      {/* <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+        YOU'LL GET ALL OF THIS. Directing to major and minor giveaways, showing timers and entries as per selected plan. 'For Your $[x]' contains accumulative price.
+      </div> */}
 
       {/* <div className="font-tt-ramillas text-primary font-normal text-[30px] sm:text-5xl leading-9 sm:leading-[57.6px]">
         {subHeading}
