@@ -50,13 +50,13 @@ export function NextGiveAway() {
   }
 
   return (
-    <section className="py-[64px] sm:py-[112px] px-[24px] sm:px-16 bg-[#F3F3F3]">
-      <div className="flex flex-col gap-12 items-center">
-        <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-[72px] text-4xl leading-[43.2px] sm:leading-[86.4px] text-[#171614] px-[26px] sm:px-0">
+    <section className="py-[64px] sm:py-[112px] px-[24px] sm:px-[160px] bg-[#F3F3F3]">
+      <div className="flex flex-col gap-8 sm:gap-12 items-center">
+        <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-5xl text-[28px] leading-[33px] sm:leading-[72px] text-[#171614] px-[26px] sm:px-0">
           NEXT Major Giveaway
         </div>
 
-        {giveAwayData && <div className="flex flex-col gap-12 items-center rounded-[24px] border-[3px] border-primary w-full sm:h-[560px]">
+        {giveAwayData && <div className="flex flex-col gap-12 items-center rounded-[24px] border-[3px] border-primary w-full sm:h-[416px]">
 
           <div className="w-full relative bg-white rounded-[24px] shadow-xl border-[#9CA3AF] overflow-hidden">
             <div className="z-10 opacity-[0.08] absolute bg-[url('/images/giveaway-bg.png')] w-full h-full">
@@ -70,17 +70,18 @@ export function NextGiveAway() {
                   // layout="responsive"
                   width={656}
                   height={399}
+                  className="object-cover"
                 />
 
               </div>
-              <div className="p-12 flex flex-col gap-8 items-start sm:w-1/2 w-full">
-                <div className="sm:hidden bg-primary border border-[#9CA3AF] px-2 rounded-[16px] w-fit">
+              <div className="p-8 flex flex-col gap-4 items-start sm:w-1/2 w-full">
+                <div className="bg-primary border border-[#9CA3AF] px-2 rounded-[16px] w-fit">
                   <div className="font-semibold text-base leading-6 text-[#FFFFFF]">MAJOR</div>
                 </div>
                 <div className="w-full flex flex-col gap-4">
 
-                  <div className="w-full flex flex-col sm:flex-row gap-6 justify-between sm:items-center">
-                    <div className="font-bold text-[38px] leading-9 text-[#171614]">
+                  <div className="w-full flex flex-col sm:flex-row gap-6 justify-between sm:items-center ">
+                    <div title={giveAwayData?.brand} className="font-bold text-[38px] leading-9 text-[#171614] line-clamp-1 overflow-hidden">
                       {giveAwayData?.brand}
                     </div>
 
@@ -102,7 +103,7 @@ export function NextGiveAway() {
                 {!isMobile && <div id="collpasable" className="flex flex-col gap-8 items-start w-full">
 
                   <div className="flex flex-col ">
-                    <div className="font-normal text-base leading-6 text-[#171614]">
+                    <div title={giveAwayData?.description} className="font-normal text-base leading-6 text-[#171614] sm:line-clamp-5 sm:overflow-hidden">
                      {giveAwayData?.description ? giveAwayData?.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad'}
                     </div>
                     {/* <div className="font-nomral text-base leading-6 text-[#171614]">

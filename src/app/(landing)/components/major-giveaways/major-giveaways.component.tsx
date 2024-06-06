@@ -17,7 +17,12 @@ import { useWidth } from "@/hooks";
 import useCalculateEntries from "@/hooks/useEntries";
 import { Session } from "next-auth";
 
-export default function MajorGiveaways({ session }: { session: Session | null }) {
+type MajorGiveaways = {
+  session: Session | null,
+  showHeading?: boolean
+}
+
+export default function MajorGiveaways({ session, showHeading = true }: MajorGiveaways) {
   const { majorGiveaways: {
     heading, subHeading
   } } = messages;
@@ -46,11 +51,13 @@ export default function MajorGiveaways({ session }: { session: Session | null })
 
 
   return (
-    <section className={`${width < 640 ? '!py-[33px]' : 'pt-[66px]'} ${width < 640 ? 'px-6' : 'px-[160px]'} flex flex-col items-center gap-8 bg-[#F3F3F3]`}>
+    <section className={`${width < 640 ? '!py-[33px]' : 'pt-[66px]'} ${showHeading ? 'pb-0' : 'pb-[66px] pt-8'} ${width < 640 ? 'px-6' : 'px-[160px]'} flex flex-col items-center gap-8 bg-[#F3F3F3]`}>
 
-      <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[310px]">
-        {heading}
-      </div>
+      {
+        showHeading && <div className="font-tt-ramillas select-none text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[310px]">
+          {heading}
+        </div>
+      }
 
       {/* <div className="font-tt-ramillas text-primary font-normal text-[30px] sm:text-5xl leading-9 sm:leading-[57.6px]">
         {subHeading}
@@ -115,14 +122,14 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   <div className="flex flex-row gap-2 items-center justify-between">
                     <div>
 
-                    <Timer
-                      containerClass="flex flex-row gap-2"
-                      boxClass="w-8 h-8 flex flex-col items-center justify-center"
-                      textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#171614] border border-[#171614]"
-                      labelClass="font-normal text-base leading-7"
-                      labelPosition="bottom"
-                      drawDate={giveAway?.draw_time}
-                    />
+                      <Timer
+                        containerClass="flex flex-row gap-2"
+                        boxClass="w-8 h-8 flex flex-col items-center justify-center"
+                        textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#171614] border border-[#171614]"
+                        labelClass="font-normal text-base leading-7"
+                        labelPosition="bottom"
+                        drawDate={giveAway?.draw_time}
+                      />
 
                     </div>
                   </div>

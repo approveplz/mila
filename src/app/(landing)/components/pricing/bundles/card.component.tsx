@@ -90,7 +90,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
             </div>
             {cardData?.benefits.map((benefit: benefit, index: number) => (
               <div key={index} className="flex flex-row gap-[7px] items-center">
-                <div className="font-normal text-base leading-6">
+                <div className="font-normal text-base leading-6 select-none">
                   {benefit?.benefit.includes('{access_duration}') ? benefit?.benefit.replace('{access_duration}', cardData.duration.toString()) : benefit?.benefit}
                 </div>
               </div>

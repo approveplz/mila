@@ -52,7 +52,7 @@ export function MinorGiveaways() {
 
 
   return (
-    <section className={`sm:py-20 px-6 flex flex-col justify-center w-full items-center gap-12 ${isMobile ? 'bg-[#F3F3F3]' : 'bg-white'}`}>
+    <section className={`sm:py-20 px-6 sm:px-[160px] flex flex-col justify-center w-full items-center gap-12 ${isMobile ? 'bg-[#F3F3F3]' : 'bg-white'}`}>
 
       <div className={`font-tt-ramillas font-normal text-[30px] sm:text-5xl leading-9 sm:leading-[57.6px] ${isMobile ? 'text-[#171614]' : 'text-primary'}`}>
         {title}
@@ -61,7 +61,7 @@ export function MinorGiveaways() {
       <div className="max-w-full flex flex-col gap-3 items-center">
         {!isMobile && giveAwayData ? <div className="grid grid-cols-4 gap-6">
           {giveAwayData.slice(0, 8).map((giveAway, index) => (
-            <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[310px] flex flex-col gap-4">
+            <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] flex flex-col gap-4">
 
               {/* {products?.length > 0 && <div className="absolute bg-white rounded-full px-2 top-4 right-4 ">
                 <div className="font-semibold text-base leading-6">
@@ -74,8 +74,8 @@ export function MinorGiveaways() {
                 alt="bagpack"
                 // layout="responsive"
                 width={240}
-                height={210}
-                className="w-full h-full max-h-[387px] !rounded-t-[30px]"
+                height={225}
+                className="w-full h-[225px] max-h-[225px] object-cover !rounded-t-[30px]"
               />
 
               <div className="flex flex-col gap-6 px-6 pb-6">
