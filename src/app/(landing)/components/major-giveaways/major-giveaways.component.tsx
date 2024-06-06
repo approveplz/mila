@@ -11,7 +11,7 @@ import {
   UseQueryResult
 } from '@tanstack/react-query'
 import { getGiveaways } from "@/actions";
-import { GiveawayItem } from "@/entities";
+import { GiveawayItem, Product } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import { useWidth } from "@/hooks";
 import useCalculateEntries from "@/hooks/useEntries";
@@ -21,18 +21,23 @@ import { getProductPrice } from "@/utils";
 type MajorGiveaways = {
   session: Session | null,
   showHeading?: boolean
+  productsArray?: Array<Product>
 }
 
-export default function MajorGiveaways({ session, showHeading = true }: MajorGiveaways) {
+
+export default function MajorGiveaways({ session, showHeading = true, productsArray = [] }: MajorGiveaways) {
+
   const { majorGiveaways: {
     heading, subHeading
   } } = messages;
 
   const { products } = useCheckOutStore();
   const pricingType = useCheckOutStore((state) => state.pricingType);
+  const subscriptions = productsArray?.filter(product => product.type === "subscription");
+  const bundles = productsArray?.filter(product => product.type === "bundle");
 
   const { width } = useWidth();
-  const [amount, setAmount] = useState<number>();
+  const [amount, setAmount] = useState<number>(0);
 
   const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem[]> =
     useQuery({
@@ -51,7 +56,7 @@ export default function MajorGiveaways({ session, showHeading = true }: MajorGiv
   }, [giveAwayData, pricingType])
 
   useEffect(() => {
-    if (products?.length > 0 && pricingType === 'subscription') {
+    if (!isLoggedIn && products?.length > 0 && pricingType === 'subscription') {
       products.forEach(product => {
         if (product?.data?.type === 'subscription') {
           const quantity = product.quantity
@@ -59,7 +64,7 @@ export default function MajorGiveaways({ session, showHeading = true }: MajorGiv
           pricingData?.isDiscounted ? setAmount(quantity * pricingData?.discountedPrice) : setAmount(quantity * pricingData?.defaultPrice)
         }
       })
-    } else if (products?.length > 0 && pricingType === 'bundle') {
+    } else if (!isLoggedIn && products?.length > 0 && pricingType === 'bundle') {
       let amount = 0;
       products.forEach(product => {
         if (product?.data?.type === 'bundle') {
@@ -72,7 +77,34 @@ export default function MajorGiveaways({ session, showHeading = true }: MajorGiv
     }
   }, [products, pricingType])
 
-  useEffect(() => { console.log(session) }, [session])
+  useEffect(() => {
+    setAmount(0);
+
+    if (isLoggedIn && pricingType === 'subscription') {
+      session?.user?.user?.metadata?.subscribed_products.forEach(subProduct => {
+        subscriptions?.forEach(subscription => {
+          if (subProduct?.product === subscription?.id) {
+            const quantity = subProduct.quantity
+            const pricingData = getProductPrice(subscription?.prices);
+            pricingData?.isDiscounted ? setAmount(quantity * pricingData?.discountedPrice) : setAmount(quantity * pricingData?.defaultPrice)
+          }
+        })
+      })
+    } else if (isLoggedIn && pricingType === 'bundle') {
+      let amount = 0;
+      session?.user?.user?.metadata?.subscribed_products.forEach(subProduct => {
+        bundles?.forEach(bundle => {
+          if (subProduct?.product === bundle?.id) {
+            const quantity = subProduct.quantity
+            const pricingData = bundle?.prices[0]?.unit_amount;
+            amount += quantity * Number(pricingData)
+          }
+        })
+      })
+      setAmount(amount)
+    }
+
+  }, [productsArray, session, pricingType])
 
 
 
@@ -81,14 +113,22 @@ export default function MajorGiveaways({ session, showHeading = true }: MajorGiv
     <section className={`${width < 640 ? '!py-[33px]' : 'pt-[66px]'} ${showHeading ? 'pb-0' : 'pb-[66px] pt-8'} ${width < 640 ? 'px-6' : 'px-[160px]'} flex flex-col items-center gap-8 bg-[#F3F3F3]`}>
 
       {showHeading && <div>
-        {!isLoggedIn && products?.length === 0 && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[410px]">
-          {heading}
+        {!isLoggedIn && <div>
+          {products?.length > 0 && amount > 0 && pricingType === 'subscription' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+            FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
+          </div>}
+          {products?.length > 0 && amount > 0 && pricingType === 'bundle' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+            FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
+          </div>}
         </div>}
-        {!isLoggedIn && products?.length > 0 && pricingType === 'subscription' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-          FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
-        </div>}
-        {!isLoggedIn && products?.length > 0 && pricingType === 'bundle' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-          FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
+
+        {isLoggedIn && <div>
+          {pricingType === 'subscription' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+            FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
+          </div>}
+          {pricingType === 'bundle' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+            FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
+          </div>}
         </div>}
 
       </div>}
