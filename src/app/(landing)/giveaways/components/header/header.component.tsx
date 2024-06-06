@@ -22,48 +22,53 @@ export function Header() {
       <div className="w-full sm:w-[54%] flex flex-row sm:gap-10 gap-[19px] ">
         <div className="flex flex-col w-full sm:h-[798px] mt-[165px] sm:mt-[348px]">
           <Image
-            src="/images/bottle.png"
-            alt="bottle"
+            src="/images/ladyBag.png"
+            alt="ladyBag"
             // layout="cover"
             width={237}
             height={300}
+            className="w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
           />
         </div>
 
         <div className="flex flex-col gap-[22px] sm:gap-12 w-full sm:h-[798px] mt-[71px] sm:mt-[150px]">
 
           <Image
-            src="/images/cream.png"
-            alt="cream"
+            src="/images/message.png"
+            alt="message"
             // layout="cover"
             width={237}
             height={300}
+            className="w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
           />
 
           <Image
-            src="/images/spray.png"
-            alt="spray"
+            src="/images/lady1.png"
+            alt="lady1"
             // layout="cover"
             width={237}
             height={300}
+            className="w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
           />
 
         </div>
 
         <div className="flex flex-col gap-[22px] sm:gap-12 w-full sm:h-[798px]">
           <Image
-            src="/images/lipstick.png"
-            alt="lipstick"
+            src="/images/stuff.png"
+            alt="stuff"
             // layout="cover"
             width={237}
             height={300}
+            className="w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
           />
           <Image
-            src="/images/brushes.png"
-            alt="brushes"
+            src="/images/lady2.png"
+            alt="lady2"
             // layout="cover"
             width={237}
             height={300}
+            className="w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
           />
 
         </div>
