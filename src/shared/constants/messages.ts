@@ -79,7 +79,7 @@ export const messages = {
     }
   },
   benefits: {
-    heading: "AMERICA'S fastest growing BENFITS CLUB",
+    heading: "AMERICA'S fastest growing BENEFITS CLUB",
     description: "Welcome to Mila Collective, where we're dedicated to bringing joy and excitement into your life through our innovative rewards platform. Our mission is simple: to offer a diverse range of prizes, from dream getaways to coveted give aways replaced with latest in fashion. With fairness and transparency at our core, every spin or entry gives you an equal chance to win big.",
     points: [
       'Join a community of luxury lovers',

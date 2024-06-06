@@ -40,9 +40,9 @@ export function GiveAway() {
   }
 
   return (
-    <section className="py-[112px] px-[24px] sm:px-[192.5px] bg-[#F3F3F3]">
+    <section className="py-[112px] px-[24px] sm:px-[220px] bg-[#F3F3F3]">
       <div className="flex flex-col gap-20 items-center">
-        <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-[72px] text-4xl leading-[43.2px] sm:leading-[86.4px] text-[#171614] px-[26px] sm:px-0">
+        <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-[48px] text-4xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[26px] sm:px-0">
           {heading}
         </div>
 

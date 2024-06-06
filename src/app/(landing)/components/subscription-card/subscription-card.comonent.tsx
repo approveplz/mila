@@ -8,7 +8,7 @@ import { HiCheck, HiOutlineGift, HiXMark } from "react-icons/hi2";
 
 // const cardClasses = cva("relative overflow-hidden rounded-[24px] max-h-[579px] price-card before:rounded-3xl before:-z-10 z-20", {
 
-const cardClasses = cva("relative overflow-hidden py-8 px-6 rounded-3xl z-20 w-full min-h-[600px] sm:min-h-0", {
+const cardClasses = cva("relative overflow-hidden p-6 rounded-3xl z-20 w-full min-h-[600px] sm:min-h-0 sm:h-[502px]", {
     variants: {
         type: {
             free: "after:bg-white",
@@ -153,7 +153,7 @@ export function SubscriptionInfoCard({
 
                                 <div className="flex flex-row gap-2 items-center">
                                     <HiOutlineGift size={24} className="text-primary" />
-                                    <span className="font-tt-ramillas text-4xl font-medium leading-[43.2px] text-primary">{entries} {entries > 1 ? "Entries" : "Entry"}</span>
+                                    <span className="font-tt-ramillas text-[28px] font-extrabold leading-[33.6px] text-primary">{entries} {entries > 1 ? "Entries" : "Entry"}</span>
                                 </div>
                                 <div className="font-normal text-base">
                                     {getMessageB}
@@ -173,13 +173,13 @@ export function SubscriptionInfoCard({
                         ))}
                     </div>
 
-                    {!isLoggedIn && <div className="w-full flex flex-col mt-auto">
+                    {!isLoggedIn && <div className="w-full flex flex-col ">
                         <Button variant={selected ? "primary" : "fatal-outline"} onClick={onSelect}>
                             {selected ? "Selected" : "Select"}
                         </Button>
                     </div>}
 
-                    {(isLoggedIn && isCardSelected) && <div className="w-full flex flex-col mt-auto">
+                    {(isLoggedIn && isCardSelected) && <div className="w-full flex flex-col">
                         <Button variant="primary" >
                             Selected
                         </Button>

@@ -8,7 +8,7 @@ export function Brands() {
   } } = messages;
 
   return (
-    <section className="w-full gap-12 flex flex-col items-center justify-center py-20 bg-[#F3F3F3] ">
+    <section className="w-full gap-6 flex flex-col items-center justify-center pt-12 pb-16 px-16  bg-[#F3F3F3] ">
       <div className="font-normal text-lg leading-[27px] text-[#171614]">
         {heading}
       </div>
