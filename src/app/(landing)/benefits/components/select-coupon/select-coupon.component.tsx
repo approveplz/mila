@@ -6,13 +6,15 @@ import { InstaIcon } from "@/components/layout/footer/instagram-icon.component";
 import { TikTokIcon } from "@/components/layout/footer/tiktok.component";
 import Image from 'next/image'
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
+import { WebsiteIcon } from "./website-icon.component";
+import Link from "next/link";
+import { XIcon } from "./x-icon.component";
 
 type SelectCoupon = {
   coupon?: CouponResponse
 }
 
 export default function SelectCoupons({ coupon }: SelectCoupon) {
-
 
   const handleCopy = () => {
     if (coupon?.clip) {
@@ -73,20 +75,46 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
 
       </div>
 
-
-
-      <div className="flex flex-row gap-4 w-full justify-center">
-        <div className="items-center cursor-pointer" >
-          <FBIcon />
+      {coupon?.business?.socials && coupon?.business?.socials?.length > 0
+        && <div className="flex flex-row gap-4 w-full justify-center">
+          {coupon?.business?.socials?.map(item => {
+            switch (item.platform) {
+              case 'website':
+                return (
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                    <WebsiteIcon />
+                  </Link>
+                );
+              case 'instagram':
+                return (
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                    <InstaIcon />
+                  </Link>
+                );
+              case 'facebook':
+                return (
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                    <FBIcon />
+                  </Link>
+                );
+              case 'tiktok':
+                return (
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                    <TikTokIcon />
+                  </Link>
+                );
+                case 'x':
+                return (
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                    <XIcon />
+                  </Link>
+                );
+              default:
+                return null;
+            }
+          })}
         </div>
-        <div className="items-center cursor-pointer" >
-          <TikTokIcon />
-        </div>
-        <div className="items-center  cursor-pointer" >
-          <InstaIcon />
-        </div>
-
-      </div>
+      }
 
       <div className="bg-[#E5E7EB] py-2 px-4 rounded-[24px] w-fit">
         <div className="font-semibold text-[14px] leading-[20px] "> {coupon?.business?.category.toUpperCase()} </div>
