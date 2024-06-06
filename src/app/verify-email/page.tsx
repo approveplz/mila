@@ -1,4 +1,5 @@
-import { verifyEmailOrSMS } from "@/api/auth"
+import { redirect } from "next/navigation";
+import { verifyEmailOrSMS } from "@/api/auth";
 
 export default async function Page({
     searchParams
@@ -8,7 +9,11 @@ export default async function Page({
         client_code: string
     }
 }) {
-    await verifyEmailOrSMS({ client_code: searchParams.client_code, server_code: searchParams.server_code });
+    const res = await verifyEmailOrSMS({ client_code: searchParams.client_code, server_code: searchParams.server_code });
+
+    if(res) {
+        redirect('/')
+    }
 
     return (
         <p>Redirecting...</p>
