@@ -10,7 +10,10 @@ export function StepperForm({ children }: React.PropsWithChildren) {
         resolver: zodResolver(amoeSchema),
         defaultValues: {
             token: "",
-            giveaway: "",
+            giveaway: {
+                id: "",
+                title: "",
+            },
             email: "",
             phone: "",
             first_name: "",

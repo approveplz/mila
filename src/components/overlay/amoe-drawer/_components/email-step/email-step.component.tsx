@@ -15,19 +15,20 @@ import {
     Input
 } from "@/components";
 import { AmoeStepType } from "../../amoe-drawer.type";
-import { HiOutlineEnvelopeOpen, HiOutlineExclamationTriangle } from "react-icons/hi2";
+import { HiOutlineEnvelope, HiOutlineEnvelopeOpen, HiOutlineExclamationTriangle, HiXMark } from "react-icons/hi2";
 import { useMutation } from "@tanstack/react-query";
 import { CheckEligibilityPayload, SendVerificationEmailPayload, ValidateCodePayload } from "@/api/amoes/amoe.types";
 import { checkEligibility, sendVerificationEmail, validateCode } from "@/api/amoes";
 import { AMOEFormData } from "../stepper-form/stepper-form.schema";
 import { withAsync } from "@/utils";
+import { toast } from "sonner";
 
 export function EmailStep({ actions }: AmoeStepType) {
     const [shouldVerify, setShouldVerify] = React.useState(false);
     const [showModalWarning, setShowModalWarning] = React.useState(false);
     const { control, trigger, getValues } = useFormContext<AMOEFormData>();
 
-    const { mutateAsync: checkEligibilityMutateAsync } = useMutation({
+    const { mutateAsync: checkEligibilityMutateAsync, isPending: isPendingCheckEligibility } = useMutation({
         mutationFn: (payload: CheckEligibilityPayload) => checkEligibility(payload),
         onSuccess(data, variables, context) {
             console.log("success: ", { data, variables, context })
@@ -37,7 +38,7 @@ export function EmailStep({ actions }: AmoeStepType) {
         },
     });
 
-    const { mutateAsync: verifyMutateAsync } = useMutation({
+    const { mutateAsync: verifyMutateAsync, isPending: isPendingVerify } = useMutation({
         mutationFn: (payload: SendVerificationEmailPayload) => sendVerificationEmail(payload),
         onSuccess(data, variables, context) {
             console.log("success: ", { data, variables, context })
@@ -47,7 +48,29 @@ export function EmailStep({ actions }: AmoeStepType) {
         },
     });
 
-    const { mutateAsync: codeMutateAsync } = useMutation({
+    const { mutateAsync: resendVerifyMutateAsync, isPending: isPendingResendVerify } = useMutation({
+        mutationFn: (payload: SendVerificationEmailPayload) => sendVerificationEmail(payload),
+        onSuccess(data, variables, context) {
+            console.log("success: ", { data, variables, context })
+            toast.custom(t => (
+                <div className="flex items-center px-4 py-3">
+                    <div className="flex items-center gap-2">
+                        <HiOutlineEnvelope className="h-6 w-6" />
+                        <p className="font-medium">Email sent!</p>
+                    </div>
+
+                    <button className="ml-auto" onClick={() => toast.dismiss(t)}>
+                        <HiXMark className="h-6 w-6" />
+                    </button>
+                </div>
+            ))
+        },
+        onError(error, variables, context) {
+            console.log("error: ", { error, variables, context })
+        },
+    });
+
+    const { mutateAsync: codeMutateAsync, isPending: isPendingCode } = useMutation({
         mutationFn: (payload: ValidateCodePayload) => validateCode(payload),
         onSuccess(data, variables, context) {
             console.log("success: ", { data, variables, context })
@@ -62,10 +85,10 @@ export function EmailStep({ actions }: AmoeStepType) {
 
         if (validEmail) {
             const { email, giveaway } = getValues();
-            const { response, error } = await withAsync(() => checkEligibilityMutateAsync({ email, giveaway, secret: "F83C63FEB5E3E6768D86281E2B2F7" }));
+            const { response, error } = await withAsync(() => checkEligibilityMutateAsync({ email, giveaway: giveaway.id, secret: process.env.NEXT_PUBLIC_API_SECRET! }));
 
             if (response?.is_eligible) {
-                const { response } = await withAsync(() => verifyMutateAsync({ email, secret: "F83C63FEB5E3E6768D86281E2B2F7" }))
+                const { response } = await withAsync(() => verifyMutateAsync({ email, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
                 if (response) {
                     setShouldVerify(true);
@@ -83,10 +106,14 @@ export function EmailStep({ actions }: AmoeStepType) {
 
         if (validCode) {
             const { email_code } = getValues();
-            const { response } = await withAsync(() => codeMutateAsync({ code: email_code, secret: "F83C63FEB5E3E6768D86281E2B2F7" }))
+            const { response, error } = await withAsync(() => codeMutateAsync({ code: email_code, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
-            if(response) {
+            if (response) {
                 return true;
+            }
+
+            if (error) {
+                toast.error("Invalid code!");
             }
         }
 
@@ -117,7 +144,7 @@ export function EmailStep({ actions }: AmoeStepType) {
                         )}
                     />
 
-                    {actions && actions(isValidEmail, false)}
+                    {actions && actions(isValidEmail, isPendingCheckEligibility || isPendingVerify)}
                 </>
             ) : (
                 <>
@@ -151,12 +178,25 @@ export function EmailStep({ actions }: AmoeStepType) {
 
                             <div className="flex items-center">
                                 <p>Didn&apos;t get the email?</p>
-                                <button type="button" className="font-medium ml-1" onClick={() => { }}>Resend verification email</button>
+                                <button
+                                    type="button"
+                                    className="font-medium ml-1"
+                                    onClick={() => {
+                                        const { email } = getValues();
+                                        resendVerifyMutateAsync({
+                                            email,
+                                            secret: process.env.NEXT_PUBLIC_API_SECRET!
+                                        })
+                                    }}
+                                    disabled={isPendingResendVerify}
+                                >
+                                    Resend verification email
+                                </button>
                             </div>
                         </main>
                     </article>
 
-                    {actions && actions(isValidCode, false)}
+                    {actions && actions(isValidCode, isPendingCode)}
                 </>
             )}
 

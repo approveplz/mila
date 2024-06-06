@@ -16,7 +16,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>(({ className, childr
         >
             <p className="text-lg text-center font-semibold mb-4">{activeStep} of {React.Children.count(children)}</p>
 
-            <ul data-title={activeTitle} className="relative flex gap-4 before:content-[attr(data-title)] before:absolute before:top-4 before:left-1/2 before:-translate-x-1/2 before:text-xs before:text-muted">
+            <ul data-title={activeTitle} className="relative flex gap-4 before:content-[attr(data-title)] before:sm:content-none before:absolute before:top-4 before:left-1/2 before:-translate-x-1/2 before:text-xs before:text-muted">
                 {children}
             </ul>
         </nav>

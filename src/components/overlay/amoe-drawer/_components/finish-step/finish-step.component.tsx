@@ -18,6 +18,7 @@ import { withAsync } from "@/utils";
 import { useMutation } from "@tanstack/react-query";
 import { createAMOE } from "@/api/amoes";
 import { CreateAMOEPayload } from "@/api/amoes/amoe.types";
+import { PatternFormat } from "react-number-format";
 
 export function FinishStep({ actions }: AmoeStepType) {
     const closeButtonRef = React.useRef<HTMLButtonElement | null>(null);
@@ -52,8 +53,8 @@ export function FinishStep({ actions }: AmoeStepType) {
             } = getValues();
 
             const { response } = await withAsync(() => mutateAsync({
-                giveaway,
-                secret: "F83C63FEB5E3E6768D86281E2B2F7",
+                giveaway: giveaway.id,
+                secret: process.env.NEXT_PUBLIC_API_SECRET!,
                 is_over_18_and_agrees_tc,
                 user: {
                     email,
@@ -88,8 +89,17 @@ export function FinishStep({ actions }: AmoeStepType) {
                     <p>First Name: {values.first_name}</p>
                     <p>Last Name: {values.last_name}</p>
                     <p>Email Address: {values.email}</p>
-                    <p>Phone: {values.phone}</p>
-                    <p>Selected Giveaway: {values.giveaway}</p>
+                    <p>
+                        Phone: {" "}
+                        <PatternFormat
+                            displayType="text"
+                            format="+1 (###)-###-####"
+                            allowEmptyFormatting
+                            mask="_"
+                            value={values.phone}
+                        />
+                    </p>
+                    <p>Selected Giveaway: {values.giveaway.title}</p>
                     <p>Address: {values.line_1}, {values.city}, {values.region}, {values.postal_code}</p>
                 </div>
 
