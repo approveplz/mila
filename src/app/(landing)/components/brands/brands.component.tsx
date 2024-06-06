@@ -8,11 +8,11 @@ export function Brands() {
   } } = messages;
 
   return (
-    <section className="w-full gap-6 flex flex-col items-center justify-center pt-12 pb-16 px-16  bg-[#F3F3F3] ">
+    <section className="w-full gap-6 flex flex-col items-center justify-center pb-12 pt-12 sm:pb-16 px-6 sm:px-16  bg-[#F3F3F3] ">
       <div className="font-normal text-lg leading-[27px] text-[#171614]">
         {heading}
       </div>
-      <div className="flex flex-wrap gap-10 justify-center items-center px-10 sm:px-0">
+      <div className="flex flex-wrap gap-6 sm:gap-10 justify-center items-center px-10 sm:px-0">
         <Image
           src="/images/italic.png"
           alt="italic"

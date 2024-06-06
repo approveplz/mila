@@ -8,7 +8,7 @@ import { HiCheck, HiOutlineGift, HiXMark } from "react-icons/hi2";
 
 // const cardClasses = cva("relative overflow-hidden rounded-[24px] max-h-[579px] price-card before:rounded-3xl before:-z-10 z-20", {
 
-const cardClasses = cva("relative overflow-hidden p-6 rounded-3xl z-20 w-full min-h-[600px] sm:min-h-0 ", {
+const cardClasses = cva("relative overflow-hidden p-6 rounded-3xl z-20 w-full ", {
     variants: {
         type: {
             free: "after:bg-white",
@@ -93,7 +93,7 @@ export function SubscriptionInfoCard({
 
 
     return (
-        <figure>
+        <figure className="w-full">
             <div className={cn(cardClasses({ type, selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
                 <div
                     className={cn(cva("price-card__bg h-full", {

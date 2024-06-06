@@ -37,7 +37,7 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
   }
 
   return (
-    <section className="py-8 px-[160px] flex flex-col justify-center w-full items-center gap-12 bg-[#F3F3F3]">
+    <section className="sm:py-8 sm:px-[160px] flex flex-col justify-center w-full items-center gap-12 bg-[#F3F3F3]">
 
       {/* <div className="font-tt-ramillas font-normal text-[30px] sm:text-5xl leading-9 sm:leading-[57.6px] text-primary">
         {title}

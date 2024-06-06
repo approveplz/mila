@@ -48,7 +48,7 @@ export default function MajorGiveaways({ session }: { session: Session | null })
   return (
     <section className={`${width < 640 ? '!py-[33px]' : 'pt-[66px]'} ${width < 640 ? 'px-6' : 'px-[160px]'} flex flex-col items-center gap-8 bg-[#F3F3F3]`}>
 
-      <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[410px]">
+      <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[310px]">
         {heading}
       </div>
 
@@ -115,14 +115,14 @@ export default function MajorGiveaways({ session }: { session: Session | null })
                   <div className="flex flex-row gap-2 items-center justify-between">
                     <div>
 
-                      <Timer
-                        containerClass="flex flex-row gap-2"
-                        boxClass="flex flex-col gap-[6px] items-center justify-center"
-                        textClass="text-center w-[54px] text-[30px] leading-9 font-semibold text-[#171614] rounded-lg bg-white border border-[#171614] p-[6.43px]"
-                        labelClass="font-normal text-lg leading-7"
-                        labelPosition="bottom"
-                        drawDate={giveAway?.draw_time}
-                      />
+                    <Timer
+                      containerClass="flex flex-row gap-2"
+                      boxClass="w-8 h-8 flex flex-col items-center justify-center"
+                      textClass="text-center w-[32px] p-[6.43px] text-[14px] leading-[20px] font-semibold text-white rounded-lg bg-[#171614] border border-[#171614]"
+                      labelClass="font-normal text-base leading-7"
+                      labelPosition="bottom"
+                      drawDate={giveAway?.draw_time}
+                    />
 
                     </div>
                   </div>

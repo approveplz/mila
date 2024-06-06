@@ -32,7 +32,7 @@ type bundleCard = {
   },
 }
 
-const bundleCardClasses = cva("relative py-8 px-6 rounded-3xl shadow-lg z-20 sm:min-w-[350px] min-h-[441px] sm:min-h-0", {
+const bundleCardClasses = cva("relative py-8 px-6 rounded-3xl shadow-lg z-20 sm:min-w-[350px] w-full", {
   variants: {
     selected: {
       true: "border-4 border-primary bg-white",
@@ -73,7 +73,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
         <div className="flex flex-col items-left ">
           <div className="flex flex-row gap-2 items-center select-none">
             <HiOutlineGift size={24} color="#BE7B62" />
-            <span className="font-tt-ramillas text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry} Entries</span>
+            <span className="font-tt-ramillas text-[30px] sm:text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry} Entries</span>
           </div>
           {/* <div className="select-none font-medium text-base leading-6 text-[#171614]">
             {draw}
