@@ -23,6 +23,7 @@ import { useFormState } from "react-dom";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { User } from "@/entities";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { toast } from "sonner";
 
 type K = keyof {};
 
@@ -265,6 +266,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
                         if (error) {
                             console.log("error: ", error);
+                            toast.error(error.message)
                         } else {
                             return latestInvoicePaymentStatusAsyncMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
                         }
@@ -285,6 +287,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
                         if (error) {
                             console.log("error: ", error);
+                            toast.error(error.message)
                         } else {
                             return latestInvoicePaymentStatusAsyncMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
                         }
