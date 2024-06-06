@@ -5,8 +5,12 @@ export const amoeSchema = z.object({
         .string()
         .min(1, { message: "Captcha is required" }),
     giveaway: z
-        .string()
-        .min(1, { message: "Giveaway is required" }),
+        // .string()
+        // .min(1, { message: "Giveaway is required" }),
+        .object({
+            id: z.string().min(1, { message: "Giveaway is required" }),
+            title: z.string().min(1, { message: "Giveaway title is required" })
+        }),
     email: z
         .string()
         .min(1, { message: "Email is required" })

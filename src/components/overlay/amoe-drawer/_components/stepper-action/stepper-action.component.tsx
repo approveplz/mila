@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button } from "@/components";
+import { Button, Spinner } from "@/components";
 
 export function StepperAction({
     isValid,
@@ -35,8 +35,10 @@ export function StepperAction({
                     full
                     onClick={handleNext}
                     type="button"
+                    disabled={isLoading}
                 >
                     Next
+                    {isLoading && <Spinner className="w-4 h-4 ml-4" />}
                 </Button>
             </div>
 

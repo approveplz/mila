@@ -19,7 +19,7 @@ import { withAsync } from "@/utils";
 import { CheckEligibilityPayload } from "@/api/amoes/amoe.types";
 
 export function GiveawayStep({ actions }: AmoeStepType) {
-    const { control, trigger } = useFormContext<AMOEFormData>();
+    const { control, trigger, setValue } = useFormContext<AMOEFormData>();
     const { data: giveAwaysData } = useQuery({
         queryKey: ["ListUpcomingGiveaways"],
         queryFn: async () => await listUpcomingGiveaways(),
@@ -36,7 +36,7 @@ export function GiveawayStep({ actions }: AmoeStepType) {
     // })
 
     const isValid = async () => {
-        const { response: valid } = await withAsync(() => trigger("giveaway"));
+        const { response: valid } = await withAsync(() => trigger("giveaway.id"));
 
         return valid as boolean;
     };
@@ -49,14 +49,20 @@ export function GiveawayStep({ actions }: AmoeStepType) {
 
             <FormField
                 control={control}
-                name="giveaway"
+                name="giveaway.id"
                 render={({ field }) => (
                     <FormItem>
                         <FormLabel>Select Giveaway</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                            onValueChange={val => {
+                                setValue("giveaway.title", giveAways.find(giveAway => giveAway.id === val)?.prize || "")
+                                field.onChange(val);
+                            }}
+                            defaultValue={field.value}
+                        >
                             <FormControl>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="e.g. Lorem ipsum" />
+                                    <SelectValue placeholder="Select a Giveaway" />
                                 </SelectTrigger>
                             </FormControl>
                             <SelectContent>

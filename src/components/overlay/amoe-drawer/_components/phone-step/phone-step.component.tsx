@@ -16,21 +16,24 @@ import {
     InputOTP,
     InputOTPGroup,
     InputOTPSlot,
+    inputClasses,
 } from "@/components";
 import { AmoeStepType } from "../../amoe-drawer.type";
-import { HiOutlineDevicePhoneMobile, HiOutlineExclamationTriangle } from "react-icons/hi2";
+import { HiOutlineDevicePhoneMobile, HiOutlineExclamationTriangle, HiOutlinePhone, HiXMark } from "react-icons/hi2";
 import { AMOEFormData } from "../stepper-form/stepper-form.schema";
-import { withAsync } from "@/utils";
+import { cn, withAsync } from "@/utils";
 import { checkEligibility, sendVerificationEmail, sendVerificationSMS, validateCode } from "@/api/amoes";
 import { CheckEligibilityPayload, SendVerificationEmailPayload, SendVerificationSMSPayload, ValidateCodePayload } from "@/api/amoes/amoe.types";
 import { useMutation } from "@tanstack/react-query";
+import { PatternFormat } from "react-number-format";
+import { toast } from "sonner";
 
 export function PhoneStep({ actions }: AmoeStepType) {
     const [shouldVerify, setShouldVerify] = React.useState(false);
     const [showModalWarning, setShowModalWarning] = React.useState(false);
-    const { control, trigger, getValues } = useFormContext<AMOEFormData>();
+    const { control, trigger, watch, getValues } = useFormContext<AMOEFormData>();
 
-    const { mutateAsync: checkEligibilityMutateAsync } = useMutation({
+    const { mutateAsync: checkEligibilityMutateAsync, isPending: isPendingCheckEligibility } = useMutation({
         mutationFn: (payload: CheckEligibilityPayload) => checkEligibility(payload),
         onSuccess(data, variables, context) {
             console.log("success: ", { data, variables, context })
@@ -40,7 +43,7 @@ export function PhoneStep({ actions }: AmoeStepType) {
         },
     });
 
-    const { mutateAsync: verifyMutateAsync } = useMutation({
+    const { mutateAsync: verifyMutateAsync, isPending: isPendingVerify } = useMutation({
         mutationFn: (payload: SendVerificationSMSPayload) => sendVerificationSMS(payload),
         onSuccess(data, variables, context) {
             console.log("success: ", { data, variables, context })
@@ -50,7 +53,29 @@ export function PhoneStep({ actions }: AmoeStepType) {
         },
     });
 
-    const { mutateAsync: codeMutateAsync } = useMutation({
+    const { mutateAsync: resendVerifyMutateAsync, isPending: isPendingResendVerify } = useMutation({
+        mutationFn: (payload: SendVerificationSMSPayload) => sendVerificationSMS(payload),
+        onSuccess(data, variables, context) {
+            console.log("success: ", { data, variables, context });
+            toast.custom(t => (
+                <div className="flex items-center px-4 py-3">
+                    <div className="flex items-center gap-2">
+                        <HiOutlinePhone className="h-6 w-6" />
+                        <p className="font-medium">Code sent!</p>
+                    </div>
+
+                    <button className="ml-auto" onClick={() => toast.dismiss(t)}>
+                        <HiXMark className="h-6 w-6" />
+                    </button>
+                </div>
+            ))
+        },
+        onError(error, variables, context) {
+            console.log("error: ", { error, variables, context })
+        },
+    });
+
+    const { mutateAsync: codeMutateAsync, isPending: isPendingCode } = useMutation({
         mutationFn: (payload: ValidateCodePayload) => validateCode(payload),
         onSuccess(data, variables, context) {
             console.log("success: ", { data, variables, context })
@@ -65,10 +90,10 @@ export function PhoneStep({ actions }: AmoeStepType) {
 
         if (validPhone) {
             const { phone, email, giveaway } = getValues();
-            const { response, error } = await withAsync(() => checkEligibilityMutateAsync({ phone, giveaway, secret: "F83C63FEB5E3E6768D86281E2B2F7" }));
+            const { response, error } = await withAsync(() => checkEligibilityMutateAsync({ phone: `1 ${phone}`, giveaway: giveaway.id, secret: process.env.NEXT_PUBLIC_API_SECRET! }));
 
             if (response?.is_eligible) {
-                const { response } = await withAsync(() => verifyMutateAsync({ email, phone, secret: "F83C63FEB5E3E6768D86281E2B2F7" }))
+                const { response } = await withAsync(() => verifyMutateAsync({ email, phone: `1 ${phone}`, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
                 if (response) {
                     setShouldVerify(true);
@@ -87,7 +112,7 @@ export function PhoneStep({ actions }: AmoeStepType) {
         if (validCode) {
             const { phone_code } = getValues();
 
-            const { response } = await withAsync(() => codeMutateAsync({ code: phone_code, secret: "F83C63FEB5E3E6768D86281E2B2F7" }))
+            const { response } = await withAsync(() => codeMutateAsync({ code: phone_code, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
             if (response) {
                 return true;
@@ -96,6 +121,8 @@ export function PhoneStep({ actions }: AmoeStepType) {
 
         return false
     }
+
+    console.log("phone: ", watch("phone"));
 
     return (
         <div className="flex flex-col gap-12">
@@ -110,18 +137,24 @@ export function PhoneStep({ actions }: AmoeStepType) {
                             <FormItem>
                                 <FormLabel htmlFor="phone">Phone</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        id="phone"
-                                        placeholder="(555) 555-1234"
-                                        {...field}
-                                    />
+                                    <>
+                                        <PatternFormat
+                                            placeholder="+1 (555) 555-1234"
+                                            className={cn(inputClasses())}
+                                            format="+1 (###)-###-####"
+                                            allowEmptyFormatting
+                                            mask="_"
+                                            value={field.value}
+                                            onValueChange={data => field.onChange(data.value)}
+                                        />
+                                    </>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
 
-                    {actions && actions(isValidPhone, false)}
+                    {actions && actions(isValidPhone, isPendingCheckEligibility || isPendingVerify)}
                 </>
             ) : (
                 <>
@@ -132,7 +165,15 @@ export function PhoneStep({ actions }: AmoeStepType) {
                         </header>
 
                         <main className="flex flex-col gap-8 items-center text-center">
-                            <p>Please enter the 6 digit code that we sent to: <br /> +385-846-588-952</p>
+                            <p>Please enter the 6 digit code that we sent to: <br />
+                                <PatternFormat
+                                    displayType="text"
+                                    format="+1 (###)-###-####"
+                                    allowEmptyFormatting
+                                    mask="_"
+                                    value={watch("phone")}
+                                />
+                            </p>
 
                             <FormField
                                 control={control}
@@ -161,12 +202,26 @@ export function PhoneStep({ actions }: AmoeStepType) {
                         <footer className="flex flex-col items-center gap-8 min-w-[346px]">
                             <div className="flex items-center">
                                 <p>Didn&apos;t get the email?</p>
-                                <button className="font-medium ml-1" onClick={() => { }}>Resend verification email</button>
+                                <button
+                                    type="button"
+                                    className="font-medium ml-1"
+                                    onClick={() => {
+                                        const { email, phone } = getValues();
+
+                                        resendVerifyMutateAsync({
+                                            email,
+                                            phone: `1 ${phone}`,
+                                            secret: process.env.NEXT_PUBLIC_API_SECRET!
+                                        })
+                                    }}
+                                >
+                                    Resend verification email
+                                </button>
                             </div>
                         </footer>
                     </article>
 
-                    {actions && actions(isValidCode, false)}
+                    {actions && actions(isValidCode, isPendingCode)}
                 </>
             )}
 
