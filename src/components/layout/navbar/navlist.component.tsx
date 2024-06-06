@@ -50,8 +50,8 @@ export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
         <ul className="space-y-6 py-6">
             {session ? (
                 <>
-                    {listItemsSignedIn.map(item => (
-                        <div onClick={closeAccordion}>
+                    {listItemsSignedIn.map((item, index) => (
+                        <div key={index} onClick={closeAccordion}>
                             <NavItem key={item.id}>
                                 <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                             </NavItem>
@@ -63,8 +63,8 @@ export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
                 </>
             ) : (
                 <>
-                    {listItems.map(item => (
-                        <div onClick={closeAccordion}>
+                    {listItems.map((item,index) => (
+                        <div  key={index} onClick={closeAccordion}>
                             <NavItem key={item.id}>
                                 <Link className=" text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                             </NavItem>
@@ -72,6 +72,12 @@ export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
                     ))}
 
                     <hr />
+                    <div onClick={closeAccordion}>
+                        <NavItem>
+                            <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/signin">Sign In</Link>
+                        </NavItem>
+                    </div>
+
                     <div onClick={closeAccordion}>
                         <NavItem>
                             <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/#pricing">Sign Up</Link>

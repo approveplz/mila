@@ -24,7 +24,6 @@ const AccordionContent = AccordionPrimitive.Content;
 const cookies = new Cookies(AUTH_CHECK_COOKIE, { path: '/' });
 
 export function NavContent() {
-    const [isOpened, setIsOpened] = React.useState(false);
     const triggerRef = React.useRef<HTMLButtonElement | null>(null);
     const activeSegment = useSelectedLayoutSegment();
     const { user } = useAuthStore();
