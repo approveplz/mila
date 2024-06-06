@@ -21,7 +21,7 @@ export function Benefits() {
         />
       </div>
 
-      <div className="text-[#171614] sm:absolute items-center px-6 sm:px-0 flex font-tt-ramillas font-normal text-4xl leading-[43.2px] sm:text-[72px] sm:leading-[86.4px] sm:font-light sm:w-[815px] sm:left-[562px] sm:top-[176px]">
+      <div className="text-[#171614] sm:absolute items-center px-6 sm:px-0 flex font-tt-ramillas font-normal text-4xl leading-[43.2px] sm:text-[5xl] sm:leading-[57.6px] sm:font-light sm:w-[430px] sm:left-[650px] sm:top-[276px]">
         {heading}
       </div>
       

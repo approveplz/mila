@@ -40,14 +40,14 @@ export function GiveAway() {
   }
 
   return (
-    <section className="py-[112px] px-[24px] sm:px-[192.5px] bg-[#F3F3F3]">
-      <div className="flex flex-col gap-20 items-center">
-        <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-[72px] text-4xl leading-[43.2px] sm:leading-[86.4px] text-[#171614] px-[26px] sm:px-0">
+    <section className="py-12 px-[24px] sm:px-[160px] bg-[#F3F3F3]">
+      <div className="flex flex-col gap-4 items-center">
+        <div className="font-tt-ramillas text-center font-normal sm:font-light sm:text-[48px] text-4xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[26px] sm:px-0">
           {heading}
         </div>
 
-        {giveAwayData && <div className="flex flex-col gap-12 items-center rounded-[24px]">
-          <div className="font-tt-ramillas text-center font-normal text-[30px] leading-9 text-[#171614] px-[26px] sm:px-0">
+        {giveAwayData && <div className="flex flex-col gap-4 items-center rounded-[24px]">
+          <div className="font-tt-ramillas text-center font-normal text-[18px] leading-9 text-[#171614] px-[26px] sm:px-0">
             {subHeading}
           </div>
 
@@ -67,7 +67,7 @@ export function GiveAway() {
                 />
 
               </div>
-              <div className="pb-[61.5px] sm:pb-0 sm:py-[61.5px] flex flex-col gap-8 items-start">
+              <div className="sm:pb-0 sm:py-[61.5px] flex flex-col gap-8 items-start">
 
                 <div className="w-full flex flex-col gap-6 sm:gap-2">
                   <div className="w-full flex flex-col sm:flex-row gap-6 sm:gap-2 justify-between sm:items-center">

@@ -32,7 +32,7 @@ type bundleCard = {
   },
 }
 
-const bundleCardClasses = cva("relative py-8 px-6 rounded-3xl shadow-lg z-20 sm:min-w-[416px] min-h-[441px] sm:min-h-0", {
+const bundleCardClasses = cva("relative py-8 px-6 rounded-3xl shadow-lg z-20 sm:min-w-[350px] w-full", {
   variants: {
     selected: {
       true: "border-4 border-primary bg-white",
@@ -69,28 +69,35 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
   return (
     <figure
       className={cn(bundleCardClasses({ selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
-      <div className="flex flex-col items-left gap-8">
+      <div className="flex flex-col items-left gap-6">
         <div className="flex flex-col items-left ">
           <div className="flex flex-row gap-2 items-center select-none">
             <HiOutlineGift size={24} color="#BE7B62" />
-            <span className="font-tt-ramillas text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry} Entries</span>
+            <span className="font-tt-ramillas text-[30px] sm:text-4xl font-bold leading-[46.8px] text-primary">{cardData?.entry} Entries</span>
           </div>
-          <div className="select-none font-medium text-base leading-6 text-[#171614]">
+          {/* <div className="select-none font-medium text-base leading-6 text-[#171614]">
             {draw}
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-col gap-6 items-left w-full">
           <div className="flex flex-col items-left">
-            <div className="select-none font-light text-5xl leading-[40px]">
+            <div className="select-none font-light text-5xl leading-[48px]">
               ${cardData?.cost}
             </div>
-            <div className="select-none font-normal text-base leading-[48px]">
+            <div className="select-none font-normal text-base leading-6">
               {oneOff}
             </div>
+            {cardData?.benefits.map((benefit: benefit, index: number) => (
+              <div key={index} className="flex flex-row gap-[7px] items-center">
+                <div className="font-normal text-base leading-6 select-none">
+                  {benefit?.benefit.includes('{access_duration}') ? benefit?.benefit.replace('{access_duration}', cardData.duration.toString()) : benefit?.benefit}
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="flex flex-col items-left gap-1 select-none">
+          {/* <div className="flex flex-col items-left gap-1 select-none">
             {cardData?.benefits.map((benefit: benefit, index: number) => (
               <div key={index} className="flex flex-row gap-[7px] items-center">
                 {benefit?.included ? <HiCheck size={16} color="black" /> : <HiXMark size={16} color="black" />}
@@ -99,7 +106,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div className="w-full flex justify-between">
