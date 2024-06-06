@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Button, Input, Label } from '@/components';
+import { Button, Input, Label, Spinner } from '@/components';
 import {
     CardNumberElement,
     CardExpiryElement,
@@ -22,6 +22,8 @@ import * as actions from "@/actions";
 import { useFormState } from "react-dom";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { User } from "@/entities";
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
+import { toast } from "sonner";
 
 type K = keyof {};
 
@@ -36,6 +38,23 @@ const inputStylesBase: StripeElementStyleVariant = {
         fontWeight: 400
     }
 }
+
+const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
+    const { promiseInProgress } = usePromiseTracker();
+
+    return (
+        <Button
+            type="button"
+            disabled={promiseInProgress}
+            onClick={onClick}
+        >
+            Pay
+            {promiseInProgress && <Spinner className="w-4 h-4 ml-4" />}
+        </Button>
+    )
+});
+
+LoaderButton.displayName = "LoaderButton";
 
 const PaymentFormGroup = React.memo(({
     actions,
@@ -141,12 +160,12 @@ export function PaymentForm({ session }: { session: Session | null }) {
     const setCouponError = React.useCallback((key: K, message: string) => {
         setError(key, { message });
     }, [setError]);
-    
+
     const setLoading = (status: boolean) => {
         isLoading.current = status;
     }
 
-    const { mutate: checkInvoicePaymentStatusMutate } = useMutation({
+    const { mutate: checkInvoicePaymentStatusMutate, mutateAsync: checkInvoicePaymentStatusAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload).then(res => {
             if (res.is_paid) {
                 return res;
@@ -156,11 +175,13 @@ export function PaymentForm({ session }: { session: Session | null }) {
         }),
         async onSuccess(data, variables) {
             if (authUser) {
-                authFormAction(serialize({
+                const res = await authFormAction(serialize({
                     email: authUser.email,
                     password: authUser.password,
                     redirect: false
                 }));
+
+                return res;
             }
         },
         retry(failureCount, error) {
@@ -171,26 +192,28 @@ export function PaymentForm({ session }: { session: Session | null }) {
         retryDelay: 2000
     });
 
-    const { mutate: markLatestInvoicePaidMutate } = useMutation({
+    const { mutate: markLatestInvoicePaidMutate, mutateAsync: markLatestInvoicePaidAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => markLatestInvoicePaid(payload),
         onSuccess(data, variables) {
-            checkInvoicePaymentStatusMutate(variables);
+            return checkInvoicePaymentStatusAsyncMutate(variables).then(res => res.is_paid);
         },
     });
 
-    const { mutate: latestInvoicePaymentStatusMutate } = useMutation({
+    const { mutate: latestInvoicePaymentStatusMutate, mutateAsync: latestInvoicePaymentStatusAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
         async onSuccess(data, variables) {
             if (data.is_paid) {
                 if (authUser) {
-                    authFormAction(serialize({
+                    const res = await authFormAction(serialize({
                         email: authUser.email,
                         password: authUser.password,
                         redirect: false
                     }));
+
+                    return res;
                 }
             } else {
-                markLatestInvoicePaidMutate(variables)
+                return markLatestInvoicePaidAsyncMutate(variables).then(res => res.processing)
             }
         },
     });
@@ -216,9 +239,6 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
     const onPayment = React.useCallback(async (stripe: Stripe, elements: StripeElements) => {
         if (authUser) {
-            setLoading(true);
-
-            console.log(coupon, hasCompletedMembership)
             const payload = {
                 coupon: coupon || null,
                 user: authUser.id,
@@ -236,7 +256,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
             })
 
             if (hasCompletedMembership) {
-                generateMembership({ ...payload, payment_method: paymentMethod?.id })
+                trackPromise(generateMembership({ ...payload, payment_method: paymentMethod?.id })
                     .then(async (res) => {
                         const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
                             payment_method: {
@@ -246,17 +266,17 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
                         if (error) {
                             console.log("error: ", error);
-                            setLoading(false);
+                            toast.error(error.message)
                         } else {
-                            latestInvoicePaymentStatusMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
+                            return latestInvoicePaymentStatusAsyncMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
                         }
                     })
+                    .then(res => res?.is_paid)
                     .catch(err => {
                         console.log("err: ", err);
-                        setLoading(false);
-                    })
+                    }))
             } else {
-                confirmMembership(payload)
+                trackPromise(confirmMembership(payload)
                     .then(async (res) => generateMembership({ ...payload, payment_method: paymentMethod?.id }))
                     .then(async (res) => {
                         const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
@@ -266,11 +286,13 @@ export function PaymentForm({ session }: { session: Session | null }) {
                         })
 
                         if (error) {
-                            setLoading(false);
+                            console.log("error: ", error);
+                            toast.error(error.message)
                         } else {
-                            latestInvoicePaymentStatusMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
+                            return latestInvoicePaymentStatusAsyncMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
                         }
                     })
+                    .then(res => res?.is_paid)
                     .catch(err => {
                         const errors = err.response.data;
 
@@ -283,22 +305,14 @@ export function PaymentForm({ session }: { session: Session | null }) {
                                 }
                             });
                         }
-
-                        setLoading(false);
-                    })
+                    }))
             }
         }
-    }, [authUser, latestInvoicePaymentStatusMutate, getProductsPrices, coupon, hasCompletedMembership, setCouponError])
+    }, [authUser, latestInvoicePaymentStatusAsyncMutate, getProductsPrices, coupon, hasCompletedMembership, setCouponError])
 
     const renderActions = React.useCallback((handlePayment: () => void) => (
-        <Button
-            type="button"
-            disabled={isLoading.current}
-            onClick={handlePayment}
-        >
-            Pay
-        </Button>
-    ), [isLoading]);
+        <LoaderButton onClick={handlePayment} />
+    ), []);
 
     React.useEffect(() => {
         if (resultAuthFormAction) {
