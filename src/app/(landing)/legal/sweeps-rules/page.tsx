@@ -33,11 +33,13 @@ export default function Page() {
 
             <ul className="my-2">
                 <li className="relative pl-8 before:content-['\00B7'] before:absolute before:left-2 before:-top-[14px] before:text-5xl before:text-[#D9D9D9]">
-                    Ten (10) Entries by filling out the online{" "}
+                    Ten (10) Entries by filling out the online
+                    associated with that Drawing. You may fill out the online
+                    {" "}
                     <AmoeDrawer>
                         <button className="text-primary font-medium">AMOE Form</button>
-                    </AmoeDrawer>{" "}
-                    associated with that Drawing. You may fill out the online AMOE form up to four (4) times for each Drawing which lasts less than one month.
+                    </AmoeDrawer>{" "} 
+                    up to two(2) times per day for each Drawing which lasts less than one month.
                 </li>
                 <li className="relative pl-8 before:content-['\00B7'] before:absolute before:left-2 before:-top-[14px] before:text-5xl before:text-[#D9D9D9]">
                     From time to time, we may offer additional entries by engaging with our social media posts or referring a friend. The terms and conditions of these additional AMOEs will be prominently displayed on our social media accounts or Mila Collective.
