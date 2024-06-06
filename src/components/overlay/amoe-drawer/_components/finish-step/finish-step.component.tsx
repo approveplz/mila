@@ -25,7 +25,7 @@ export function FinishStep({ actions }: AmoeStepType) {
     const { control, trigger, getValues } = useFormContext<AMOEFormData>();
     const values = getValues();
 
-    const { mutateAsync } = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationFn: (payload: CreateAMOEPayload) => createAMOE(payload),
         onSuccess(data, variables, context) {
             console.log("success: ", { data, variables, context })
@@ -124,7 +124,7 @@ export function FinishStep({ actions }: AmoeStepType) {
                 <button className="opacity-0" ref={closeButtonRef}>Home</button>
             </DrawerClose>
 
-            {actions && actions(isValid, false)}
+            {actions && actions(isValid, isPending)}
         </div>
     )
 }
