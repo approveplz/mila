@@ -29,6 +29,7 @@ export function NavContent() {
     const activeSegment = useSelectedLayoutSegment();
     const { user } = useAuthStore();
     const { session } = useAuthContext();
+    const [accordionValue, setAccordionValue] = React.useState<string>('')
 
     React.useEffect(() => {
         const cookieChangeListener = (params: unknown) => {
@@ -43,7 +44,7 @@ export function NavContent() {
     }, []);
 
     return (
-        <Accordion type="single" collapsible onValueChange={val => console.log(val)}>
+        <Accordion type="single" collapsible value={accordionValue} onValueChange={val => console.log(val)}>
             <AccordionItem value="nav">
                 <div className="flex justify-between items-center">
                     <NavList />
@@ -75,12 +76,12 @@ export function NavContent() {
                                 <HiOutlineGift className="h-4 w-4 mr-1" /> {session.user?.user?.metadata?.total_entries_count || 0}
                             </Button>
                         )}
-                        <Button type="button" asChild variant="fatal" className="p-2 max-h-10 max-w-10 data-[state=open]:hidden">
+                        <Button onClick={() => setAccordionValue('nav')} type="button" asChild variant="fatal" className="p-2 max-h-10 max-w-10 data-[state=open]:hidden">
                             <AccordionTrigger>
                                 <HiBars3 className="h-6 w-6" />
                             </AccordionTrigger>
                         </Button>
-                        <Button type="button" asChild variant="fatal" className="p-2 max-h-10 max-w-10 data-[state=closed]:hidden">
+                        <Button onClick={() => setAccordionValue('')} type="button" asChild variant="fatal" className="p-2 max-h-10 max-w-10 data-[state=closed]:hidden">
                             <AccordionTrigger>
                                 <HiXMark className="h-6 w-6" />
                             </AccordionTrigger>
@@ -90,7 +91,7 @@ export function NavContent() {
 
                 <AccordionContent>
                     <div className="sm:hidden">
-                        <NavListMobile session={session} />
+                        <NavListMobile closeAccordion={() => setAccordionValue('')} session={session} />
                         <AccordionTrigger ref={triggerRef} />
                     </div>
                 </AccordionContent>

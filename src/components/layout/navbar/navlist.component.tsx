@@ -36,8 +36,14 @@ export function NavList() {
     )
 }
 
-export function NavListMobile({ session }: { session: Session | null }) {
+interface NavListMobileProps {
+    session: Session | null;
+    closeAccordion: () => void;
+}
+
+export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
     function handleSignOut() {
+        closeAccordion();
         signOut({ redirect: true });
     }
     return (
@@ -45,9 +51,11 @@ export function NavListMobile({ session }: { session: Session | null }) {
             {session ? (
                 <>
                     {listItemsSignedIn.map(item => (
-                        <NavItem key={item.id}>
-                            <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
-                        </NavItem>
+                        <div onClick={closeAccordion}>
+                            <NavItem key={item.id}>
+                                <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
+                            </NavItem>
+                        </div>
                     ))}
                     <NavItem >
                         <div onClick={handleSignOut} className="text-base leading-[23px] md:text-lg md:leading-[27px]" >Log out</div>
@@ -56,16 +64,19 @@ export function NavListMobile({ session }: { session: Session | null }) {
             ) : (
                 <>
                     {listItems.map(item => (
-                        <NavItem key={item.id}>
-                            <Link className=" text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
-                        </NavItem>
+                        <div onClick={closeAccordion}>
+                            <NavItem key={item.id}>
+                                <Link className=" text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
+                            </NavItem>
+                        </div>
                     ))}
 
                     <hr />
-
-                    <NavItem>
-                        <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/#pricing">Sign Up</Link>
-                    </NavItem>
+                    <div onClick={closeAccordion}>
+                        <NavItem>
+                            <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href="/#pricing">Sign Up</Link>
+                        </NavItem>
+                    </div>
                 </>
             )}
         </ul>
