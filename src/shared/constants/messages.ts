@@ -259,12 +259,12 @@ export const messages = {
         entry: '20 Entries',
         cost: '$9.99',
         benefits: [
+          // {
+          //   benefit: 'Access to 100% of Mila Benefits',
+          //   included: true
+          // },
           {
-            benefit: 'Access to 100% of Mila Benefits',
-            included: true
-          },
-          {
-            benefit: '{access_duration} days access',
+            benefit: '{access_duration} day access',
             included: true
           },
         ]
@@ -273,10 +273,10 @@ export const messages = {
         entry: '40 Entries',
         cost: '$19.99',
         benefits: [
-          {
-            benefit: 'Access to 100% of Mila Benefits',
-            included: true
-          },
+          // {
+          //   benefit: 'Access to 100% of Mila Benefits',
+          //   included: true
+          // },
           {
             benefit: '5 days access',
             included: true
@@ -287,10 +287,10 @@ export const messages = {
         entry: '150 Entries',
         cost: '$49.99',
         benefits: [
-          {
-            benefit: 'Access to 100% of Mila Benefits',
-            included: true
-          },
+          // {
+          //   benefit: 'Access to 100% of Mila Benefits',
+          //   included: true
+          // },
           {
             benefit: '20 days access',
             included: true
@@ -302,10 +302,10 @@ export const messages = {
         entry: '110 Entries',
         cost: '$39.99',
         benefits: [
-          {
-            benefit: 'Access to 100% of Mila Benefits',
-            included: true
-          },
+          // {
+          //   benefit: 'Access to 100% of Mila Benefits',
+          //   included: true
+          // },
           {
             benefit: '15 days access',
             included: true
@@ -317,10 +317,10 @@ export const messages = {
         entry: '400 Entries',
         cost: '$99.99',
         benefits: [
-          {
-            benefit: 'Access to 100% of Mila Benefits',
-            included: true
-          },
+          // {
+          //   benefit: 'Access to 100% of Mila Benefits',
+          //   included: true
+          // },
           {
             benefit: '50 days access',
             included: true
@@ -332,10 +332,10 @@ export const messages = {
         entry: '1000 Entries',
         cost: '$199.99',
         benefits: [
-          {
-            benefit: 'Access to 100% of Mila Benefits',
-            included: true
-          },
+          // {
+          //   benefit: 'Access to 100% of Mila Benefits',
+          //   included: true
+          // },
           {
             benefit: '110 days access',
             included: true
