@@ -112,10 +112,19 @@ export function PhoneStep({ actions }: AmoeStepType) {
         if (validCode) {
             const { phone_code } = getValues();
 
-            const { response } = await withAsync(() => codeMutateAsync({ code: phone_code, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
+            const { response, error } = await withAsync(() => codeMutateAsync({ code: phone_code, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
             if (response) {
+                if(!response.is_verified) {
+                    toast.error("Invalid code!");
+                    return false;
+                }
+                
                 return true;
+            }
+
+            if (error) {
+                toast.error("Invalid code!");
             }
         }
 

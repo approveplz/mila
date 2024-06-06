@@ -39,45 +39,44 @@ export function FinishStep({ actions }: AmoeStepType) {
     const isValid = async () => {
         const { response: valid } = await withAsync(() => trigger(["is_over_18_and_agrees_tc"]));
 
-        // if (valid) {
-        //     const {
-        //         giveaway,
-        //         email,
-        //         first_name,
-        //         last_name,
-        //         phone,
-        //         line_1,
-        //         region,
-        //         city,
-        //         postal_code,
-        //         is_over_18_and_agrees_tc
-        //     } = getValues();
+        if (valid) {
+            const {
+                giveaway,
+                email,
+                first_name,
+                last_name,
+                phone,
+                line_1,
+                region,
+                city,
+                postal_code,
+                is_over_18_and_agrees_tc
+            } = getValues();
 
-        //     const { response } = await withAsync(() => mutateAsync({
-        //         giveaway: giveaway.id,
-        //         secret: process.env.NEXT_PUBLIC_API_SECRET!,
-        //         is_over_18_and_agrees_tc,
-        //         user: {
-        //             email,
-        //             first_name,
-        //             last_name,
-        //             phone: `1 ${phone}`,
-        //         },
-        //         address: {
-        //             line_1,
-        //             line_2: "",
-        //             region,
-        //             city,
-        //             postal_code,
-        //             country: "USA",
-        //         }
-        //     }))
+            const { response } = await withAsync(() => mutateAsync({
+                giveaway: giveaway.id,
+                secret: process.env.NEXT_PUBLIC_API_SECRET!,
+                is_over_18_and_agrees_tc,
+                user: {
+                    email,
+                    first_name,
+                    last_name,
+                    phone: `1 ${phone}`,
+                },
+                address: {
+                    line_1,
+                    line_2: "",
+                    region,
+                    city,
+                    postal_code,
+                    country: "USA",
+                }
+            }))
 
-        //     if (response) {
-        //         closeButtonRef.current?.click()
-        //     }
-        // }
-        closeButtonRef.current?.click()
+            if (response) {
+                closeButtonRef.current?.click()
+            }
+        }
 
         return false;
     }
