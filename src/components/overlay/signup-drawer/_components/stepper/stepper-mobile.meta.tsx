@@ -8,7 +8,7 @@ import {
 } from "../payment-step/payment-step.component";
 import { VerifyEmail } from "../verify-email/verify-email.component";
 import { VerifyPhone } from "../verify-phone/verify-phone.component";
-import { Finish, FinishPayment } from "../finish/finish.component";
+import { Finish, FinishPayment, FinishThanks } from "../finish/finish.component";
 import { useStepperContext } from "./stepper.context";
 import { useCheckOutStore } from "@/store";
 import { Session } from "next-auth";
@@ -20,6 +20,7 @@ const stepsMobileMetaWithPayment: Array<StepperComponent> = [
     PaymentListStep,
     PaymentFormStep,
     FinishPayment,
+    FinishThanks
 ];
 
 const stepsMobileMeta: Array<StepperComponent> = [
