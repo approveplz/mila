@@ -3,7 +3,7 @@
 import { CouponCard } from "../coupon-card/coupon-card.component";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HiMiniArrowLeft, HiMiniArrowRight } from "react-icons/hi2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getCouponCategories, getCoupons } from "@/api/auth";
 import { CouponResponse, GetCouponsResponse, GetCouponCategoriesResponse } from "@/api/auth/auth.types";
 import {
@@ -18,16 +18,17 @@ export function CoupensList({ session }: { session: Session | null }) {
   const isLoggedIn = !!session;
   const [page, setPage] = useState<number>(1)
   const [selectedCategory, setSelectedCategory] = useState<string>('')
-  
+
   const { data: categoryData, isLoading: isCategoryLoading }: UseQueryResult<GetCouponCategoriesResponse> =
     useQuery({
       queryKey: ['couponCategories'],
       queryFn: () =>
         getCouponCategories().then((res) => {
-          setSelectedCategory(res?.results[0]?.id)
+          if (!selectedCategory)
+            setSelectedCategory(res?.results[0]?.id)
           return res;
         }),
-        enabled: isLoggedIn,
+      enabled: isLoggedIn,
     })
 
   const { data: coupons, isLoading: isCouponLoading }: UseQueryResult<GetCouponsResponse> =
