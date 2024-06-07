@@ -37,16 +37,16 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
   }
 
   return (
-    <section className="sm:py-8 sm:px-[160px] flex flex-col justify-center w-full items-center gap-12 bg-[#F3F3F3]">
+    <section className="sm:py-8 sm:px-[160px] flex flex-col justify-center w-full items-left gap-12 bg-[#F3F3F3]">
 
       {/* <div className="font-tt-ramillas font-normal text-[30px] sm:text-5xl leading-9 sm:leading-[57.6px] text-primary">
         {title}
       </div> */}
 
-      {giveAwayData && <div className="max-w-full flex flex-col gap-3 items-center">
-        <div className="flex sm:flex-wrap overflow-x-auto max-w-full sm:max-w-[1440px] sm:justify-center items-left  gap-6 px-6 sm:px-0 pb-8 pt-2">
-          {giveAwayData?.map((giveAway, index) => (
-            <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[204px] flex flex-col gap-4">
+      {giveAwayData && <div className="max-w-full flex flex-col gap-3 items-left">
+        <div className="flex sm:flex-wrap overflow-x-auto max-w-full sm:max-w-[1440px] sm:justify-left  items-left gap-4 px-6 sm:px-0 pb-8 pt-2">
+          {giveAwayData?.slice(0,8)?.map((giveAway, index) => (
+            <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[262px] flex flex-col gap-4">
 
               {pricingType === 'bundle' && !calculateGiveAwayDate(giveAway?.draw_time) && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[30px]"></div>}
 
@@ -66,9 +66,9 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
               <Image
                 src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                 alt="bagpack"
-                width={240}
+                width={262}
                 height={210}
-                className="!w-[204px] max-w-[204px] !h-[168px] max-h-[168px] object-cover !rounded-t-[30px]"
+                className="w-full !h-[210px] max-h-[210px] object-cover !rounded-t-[30px]"
               />
 
 
