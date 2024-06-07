@@ -240,3 +240,23 @@ export type SubscribeToNewsletterPayload = {
 export type SubscribeToNewsletterResponse = {
     email: string
 }
+
+export type BuyAdditionalBundlesPayload = {
+    prices: Array<{
+        price: string
+        quantity: number
+    }>
+}
+
+export type BuyAdditionalBundlesResponse = {
+    invoice: string
+}
+
+export type GetCheckInvoicePaymentStatusParams = {
+    invoiceId: string
+}
+
+export type CheckInvoicePaymentStatusResponse = {
+    id: string,
+    is_paid: boolean
+}

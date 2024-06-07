@@ -29,7 +29,11 @@ import {
     MarkLatestInvoicePaidPayload,
     MarkLatestInvoicePaidResponse,
     SubscribeToNewsletterPayload,
-    SubscribeToNewsletterResponse
+    SubscribeToNewsletterResponse,
+    BuyAdditionalBundlesPayload,
+    BuyAdditionalBundlesResponse,
+    GetCheckInvoicePaymentStatusParams,
+    CheckInvoicePaymentStatusResponse
 } from "./auth.types";
 
 export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => {
@@ -142,5 +146,19 @@ export const markLatestInvoicePaid = ({ userId, ...payload }: MarkLatestInvoiceP
 export const subscribeToNewsletter = (payload: SubscribeToNewsletterPayload) => {
     return api
         .post<SubscribeToNewsletterResponse>("/users/v0/subscribe-to-newsletter", payload)
+        .then(res => res.data)
+}
+
+export const buyAdditionalBundles = (userId: string, payload: BuyAdditionalBundlesPayload) => {
+    console.log(payload)
+    return api
+        .put<BuyAdditionalBundlesResponse>(`/payments/v0/user/${userId}/buy-one-time-bundles`, payload)
+        .then(res => res.data)
+}
+
+
+export const checkInvoicePaymentStatus = (params: GetCheckInvoicePaymentStatusParams) => {
+    return api
+        .get<CheckInvoicePaymentStatusResponse>(`/payments/v0/invoice/${params?.invoiceId}/check-payment-status`)
         .then(res => res.data)
 }

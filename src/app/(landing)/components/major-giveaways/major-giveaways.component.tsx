@@ -64,7 +64,7 @@ export default function MajorGiveaways({ session, showHeading = true, productsAr
           pricingData?.isDiscounted ? setAmount(quantity * pricingData?.discountedPrice) : setAmount(quantity * pricingData?.defaultPrice)
         }
       })
-    } else if (!isLoggedIn && products?.length > 0 && pricingType === 'bundle') {
+    } else if ( products?.length > 0 && pricingType === 'bundle') {
       let amount = 0;
       products.forEach(product => {
         if (product?.data?.type === 'bundle') {
@@ -90,19 +90,20 @@ export default function MajorGiveaways({ session, showHeading = true, productsAr
           }
         })
       })
-    } else if (isLoggedIn && pricingType === 'bundle') {
-      let amount = 0;
-      session?.user?.user?.metadata?.subscribed_products.forEach(subProduct => {
-        bundles?.forEach(bundle => {
-          if (subProduct?.product === bundle?.id) {
-            const quantity = subProduct.quantity
-            const pricingData = bundle?.prices[0]?.unit_amount;
-            amount += quantity * Number(pricingData)
-          }
-        })
-      })
-      setAmount(amount)
-    }
+    } 
+    // else if (isLoggedIn && pricingType === 'bundle') {
+    //   let amount = 0;
+    //   session?.user?.user?.metadata?.subscribed_products.forEach(subProduct => {
+    //     bundles?.forEach(bundle => {
+    //       if (subProduct?.product === bundle?.id) {
+    //         const quantity = subProduct.quantity
+    //         const pricingData = bundle?.prices[0]?.unit_amount;
+    //         amount += quantity * Number(pricingData)
+    //       }
+    //     })
+    //   })
+    //   setAmount(amount)
+    // }
 
   }, [productsArray, session, pricingType])
 
@@ -114,21 +115,23 @@ export default function MajorGiveaways({ session, showHeading = true, productsAr
 
       {showHeading && <div>
         {!isLoggedIn && <div>
-          {products?.length > 0 && amount > 0 && pricingType === 'subscription' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+          {products?.length > 0 && amount > 0 && pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
             FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
           </div>}
-          {products?.length > 0 && amount > 0 && pricingType === 'bundle' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-            FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
-          </div>}
+          
         </div>}
 
-        {isLoggedIn && <div>
-          {pricingType === 'subscription' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-            FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
-          </div>}
-          {pricingType === 'bundle' && <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+        {products?.length > 0 && amount > 0 && pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
             FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
           </div>}
+
+        {isLoggedIn && <div>
+          {pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+            FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
+          </div>}
+          {/* {pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+            FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
+          </div>} */}
         </div>}
 
       </div>}
