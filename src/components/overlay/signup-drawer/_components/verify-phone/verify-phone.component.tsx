@@ -13,7 +13,7 @@ export function VerifyPhone() {
     const { session } = useCurrentSession();
 
     const handleVerifyPhone = (pin: string) => {
-        verifyEmailOrSMS({ server_code: pin })
+        verifyEmailOrSMS({ server_code: pin, client_code: pin })
             .then(res => {
                 nextStep();
             }).catch(err => {
