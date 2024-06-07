@@ -43,9 +43,6 @@ export function PhoneVerificationContent({
         resolver: zodResolver(pinFormSchema),
         defaultValues: {
             pin: "",
-        },
-        errors: {
-            ...(error && { pin: { message: error, type: "validate" } })
         }
     });
 

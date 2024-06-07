@@ -47,7 +47,7 @@ export function NavBanner() {
     }
 
     const onVerifyPhone = (pin: string) => {
-        verifyEmailOrSMS({ server_code: pin })
+        verifyEmailOrSMS({ server_code: pin, client_code: pin })
             .then(res => {
                 setIsOpened(false);
             }).catch(err => {
@@ -56,7 +56,9 @@ export function NavBanner() {
             })
     }
 
-    if (!!!session || ((session?.user.user.metadata.is_email_verified || session?.user.user.metadata.is_phone_verified) || !session.user.user.metadata.is_free_tier_subscriber)) return null
+    console.log("session: ", session);
+
+    if (!!!session || ((session?.user.user.metadata.is_email_verified || session?.user.user.metadata.is_phone_verified) && !session.user.user.metadata.is_free_tier_subscriber)) return null
 
     return (
         <div className="bg-[#F3DDCF] py-3">
