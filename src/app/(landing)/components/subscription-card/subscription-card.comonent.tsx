@@ -1,6 +1,7 @@
 import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
 import { cn } from "@/utils";
+import { formatNumberWithCommas } from "@/utils/currency";
 import { VariantProps, cva } from "class-variance-authority"
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
@@ -159,7 +160,7 @@ export function SubscriptionInfoCard({
 
                                     <div className="flex flex-row gap-2 items-center">
                                         <HiOutlineGift size={24} className="text-primary" />
-                                        <span className="font-tt-ramillas text-[28px] font-semibold leading-[38.6px] text-primary">{entries} {entries > 1 ? "Entries" : "Entry"}</span>
+                                        <span className="font-tt-ramillas text-[26px] font-semibold leading-[38.6px] text-primary">{formatNumberWithCommas(entries)} {entries > 1 ? "Entries" : "Entry"}</span>
                                     </div>
                                     {/* <div className="font-normal text-base leading-6">
                                     {getMessageB}
