@@ -23,7 +23,7 @@ export default async function Giveaways() {
         <MajorGiveaways showHeading={false} session={session} />
       </div>
       <MinorGiveaways />
-      <Pricing products={product} />
+      <Pricing session={session} products={product} />
       <FollowUs />
     </div>
   )
