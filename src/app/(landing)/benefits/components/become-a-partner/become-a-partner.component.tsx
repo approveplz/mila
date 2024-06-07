@@ -39,8 +39,8 @@ export function BecomeAPartner() {
 
         <div className="flex flex-col items-center gap-4 sm:w-1/3">
           <Image
-            src="/images/commercial.png"
-            alt="pointer"
+            src="/images/Commercial.png"
+            alt="Commercial"
             width={100}
             height={100}
             className="max-w-[100px] max-h-[100px]"
@@ -54,8 +54,8 @@ export function BecomeAPartner() {
 
         <div className="flex flex-col items-center gap-4 sm:w-1/3">
           <Image
-            src="/images/shopping-bag.png"
-            alt="Shopping-Bag"
+            src="/images/shopping.png"
+            alt="shopping"
             width={100}
             height={100}
             className="max-w-[100px] max-h-[100px]"
@@ -69,8 +69,8 @@ export function BecomeAPartner() {
 
         <div className="flex flex-col items-center gap-4 sm:w-1/3">
           <Image
-            src="/images/meeting.png"
-            alt="meeting"
+            src="/images/Meeting.png"
+            alt="Meeting"
             width={100}
             height={100}
             className="max-w-[100px] max-h-[100px]"
