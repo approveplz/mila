@@ -8,11 +8,34 @@ import Script from "next/script";
 import { Toaster } from "@/components";
 import { auth as authSession } from "@/auth";
 
+// export const metadata: Metadata = {
+//   title: "Mila Collective: Benefits Club With Incredible Giveaways",
+//   description: "Mila Collective is Americas fastest growing luxury benefits club. Every week we give away amazing prizes with monthly mega prizes!",
+//   openGraph: {
+//     images: "/images/apple-icon.png",
+//   },
+// };
+
+// export const metadata: Metadata = {
+//   title: "Mila Collective: Benefits Club With Incredible Giveaways",
+//   description: "Mila Collective is Americas fastest growing luxury benefits club. Every week we give away amazing prizes with monthly mega prizes!",
+//   openGraph: {
+//     images: "/images/apple-icon.png",
+//   },
+// };
+
 export const metadata: Metadata = {
-  title: "Mila Collective: Benefits Club With Incredible Giveaways",
+  title: 'Mila Collective: Benefits Club With Incredible Giveaways',
   description: "Mila Collective is Americas fastest growing luxury benefits club. Every week we give away amazing prizes with monthly mega prizes!",
   openGraph: {
-    images: "/images/apple-icon.png",
+      images: [
+          {
+              url: "/images/apple-icon.png",
+              width: 800,
+              height: 600,
+              alt: "OG Image",
+          }
+      ],
   },
 };
 
