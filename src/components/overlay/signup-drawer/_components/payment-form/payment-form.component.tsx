@@ -14,18 +14,33 @@ import { useStepperContext } from '../stepper/stepper.context';
 import { confirmMembership, generateMembership, latestInvoicePaymentStatus, markLatestInvoicePaid } from '@/api/auth';
 import { useAuthStore, useCheckOutStore } from '@/store';
 import { useFormContext } from 'react-hook-form';
-import { getProductPriceInfo, setFormError, withAsync } from '@/utils';
+import { getProductPrice, getProductPriceInfo, setFormError, withAsync } from '@/utils';
 import { Session } from 'next-auth';
 import { useMutation } from "@tanstack/react-query";
 import { serialize } from "object-to-formdata";
 import * as actions from "@/actions";
 import { useFormState } from "react-dom";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
-import { User } from "@/entities";
+import { Product, User } from "@/entities";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { toast } from "sonner";
+import { CheckoutProduct } from "@/store/checkout/checkout.types";
 
 type K = keyof {};
+
+function calculateTotal(products: Array<CheckoutProduct>) {
+    const getPrice = (prices: Product["prices"]) => {
+        const actualPrice = getProductPrice(prices);
+
+        if (actualPrice.isDiscounted) {
+            return actualPrice.discountedPrice
+        } else {
+            return actualPrice.defaultPrice
+        }
+    }
+
+    return products.reduce((accumulator, currentValue) => (getPrice(currentValue.data.prices) * currentValue.quantity) + accumulator, 0).toFixed(2);
+}
 
 const inputStylesBase: StripeElementStyleVariant = {
     fontSize: "14px",
@@ -39,6 +54,21 @@ const inputStylesBase: StripeElementStyleVariant = {
     }
 }
 
+const Header = React.memo(() => {
+    const { products } = useCheckOutStore();
+
+    return (
+        <div>
+            <div className="block sm:hidden text-center">
+                <h6 className="text-2xl font-normal">Select payment method</h6>
+                <p className="text-lg leading-[27px] font-normal">You will be charged ${calculateTotal(products)}</p>
+            </div>
+        </div>
+    )
+});
+
+Header.displayName = "Header";
+
 const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
     const { promiseInProgress } = usePromiseTracker();
     const [isDisabled, setIsDisabled] = React.useState(false);
@@ -47,8 +77,8 @@ const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
         if (isDisabled) {
             const timer = setTimeout(() => {
                 setIsDisabled(false);
-            }, 3000); 
-            
+            }, 3000);
+
             return () => clearTimeout(timer);
         }
     }, [isDisabled]);
@@ -341,12 +371,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
 
     return (
         <form className="flex flex-col flex-1 w-full sm:flex-initial justify-center gap-6">
-            <div>
-                <div className="block sm:hidden text-center">
-                    <h6 className="text-2xl font-normal">Select payment method</h6>
-                    <p className="text-lg leading-[27px] font-normal">You will be charged $99.96</p>
-                </div>
-            </div>
+            <Header />
 
             <PaymentFormGroup
                 paymentCallBack={onPayment}
