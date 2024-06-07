@@ -37,21 +37,21 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
   }
 
   return (
-    <section className="py-8 flex flex-col justify-center w-full items-center gap-12 bg-[#F3F3F3]">
+    <section className="sm:py-8 sm:px-[160px] flex flex-col justify-center w-full items-center gap-12 bg-[#F3F3F3]">
 
-      <div className="font-tt-ramillas font-normal text-[30px] sm:text-5xl leading-9 sm:leading-[57.6px] text-primary">
+      {/* <div className="font-tt-ramillas font-normal text-[30px] sm:text-5xl leading-9 sm:leading-[57.6px] text-primary">
         {title}
-      </div>
+      </div> */}
 
       {giveAwayData && <div className="max-w-full flex flex-col gap-3 items-center">
-        <div className="flex sm:flex-wrap overflow-x-auto max-w-full sm:max-w-[1440px] sm:justify-center items-left  gap-6 px-6 sm:px-16 pb-8 pt-2">
+        <div className="flex sm:flex-wrap overflow-x-auto max-w-full sm:max-w-[1440px] sm:justify-center items-left  gap-6 px-6 sm:px-0 pb-8 pt-2">
           {giveAwayData?.map((giveAway, index) => (
-            <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[240px] flex flex-col gap-4">
+            <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[204px] flex flex-col gap-4">
 
               {pricingType === 'bundle' && !calculateGiveAwayDate(giveAway?.draw_time) && <div className="absolute w-full h-full z-30 bg-[#17161440] opacity-75 rounded-[30px]"></div>}
 
 
-              {!isLoggedIn && products?.length > 0 && entries > 0 && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+              {!isLoggedIn && products?.length > 0 && entries > 0 && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[24px]  ">
                 <div className="font-semibold text-base leading-6">
                   {entries < 1000 ? entries : `${(entries / 1000).toFixed(1)}k`} {entries > 1 ? 'entries' : 'entry'}
                 </div>
@@ -59,20 +59,26 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
 
               {isLoggedIn && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
                 <div className="font-semibold text-base leading-6">
-                  {session?.user?.user?.metadata?.total_entries_count < 1000 ? session?.user?.user?.metadata?.total_entries_count : `${(session?.user?.user?.metadata?.total_entries_count / 1000).toFixed(1)}k` } {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
+                  {session?.user?.user?.metadata?.total_entries_count < 1000 ? session?.user?.user?.metadata?.total_entries_count : `${(session?.user?.user?.metadata?.total_entries_count / 1000).toFixed(1)}k`} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
                 </div>
               </div>}
 
               <Image
                 src={giveAway?.image ? giveAway?.image?.file_url : "/images/bagpack-2.jpeg"}
                 alt="bagpack"
-                // layout="responsive"
                 width={240}
                 height={210}
-                className="w-full h-full max-h-[300px] !rounded-t-[30px]"
+                className="!w-[204px] max-w-[204px] !h-[168px] max-h-[168px] object-cover !rounded-t-[30px]"
               />
 
+
+
               <div className="flex flex-col gap-2 px-4 pb-4">
+
+                <div className="bg-[#D1D5DB] border border-[#9CA3AF] px-2 rounded-[16px] w-fit">
+                  <div className="font-semibold text-xs leading-6">MINOR</div>
+                </div>
+
                 <div className="font-bold text-[14px] leading-[20px] text-[#54423A]">
                   {giveAway?.brand}
                 </div>

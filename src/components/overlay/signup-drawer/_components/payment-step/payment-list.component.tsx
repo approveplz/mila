@@ -14,7 +14,7 @@ import {
 } from "react-icons/hi2";
 import { useStepperContext } from "../stepper/stepper.context";
 import { useFormContext } from "react-hook-form";
-import { useCheckOutStore } from "@/store";
+import { useAuthStore, useCheckOutStore } from "@/store";
 import { confirmMembership, generateMembership } from '@/api/auth';
 import { useSession } from "next-auth/react";
 import { getProductPrice } from "@/utils";
@@ -49,6 +49,7 @@ function PriceSelector({ prices, view }: { prices: Array<Price>, view: (price: n
 
 export function PaymentList() {
     const { nextStep } = useStepperContext();
+    const { authUser } = useAuthStore();
     const { products, increaseProductQuantity, decreaseProductQuantity, removeProduct } = useCheckOutStore();
     const form = useFormContext<{
         coupon: string
@@ -60,10 +61,10 @@ export function PaymentList() {
     const bundles = products.filter(product => product.data.type === "bundle");
 
     const handleNext = () => {
-        if (session.data?.user.user) {
+        if (authUser) {
             const payload = {
                 coupon: form.getValues("coupon") || null,
-                user: session.data?.user.user.id,
+                user: authUser.id,
                 prices: products
                     .map(product => product.data.prices[0])
                     .map(price => ({
@@ -99,7 +100,7 @@ export function PaymentList() {
         <article className="flex flex-col justify-between h-full">
             <header className="block sm:hidden text-center">
                 <h6 className="text-2xl font-normal">Select payment method</h6>
-                <p className="text-lg leading-[27px] font-normal">You will be charged $99.96</p>
+                <p className="text-lg leading-[27px] font-normal">You will be charged ${calculateTotal(products)}</p>
             </header>
 
             <main>

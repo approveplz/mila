@@ -69,7 +69,7 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
             ))}
         </Swiper>
       ) : (
-        <div className="flex gap-8 [&>*]:flex-1">
+        <div className="flex gap-2 [&>*]:flex-1">
           {subscriptions
             .sort((a, b) => a.sort_order - b.sort_order)
             .map(subscription => (

@@ -14,7 +14,7 @@ export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
         <Drawer dismissible={false} nested={true}>
             <DrawerTrigger asChild>
                 <Button variant="fatal">
-                    Continue With Selected
+                   <span className="select-none" >Continue With Selected </span> 
                     <HiArrowUpRight className="ml-3 h-6 w-4" />
                 </Button>
             </DrawerTrigger>

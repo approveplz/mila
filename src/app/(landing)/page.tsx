@@ -25,8 +25,8 @@ export default async function Home() {
       <Header />
       <Brands />
       <Benefits />
-      <GiveAway />
       <HowItWorks />
+      <GiveAway />
       <Pricing session={session} products={products} />
       <MajorGiveaways session={session} />
       <MinorGiveaways session={session} />

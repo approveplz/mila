@@ -109,6 +109,11 @@ export function EmailStep({ actions }: AmoeStepType) {
             const { response, error } = await withAsync(() => codeMutateAsync({ code: email_code, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
             if (response) {
+                if(!response.is_verified) {
+                    toast.error("Invalid code!");
+                    return false;
+                }
+
                 return true;
             }
 

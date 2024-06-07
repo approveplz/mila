@@ -112,10 +112,19 @@ export function PhoneStep({ actions }: AmoeStepType) {
         if (validCode) {
             const { phone_code } = getValues();
 
-            const { response } = await withAsync(() => codeMutateAsync({ code: phone_code, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
+            const { response, error } = await withAsync(() => codeMutateAsync({ code: phone_code, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
             if (response) {
+                if(!response.is_verified) {
+                    toast.error("Invalid code!");
+                    return false;
+                }
+                
                 return true;
+            }
+
+            if (error) {
+                toast.error("Invalid code!");
             }
         }
 
@@ -201,7 +210,7 @@ export function PhoneStep({ actions }: AmoeStepType) {
 
                         <footer className="flex flex-col items-center gap-8 min-w-[346px]">
                             <div className="flex items-center">
-                                <p>Didn&apos;t get the email?</p>
+                                <p>Didn&apos;t get the code?</p>
                                 <button
                                     type="button"
                                     className="font-medium ml-1"
@@ -215,7 +224,7 @@ export function PhoneStep({ actions }: AmoeStepType) {
                                         })
                                     }}
                                 >
-                                    Resend verification email
+                                    Resend verification code
                                 </button>
                             </div>
                         </footer>
