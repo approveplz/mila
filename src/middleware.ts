@@ -110,26 +110,33 @@ export async function middleware(req: NextRequest) {
             } else {
                 try {
                     const res = await refreshSessionAPI(token);
-                    const tokenRes = JSON.parse(JSON.stringify(token));
-                    tokenRes.user = JSON.parse(JSON.stringify(res));
 
-                    console.log("res: ", res);
+                    if(res && res.id) {
+                        const tokenRes = JSON.parse(JSON.stringify(token));
+                        tokenRes.user = JSON.parse(JSON.stringify(res));
+    
+                        console.log("res: ", res);
+    
+                        const newSessionToken = await encode({
+                            secret: process.env.AUTH_SECRET!,
+                            token: tokenRes,
+                            salt: sessionCookie
+                        });
+    
+                        const response = NextResponse.next();
+                        response.cookies.set(sessionCookie, newSessionToken, {
+                            httpOnly: true,
+                            secure: process.env.NODE_ENV === 'production',
+                            path: "/",
+                            sameSite: "lax"
+                        });
+    
+                        return response;
+                    } else {
+                        const response = NextResponse.next();
 
-                    const newSessionToken = await encode({
-                        secret: process.env.AUTH_SECRET!,
-                        token: tokenRes,
-                        salt: sessionCookie
-                    });
-
-                    const response = NextResponse.next();
-                    response.cookies.set(sessionCookie, newSessionToken, {
-                        httpOnly: true,
-                        secure: process.env.NODE_ENV === 'production',
-                        path: "/",
-                        sameSite: "lax"
-                    });
-
-                    return response;
+                        return response;
+                    }
                 } catch (err) {
                     console.log("Error updating session!");
                 }
