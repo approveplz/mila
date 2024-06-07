@@ -20,7 +20,7 @@ export async function getProducts() {
             TableName: process.env.DYNAMODB_PRODUCT_TABLE_NAME
         })
     ));
-
+    
     const items = results.Items || [];
 
     return items.map(item => JSON.parse(item.data)) as Array<Product>
