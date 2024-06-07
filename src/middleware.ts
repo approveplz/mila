@@ -30,6 +30,20 @@ const refreshTokenAPI = async (user: JWT) => {
         .then(res => res);
 }
 
+const refreshSessionAPI = async (user: JWT) => {
+    console.log("user: ", user);
+    return fetch("https://backend.milacollective.today/users/v0/me", {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.access}`
+        },
+    })
+        .then(res => res.json())
+        .then(res => res);
+}
+
 // function withRefreshToken(middleware: NextMiddleware) {
 //     return async function(request: NextRequest, event: NextFetchEvent) {
 //         return middleware(request, event);
@@ -49,6 +63,7 @@ export async function middleware(req: NextRequest) {
             cookieName: sessionCookie,
             salt: sessionCookie
         });
+
 
         if (token) {
             if (shouldUpdateToken(token)) {
@@ -76,7 +91,7 @@ export async function middleware(req: NextRequest) {
                         });
 
                         response.cookies.delete(AUTH_CHECK_COOKIE);
-                        
+
                         return response;
                     }
                 } catch (err) {
@@ -88,9 +103,35 @@ export async function middleware(req: NextRequest) {
                         path: "/",
                         sameSite: "lax"
                     });
-                    
+
                     response.cookies.delete(AUTH_CHECK_COOKIE);
                     return response;
+                }
+            } else {
+                try {
+                    const res = await refreshSessionAPI(token);
+                    const tokenRes = JSON.parse(JSON.stringify(token));
+                    tokenRes.user = JSON.parse(JSON.stringify(res));
+
+                    console.log("res: ", res);
+
+                    const newSessionToken = await encode({
+                        secret: process.env.AUTH_SECRET!,
+                        token: tokenRes,
+                        salt: sessionCookie
+                    });
+
+                    const response = NextResponse.next();
+                    response.cookies.set(sessionCookie, newSessionToken, {
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV === 'production',
+                        path: "/",
+                        sameSite: "lax"
+                    });
+
+                    return response;
+                } catch (err) {
+                    console.log("Error updating session!");
                 }
             }
         }
