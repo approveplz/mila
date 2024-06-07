@@ -18,6 +18,7 @@ import { subscribeToNewsletter } from "@/api/auth";
 import { toast } from "sonner"
 import * as z from "zod";
 
+
 const SubscribeToNewsLetterSchema = z.object({
     email: z
         .string()
@@ -37,6 +38,10 @@ export function SubscribeToNewsletter() {
     const form = useForm<SubscribeToNewsLetterFormData>({
         mode: "onTouched",
         resolver: zodResolver(SubscribeToNewsLetterSchema),
+        resetOptions: {
+            keepValues: false,
+            keepErrors: false
+        }
     });
 
     return (
@@ -66,7 +71,7 @@ export function SubscribeToNewsletter() {
                                     onClick: () => console.log("Undo"),
                                 },
                             })
-                            form.reset();
+                            form.reset({ email: '' });
                             setIsLoading(false);
                         }).catch(e => {
                             toast("Error occured while subscribing newsletter", {

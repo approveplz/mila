@@ -26,49 +26,49 @@ export function Header() {
             <div className="w-full sm:w-[54%] flex flex-row sm:gap-10 gap-[19px] ">
                 <div className="flex flex-col w-full sm:h-[798px] mt-[165px] sm:mt-[348px]">
                     <Image
-                        src="/images/people.png"
-                        alt="people"
+                        src="/images/mila1.png"
+                        alt="mila1"
                         // layout="cover"
                         width={237}
                         height={300}
-                        className="hover:scale-105 transition-all duration-500 cursor-pointer"
+                        className="hover:scale-105 transition-all duration-500 cursor-pointer w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
                     />
                 </div>
 
                 <div className="flex flex-col gap-[22px] sm:gap-12 w-full sm:h-[798px] mt-[71px] sm:mt-[150px]">
 
                     <Image
-                        src="/images/people-2.png"
-                        alt="people-2"
+                        src="/images/mila2.png"
+                        alt="mila2"
                         width={237}
                         height={300}
-                        className="hover:scale-105 transition-all duration-500 cursor-pointer"
+                        className="hover:scale-105 transition-all duration-500 cursor-pointer w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
                     />
 
                     <Image
-                        src="/images/hands.png"
-                        alt="hands"
+                        src="/images/mila3.png"
+                        alt="mila3"
                         width={237}
                         height={300}
-                        className="hover:scale-105 transition-all duration-500 cursor-pointer"
+                        className="hover:scale-105 transition-all duration-500 cursor-pointer w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
                     />
 
                 </div>
 
                 <div className="flex flex-col gap-[22px] sm:gap-12 w-full sm:h-[798px]">
                     <Image
-                        src="/images/lipstick.png"
-                        alt="lipstick"
+                        src="/images/mila4.png"
+                        alt="mila4"
                         width={237}
                         height={300}
-                        className="hover:scale-105 transition-all duration-500 cursor-pointer"
+                        className="hover:scale-105 transition-all duration-500 cursor-pointer w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
                     />
                     <Image
-                        src="/images/mac.png"
-                        alt="brushes"
+                        src="/images/milabags.png"
+                        alt="milabags"
                         width={237}
                         height={300}
-                        className="hover:scale-105 transition-all duration-500 cursor-pointer"
+                        className="hover:scale-105 transition-all duration-500 cursor-pointer w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
                     />
 
                 </div>
