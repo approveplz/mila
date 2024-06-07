@@ -47,7 +47,7 @@ export function NavBanner() {
     }
 
     const onVerifyPhone = (pin: string) => {
-        verifyEmailOrSMS({ server_code: pin })
+        verifyEmailOrSMS({ server_code: pin, client_code: pin })
             .then(res => {
                 setIsOpened(false);
             }).catch(err => {
