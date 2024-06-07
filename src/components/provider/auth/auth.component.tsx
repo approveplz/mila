@@ -33,8 +33,9 @@ type Props = React.PropsWithChildren
 const [useAuthContext, AuthContext] = contextFactory<{
     session: Session | null,
     status: string,
-    authFormAction: (payload: FormData) => void,
     resultAuthFormAction: { status: string, error: string }
+    authFormAction: (payload: FormData) => void,
+    retrieveSession: () => Promise<void>
 }>();
 
 function AuthProvider({ children }: Props) {
@@ -77,7 +78,13 @@ function AuthProvider({ children }: Props) {
     }, [resultAuthFormAction, retrieveSession])
 
     return (
-        <AuthContext.Provider value={{ session, status, authFormAction, resultAuthFormAction }}>
+        <AuthContext.Provider value={{
+            session, 
+            status,
+            authFormAction,
+            retrieveSession,
+            resultAuthFormAction
+        }}>
             {children}
         </AuthContext.Provider>
     )

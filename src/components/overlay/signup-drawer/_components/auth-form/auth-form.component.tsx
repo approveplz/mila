@@ -40,6 +40,7 @@ import { isApiError } from "@/api";
 import { PatternFormat } from "react-number-format";
 import { useFormState } from "react-dom";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
+import { toast } from "sonner";
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
@@ -94,6 +95,8 @@ export function AuthForm() {
         onError(error) {
             if (isApiError(error) && error.response) {
                 setFormError<SignUpFormData>(error.response.data, form.setError)
+            } else {
+                toast.error("Something went wrong!");
             }
         },
     })
