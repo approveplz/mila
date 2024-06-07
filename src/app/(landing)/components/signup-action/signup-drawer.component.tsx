@@ -9,8 +9,10 @@ import {
 } from "@/components";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
+import { useRouter } from "next/navigation";
 
 export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
+    const router = useRouter();
     const { retrieveSession } = useAuthContext();
 
     return (
@@ -19,6 +21,8 @@ export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
             nested={true}
             onClose={() => {
                 retrieveSession()
+                window.location.reload();
+                
             }}
         >
             <DrawerTrigger asChild>
