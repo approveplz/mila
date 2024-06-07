@@ -20,7 +20,7 @@ export function NoCouponsFound() {
             No coupons found
           </div>
           <div className="font-normal text-center px-6 sm:px-72 leading-6 text-base text-[#6B7280]">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam
+            There are currently no coupons available for this category. Please check back later.
           </div>
         </div>
       </div>
