@@ -142,7 +142,7 @@ export function MinorGiveaways() {
                         // layout="responsive"
                         width={240}
                         height={210}
-                        className="w-full !h-[328px] !rounded-t-[20px]"
+                        className="w-full !h-[328px] object-cover !rounded-t-[20px]"
                       />
 
                       <div className="z-20 flex flex-col gap-6 px-6 pb-6">

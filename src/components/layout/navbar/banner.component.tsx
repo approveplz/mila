@@ -56,8 +56,13 @@ export function NavBanner() {
             })
     }
 
-
-    if (!!!session || ((session?.user.user.metadata.is_email_verified || session?.user.user.metadata.is_phone_verified) && !session.user.user.metadata.is_free_tier_subscriber)) return null
+    if (!!!session) {
+        return null;
+    } else if (session?.user.user.metadata.is_free_tier_subscriber === false) {
+        return null;
+    } else if(session?.user.user.metadata.is_email_verified === true && session?.user.user.metadata.is_phone_verified === true) {
+        return null
+    }
 
     return (
         <div className="bg-[#F3DDCF] py-3">
