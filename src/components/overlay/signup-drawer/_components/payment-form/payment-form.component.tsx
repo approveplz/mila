@@ -41,15 +41,29 @@ const inputStylesBase: StripeElementStyleVariant = {
 
 const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
     const { promiseInProgress } = usePromiseTracker();
+    const [isDisabled, setIsDisabled] = React.useState(false);
+
+    React.useEffect(() => {
+        if (isDisabled) {
+            const timer = setTimeout(() => {
+                setIsDisabled(false);
+            }, 3000); 
+            
+            return () => clearTimeout(timer);
+        }
+    }, [isDisabled]);
 
     return (
         <Button
             type="button"
-            disabled={promiseInProgress}
-            onClick={onClick}
+            disabled={promiseInProgress || isDisabled}
+            onClick={() => {
+                setIsDisabled(true);
+                onClick()
+            }}
         >
             Pay
-            {promiseInProgress && <Spinner className="w-4 h-4 ml-4" />}
+            {(promiseInProgress || isDisabled) && <Spinner className="w-4 h-4 ml-4" />}
         </Button>
     )
 });
