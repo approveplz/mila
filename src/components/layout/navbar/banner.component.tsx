@@ -56,7 +56,6 @@ export function NavBanner() {
             })
     }
 
-<<<<<<< HEAD
     if (!!!session) {
         return null;
     } else if (session?.user.user.metadata.is_free_tier_subscriber === false) {
@@ -64,10 +63,6 @@ export function NavBanner() {
     } else if(session?.user.user.metadata.is_email_verified === true && session?.user.user.metadata.is_phone_verified === true) {
         return null
     }
-=======
-
-    if (!!!session || ((session?.user.user.metadata.is_email_verified || session?.user.user.metadata.is_phone_verified) && !session.user.user.metadata.is_free_tier_subscriber)) return null
->>>>>>> 94e69aea5ea464fe3179c19128599e3547cfe5fe
 
     return (
         <div className="bg-[#F3DDCF] py-3">
