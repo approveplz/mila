@@ -9,29 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          950: "#2D221D",
-          900: "#54423A",
-          800: "#674F45",
-          700: "#7E6050",
-          600: "#97765F",
-          500: "#A4866B",
-          400: "#A4866B",
-          300: "#C7B8A3",
-          200: "#DFD7C9",
-          100: "#EFECE5",
-          50: "#F8F6F4"
-        },
-        accent: '#BE7B62'
+        primary: "#B06E6A",
+        muted: "#9CA3AF",
+        fatal: "#171614",
+        destructive: "#c92a2a"
       },
       fontFamily: {
-        stardom: ['var(--font-stardom)']
+        "tt-ramillas": ['var(--font-tt-ramillas-trl-var)'],
+        "inter": ['var(--font-inter)']
       },
       screens: {
-        xs: '376px'
-      }
+        xs: '376px',
+        tall: { 'raw': '(min-height: 712px)' },
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
 export default config;

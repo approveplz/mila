@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/navigation';
+@import 'swiper/css/scrollbar';
+
+@layer components {
+    .price-card::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        border: 2px solid transparent;
+        background: 
+            linear-gradient(to right, white, white), 
+            linear-gradient(180deg, #CDCDCD 0%, #989898 51.23%, #6A6A6A 100%);
+        background-clip: padding-box, border-box;
+        background-origin: padding-box, border-box;
+        z-index: -10
+    }
+
+    .price-card::after {
+        content: '';
+        position: absolute;
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        left: 2px;
+        top: 2px;
+        border: 2px solid transparent;
+        z-index: -9;
+        border-radius: 22px;
+    }
+
+    .price-card__bg::before {
+        content: '';
+        position: absolute;
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        left: 2px;
+        top: 2px;
+        background: url(/images/bg-pattern.png);
+        border: 2px solid transparent;
+        border-radius: 22px;
+        z-index: -8;
+        opacity: 0.01;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #9CA3AF;
+    border-radius: 4px;
+    opacity: 0.2;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5b6371;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: left;
+    font-size: 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mySwiper {
+    --swiper-pagination-color: #171614;
+    --swiper-pagination-bullet-inactive-color: #d1d5db;
+    --swiper-pagination-bullet-inactive-opacity: 1;
+    --swiper-pagination-bullet-size: 8px;
+    --swiper-pagination-bullet-horizontal-gap: 4px;
+}
+
+.promotions {
+    --swiper-pagination-color: #171614;
+    --swiper-pagination-bullet-inactive-color: #FFFFFF;
+    --swiper-pagination-bullet-inactive-opacity: 1;
+    --swiper-pagination-bullet-size: 8px;
+    --swiper-pagination-bullet-horizontal-gap: 4px;
+}

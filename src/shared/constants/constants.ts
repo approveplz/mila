@@ -1,0 +1,1 @@
+export const AUTH_CHECK_COOKIE = "auth.check";

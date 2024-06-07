@@ -1,57 +1,50 @@
+import "@/styles/css/globals.css";
+
 import type { Metadata } from "next";
-import localFont from 'next/font/local';
-import { NavBar } from "@/components/navbar";
-
-import "./globals.css";
-
-const generalSans = localFont({
-  variable: '--font-general-sans',
-  src: [
-    {
-      path: './fonts/GeneralSans-Regular.woff2',
-      weight: '400',
-      style: 'normal'
-    },
-    {
-      path: './fonts/GeneralSans-Medium.woff2',
-      weight: '500',
-      style: 'normal'
-    },
-    {
-      path: './fonts/GeneralSans-Semibold.woff2',
-      weight: '600',
-      style: 'normal'
-    },
-    {
-      path: './fonts/GeneralSans-Bold.woff2',
-      weight: '700',
-      style: 'normal'
-    },
-  ]
-});
-
-const stardom = localFont({
-  variable: '--font-stardom',
-  src: './fonts/Stardom-Regular.woff'
-})
+import { inter, ttRamillasTrlVar } from "@/styles/fonts";
+import { Providers } from "./providers";
+import { cn } from "@/utils";
+import Script from "next/script";
+import { Toaster } from "@/components";
+import { auth as authSession } from "@/auth";
 
 export const metadata: Metadata = {
   title: "MilaCollective",
   description: "Over 500+ stores available — rewards at your own pace.",
 };
 
-export default function RootLayout({
-  children,
+export default async function RootLayout({
+  auth,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  auth: React.ReactNode,
+  children: React.ReactNode
 }>) {
+  const session = await authSession();
+
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${generalSans.variable} ${stardom.variable} ${generalSans.className} bg-[#FAFAF9]`}>
-        <NavBar />
-        <main className="pt-[98px]">
+      <body className={cn(inter.variable, ttRamillasTrlVar.variable, inter.className, "text-fatal")}>
+        <Providers session={session}>
           {children}
-        </main>
+          {auth}
+        </Providers>
+
+        <Script id="fb-pixel">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+             fbq('init', '433865426101614'); 
+            fbq('track', 'PageView');
+          `}
+        </Script>
+        <Toaster />
       </body>
     </html>
   );
