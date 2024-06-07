@@ -100,8 +100,8 @@ export function PhoneVerificationContent({
             <footer className="flex flex-col items-center gap-8 min-w-[346px]">
                 <Button full form="phone-pin-form">Verify</Button>
                 <div className="flex items-center">
-                    <p>Didn&apos;t get the email?</p>
-                    <button className="font-medium ml-1" onClick={onReSend}>Resend verification email</button>
+                    <p>Didn&apos;t get the code?</p>
+                    <button className="font-medium ml-1" onClick={onReSend}>Resend verification code</button>
                 </div>
             </footer>
         </article>
