@@ -34,7 +34,7 @@ export function EmailVerificationContent({
                 )}
 
                 <p>We have sent email to {session?.user.user.email} to confirm the validity of your email address. After receiving the email please follow the link provided to complete your registration.</p>
-                <div className="flex items-center">
+                <div className="flex flex-col items-center sm:flex-row">
                     <p>Didn&apos;t get the email?</p>
                     <button className="font-medium ml-1" onClick={onReSend}>Resend verification email</button>
                 </div>
