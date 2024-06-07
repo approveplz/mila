@@ -15,7 +15,7 @@ const shouldUpdateToken = (token: JWT) => {
 }
 
 const refreshTokenAPI = async (user: JWT) => {
-    return fetch("https://backend.milacollective.today/auth/v0/token/refresh", {
+    return fetch(`${process.env.API_BASE_URL}/auth/v0/token/refresh`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -32,7 +32,7 @@ const refreshTokenAPI = async (user: JWT) => {
 
 const refreshSessionAPI = async (user: JWT) => {
     console.log("user: ", user);
-    return fetch("https://backend.milacollective.today/users/v0/me", {
+    return fetch(`${process.env.API_BASE_URL}/users/v0/me`, {
         method: "GET",
         headers: {
             'Accept': 'application/json',
