@@ -43,7 +43,7 @@ const routes: Array<{
   ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const URL = process.env.NODE_ENV === "production" ? "https://www.milacollective.today" : "https://www.milacollective.com";
+  const URL = process.env.NODE_ENV === "production" ? "https://www.milacollective.com" : "https://www.milacollective.today";
 
   return routes.map(({ route, changeFrequency, priority }) => ({
     url: URL + route,
