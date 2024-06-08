@@ -15,10 +15,10 @@ import { Session } from "next-auth";
 import { StepperComponent } from "./stepper.types";
 
 const stepsMobileMetaWithPayment: Array<StepperComponent> = [
-    PricingStep,
-    AuthFormStep,
-    PaymentListStep,
-    PaymentFormStep,
+    // PricingStep,
+    // AuthFormStep,
+    // PaymentListStep,
+    // PaymentFormStep,
     FinishPayment,
     FinishThanks
 ];
