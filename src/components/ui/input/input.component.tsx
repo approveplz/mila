@@ -25,6 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 type={type}
                 className={cn(inputClasses({ className }))}
                 ref={ref}
+                autoCapitalize="none" as any
                 {...props}
             />
         )

@@ -141,7 +141,7 @@ export default function MajorGiveaways({ session, showHeading = true }: MajorGiv
       }
 
       {
-        width >= 640 && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
+        width >= 640 && <div className="flex flex-wrap gap-8 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {giveAwayData && giveAwayData?.map((giveAway, index) => (
               <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[265px] rounded-[20px]" >
