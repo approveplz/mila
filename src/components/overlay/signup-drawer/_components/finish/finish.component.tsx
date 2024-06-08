@@ -32,6 +32,7 @@ export function Finish() {
 
 export function FinishPayment({ session }: StepperComponentProps) {
     const { nextStep } = useStepperContext();
+
     const handleVerifyEmail = () => {
         sendVerificationEmail().then(res => {
             console.log("res: ", res);
@@ -42,8 +43,8 @@ export function FinishPayment({ session }: StepperComponentProps) {
 
     return (
         <Container>
-            <CentralizedContent>
-                <div className="flex flex-col gap-24 justify-center h-full">
+            <CentralizedContent className="py-16 sm:py-0" fullHeight={true}>
+                <div className="flex flex-col gap-20 sm:gap-24 justify-center h-full">
                     <ThankYou
                         type="wider"
                         info="Your payment was successful."

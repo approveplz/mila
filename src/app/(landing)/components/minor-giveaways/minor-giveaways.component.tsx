@@ -11,9 +11,9 @@ import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import useCalculateEntries from "@/hooks/useEntries";
-import { Session } from "next-auth";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
-export function MinorGiveaways({ session }: { session: Session | null }) {
+export function MinorGiveaways() {
   const { minorGiveways: {
     title,
   } } = messages;
@@ -30,6 +30,7 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
   const closestMajorGiveaway = useCheckOutStore(state => state.closestGiveAwayDate)
 
   const entries = useCalculateEntries(pricingType as "subscription" | "bundle", products);
+  const { session } = useAuthContext();
   const isLoggedIn = !!session;
 
   const calculateGiveAwayDate = (minorGiveAwayDate: string) => {

@@ -50,7 +50,7 @@ export function PaymentStep({ session }: StepperComponentProps) {
 export function PaymentListStep({ session }: StepperComponentProps) {
     return (
         <Container>
-            <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0">
+            <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0" fullHeight={true}>
                 <PaymentListFormProvider>
                     <PaymentList />
                 </PaymentListFormProvider>
@@ -62,7 +62,7 @@ export function PaymentListStep({ session }: StepperComponentProps) {
 export function PaymentFormStep({ session }: StepperComponentProps) {
     return (
         <Container>
-            <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0">
+            <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0" fullHeight={true}>
                 <PaymentListFormProvider>
                     <PaymentForm session={session} />
                 </PaymentListFormProvider>
