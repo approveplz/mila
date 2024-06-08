@@ -19,9 +19,9 @@ export function EmailVerificationContent({
         <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
             <header className="flex flex-col gap-8 items-center">
                 {type === "narrow" ? (
-                    <h2 className="text-3xl font-tt-ramillas text-center">Welcome {session?.user.user.full_name}!</h2>
+                    <h2 className="text-3xl font-tt-ramillas text-center">Welcome <br className="block sm:hidden" /> {session?.user.user.full_name}!</h2>
                 ) : (
-                    <h2 className="text-4xl font-tt-ramillas text-center">Welcome {session?.user.user.full_name}!</h2>
+                    <h2 className="text-4xl font-tt-ramillas text-center">Welcome <br className="block sm:hidden" /> {session?.user.user.full_name}!</h2>
                 )}
             </header>
 
