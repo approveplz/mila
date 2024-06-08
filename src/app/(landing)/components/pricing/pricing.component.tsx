@@ -24,7 +24,7 @@ export async function Pricing({
 
   return (
     <section id="pricing" className="pt-[66px] sm:px-[160px] bg-[#F3F3F3]">
-      <Container>
+      <Container className="!max-w-full !w-full">
         <div className="flex flex-col items-center gap-12">
           <div className="flex flex-col gap-6 items-center">
             <div>
