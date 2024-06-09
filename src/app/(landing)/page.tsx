@@ -24,7 +24,7 @@ export default async function Home() {
     <>
       <Header />
       <Brands />
-      <Benefits />
+      {/* <Benefits /> */}
       <HowItWorks />
       <GiveAway />
       <Pricing session={session} products={products} />
