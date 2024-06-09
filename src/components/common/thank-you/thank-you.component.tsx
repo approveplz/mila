@@ -11,7 +11,7 @@ export function ThankYou({
     onFinish?: () => void
 }) {
     return (
-        <article className="hidden flex-col items-stretch sm:items-center justify-between sm:justify-normal gap-8 h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
+        <article className="hidden sm:flex flex-col items-stretch sm:items-center justify-between sm:justify-normal gap-8 h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
             <div></div>
             <main>
                 <header className="flex flex-col items-center gap-8">

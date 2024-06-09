@@ -28,8 +28,8 @@ export default async function Home() {
       <HowItWorks />
       <GiveAway />
       <Pricing session={session} products={products} />
-      <MajorGiveaways session={session} />
-      <MinorGiveaways session={session} />
+      <MajorGiveaways  />
+      <MinorGiveaways />
       <FollowUs />
       <FAQ />
     </>

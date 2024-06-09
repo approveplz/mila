@@ -12,6 +12,7 @@ import {
     InputOTP,
     InputOTPGroup,
     InputOTPSlot,
+    Spinner,
 } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,12 +31,14 @@ export function PhoneVerificationContent({
     phone,
     showHeader = true,
     error,
+    isLoading = false,
     onReSend,
     onVerify
 }: {
     phone: string,
     showHeader?: boolean,
     error?: string,
+    isLoading?: boolean,
     onReSend: () => void,
     onVerify: (pin: string) => void,
 }) {
@@ -43,9 +46,6 @@ export function PhoneVerificationContent({
         resolver: zodResolver(pinFormSchema),
         defaultValues: {
             pin: "",
-        },
-        errors: {
-            ...(error && { pin: { message: error, type: "validate" } })
         }
     });
 
@@ -101,10 +101,14 @@ export function PhoneVerificationContent({
             </main>
 
             <footer className="flex flex-col items-center gap-8 min-w-[346px]">
-                <Button full form="phone-pin-form">Verify</Button>
+                <Button full form="phone-pin-form" disabled={isLoading}>
+                    Verify
+                    {isLoading && <Spinner className="w-4 h-4 ml-4" />}
+                </Button>
+
                 <div className="flex items-center">
-                    <p>Didn&apos;t get the email?</p>
-                    <button className="font-medium ml-1" onClick={onReSend}>Resend verification email</button>
+                    <p>Didn&apos;t get the code?</p>
+                    <button className="font-medium ml-1" onClick={onReSend}>Resend verification code</button>
                 </div>
             </footer>
         </article>
