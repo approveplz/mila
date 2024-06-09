@@ -12,7 +12,7 @@ const listItems = [
 ];
 
 const listItemsSignedIn = [
-    { id: "1", title: "Profile", href: "/" },
+    { id: "1", title: "Profile", href: "/account" },
     { id: "2", title: "About Us", href: "/about-us" },
     { id: "3", title: "Benefits", href: "/benefits" },
     { id: "4", title: "Giveaways", href: "/giveaways" },

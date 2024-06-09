@@ -81,31 +81,31 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
             switch (item.platform) {
               case 'website':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <WebsiteIcon />
                   </Link>
                 );
               case 'instagram':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <InstaIcon />
                   </Link>
                 );
               case 'facebook':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <FBIcon />
                   </Link>
                 );
               case 'tiktok':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <TikTokIcon />
                   </Link>
                 );
                 case 'x':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <XIcon />
                   </Link>
                 );
