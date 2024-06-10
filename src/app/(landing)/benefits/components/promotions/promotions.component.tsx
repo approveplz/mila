@@ -5,6 +5,8 @@ import { Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 import { useWidth } from '@/hooks';
+import { Dialog, DialogContent, DialogTrigger } from '@/components';
+import SelectCoupons from '../select-coupon/select-coupon.component';
 
 
 
@@ -30,12 +32,21 @@ export function Promotions() {
         >
 
           <SwiperSlide className='relative'>
-            <Image
-              src={width > 640 ? "/images/BannerAmaraSacs(desktop).jpg" : '/images/BannerAmaraSacs(mobile).jpg'}
-              alt="promotions"
-              layout="fill"
-              className={`w-full object-cover`}
-            />
+            <Dialog>
+              <DialogTrigger >
+                <Image
+                  // onClick={ }
+                  src={width > 640 ? "/images/BannerAmaraSacs(desktop).jpg" : '/images/BannerAmaraSacs(mobile).jpg'}
+                  alt="promotions"
+                  layout="fill"
+                  className={`w-full object-cover`}
+                />
+              </DialogTrigger>
+              <DialogContent className='w-[365px] z-[99999] sm:!w-[543px] !py-0 pb-4' withClose={true} >
+                {/* <SelectCoupons coupon={coupon} /> */}
+              </DialogContent>
+            </Dialog>
+
           </SwiperSlide>
 
           <SwiperSlide className='relative'>
