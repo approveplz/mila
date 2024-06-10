@@ -16,7 +16,7 @@ import { Link } from "@/app/(landing)/legal/_components/link/link.component";
 export default function BasicInfo({ session }: { session: Session | null }) {
     const isLoggedIn = !!session;
 
-    const { data: profileDetails, isLoading: isProfileLoading }: UseQueryResult<GetProfileResponse> =
+    const { data: profileDetails, isLoading: isProfileLoading, refetch }: UseQueryResult<GetProfileResponse> =
         useQuery({
             queryKey: ['profile'],
             queryFn: () =>
@@ -43,7 +43,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                     </div>
 
                     <div className="sm:w-[376px]">
-                        <BasicInfoForm profileDetail={profileDetails} session={session} />
+                        <BasicInfoForm refetch={() => refetch()} profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
@@ -61,7 +61,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                     </div>
 
                     <div className="sm:w-[376px]">
-                        <AddressForm profileDetail={profileDetails} session={session} />
+                        <AddressForm refetch={() => refetch()} profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
@@ -79,7 +79,7 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                     </div>
 
                     <div className="sm:w-[376px]">
-                        <PasswordForm profileDetail={profileDetails} session={session} />
+                        <PasswordForm refetch={() => refetch()} profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>

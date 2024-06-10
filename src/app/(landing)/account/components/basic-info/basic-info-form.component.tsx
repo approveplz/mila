@@ -32,9 +32,10 @@ import { HiXMark } from "react-icons/hi2";
 interface BasicInfoFormProps {
     session: Session | null;
     profileDetail: GetProfileResponse | undefined;
+    refetch: () => void
 }
 
-export function BasicInfoForm({ session, profileDetail }: BasicInfoFormProps) {
+export function BasicInfoForm({ session, profileDetail, refetch }: BasicInfoFormProps) {
     const [result, formAction] = useFormState(actions.authSignIn, {
         status: 'idle',
         error: ''
@@ -90,6 +91,7 @@ export function BasicInfoForm({ session, profileDetail }: BasicInfoFormProps) {
                                     onClick: () => console.log("Undo"),
                                 },
                             })
+                            refetch();
                             setIsLoading(false);
                         }).catch(e => {
                             toast("Error occured while updating information", {
