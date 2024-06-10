@@ -19,7 +19,7 @@ export function Finish() {
 
     return (
         <Container>
-            <CentralizedContent>
+            <CentralizedContent fullHeight={true}>
                 <ThankYou
                     type="narrow"
                     info="Your information was verified!"
