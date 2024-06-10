@@ -4,11 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
 import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
+import { useWidth } from '@/hooks';
 
 
 
 
 export function Promotions() {
+
+  const { width } = useWidth();
 
   return (
     <section>
@@ -25,7 +28,29 @@ export function Promotions() {
           modules={[Pagination, Navigation]}
           className="promotions"
         >
-          {[1, 2, 3, 4].map(item => (
+
+          <SwiperSlide className='relative'>
+            <Image
+              src={width > 640 ? "/images/BannerAmaraSacs(desktop).jpg" : '/images/BannerAmaraSacs(mobile).jpg'}
+              alt="promotions"
+              layout="cover"
+              width={319}
+              height={267}
+              className={`w-full object-cover`}
+            />
+          </SwiperSlide>
+
+          <SwiperSlide className='relative'>
+            <Image
+              src={width > 640 ? "/images/BannerRevival(Desktop).jpg" : '/images/BannerRevival(mobile).jpg'}
+              alt="promotions"
+              layout="cover"
+              width={319}
+              height={267}
+              className={`w-full object-cover`}
+            />
+          </SwiperSlide>
+          {/* {[1, 2, 3, 4].map(item => (
             <SwiperSlide key={item} className='relative'>
 
               <div className='sm:absolute flex sm:flex-col flex-row justify-center items-center gap-2 w-full sm:w-[174px] sm:h-[223px] bg-[#171614] py-[22px] px-6 sm:py-6 sm:px-8 sm:rounded-[24px] sm:top-6 sm:right-28'>
@@ -43,7 +68,7 @@ export function Promotions() {
                 className={`w-full`}
               />
             </SwiperSlide>
-          ))}
+          ))} */}
         </Swiper>
 
         <button className="hidden sm:flex arrow-left absolute top-[124px] z-20 left-6 p-2 bg-[#FFFFFF] shadow-lg rounded-full"><HiArrowSmallLeft size={24} /></button>
