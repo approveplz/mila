@@ -67,15 +67,15 @@ export const messages = {
     description: "Become a member and join Americas fastest growing benefits club. Get access to incredible discounts while being entered to win amazing prizes!",
     subscribe: {
       title: "1. Become A Member",
-      description: "Become a member or choose a one of bundle for limited time access to our amazing benefits.",
+      description: "Become a member, or choose a one-time package, to gain access to our amazing benefits!",
     },
     accessBenefits: {
       title: "2. Access Mila Benefits",
-      description: "After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save $$$"
+      description: "After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save big!"
     },
     giveAways: {
       title: "3. Win Prizes",
-      description: "That's it, you're entered into all our giveaways, if you're a member you'll get access to EVERY single giveaway!!!"
+      description: "That's it, you're entered into all our giveaways, if you're a member you'll be automatically entered and never miss a giveaway!!!"
     }
   },
   benefits: {
