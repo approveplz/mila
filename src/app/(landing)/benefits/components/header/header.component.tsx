@@ -1,6 +1,9 @@
 import { messages } from "@/shared/constants/messages";
+import { Session } from "next-auth";
 
-export function Header() {
+export function Header({ session }: { session: Session | null }) {
+
+  const isLoggedIn = !!session;
 
   const { coupons: {
     heading,
@@ -13,9 +16,9 @@ export function Header() {
         <div className="font-tt-ramillas text-center font-normal px-12 sm:font-light text-4xl sm:text-8xl leading-[43.2px] sm:leading-[115.2px] text-[#171614]">
           {heading}
         </div>
-        <div className="font-normal px-6 text-center text-[20px] leading-[28px]">
+        {!isLoggedIn && <div className="font-normal px-6 text-center text-[20px] leading-[28px]">
           {subheading}
-        </div>
+        </div>}
       </div>
     </header>
   )
