@@ -23,7 +23,7 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
   };
 
   return (
-    <div className="flex flex-col gap-8 pt-[40px] pb-12">
+    <div className="flex flex-col gap-4 pb-6 ">
       <div className="flex flex-col gap-8 justify-center items-center">
         <Image
           src={coupon?.business?.logo ? coupon?.business?.logo?.file_url : "/images/peloton.png"}
