@@ -58,7 +58,7 @@ export const messages = {
     headingA: "WELCOME ",
     headingB: "to MILA ",
     headingC: "COLLECTIVE",
-    subHeading: "Over 500+ stores available — rewards at your own pace.",
+    subHeading: "America's fastest growing rewards membership club",
     learnMore: "Learn more",
     signUp: "Sign up"
   },

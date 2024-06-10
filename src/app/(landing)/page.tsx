@@ -23,7 +23,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <Brands />
+      {/* <Brands /> */}
       {/* <Benefits /> */}
       <HowItWorks />
       <GiveAway />
