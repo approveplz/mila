@@ -37,7 +37,7 @@ export function HowItWorks() {
                     </div>
 
                     <div className="font-normal text-base leading-6 text-white text-center">
-                        Become a member or choose a one of bundle for limited time access to our amazing benefits.
+                        Become a member, or choose a one-time package, to gain access to our amazing benefits!
                     </div>
 
                 </div>
@@ -55,7 +55,7 @@ export function HowItWorks() {
                     </div>
 
                     <div className="font-normal text-base leading-6 text-white text-center">
-                        After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save &#36;&#36;&#36;
+                    After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save big!
                     </div>
 
                 </div>
@@ -74,7 +74,7 @@ export function HowItWorks() {
                     </div>
 
                     <div className="font-normal text-base leading-6 text-white text-center">
-                        That&apos;s it, you&apos;re entered into all our giveaways, if you&apos;re a member you&apos;ll get access to EVERY single giveaway!!!
+                    That&apos;s it, you&apos;re entered into all our giveaways, if you&apos;re a member you&apos;ll be automatically entered and never miss a giveaway!!!
                     </div>
 
 

@@ -30,9 +30,10 @@ import { HiXMark } from "react-icons/hi2";
 interface PasswordFormProps {
     session: Session | null;
     profileDetail: GetProfileResponse | undefined;
+    refetch:() => void
 }
 
-export function PasswordForm({ session, profileDetail }: PasswordFormProps) {
+export function PasswordForm({ session, profileDetail, refetch }: PasswordFormProps) {
     const [result, formAction] = useFormState(actions.authSignIn, {
         status: 'idle',
         error: ''
@@ -81,6 +82,7 @@ export function PasswordForm({ session, profileDetail }: PasswordFormProps) {
                         updateProfileDetails(session?.user?.user?.id as string, {
                             first_name: profileDetail?.first_name,
                             last_name: profileDetail?.last_name,
+                            full_name:profileDetail?.full_name,
                             address: {
                                 line_1: profileDetail?.address?.line_1,
                                 line_2: profileDetail?.address?.line_2,
@@ -99,6 +101,7 @@ export function PasswordForm({ session, profileDetail }: PasswordFormProps) {
                                     onClick: () => console.log("Undo"),
                                 },
                             })
+                            refetch();
                             setIsLoading(false);
                         }).catch(e => {
                             toast("Error occured while updating information", {
@@ -178,7 +181,7 @@ export function PasswordForm({ session, profileDetail }: PasswordFormProps) {
                 />
 
 
-                <Button className="w-[65px] py-2 px-4" type="submit" disabled={isLoading}>Save</Button>
+                <Button className="w-fit sm:w-[65px] py-2 px-4" type="submit" disabled={isLoading}>Save</Button>
             </form>
         </Form>
     )

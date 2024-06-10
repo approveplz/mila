@@ -58,7 +58,7 @@ export const messages = {
     headingA: "WELCOME ",
     headingB: "to MILA ",
     headingC: "COLLECTIVE",
-    subHeading: "Over 500+ stores available — rewards at your own pace.",
+    subHeading: "America's fastest growing rewards membership club",
     learnMore: "Learn more",
     signUp: "Sign up"
   },
@@ -66,16 +66,16 @@ export const messages = {
     heading: "HOW it WORKS",
     description: "Become a member and join Americas fastest growing benefits club. Get access to incredible discounts while being entered to win amazing prizes!",
     subscribe: {
-      title: "Become A Member",
-      description: "Become a member, or choose a bundle for limited-time access, to enjoy our amazing benefits!",
+      title: "1. Become A Member",
+      description: "Become a member, or choose a one-time package, to gain access to our amazing benefits!",
     },
     accessBenefits: {
-      title: "Access Mila Benefits",
-      description: "After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save $$$"
+      title: "2. Access Mila Benefits",
+      description: "After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save big!"
     },
     giveAways: {
-      title: "Win Prizes",
-      description: "That’s it, you’re entered into all our giveaways. If you're a member, you'll be automatically entered into EVERY single giveaway!!!"
+      title: "3. Win Prizes",
+      description: "That's it, you're entered into all our giveaways, if you're a member you'll be automatically entered and never miss a giveaway!!!"
     }
   },
   benefits: {
@@ -96,7 +96,9 @@ export const messages = {
         subscribe: 'Subscribe',
         messageA: 'By subscribing you agree to with our',
         messageB: 'Privacy Policy',
-        messageC: 'and provide consent to receive updates from our company. See sweeps rules for details on our sweepstakes. No purchase necessary. Void Where Prohibited by Law. '
+        messageC: 'and provide consent to receive updates from our company. See',
+        messageD: ' sweeps rules',
+        messageE: ' for details on our sweepstakes. No purchase necessary. Void Where Prohibited by Law.'
       }
     },
     tradeMark: '© 2024 Mila Collective. All rights reserved.',

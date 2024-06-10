@@ -184,8 +184,9 @@ export type Address = {
 
 export type GetProfileResponse = {
     id: string;
-    first_name: string;
-    last_name: string;
+    first_name?: string;
+    last_name?: string;
+    full_name: string
     email: string;
     phone: string;
     address: Address;
@@ -193,6 +194,7 @@ export type GetProfileResponse = {
 
 
 export type UpdateProfilePayload = {
+    full_name?: string
     first_name?: string;
     last_name?: string;
     address?: Address;

@@ -23,8 +23,8 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <Brands />
-      <Benefits />
+      {/* <Brands /> */}
+      {/* <Benefits /> */}
       <HowItWorks />
       <GiveAway />
       <Pricing session={session} products={products} />
