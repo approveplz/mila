@@ -11,7 +11,7 @@ export default async function Coupons() {
     <div>
       <Header session={session}/>
       {session && <Promotions/>}
-      <Brands />
+      {/* <Brands /> */}
       <CoupensList session={session} />
       <BecomeAPartner />
     </div>

@@ -28,9 +28,8 @@ import {
     signUpSchema
 } from "./auth-form.schema";
 import { useStepperContext } from "../stepper/stepper.context";
-import { cn, getProductPriceInfo, prefixObjectKeys, setFormError, withAsync } from "@/utils";
+import { cn, getProductPriceInfo, setFormError } from "@/utils";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import * as actions from "@/actions";
 import { serialize } from "object-to-formdata";
 import states from "@/data/state.data.json" with { type: "json" };
 import Link from "next/link";
@@ -38,7 +37,6 @@ import { useMutation } from "@tanstack/react-query";
 import { SignUpWithPricesPayload } from "@/api/auth/auth.types";
 import { isApiError } from "@/api";
 import { PatternFormat } from "react-number-format";
-import { useFormState } from "react-dom";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { toast } from "sonner";
 
@@ -48,11 +46,6 @@ export function AuthForm() {
     const { setAuthUser } = useAuthStore()
     const formRef = React.useRef<HTMLFormElement>(null);
     const { resultAuthFormAction, authFormAction } = useAuthContext();
-
-    // const [resultAuthFormAction, authFormAction] = useFormState(actions.authSignIn, {
-    //     status: 'idle',
-    //     error: ''
-    // });
 
     const form = useForm<SignUpFormData>({
         mode: "onTouched",
@@ -283,8 +276,7 @@ export function AuthForm() {
                     type="submit"
                     disabled={!form.watch("is_over_18_and_agrees_tc") || !!!form.watch("token") || isPending}
                 >
-                    Sign Up
-                    {isPending && <Spinner className="w-4 h-4 ml-4" />}
+                    Sign Up {isPending && <Spinner className="w-4 h-4 ml-4" />}
                 </Button>
             </form>
         </Form>

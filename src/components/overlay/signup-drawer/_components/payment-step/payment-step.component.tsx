@@ -6,14 +6,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import { StepperComponentProps } from "../stepper/stepper.types";
 
 export function PaymentListFormProvider({ children }: React.PropsWithChildren) {
-    const form = useForm<{
-        coupon: string,
-        hasCompletedMemberShip: boolean
-    }>({
+    const form = useForm<{ coupon: string }>({
         mode: "onTouched",
         defaultValues: {
             coupon: "",
-            hasCompletedMemberShip: false
         }
     });
 

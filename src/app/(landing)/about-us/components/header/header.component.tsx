@@ -64,7 +64,7 @@ export function Header() {
                         className="hover:scale-105 transition-all duration-500 cursor-pointer w-[112px] h-[142px] sm:w-[237px] sm:h-[300px] rounded-lg object-cover"
                     />
                     <Image
-                        src="/images/milabags.png"
+                        src="/images/mila6.jpg"
                         alt="milabags"
                         width={237}
                         height={300}
