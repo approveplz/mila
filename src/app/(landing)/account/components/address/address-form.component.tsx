@@ -86,6 +86,7 @@ export function AddressForm({ session, profileDetail }: BasicInfoFormProps) {
                         updateProfileDetails(session?.user?.user?.id as string, {
                             first_name: profileDetail?.first_name,
                             last_name: profileDetail?.last_name,
+                            full_name:profileDetail?.full_name,
                             address: {
                                 line_1: data?.address,
                                 line_2: data?.address,

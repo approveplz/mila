@@ -92,15 +92,17 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                             Delete my Account
                         </div>
                         <div className="font-normal leading-[20px] text-[14px]">
-                            No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.
+                            No longer want to use our service? You can delete your account by emailing  <Link href="mailto:support@milacollective.com" className="underline">support@milacollective.com</Link>
+                        </div>
+
+                        <div className="font-normal leading-[20px] text-[14px]">
+                            All information and your entries will be deleted permanently.
                         </div>
                     </div>
 
                     <div className="sm:w-[376px]">
 
-                        <div className="font-normal leading-[20px] text-[14px]">
-                            No longer want to use our service? You can delete your account by emailing  <Link href="mailto:support@milacollective.com">support@milacollective.com</Link>
-                        </div>
+                       
 
                         {/* <Dialog>
                             <DialogTrigger className="w-fit bg-[#EF4444] border-[#EF4444] px-4 py-2 text-white rounded-full ">

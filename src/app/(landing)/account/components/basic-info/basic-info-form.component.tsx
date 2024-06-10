@@ -47,8 +47,9 @@ export function BasicInfoForm({ session, profileDetail }: BasicInfoFormProps) {
         mode: "onTouched",
         resolver: zodResolver(BasicInfoSchema),
         values: {
-            firstName: profileDetail?.first_name as string,
-            lastName: profileDetail?.last_name as string,
+            fullName: profileDetail?.full_name as string,
+            // firstName: profileDetail?.first_name as string,
+            // lastName: profileDetail?.last_name as string,
             emailAddress: profileDetail?.email as string,
             phone: profileDetail?.phone as string,
         },
@@ -79,8 +80,9 @@ export function BasicInfoForm({ session, profileDetail }: BasicInfoFormProps) {
                     setIsLoading(true);
                     form.handleSubmit(async (data) => {
                         updateProfileDetails(session?.user?.user?.id as string, {
-                            first_name: data?.firstName,
-                            last_name: data?.lastName,
+                            // first_name: data?.firstName,
+                            // last_name: data?.lastName,
+                            full_name: data?.fullName
                         }).then(res => {
                             toast("Information Updated", {
                                 action: {
@@ -110,34 +112,15 @@ export function BasicInfoForm({ session, profileDetail }: BasicInfoFormProps) {
                 )}
                 <FormField
                     control={form.control}
-                    name="firstName"
+                    name="fullName"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel htmlFor="firstName">First Name</FormLabel>
+                            <FormLabel htmlFor="fullName">Full Name</FormLabel>
                             <FormControl>
                                 <Input
-                                    id="firstName"
+                                    id="fullName"
                                     placeholder="e.g.JohnDoe"
                                     {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel htmlFor="lastName">Last Name</FormLabel>
-                            <FormControl>
-                                <Input
-                                    id="lastName"
-                                    placeholder="e.g.JohnDoe"
-                                    {...field}
-
                                 />
                             </FormControl>
                             <FormMessage />
