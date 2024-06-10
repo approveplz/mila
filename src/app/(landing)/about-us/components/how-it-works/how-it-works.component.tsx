@@ -74,7 +74,7 @@ export function HowItWorks() {
                     </div>
 
                     <div className="font-normal text-base leading-6 text-white text-center">
-                    That's it, you're entered into all our giveaways, if you're a member you'll be automatically entered and never miss a giveaway!!!
+                    That&apos;s it, you&apos;re entered into all our giveaways, if you&apos;re a member you&apos;ll be automatically entered and never miss a giveaway!!!
                     </div>
 
 
