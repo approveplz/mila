@@ -1,12 +1,15 @@
 import * as z from "zod";
 
 export const BasicInfoSchema = z.object({
-    firstName: z
-        .string()
-        .min(1, { message: "First Name is required" }),
-    lastName: z
-        .string()
-        .min(1, { message: "Last Name is required" }),
+    fullName:z
+    .string()
+        .min(1, { message: "Full Name is required" }),
+    // firstName: z
+    //     .string()
+    //     .min(1, { message: "First Name is required" }),
+    // lastName: z
+    //     .string()
+    //     .min(1, { message: "Last Name is required" }),
     emailAddress: z
         .string()
         .min(1, { message: "Email Address is required" })
