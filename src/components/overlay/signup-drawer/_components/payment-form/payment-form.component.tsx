@@ -9,17 +9,15 @@ import {
     useStripe,
     useElements
 } from '@stripe/react-stripe-js';
-import { Stripe, StripeElement, StripeElementStyleVariant, StripeElements } from '@stripe/stripe-js';
+import { Stripe, StripeElementStyleVariant, StripeElements } from '@stripe/stripe-js';
 import { useStepperContext } from '../stepper/stepper.context';
-import { confirmMembership, generateMembership, latestInvoicePaymentStatus, markLatestInvoicePaid } from '@/api/auth';
+import { generateMembership, latestInvoicePaymentStatus, markLatestInvoicePaid } from '@/api/auth';
 import { useAuthStore, useCheckOutStore } from '@/store';
 import { useFormContext } from 'react-hook-form';
-import { getProductPrice, getProductPriceInfo, setFormError, withAsync } from '@/utils';
+import { getProductPrice, getProductPriceInfo } from '@/utils';
 import { Session } from 'next-auth';
 import { useMutation } from "@tanstack/react-query";
 import { serialize } from "object-to-formdata";
-import * as actions from "@/actions";
-import { useFormState } from "react-dom";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { Product, User } from "@/entities";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
@@ -198,9 +196,8 @@ export function PaymentForm({ session }: { session: Session | null }) {
     const isLoading = React.useRef(false);
     const { authFormAction, resultAuthFormAction } = useAuthContext();
 
-    const { watch, setError } = useFormContext<{ coupon: string, hasCompletedMemberShip: boolean }>();
+    const { watch, setError } = useFormContext<{ coupon: string }>();
     const coupon = watch("coupon")
-    const hasCompletedMembership = watch("hasCompletedMemberShip")
     const setCouponError = React.useCallback((key: K, message: string) => {
         setError(key, { message });
     }, [setError]);
@@ -209,7 +206,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
         isLoading.current = status;
     }
 
-    const { mutate: checkInvoicePaymentStatusMutate, mutateAsync: checkInvoicePaymentStatusAsyncMutate } = useMutation({
+    const { mutateAsync: checkInvoicePaymentStatusAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload).then(res => {
             if (res.is_paid) {
                 return res;
@@ -229,21 +226,24 @@ export function PaymentForm({ session }: { session: Session | null }) {
             }
         },
         retry(failureCount, error) {
-            if (failureCount > 3) return false;
+            if (failureCount > 15) {
+                toast.error("Something went wrong!");
+                return false;
+            };
 
             return true;
         },
         retryDelay: 2000
     });
 
-    const { mutate: markLatestInvoicePaidMutate, mutateAsync: markLatestInvoicePaidAsyncMutate } = useMutation({
+    const { mutateAsync: markLatestInvoicePaidAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => markLatestInvoicePaid(payload),
         onSuccess(data, variables) {
             return checkInvoicePaymentStatusAsyncMutate(variables).then(res => res.is_paid);
         },
     });
 
-    const { mutate: latestInvoicePaymentStatusMutate, mutateAsync: latestInvoicePaymentStatusAsyncMutate } = useMutation({
+    const { mutateAsync: latestInvoicePaymentStatusAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
         async onSuccess(data, variables) {
             if (data.is_paid) {
@@ -299,49 +299,25 @@ export function PaymentForm({ session }: { session: Session | null }) {
                 // },
             })
 
-            if (hasCompletedMembership) {
-                trackPromise(generateMembership({ ...payload, payment_method: paymentMethod?.id })
-                    .then(async (res) => {
-                        const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
-                            payment_method: {
-                                card: elements.getElement(CardNumberElement)!
-                            }
-                        })
-
-                        if (error) {
-                            console.log("error: ", error);
-                            toast.error(error.message)
-                        } else {
-                            return latestInvoicePaymentStatusAsyncMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
+            trackPromise(generateMembership({ ...payload, payment_method: paymentMethod?.id })
+                .then(async (res) => {
+                    const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
+                        payment_method: {
+                            card: elements.getElement(CardNumberElement)!
                         }
                     })
-                    .then(res => res?.is_paid)
-                    .catch(err => {
-                        console.log("err: ", err);
-                    }))
-            } else {
-                trackPromise(confirmMembership(payload)
-                    .then(async (res) => generateMembership({ ...payload, payment_method: paymentMethod?.id }))
-                    .then(async (res) => {
-                        const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
-                            payment_method: {
-                                card: elements.getElement(CardNumberElement)!
-                            }
-                        })
 
-                        if (error) {
-                            console.log("error: ", error);
-                            toast.error(error.message)
-                        } else {
-                            return latestInvoicePaymentStatusAsyncMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
-                        }
-                    })
-                    .then(res => res?.is_paid)
-                    .catch(err => {
-                        const errors = err.response.data;
-
-                        if (errors && typeof errors === "object") {
-                            Object.entries(errors).forEach((error) => {
+                    if (error) {
+                        toast.error(error.message)
+                    } else {
+                        return latestInvoicePaymentStatusAsyncMutate({ userId: authUser.id, secret: process.env.NEXT_PUBLIC_API_SECRET! })
+                    }
+                })
+                .then(res => res?.is_paid)
+                .catch(err => {
+                    if (err && typeof err === "object") {
+                        if (coupon) {
+                            Object.entries(err).forEach((error) => {
                                 const [key, val] = error as [K, [string]];
 
                                 if (key === "coupon") {
@@ -349,10 +325,10 @@ export function PaymentForm({ session }: { session: Session | null }) {
                                 }
                             });
                         }
-                    }))
-            }
+                    }
+                }))
         }
-    }, [authUser, latestInvoicePaymentStatusAsyncMutate, getProductsPrices, coupon, hasCompletedMembership, setCouponError])
+    }, [authUser, latestInvoicePaymentStatusAsyncMutate, getProductsPrices, coupon, setCouponError])
 
     const renderActions = React.useCallback((handlePayment: () => void) => (
         <LoaderButton onClick={handlePayment} />
