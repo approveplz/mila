@@ -22,7 +22,7 @@ export function Finish() {
             <CentralizedContent fullHeight={true}>
                 <ThankYou
                     type="narrow"
-                    info="Your information was verified!"
+                    info=""
                     onFinish={() => { }}
                 />
             </CentralizedContent>
