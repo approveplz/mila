@@ -9,7 +9,7 @@ export default async function Coupons() {
   const session = await auth();
   return (
     <div>
-      <Header />
+      <Header session={session}/>
       {session && <Promotions/>}
       <Brands />
       <CoupensList session={session} />
