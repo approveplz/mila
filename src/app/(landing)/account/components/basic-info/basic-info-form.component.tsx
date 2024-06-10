@@ -184,7 +184,7 @@ export function BasicInfoForm({ session, profileDetail }: BasicInfoFormProps) {
                 />
 
 
-                <Button className="w-[65px] py-2 px-4" type="submit" disabled={isLoading}>Save</Button>
+                <Button className="w-fit sm:w-[65px] py-2 px-4" type="submit" disabled={isLoading}>Save</Button>
             </form>
         </Form>
     )

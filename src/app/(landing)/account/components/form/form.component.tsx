@@ -22,7 +22,7 @@ export default function Form({ session }: { session: Session | null }) {
 
     return (
         isLoggedIn ? (
-            <section className="flex flex-row gap-16 py-20 px-16">
+            <section className="flex sm:flex-row flex-col gap-8 sm:gap-16 sm:py-20 sm:px-16 px-6">
                 <Steps
                     selectedStep={selectedStep}
                     setSelectedStep={(step: string) => setSelectedStep(step)}
