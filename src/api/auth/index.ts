@@ -33,7 +33,9 @@ import {
     BuyAdditionalBundlesPayload,
     BuyAdditionalBundlesResponse,
     GetCheckInvoicePaymentStatusParams,
-    CheckInvoicePaymentStatusResponse
+    CheckInvoicePaymentStatusResponse,
+    SetupBundlesBuyingPayload,
+    SetupBundlesBuyingResponse
 } from "./auth.types";
 
 export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => {
@@ -149,8 +151,7 @@ export const subscribeToNewsletter = (payload: SubscribeToNewsletterPayload) => 
         .then(res => res.data)
 }
 
-export const buyAdditionalBundles = (userId: string, payload: BuyAdditionalBundlesPayload) => {
-    console.log(payload)
+export const buyAdditionalBundles = ({ userId, ...payload }: BuyAdditionalBundlesPayload) => {
     return api
         .put<BuyAdditionalBundlesResponse>(`/payments/v0/user/${userId}/buy-one-time-bundles`, payload)
         .then(res => res.data)
@@ -160,5 +161,17 @@ export const buyAdditionalBundles = (userId: string, payload: BuyAdditionalBundl
 export const checkInvoicePaymentStatus = (params: GetCheckInvoicePaymentStatusParams) => {
     return api
         .get<CheckInvoicePaymentStatusResponse>(`/payments/v0/invoice/${params?.invoiceId}/check-payment-status`)
+        .then(res => res.data)
+}
+
+export const checkPaymentMethodExists = () => {
+    return api
+        .get<{ exists: boolean }>("/payments/v0/customer-payment-method-exists")
+        .then(res => res.data)
+}
+
+export const setupBundlesBuying = (payload: SetupBundlesBuyingPayload) => {
+    return api
+        .put<SetupBundlesBuyingResponse>("/payments/v0/setup-bundles-buying", payload)
         .then(res => res.data)
 }

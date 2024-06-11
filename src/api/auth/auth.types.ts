@@ -242,6 +242,7 @@ export type SubscribeToNewsletterResponse = {
 }
 
 export type BuyAdditionalBundlesPayload = {
+    userId: string
     prices: Array<{
         price: string
         quantity: number
@@ -259,4 +260,16 @@ export type GetCheckInvoicePaymentStatusParams = {
 export type CheckInvoicePaymentStatusResponse = {
     id: string,
     is_paid: boolean
+}
+
+export type SetupBundlesBuyingPayload = {
+    payment_method: string
+    prices: Array<{
+        price: string
+        quantity: number
+    }>
+}
+
+export type SetupBundlesBuyingResponse = {
+    client_secret: string
 }

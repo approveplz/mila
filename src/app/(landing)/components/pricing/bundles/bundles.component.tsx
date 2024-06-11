@@ -9,7 +9,7 @@ import { useCheckOutStore } from "@/store";
 import { getDefaultPrice } from "@/utils";
 import { useWidth } from "@/hooks";
 import { Session } from "next-auth";
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components";
+import { Button, BuyBundleDialog, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { buyAdditionalBundles, checkInvoicePaymentStatus } from "@/api/auth";
 import { useEffect, useState } from "react";
@@ -39,71 +39,71 @@ export function Bundle({ bundles, session }: BundleProps) {
   const isLoggedIn = !!session;
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const buyBundles = () => {
-    const items = products.map(product => ({ price: product?.data?.prices[0]?.id, quantity: product.quantity }));
-    console.log(items);
-    setIsLoading(true)
-    buyAdditionalBundles(session?.user?.user?.id as string, { prices: items }).then(res => {
-      toast("Invoice has been generated, please wait while bundles are being bought.", {
-        action: {
-          label: "X",
-          onClick: () => console.log("Undo"),
-        },
-      })
+  // const buyBundles = () => {
+  //   const items = products.map(product => ({ price: product?.data?.prices[0]?.id, quantity: product.quantity }));
+  //   console.log(items);
+  //   setIsLoading(true)
+  //   buyAdditionalBundles(session?.user?.user?.id as string, { prices: items }).then(res => {
+  //     toast("Invoice has been generated, please wait while bundles are being bought.", {
+  //       action: {
+  //         label: "X",
+  //         onClick: () => console.log("Undo"),
+  //       },
+  //     })
 
-      const invoiceId = res?.invoice;
-      let attempts = 0;
-      const maxAttempts = 12;
+  //     const invoiceId = res?.invoice;
+  //     let attempts = 0;
+  //     const maxAttempts = 12;
 
-      const interval = setInterval(() => {
-        checkInvoicePaymentStatus({ invoiceId })
-          .then(paymentStatus => {
-            if (paymentStatus.is_paid) {
-              clearInterval(interval);
-              toast("Additional bundle bought Successfuly", {
-                action: {
-                  label: "X",
-                  onClick: () => console.log("Undo"),
-                },
-              })
-              setIsLoading(false);
-              clearProducts("all");
-            } else {
-              attempts += 1;
-              if (attempts >= maxAttempts) {
-                clearInterval(interval);
-                toast("Error occured while buying additional bundles", {
-                  action: {
-                    label: "X",
-                    onClick: () => console.log("Undo"),
-                  },
-                })
-                setIsLoading(false);
-              }
-            }
-          })
-          .catch(error => {
-            clearInterval(interval);
-            toast("Error occured while buying additional bundles", {
-              action: {
-                label: "X",
-                onClick: () => console.log("Undo"),
-              },
-            })
-            setIsLoading(false);
-          });
-      }, 2000);
-    }).catch(error => {
-      console.error('Error checking payment status:', error);
-      toast("Error occured while generating invoice", {
-        action: {
-          label: "X",
-          onClick: () => console.log("Undo"),
-        },
-      })
+  //     const interval = setInterval(() => {
+  //       checkInvoicePaymentStatus({ invoiceId })
+  //         .then(paymentStatus => {
+  //           if (paymentStatus.is_paid) {
+  //             clearInterval(interval);
+  //             toast("Additional bundle bought Successfuly", {
+  //               action: {
+  //                 label: "X",
+  //                 onClick: () => console.log("Undo"),
+  //               },
+  //             })
+  //             setIsLoading(false);
+  //             clearProducts("all");
+  //           } else {
+  //             attempts += 1;
+  //             if (attempts >= maxAttempts) {
+  //               clearInterval(interval);
+  //               toast("Error occured while buying additional bundles", {
+  //                 action: {
+  //                   label: "X",
+  //                   onClick: () => console.log("Undo"),
+  //                 },
+  //               })
+  //               setIsLoading(false);
+  //             }
+  //           }
+  //         })
+  //         .catch(error => {
+  //           clearInterval(interval);
+  //           toast("Error occured while buying additional bundles", {
+  //             action: {
+  //               label: "X",
+  //               onClick: () => console.log("Undo"),
+  //             },
+  //           })
+  //           setIsLoading(false);
+  //         });
+  //     }, 2000);
+  //   }).catch(error => {
+  //     console.error('Error checking payment status:', error);
+  //     toast("Error occured while generating invoice", {
+  //       action: {
+  //         label: "X",
+  //         onClick: () => console.log("Undo"),
+  //       },
+  //     })
 
-    })
-  }
+  //   })
+  // }
 
   return (
     <section className="flex flex-col items-center gap-12 bg-[#F3F3F3] mt-12">
@@ -178,26 +178,32 @@ export function Bundle({ bundles, session }: BundleProps) {
         )}
       </div>
 
-      {isLoggedIn && products?.length > 0 && pricingType === 'bundle' &&
-        <Dialog>
-          <DialogTrigger >
-            <Button type="submit" variant="fatal">
-              <span className="select-none" >Continue With Selected </span>
-              <HiArrowUpRight className="ml-3 h-6 w-4" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:w-[455px] w-[329px] z-[999999]">
-            <DialogHeader>
-              <DialogTitle className="font-normal text-[32px] leading-[38.4px]">Confirmation</DialogTitle>
-            </DialogHeader>
-            <div className="leading-9 text-xl font-normal">
-              Are you sure you want to buy these additional bundles?
-            </div>
-            <Button disabled={isLoading} onClick={buyBundles} >Confirm</Button>
-          </DialogContent>
-        </Dialog>
-      }
-    </section>
+      {/* <Dialog>
+        <DialogTrigger>
+          <Button type="submit" variant="fatal">
+            <span className="select-none">Continue With Selected</span>
+            <HiArrowUpRight className="ml-3 h-6 w-4" />
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:w-[455px] w-[329px] z-[999999]">
+          <DialogHeader>
+            <DialogTitle className="font-normal text-[32px] leading-[38.4px]">Confirmation</DialogTitle>
+          </DialogHeader>
+          <div className="leading-9 text-xl font-normal">
+            Are you sure you want to buy these additional bundles ?
+          </div>
+          <Button disabled={isLoading} onClick={buyBundles}>Confirm</Button>
+        </DialogContent>
+      </Dialog> */}
+      {isLoggedIn && products?.length > 0 && pricingType === 'bundle' && (
+        <BuyBundleDialog>
+          <Button type="submit" variant="fatal">
+            <span className="select-none">Continue With Selected</span>
+            <HiArrowUpRight className="ml-3 h-6 w-4" />
+          </Button>
+        </BuyBundleDialog>
+      )}
+    </section >
   )
 }
 
