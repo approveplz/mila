@@ -97,12 +97,6 @@ export const getCoupons = (params: GetCouponsParams) => {
         .then(res => res.data);
 }
 
-export const getCouponDetail = (payload: GetCouponDetailParams) => {
-    return api
-        .get<CouponResponse>(`/coupons/v0/coupons/${payload.couponId}`)
-        .then(res => res.data);
-}
-
 export const getProfileDetails = (params: GetProfileParams) => {
     return api
         .get<GetProfileResponse>(`/users/v0/user/${params.profileId}/account`)
@@ -143,4 +137,10 @@ export const subscribeToNewsletter = (payload: SubscribeToNewsletterPayload) => 
     return api
         .post<SubscribeToNewsletterResponse>("/users/v0/subscribe-to-newsletter", payload)
         .then(res => res.data)
+}
+
+export const getCouponDetail = (payload: GetCouponDetailParams) => {
+    return api
+        .get<CouponResponse>(`/coupons/v0/coupons/${payload.couponId}`)
+        .then(res => res.data);
 }
