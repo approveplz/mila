@@ -51,7 +51,7 @@ export default async function RootLayout({
 
         <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M2MCJWNS"
-            height="0" width="0" style="display:none;visibility:hidden">
+            height="0" width="0" style={{ display: "none", visibility: "hidden" }}>
           </iframe>
         </noscript>
       </body>
