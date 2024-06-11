@@ -51,8 +51,8 @@ export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
             {session ? (
                 <>
                     {listItemsSignedIn.map((item, index) => (
-                        <div key={index} onClick={closeAccordion}>
-                            <NavItem key={item.id}>
+                        <div key={item.id} onClick={closeAccordion}>
+                            <NavItem >
                                 <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                             </NavItem>
                         </div>
@@ -64,8 +64,8 @@ export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
             ) : (
                 <>
                     {listItems.map((item,index) => (
-                        <div  key={index} onClick={closeAccordion}>
-                            <NavItem key={item.id}>
+                        <div key={item.id} onClick={closeAccordion}>
+                            <NavItem >
                                 <Link className=" text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                             </NavItem>
                         </div>
