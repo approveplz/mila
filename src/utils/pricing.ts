@@ -6,7 +6,7 @@ export const getDefaultPrice = (prices: Array<Price>, is_free: boolean | undefin
         .find(price => price.is_default)
 
     if (price) {
-        return parseFloat(price.unit_amount).toFixed(2)
+        return parseFloat(price.unit_amount)
     }
 
     return 0;
