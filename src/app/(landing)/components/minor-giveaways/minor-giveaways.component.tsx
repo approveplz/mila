@@ -58,7 +58,7 @@ export function MinorGiveaways() {
                 </div>
               </div>}
 
-              {isLoggedIn && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+              {isLoggedIn && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[24px]  ">
                 <div className="font-semibold text-base leading-6">
                   {session?.user?.user?.metadata?.total_entries_count < 1000 ? session?.user?.user?.metadata?.total_entries_count : `${(session?.user?.user?.metadata?.total_entries_count / 1000).toFixed(1)}k`} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
                 </div>

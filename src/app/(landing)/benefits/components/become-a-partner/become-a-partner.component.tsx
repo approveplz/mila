@@ -89,7 +89,7 @@ export function BecomeAPartner() {
            Want to become a partner?
           </div>
           <div className="font-normal text-lg leading-7 text-center text-white">
-            Feel free to contact us at  <a className="underline" href="mailto:Support@MilaCollective.com">partner@milacollective.com</a>
+            Feel free to contact us at  <a className="underline" href="mailto:partners@MilaCollective.com">partners@milacollective.com</a>
           </div>
         </div>
         {/* <Dialog>

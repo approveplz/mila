@@ -149,6 +149,8 @@ export type CouponResponse = {
     is_active?: boolean;
     created?: string;
     modified?: string;
+    mobileScreen?: string,
+    fullScreen?: string
 }
 
 
