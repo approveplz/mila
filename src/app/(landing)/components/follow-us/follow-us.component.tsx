@@ -21,7 +21,7 @@ export function FollowUs() {
     <section className="sm:pt-[80px] pt-[32px] bg-[#F3F3F3]">
       <div className="grid sm:grid-cols-4 grid-cols-1 w-full">
         <Image
-          src="/images/girls.png"
+          src="/images/followa.jpg"
           alt="girls"
           // layout="responsive"
           width={360}
@@ -30,7 +30,7 @@ export function FollowUs() {
         />
 
         <Image
-          src="/images/jewelery.png"
+          src="/images/followb.jpg"
           alt="jewelery"
           // layout="responsive"
           width={360}
@@ -39,7 +39,7 @@ export function FollowUs() {
         />
 
         <Image
-          src="/images/shirt.png"
+          src="/images/followc.jpg"
           alt="shirt"
           // layout="responsive"
           width={360}
