@@ -53,3 +53,5 @@ export const getProductPriceInfo = (prices: Array<Price>, is_free: boolean | und
         discountedPrice: discountedPrice
     }
 }
+
+export const formatPrice = (price: number) => price.toFixed(2);
