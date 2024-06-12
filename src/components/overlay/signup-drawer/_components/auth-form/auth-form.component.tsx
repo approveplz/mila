@@ -128,7 +128,7 @@ export function AuthForm() {
     return (
         <Form {...form}>
             <form
-                className="flex flex-col flex-1 sm:flex-initial justify-center gap-4"
+                className="flex flex-col flex-1 sm:flex-initial justify-center gap-4 -mt-2"
                 ref={formRef}
                 onSubmit={form.handleSubmit(onSubmit)}
             >
@@ -249,7 +249,7 @@ export function AuthForm() {
                             <FormLabel>I am over 18 and I agree to {" "}
                                 <Link href="/legal/terms-of-use" target="_blank" className="underline">Terms of Use</Link>, {" "}
                                 <Link href="/legal/privacy-policy" target="_blank" className="underline">Privacy Policy</Link> and {" "}
-                                <Link href="/legal/sweeps-rules" target="_blank" className="underline">Sweeps Rules</Link>
+                                <Link href="/legal/sweeps-rules" target="_blank" className="underline">Sweeps Rules</Link>{", "} and to receive text messages for authentication (2FA)
                             </FormLabel>
                         </FormItem>
                     )}
