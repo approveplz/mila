@@ -1,3 +1,4 @@
+
 import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
 import { cn, formatPrice } from "@/utils";
@@ -56,20 +57,21 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
   const [isCardSelected, selectIsCardSelected] = useState<boolean>(false)
   const [qunatity, setQuantity] = useState<number>(0)
 
-  useEffect(() => {
-    if (isLoggedIn && cardData?.session) {
-      cardData?.session?.user?.user?.metadata?.subscribed_products?.forEach((item) => {
-        if (item.product === cardData?.cardId) {
-          selectIsCardSelected(true)
-          setQuantity(item.quantity)
-        }
-      })
-    }
-  }, [cardData?.session])
+  // useEffect(() => {
+  //   if (isLoggedIn && cardData?.session) {
+  //     cardData?.session?.user?.user?.metadata?.subscribed_products?.forEach((item) => {
+  //       if (item.product === cardData?.cardId) {
+  //         selectIsCardSelected(true)
+  //         setQuantity(item.quantity)
+  //       }
+  //     })
+  //   }
+  // }, [cardData?.session])
 
   return (
     <figure
-      className={cn(bundleCardClasses({ selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
+    // : (isLoggedIn && isCardSelected) || (!isLoggedIn && selected)
+      className={cn(bundleCardClasses({ selected }))}>
       <div className="flex flex-col items-left gap-6">
         <div className="flex flex-col items-left ">
           <div className="flex flex-row gap-2 items-center select-none">
@@ -111,7 +113,8 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
         </div>
 
         <div className="w-full flex justify-between">
-          {!isLoggedIn && <Button
+        {/* !isLoggedIn &&  */}
+          {<Button
             className="px-5 py-2 select-none"
             variant={cardData.selected ? "primary" : "tertiary"}
             onClick={cardData.onSelect}
@@ -119,7 +122,8 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
             {cardData.selected ? "Selected" : "Select"}
           </Button>}
 
-          {cardData.selected && !isLoggedIn && (
+          {/* && !isLoggedIn */}
+          {cardData.selected  && (
             <div className="flex flex-row gap-2 items-center">
               <div>
                 <HiMiniMinus
@@ -142,21 +146,21 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
           )}
 
 
-          {(isLoggedIn && isCardSelected) &&
+          {/* {(isLoggedIn && isCardSelected) &&
             <Button
               className="px-5 py-2"
               variant="primary"
             >
               Selected
             </Button>
-          }
+          } */}
 
-          {(isLoggedIn && isCardSelected) &&
+          {/* {(isLoggedIn && isCardSelected) &&
             <div className="flex flex-row gap-2 items-center">
               <div className="border border-[#171614] rounded-[10px] py-2 px-3">
                 {qunatity}
               </div>
-            </div>}
+            </div>} */}
         </div>
       </div>
     </figure>

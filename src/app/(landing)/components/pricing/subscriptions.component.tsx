@@ -28,7 +28,7 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
 
   return (
     <div className="flex flex-col gap-6 w-full mt-12">
-      {products.filter(product => product.data.type === "subscription").length > 0 && (
+      {products.filter(product => product.data.type === "subscription").length > 0 && !isLoggedIn && (
         <button
           className="font-medium text-primary text-lg leading-7 cursor-pointer"
           onClick={() => clearProducts("subscription")}

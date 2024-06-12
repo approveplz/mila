@@ -21,6 +21,7 @@ export async function Pricing({
     headingB,
     description,
   } } = messages;
+  const isLoggedIn = !!session;
 
   return (
     <section id="pricing" className="pt-[66px] sm:px-[160px] bg-[#F3F3F3]">
@@ -38,9 +39,9 @@ export async function Pricing({
 
           <PricingTabs session={session ? session : null} products={products} />
 
-          <PricingAction>
+          {!isLoggedIn && <PricingAction>
             <SignUpAction />
-          </PricingAction>
+          </PricingAction>}
         </div>
       </Container>
     </section>
