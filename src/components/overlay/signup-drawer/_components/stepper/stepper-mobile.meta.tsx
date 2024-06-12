@@ -27,7 +27,7 @@ const stepsMobileMeta: Array<StepperComponent> = [
     PricingStep,
     AuthFormStep,
     VerifyEmail,
-    // VerifyPhone,
+    VerifyPhone,
     Finish
 ];
 
