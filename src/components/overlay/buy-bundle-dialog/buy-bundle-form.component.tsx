@@ -177,7 +177,6 @@ export function PaymentForm() {
         async onSuccess(data, variables) {
             toast("Additional bundle bought Successfuly");
             triggerRef.current?.click();
-
         },
         retry(failureCount, error) {
             if (failureCount > 3) return false;

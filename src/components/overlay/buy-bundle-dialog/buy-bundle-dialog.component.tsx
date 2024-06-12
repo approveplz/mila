@@ -123,7 +123,10 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
         open={showPaymentDialog}
         onOpenChange={(state) => {
           setShowPaymentDialog(state)
-          window.location.reload()
+
+          if(state === false) {
+            window.location.reload()
+          }
         }}
       >
         <DrawerContent className="bg-white h-full rounded-none z-[9999] max-h-screen">
