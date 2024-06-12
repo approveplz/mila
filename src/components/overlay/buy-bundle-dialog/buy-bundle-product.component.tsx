@@ -11,8 +11,6 @@ import { getProductPrice } from "@/utils";
 import { Price, Product } from "@/entities";
 import { CheckoutProduct } from "@/store/checkout/checkout.types";
 
-type K = keyof {};
-
 function calculateTotal(products: Array<CheckoutProduct>) {
     const getPrice = (prices: Product["prices"]) => {
         const actualPrice = getProductPrice(prices);

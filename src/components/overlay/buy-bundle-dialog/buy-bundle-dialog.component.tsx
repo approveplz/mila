@@ -182,7 +182,7 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
         dismissible={false}
         nested={true}
         open={showPaymentDialog}
-        onClose={() => {}}
+        onOpenChange={(state) => setShowPaymentDialog(state)}
       >
         <DrawerContent className="bg-white h-full rounded-none z-[9999] max-h-screen">
           <BuyBundlePayment />

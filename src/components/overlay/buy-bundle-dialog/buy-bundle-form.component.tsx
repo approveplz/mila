@@ -10,7 +10,7 @@ import {
     useElements
 } from '@stripe/react-stripe-js';
 import { Stripe, StripeElement, StripeElementStyleVariant, StripeElements } from '@stripe/stripe-js';
-import { confirmMembership, generateMembership, latestInvoicePaymentStatus, markLatestInvoicePaid } from '@/api/auth';
+import { confirmMembership, generateMembership, latestInvoicePaymentStatus, markLatestInvoicePaid, setupBundlesBuying } from '@/api/auth';
 import { useAuthStore, useCheckOutStore } from '@/store';
 import { useFormContext } from 'react-hook-form';
 import { getProductPriceInfo, setFormError, withAsync } from '@/utils';
@@ -23,6 +23,7 @@ import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { User } from "@/entities";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { toast } from "sonner";
+import { useCurrentSession } from "@/hooks";
 
 type K = keyof {};
 
@@ -46,8 +47,8 @@ const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
         if (isDisabled) {
             const timer = setTimeout(() => {
                 setIsDisabled(false);
-            }, 3000); 
-            
+            }, 3000);
+
             return () => clearTimeout(timer);
         }
     }, [isDisabled]);
@@ -162,7 +163,7 @@ const PaymentFormGroup = React.memo(({
 PaymentFormGroup.displayName = "PaymentFormGroup";
 
 export function PaymentForm() {
-    const { authUser } = useAuthStore();
+    const { session } = useCurrentSession();
 
     const { mutate: checkInvoicePaymentStatusMutate, mutateAsync: checkInvoicePaymentStatusAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload).then(res => {
@@ -173,8 +174,8 @@ export function PaymentForm() {
             }
         }),
         async onSuccess(data, variables) {
-            if (authUser) {
-                return null;
+            if (session) {
+                // return null;
             }
         },
         retry(failureCount, error) {
@@ -196,8 +197,8 @@ export function PaymentForm() {
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
         async onSuccess(data, variables) {
             if (data.is_paid) {
-                if (authUser) {
-                    return null;
+                if (session) {
+                    // return null;
                 }
             } else {
                 return markLatestInvoicePaidAsyncMutate(variables).then(res => res.processing)
@@ -225,8 +226,36 @@ export function PaymentForm() {
     }, [])
 
     const onPayment = React.useCallback(async (stripe: Stripe, elements: StripeElements) => {
-        
-    }, [])
+        // create a payment method
+        const { paymentMethod } = await stripe.createPaymentMethod({
+            type: "card",
+            card: elements.getElement(CardNumberElement)!,
+            // billing_details: {
+            //     name,
+            //     email,
+            // },
+        })
+
+        trackPromise(setupBundlesBuying({
+            payment_method: paymentMethod?.id as string,
+            prices: getProductsPrices()
+        }).then(async (res) => {
+            const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
+                payment_method: {
+                    card: elements.getElement(CardNumberElement)!
+                }
+            })
+
+            console.log("paymentIntent: ", paymentIntent);
+            if (error) {
+                toast.error(error.message)
+            } else {
+                return latestInvoicePaymentStatusAsyncMutate({ userId: session?.user.user.id as string, secret: process.env.NEXT_PUBLIC_API_SECRET! })
+            }
+        }).catch(err => {
+            toast.error("Something went wrong")
+        }))
+    }, [getProductsPrices, latestInvoicePaymentStatusAsyncMutate, session?.user.user.id])
 
     const renderActions = React.useCallback((handlePayment: () => void) => (
         <LoaderButton onClick={handlePayment} />
