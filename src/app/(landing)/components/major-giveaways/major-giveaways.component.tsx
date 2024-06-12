@@ -117,18 +117,18 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
       {showHeading && <div>
         {!isLoggedIn && <div>
           {products?.length > 0 && amount > 0 && pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-            FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
+            FOR ${amount} A MONTH, YOU&apos;LL GET ALL OF THIS. for subscription selection.
           </div>}
           
         </div>}
 
         {products?.length > 0 && amount > 0 && pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-            FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
+            FOR YOUR ${amount} BUNDLE, YOU&apos;LL GET ALL OF THIS. for bundle selection.
           </div>}
 
         {isLoggedIn && <div>
           {pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-            FOR ${amount} A MONTH, YOU'LL GET ALL OF THIS. for subscription selection.
+            FOR ${amount} A MONTH, YOU&apos;LL GET ALL OF THIS. for subscription selection.
           </div>}
           {/* {pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
             FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
