@@ -1,7 +1,7 @@
 
 import { getProfileEntries } from "@/api/auth";
 import { ProfileEntryResponse } from "@/api/auth/auth.types";
-import { Button } from "@/components";
+import { Button, Spinner } from "@/components";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
@@ -27,6 +27,7 @@ export default function Entries({ session }: { session: Session | null }) {
         return expiryDate.toLocaleDateString('en-GB', {
             day: 'numeric',
             month: 'long',
+            year: 'numeric'
         });
     }
 
@@ -52,7 +53,7 @@ export default function Entries({ session }: { session: Session | null }) {
                         </div>
                     </div>
 
-                    <div className="w-full sm:w-[376px] flex flex-col gap-6">
+                    {!isProfileLoading ? <div className="w-full sm:w-[376px] flex flex-col gap-6">
                         <div className="flex flex-col gap-2">
                             <div className="flex flex-row gap-2 items-center">
                                 <div >
@@ -101,7 +102,10 @@ export default function Entries({ session }: { session: Session | null }) {
 
                         </div>
                         <Button onClick={getMoreEntries} className="w-fit py-2 px-4" >Get more entries</Button>
-                    </div>
+                    </div> : <div className="m-auto">
+                        <Spinner className="w-6 h-6" />
+                    </div>}
+
 
                 </div>
             </div>
