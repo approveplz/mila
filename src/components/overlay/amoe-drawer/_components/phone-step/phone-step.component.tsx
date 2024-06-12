@@ -131,8 +131,6 @@ export function PhoneStep({ actions }: AmoeStepType) {
         return false
     }
 
-    console.log("phone: ", watch("phone"));
-
     return (
         <div className="flex flex-col gap-12">
             {!shouldVerify ? (

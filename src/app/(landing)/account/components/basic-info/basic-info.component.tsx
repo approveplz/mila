@@ -16,7 +16,7 @@ import { Link } from "@/app/(landing)/legal/_components/link/link.component";
 export default function BasicInfo({ session }: { session: Session | null }) {
     const isLoggedIn = !!session;
 
-    const { data: profileDetails, isLoading: isProfileLoading }: UseQueryResult<GetProfileResponse> =
+    const { data: profileDetails, isLoading: isProfileLoading, refetch }: UseQueryResult<GetProfileResponse> =
         useQuery({
             queryKey: ['profile'],
             queryFn: () =>
@@ -25,15 +25,15 @@ export default function BasicInfo({ session }: { session: Session | null }) {
         })
 
     return (
-        <section className="p-12 flex flex-col w-full rounded-[24px] bg-[#F3F3F3]" >
+        <section className="sm:p-12 p-6 flex flex-col w-full rounded-[24px] bg-[#F3F3F3]" >
 
             <div className="flex flex-col gap-8 w-full">
                 <div className="font-semibold leading-8 text-2xl">
-                    Basic info
+                    Basic information
                 </div>
 
-                <div className="flex flex-row justify-between ">
-                    <div className="flex flex-col gap-2 w-[255px]">
+                <div className="flex flex-col gap-8 sm:gap-0 sm:flex-row sm:justify-between ">
+                    <div className="flex flex-col gap-2 sm:w-[255px]">
                         <div className="font-medium text-[20px] leading-7">
                             Personal information
                         </div>
@@ -42,16 +42,16 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                         </div>
                     </div>
 
-                    <div className="w-[376px]">
-                        <BasicInfoForm profileDetail={profileDetails} session={session} />
+                    <div className="sm:w-[376px]">
+                        <BasicInfoForm refetch={() => refetch()} profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
 
                 <hr className="mt-3 text-[#D9D9D9]" />
 
-                <div className="flex flex-row justify-between ">
-                    <div className="flex flex-col gap-2 w-[255px]">
+                <div className="flex flex-col gap-8 sm:gap-0 sm:flex-row sm:justify-between ">
+                    <div className="flex flex-col gap-2 sm:w-[255px]">
                         <div className="font-medium text-[20px] leading-7">
                             Address
                         </div>
@@ -60,16 +60,16 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                         </div>
                     </div>
 
-                    <div className="w-[376px]">
-                        <AddressForm profileDetail={profileDetails} session={session} />
+                    <div className="sm:w-[376px]">
+                        <AddressForm refetch={() => refetch()} profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
 
                 <hr className="mt-3 text-[#D9D9D9]" />
 
-                <div className="flex flex-row justify-between ">
-                    <div className="flex flex-col gap-2 w-[255px]">
+                <div className="flex flex-col gap-8 sm:gap-0 sm:flex-row sm:justify-between ">
+                    <div className="flex flex-col gap-2 sm:w-[255px]">
                         <div className="font-medium text-[20px] leading-7">
                             Change Password
                         </div>
@@ -78,29 +78,31 @@ export default function BasicInfo({ session }: { session: Session | null }) {
                         </div>
                     </div>
 
-                    <div className="w-[376px]">
-                        <PasswordForm profileDetail={profileDetails} session={session} />
+                    <div className="sm:w-[376px]">
+                        <PasswordForm refetch={() => refetch()} profileDetail={profileDetails} session={session} />
                     </div>
 
                 </div>
 
                 <hr className="mt-3 text-[#D9D9D9]" />
 
-                <div className="flex flex-row justify-between ">
-                    <div className="flex flex-col gap-2 w-[255px]">
+                <div className="flex flex-col gap-8 sm:gap-0 sm:flex-row sm:justify-between ">
+                    <div className="flex flex-col gap-2 sm:w-[255px]">
                         <div className="font-medium text-[20px] leading-7">
                             Delete my Account
                         </div>
                         <div className="font-normal leading-[20px] text-[14px]">
-                            No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.
+                            No longer want to use our service? You can delete your account by emailing  <Link href="mailto:support@milacollective.com" className="underline">support@milacollective.com</Link>
+                        </div>
+
+                        <div className="font-normal leading-[20px] text-[14px]">
+                            All information and your entries will be deleted permanently.
                         </div>
                     </div>
 
-                    <div className="w-[376px]">
+                    <div className="sm:w-[376px]">
 
-                        <div className="font-normal leading-[20px] text-[14px]">
-                            No longer want to use our service? You can delete your account by emailing  <Link href="mailto:support@milacollective.com">support@milacollective.com</Link>
-                        </div>
+                       
 
                         {/* <Dialog>
                             <DialogTrigger className="w-fit bg-[#EF4444] border-[#EF4444] px-4 py-2 text-white rounded-full ">

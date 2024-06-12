@@ -8,36 +8,18 @@ import Script from "next/script";
 import { Toaster } from "@/components";
 import { auth as authSession } from "@/auth";
 
-// export const metadata: Metadata = {
-//   title: "Mila Collective: Benefits Club With Incredible Giveaways",
-//   description: "Mila Collective is Americas fastest growing luxury benefits club. Every week we give away amazing prizes with monthly mega prizes!",
-//   openGraph: {
-//     images: "/images/apple-icon.png",
-//   },
-// };
-
-// export const metadata: Metadata = {
-//   title: "Mila Collective: Benefits Club With Incredible Giveaways",
-//   description: "Mila Collective is Americas fastest growing luxury benefits club. Every week we give away amazing prizes with monthly mega prizes!",
-//   openGraph: {
-//     images: "/images/apple-icon.png",
-//   },
-// };
-
 export const metadata: Metadata = {
   title: 'Mila Collective: Benefits Club With Incredible Giveaways',
   description: "Mila Collective is Americas fastest growing luxury benefits club. Every week we give away amazing prizes with monthly mega prizes!",
   openGraph: {
-      images: [
-          {
-              url: "/images/apple-icon.png",
-              width: 800,
-              height: 600,
-              alt: "OG Image",
-          }
-      ],
+    title: 'Mila Collective: Benefits Club With Incredible Giveaways',
+    description:
+      "Mila Collective is Americas fastest growing luxury benefits club. Every week we give away amazing prizes with monthly mega prizes!",
+    type: "website",
   },
+  metadataBase: new URL("https://www.milacollective.com/"),
 };
+
 
 export default async function RootLayout({
   auth,
@@ -56,21 +38,22 @@ export default async function RootLayout({
           {auth}
         </Providers>
 
-        <Script id="fb-pixel">
+        <Script id="gooogle-tag-manager">
           {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window,document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-             fbq('init', '433865426101614'); 
-            fbq('track', 'PageView');
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-KJWWCPKP');
           `}
         </Script>
         <Toaster />
+
+        <noscript>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KJWWCPKP"
+            height="0" width="0" style={{ display: "none", visibility: "hidden" }}>
+          </iframe>
+        </noscript>
       </body>
     </html>
   );

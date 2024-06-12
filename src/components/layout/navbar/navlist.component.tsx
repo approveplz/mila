@@ -12,7 +12,7 @@ const listItems = [
 ];
 
 const listItemsSignedIn = [
-    { id: "1", title: "Profile", href: "/" },
+    { id: "1", title: "Profile", href: "/account" },
     { id: "2", title: "About Us", href: "/about-us" },
     { id: "3", title: "Benefits", href: "/benefits" },
     { id: "4", title: "Giveaways", href: "/giveaways" },
@@ -51,8 +51,8 @@ export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
             {session ? (
                 <>
                     {listItemsSignedIn.map((item, index) => (
-                        <div key={index} onClick={closeAccordion}>
-                            <NavItem key={item.id}>
+                        <div key={item.id} onClick={closeAccordion}>
+                            <NavItem >
                                 <Link className="text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                             </NavItem>
                         </div>
@@ -64,8 +64,8 @@ export function NavListMobile({ session, closeAccordion }: NavListMobileProps) {
             ) : (
                 <>
                     {listItems.map((item,index) => (
-                        <div  key={index} onClick={closeAccordion}>
-                            <NavItem key={item.id}>
+                        <div key={item.id} onClick={closeAccordion}>
+                            <NavItem >
                                 <Link className=" text-base leading-[23px] md:text-lg md:leading-[27px]" href={item.href}>{item.title}</Link>
                             </NavItem>
                         </div>

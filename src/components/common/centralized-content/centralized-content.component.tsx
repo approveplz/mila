@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/utils";
 import { VariantProps, cva } from "class-variance-authority";
+import clsx from "clsx";
 
 const centralizedContentClasses = cva("flex", {
     variants: {
@@ -10,7 +11,7 @@ const centralizedContentClasses = cva("flex", {
             hv: "items-center justify-center"
         },
         fullHeight: {
-            true: "h-screen",
+            true: "h-dvh",
             false: "h-auto"
         }
     },
@@ -28,7 +29,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof centrali
 export function CentralizedContent({ as: Component = "div", className, centralized, fullHeight, ...props }: Props) {
     return (
         <Component
-            className={cn(centralizedContentClasses({ centralized, fullHeight, className }))}
+            className={clsx(centralizedContentClasses({ centralized, fullHeight, className }))}
             {...props}
         />
     )

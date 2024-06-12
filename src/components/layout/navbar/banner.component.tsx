@@ -1,18 +1,20 @@
 "use client";
 
 import * as React from "react"
-import { Button, Container, Dialog, DialogContent, DialogHeader, PhoneVerificationContent } from "@/components"
+import { Button, Container, Dialog, DialogContent, DialogHeader, PhoneVerificationContent, Spinner } from "@/components"
 import { useCurrentSession } from "@/hooks";
 import { toast } from "sonner"
 import { HiOutlineEnvelope, HiXMark } from "react-icons/hi2";
 import { sendVerificationEmail, sendVerificationSms, verifyEmailOrSMS } from "@/api/auth";
+import { useMutation } from "@tanstack/react-query";
 
 export function NavBanner() {
     const { session } = useCurrentSession();
     const [isOpened, setIsOpened] = React.useState(false);
 
-    const handleVerifyEmail = () => {
-        sendVerificationEmail().then(res => {
+    const { mutate: sendVerificationEmailMutate, isPending: isPendingSendVerificationEmailMutate } = useMutation({
+        mutationFn: () => sendVerificationEmail(),
+        onSuccess() {
             toast.custom(t => (
                 <div className="flex items-center px-4 py-3">
                     <div className="flex items-center gap-2">
@@ -25,18 +27,25 @@ export function NavBanner() {
                     </button>
                 </div>
             ))
-        }).catch(err => {
-            console.log("err: ", err);
-        });
-    }
+        },
+    })
 
-    const handleVerifyPhone = () => {
-        sendVerificationSms().then(res => {
+    const { mutate: sendVerificationSmsMutate, isPending: isPendingSendVerificationSmsMutate } = useMutation({
+        mutationFn: () => sendVerificationEmail(),
+        onSuccess() {
             setIsOpened(true);
-        }).catch(err => {
-            console.log("err: ", err);
-        })
-    }
+        }
+    })
+
+    const { mutate: verifyEmailOrSMSMutate, isPending: isPendingVerifyEmailOrSMSMutate } = useMutation({
+        mutationFn: (payload: { server_code: string, client_code: string }) => verifyEmailOrSMS(payload),
+        onSuccess() {
+            setIsOpened(false);
+        },
+        onError() {
+            toast.error("Invalid code!");
+        }
+    })
 
     const handleSendVerifyPhone = () => {
         sendVerificationSms().then(res => {
@@ -46,28 +55,33 @@ export function NavBanner() {
         })
     }
 
-    const onVerifyPhone = (pin: string) => {
-        verifyEmailOrSMS({ server_code: pin, client_code: pin })
-            .then(res => {
-                setIsOpened(false);
-            }).catch(err => {
-                console.log("err: ", err);
-                toast.error("Invalid code!");
-            })
+    if (!!!session) {
+        return null;
+    } else if (session?.user.user.metadata.is_free_tier_subscriber === false) {
+        return null;
+    } else if (session?.user.user.metadata.is_email_verified === true && session?.user.user.metadata.is_phone_verified === true) {
+        return null
     }
-
-
-    if (!!!session || ((session?.user.user.metadata.is_email_verified || session?.user.user.metadata.is_phone_verified) && !session.user.user.metadata.is_free_tier_subscriber)) return null
 
     return (
         <div className="bg-[#F3DDCF] py-3">
             <Container>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row justify-between gap-4 items-center">
                     <p className="text-black font-medium">Please verify your information to be entered to win!</p>
 
-                    <div className="space-x-4">
-                        {!session?.user.user.metadata.is_phone_verified && <Button onClick={handleVerifyPhone}>Verify Phone</Button>}
-                        {!session?.user.user.metadata.is_email_verified && <Button onClick={handleVerifyEmail}>Verify Email</Button>}
+                    <div className="flex flex-col sm:flex-row [&>*]:flex-1 sm:[&>*]:flex-initial gap-4 w-full sm:w-auto">
+                        {!session?.user.user.metadata.is_phone_verified && (
+                            <Button onClick={() => sendVerificationSmsMutate()} disabled={isPendingSendVerificationSmsMutate}>
+                                Verify Phone
+                                {isPendingSendVerificationSmsMutate && <Spinner className="w-4 h-4 ml-4" />}
+                            </Button>
+                        )}
+                        {!session?.user.user.metadata.is_email_verified && (
+                            <Button onClick={() => sendVerificationEmailMutate()} disabled={isPendingSendVerificationEmailMutate}>
+                                Verify Email
+                                {isPendingSendVerificationEmailMutate && <Spinner className="w-4 h-4 ml-4" />}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </Container>
@@ -76,7 +90,8 @@ export function NavBanner() {
                 <DialogContent className="sm:max-w-[455px] z-[99999] [&_header]:hidden">
                     <PhoneVerificationContent
                         showHeader={false}
-                        onVerify={onVerifyPhone}
+                        isLoading={isPendingVerifyEmailOrSMSMutate}
+                        onVerify={(pin) =>  verifyEmailOrSMSMutate({ server_code: pin, client_code: pin })}
                         onReSend={handleSendVerifyPhone}
                         phone={session?.user.user.phone || ""}
                     />

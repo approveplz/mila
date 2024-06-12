@@ -11,9 +11,9 @@ import { getGiveaways } from "@/actions";
 import { GiveawayItem } from "@/entities";
 import { useCheckOutStore } from "@/store";
 import useCalculateEntries from "@/hooks/useEntries";
-import { Session } from "next-auth";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
-export function MinorGiveaways({ session }: { session: Session | null }) {
+export function MinorGiveaways() {
   const { minorGiveways: {
     title,
   } } = messages;
@@ -30,6 +30,7 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
   const closestMajorGiveaway = useCheckOutStore(state => state.closestGiveAwayDate)
 
   const entries = useCalculateEntries(pricingType as "subscription" | "bundle", products);
+  const { session } = useAuthContext();
   const isLoggedIn = !!session;
 
   const calculateGiveAwayDate = (minorGiveAwayDate: string) => {
@@ -57,7 +58,7 @@ export function MinorGiveaways({ session }: { session: Session | null }) {
                 </div>
               </div>}
 
-              {isLoggedIn && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[123px]  ">
+              {isLoggedIn && ((pricingType === 'bundle' && calculateGiveAwayDate(giveAway?.draw_time) || pricingType !== "bundle")) && <div className="absolute bg-white rounded-full px-2 top-4 left-[24px]  ">
                 <div className="font-semibold text-base leading-6">
                   {session?.user?.user?.metadata?.total_entries_count < 1000 ? session?.user?.user?.metadata?.total_entries_count : `${(session?.user?.user?.metadata?.total_entries_count / 1000).toFixed(1)}k`} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
                 </div>

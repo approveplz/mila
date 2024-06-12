@@ -16,6 +16,10 @@ type SelectCoupon = {
 
 export default function SelectCoupons({ coupon }: SelectCoupon) {
 
+  const handleUniqueLink = (url: string) => {
+    window.open(url, '_blank');
+  }
+
   const handleCopy = () => {
     if (coupon?.clip) {
       navigator.clipboard.writeText(coupon.clip);
@@ -23,14 +27,14 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
   };
 
   return (
-    <div className="flex flex-col gap-8 pt-[40px] pb-12">
+    <div className="flex flex-col gap-4 pb-6 ">
       <div className="flex flex-col gap-8 justify-center items-center">
         <Image
           src={coupon?.business?.logo ? coupon?.business?.logo?.file_url : "/images/peloton.png"}
           alt="logo"
           width={175}
           height={50}
-          className={`w-[175px] object-cover h-[100px] mt-10`}
+          className={` object-cover mt-10`}
 
         />
 
@@ -40,13 +44,24 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
             {coupon?.description}
           </div>
 
-          <div className="bg-[#E5E7EB] p-2 rounded-[64px] flex flex-row justify-between w-[250px] items-center">
-            <div className="font-medium text-base mx-auto leading-6 text-[#171614]">{coupon?.clip}</div>
+          {coupon?.clip && <div className="bg-[#E5E7EB] p-2 rounded-[64px] flex flex-row justify-between w-[250px] items-center">
+            <div className="font-medium text-xs mx-auto leading-6 text-[#171614]">{coupon?.clip}</div>
             <Button onClick={handleCopy} className="w-[117px] h-[48px] flex flex-row gap-2" variant="primary">
               <HiOutlineDocumentDuplicate size={16} />
               <span className="font-medium text-base leading-6"> Copy </span>
             </Button>
           </div>
+          }
+          {
+            !coupon?.clip && coupon?.link &&
+            <Button onClick={() => handleUniqueLink(coupon?.link as string)} className="w-fit h-[48px] flex flex-row gap-2" variant="primary">
+              <span className="font-medium text-base leading-6"> Mila Unique Link </span>
+            </Button>
+          }
+          {
+            !coupon?.clip && !coupon?.link && coupon?.instructions &&
+            <span className="font-medium text-base leading-6"> {coupon?.instructions} </span>
+          }
 
 
         </div>
@@ -81,31 +96,31 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
             switch (item.platform) {
               case 'website':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <WebsiteIcon />
                   </Link>
                 );
               case 'instagram':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <InstaIcon />
                   </Link>
                 );
               case 'facebook':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <FBIcon />
                   </Link>
                 );
               case 'tiktok':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <TikTokIcon />
                   </Link>
                 );
-                case 'x':
+              case 'x':
                 return (
-                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform}>
+                  <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <XIcon />
                   </Link>
                 );

@@ -1,6 +1,6 @@
 import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
-import { cn } from "@/utils";
+import { cn, formatPrice } from "@/utils";
 import { formatNumberWithCommas } from "@/utils/currency";
 import { VariantProps, cva } from "class-variance-authority"
 import { Session } from "next-auth";
@@ -133,7 +133,7 @@ export function SubscriptionInfoCard({
                                     </div>
                                 )} */}
                                     <h6 className="font-light text-5xl leading-[48px]">
-                                        ${isDiscounted ? discountedPrice : defaultPrice}
+                                        ${formatPrice(isDiscounted ? discountedPrice : defaultPrice)}
                                     </h6>
                                     <div className="font-normal text-base leading-6">
                                         Per Month

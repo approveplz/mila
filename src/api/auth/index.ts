@@ -103,12 +103,6 @@ export const getCoupons = (params: GetCouponsParams) => {
         .then(res => res.data);
 }
 
-export const getCouponDetail = (payload: GetCouponDetailParams) => {
-    return api
-        .get<CouponResponse>(`/coupons/v0/coupons/${payload.couponId}`)
-        .then(res => res.data);
-}
-
 export const getProfileDetails = (params: GetProfileParams) => {
     return api
         .get<GetProfileResponse>(`/users/v0/user/${params.profileId}/account`)
@@ -173,5 +167,11 @@ export const checkPaymentMethodExists = () => {
 export const setupBundlesBuying = (payload: SetupBundlesBuyingPayload) => {
     return api
         .put<SetupBundlesBuyingResponse>("/payments/v0/setup-bundles-buying", payload)
-        .then(res => res.data)
+        .then(res => res.data);
+}
+
+export const getCouponDetail = (payload: GetCouponDetailParams) => {
+    return api
+        .get<CouponResponse>(`/coupons/v0/coupons/${payload.couponId}`)
+        .then(res => res.data);
 }

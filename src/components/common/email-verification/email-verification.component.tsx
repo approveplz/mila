@@ -19,9 +19,9 @@ export function EmailVerificationContent({
         <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
             <header className="flex flex-col gap-8 items-center">
                 {type === "narrow" ? (
-                    <h2 className="text-3xl font-tt-ramillas text-center">Welcome {session?.user.user.full_name}!</h2>
+                    <h2 className="text-3xl font-tt-ramillas text-center">Welcome <br className="block sm:hidden" /> {session?.user.user.full_name}!</h2>
                 ) : (
-                    <h2 className="text-4xl font-tt-ramillas text-center">Welcome {session?.user.user.full_name}!</h2>
+                    <h2 className="text-4xl font-tt-ramillas text-center">Welcome <br className="block sm:hidden" /> {session?.user.user.full_name}!</h2>
                 )}
             </header>
 
@@ -34,7 +34,7 @@ export function EmailVerificationContent({
                 )}
 
                 <p>We have sent email to {session?.user.user.email} to confirm the validity of your email address. After receiving the email please follow the link provided to complete your registration.</p>
-                <div className="flex items-center">
+                <div className="flex flex-col items-center sm:flex-row">
                     <p>Didn&apos;t get the email?</p>
                     <button className="font-medium ml-1" onClick={onReSend}>Resend verification email</button>
                 </div>

@@ -17,16 +17,15 @@ import { useWidth } from "@/hooks";
 import useCalculateEntries from "@/hooks/useEntries";
 import { Session } from "next-auth";
 import { getProductPrice } from "@/utils";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
 type MajorGiveaways = {
-  session: Session | null,
   showHeading?: boolean
   productsArray?: Array<Product>
 }
 
 
-export default function MajorGiveaways({ session, showHeading = true, productsArray = [] }: MajorGiveaways) {
-
+export default function MajorGiveaways({ showHeading = true, productsArray = [] }: MajorGiveaways) {
   const { majorGiveaways: {
     heading, subHeading
   } } = messages;
@@ -38,6 +37,8 @@ export default function MajorGiveaways({ session, showHeading = true, productsAr
 
   const { width } = useWidth();
   const [amount, setAmount] = useState<number>(0);
+
+  const { session } = useAuthContext();
 
   const { data: giveAwayData, isLoading }: UseQueryResult<GiveawayItem[]> =
     useQuery({
@@ -222,7 +223,7 @@ export default function MajorGiveaways({ session, showHeading = true, productsAr
       }
 
       {
-        width >= 640 && <div className="flex flex-wrap gap-8 max-w-[1440px] ">
+        width >= 640 && <div className="flex flex-wrap gap-8 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {giveAwayData && giveAwayData?.map((giveAway, index) => (
               <div key={index} className="relative shadow-lg bg-white flex flex-col xl:flex-row !h-[265px] rounded-[20px]" >

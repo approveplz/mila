@@ -82,7 +82,8 @@ export function AuthForm() {
                             <FormControl>
                                 <Input
                                     id="email"
-                                    placeholder="e.g.JohnDoe"
+                                    type="email"
+                                    placeholder="e.g.johndoe@gmail.com"
                                     {...field}
                                 />
                             </FormControl>
@@ -101,7 +102,7 @@ export function AuthForm() {
                                 <Input
                                     id="password"
                                     type="password"
-                                    placeholder="e.g.JohnDoe"
+                                    placeholder="********"
                                     {...field}
                                 />
                             </FormControl>

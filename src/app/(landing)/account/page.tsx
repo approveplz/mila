@@ -9,9 +9,9 @@ export default async function Account() {
 
 
     return (
-        <>
+        <div className="mb-12">
             {isLoggedIn && <Header />}
             <Form session={session} />
-        </>
+        </div>
     )
 }

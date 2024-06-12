@@ -6,32 +6,56 @@ export const messages = {
     accordionData: [
       {
         value: "item-1",
-        Title: "HOW DOES MILA COLLECTIVE WORK?",
-        description: 'Mila Collective is Americas fastest growing benefits club. Becoming a member gives you access to amazing benefits with our partners, automatic entries into all our giveaway and exclusive opportunity to earn additional entries.',
+        Title: "What is Mila collective?",
+        description: "Mila Collective is America's fastest growing Luxury benefits and giveaway club! We have amazing discounts and offers with a heap of businesses, and to thank our members we have amazing giveaways!",
         isOpen: "close",
       },
       {
         value: "item-2",
-        Title: "CAN ANYONE IN THE UNITED STATES WIN?",
-        description: 'Anyone in the United States can become a member. Please refer to our Official Rules to see if you’re eligible to win. ',
+        Title: "What benefits do members get and why are there different tiers?",
+        description: 'Being a member means getting access to incredible benefits from our partner businesses. We are working hard to always be adding more partners and more benefits. Benefits include discounts, special offers, invitations to VIP events, promotions and much more. Members are also automatically entered into all giveaways that we do. We offer different membership packages, each one has different benefits and features. We also offer single bundles for limited access to the site.',
         isOpen: "close",
       },
       {
         value: "item-3",
-        Title: "HOW DO I KNOW I AM IN THE DRAW?",
-        description: 'After you become a member or enter you will receive an email with the number of your entries. When you are logged in you can also see your entries on the home page.',
+        Title: "How many giveaways does Mila do?",
+        description: 'Mila will always have a major prize a month, we will also do weekly giveaways and sometimes some surprise giveaways! Make sure you’re a member to automatically be entered.',
         isOpen: "close",
       },
       {
         value: "item-4",
-        Title: "HOW ARE WINNERS CHOSEN?",
-        description: 'All draws are completed through a random selection process. Random selection allows each entry equal probability of winning and eliminates bias. ',
+        Title: "Can anyone in the United states win?",
+        description: 'Anyone in the United States can become a member. Please refer to our Official Rules to to ensure you’re eligible to win.',
         isOpen: "close",
       },
       {
         value: "item-5",
-        Title: "IF I WIN, HOW WILL I BE CONTACTED?",
-        description: 'When you signup you’ll provide your contact details. If you’re the lucky winner you’ll be contacted within 24 hours of the giveaway drawing time. ',
+        Title: "How do I know I’m in the draw?",
+        description: 'After you become a member or enter you will receive an email with the number of your entries. When you are logged in you can also see your entries on the home page and in your account section which will break down your entries',
+        isOpen: "close",
+      },
+      {
+        value: "item-6",
+        Title: " How are winners chosen?",
+        description: 'All draws are completed through a random selection process. Random selection allows each entry equal probability of winning and eliminates bias.',
+        isOpen: "close",
+      },
+      {
+        value: "item-7",
+        Title: "If I win, how will I be contacted?",
+        description: 'When you signup you’ll provide your contact details. If you’re the lucky winner you’ll be contacted within 24 hours of the giveaway drawing time.',
+        isOpen: "close",
+      },
+      {
+        value: "item-8",
+        Title: "Can I win more than once?",
+        description: 'Yes! There is no limit to how many times you can win!',
+        isOpen: "close",
+      },
+      {
+        value: "item-9",
+        Title: "Do bundle days stack?",
+        description: 'Yes your access to the site will stack if you purchase multiple bundles.',
         isOpen: "close",
       },
     ],
@@ -58,7 +82,7 @@ export const messages = {
     headingA: "WELCOME ",
     headingB: "to MILA ",
     headingC: "COLLECTIVE",
-    subHeading: "Over 500+ stores available — rewards at your own pace.",
+    subHeading: "America's fastest growing rewards membership club",
     learnMore: "Learn more",
     signUp: "Sign up"
   },
@@ -66,16 +90,16 @@ export const messages = {
     heading: "HOW it WORKS",
     description: "Become a member and join Americas fastest growing benefits club. Get access to incredible discounts while being entered to win amazing prizes!",
     subscribe: {
-      title: "Become A Member",
-      description: "Become a member, or choose a bundle for limited-time access, to enjoy our amazing benefits!",
+      title: "1. Become A Member",
+      description: "Become a member, or choose a one-time package, to gain access to our amazing benefits!",
     },
     accessBenefits: {
-      title: "Access Mila Benefits",
-      description: "After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save $$$"
+      title: "2. Access Mila Benefits",
+      description: "After becoming a member get access to exclusive discounts and savings from your favorite retailers. Save big!"
     },
     giveAways: {
-      title: "Win Prizes",
-      description: "That’s it, you’re entered into all our giveaways. If you're a member, you'll be automatically entered into EVERY single giveaway!!!"
+      title: "3. Win Prizes",
+      description: "That's it, you're entered into all our giveaways, if you're a member you'll be automatically entered and never miss a giveaway!!!"
     }
   },
   benefits: {
@@ -96,7 +120,9 @@ export const messages = {
         subscribe: 'Subscribe',
         messageA: 'By subscribing you agree to with our',
         messageB: 'Privacy Policy',
-        messageC: 'and provide consent to receive updates from our company. See sweeps rules for details on our sweepstakes. No purchase necessary. Void Where Prohibited by Law. '
+        messageC: 'and provide consent to receive updates from our company. See',
+        messageD: ' sweeps rules',
+        messageE: ' for details on our sweepstakes. No purchase necessary. Void Where Prohibited by Law.'
       }
     },
     tradeMark: '© 2024 Mila Collective. All rights reserved.',

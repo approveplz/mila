@@ -23,13 +23,13 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <Brands />
-      <Benefits />
+      {/* <Brands /> */}
+      {/* <Benefits /> */}
       <HowItWorks />
       <GiveAway />
       <Pricing session={session} products={products} />
-      <MajorGiveaways productsArray={products} session={session} />
-      <MinorGiveaways session={session} />
+      <MajorGiveaways  />
+      <MinorGiveaways />
       <FollowUs />
       <FAQ />
     </>

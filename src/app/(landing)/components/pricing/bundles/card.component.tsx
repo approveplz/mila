@@ -1,7 +1,7 @@
 
 import { Button } from "@/components";
 import { messages } from "@/shared/constants/messages";
-import { cn } from "@/utils";
+import { cn, formatPrice } from "@/utils";
 import { formatNumberWithCommas } from "@/utils/currency";
 import { VariantProps, cva } from "class-variance-authority";
 import { Session } from "next-auth";
@@ -86,7 +86,7 @@ export function BundleCard({ cardData, selected }: bundleCard & VariantProps<typ
         <div className="flex flex-col gap-6 items-left w-full">
           <div className="flex flex-col items-left">
             <div className="select-none font-light text-5xl leading-[48px]">
-              ${cardData?.cost}
+              ${formatPrice(cardData?.cost)}
             </div>
             <div className="select-none font-normal text-base leading-6">
               {oneOff}

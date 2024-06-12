@@ -15,7 +15,7 @@ import {
 
 export const listUpcomingGiveaways = () => {
     return api
-        .get<ListUpcomingGiveawaysResponse>("/amoes/v0/upcoming-giveaways", { params: { secret: "F83C63FEB5E3E6768D86281E2B2F7" } })
+        .get<ListUpcomingGiveawaysResponse>("/amoes/v0/upcoming-giveaways", { params: { secret: process.env.NEXT_PUBLIC_API_SECRET  } })
         .then(res => res.data)
 }
 

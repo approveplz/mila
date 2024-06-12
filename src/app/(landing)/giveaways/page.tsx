@@ -20,7 +20,7 @@ export default async function Giveaways() {
         <div className="bg-[#F3F3F3] font-tt-ramillas text-center font-normal sm:font-light sm:text-5xl text-4xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[26px] sm:px-0">
           UPCOMING Major Giveaways
         </div>
-        {<MajorGiveaways showHeading={false} session={session} />}
+        <MajorGiveaways showHeading={false} />
       </div>
       <MinorGiveaways />
       <Pricing session={session} products={product} />

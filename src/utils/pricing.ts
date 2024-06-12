@@ -1,6 +1,7 @@
 import { Price } from "@/entities";
 
 export const getDefaultPrice = (prices: Array<Price>, is_free: boolean | undefined = false) => {
+    console.log('prices in default function->', prices)
     const price = [...prices].sort((priceA, priceB) => priceA.sort_order - priceB.sort_order)
         .find(price => price.is_default)
 
@@ -15,7 +16,6 @@ export const getDiscountedPrice = (prices: Array<Price>, is_free: boolean | unde
     const price = [...prices]
         .sort((priceA, priceB) => priceA.sort_order - priceB.sort_order)
         .find(price => price.is_discounted);
-
     if (price) {
         return price.unit_amount
     }
@@ -53,3 +53,5 @@ export const getProductPriceInfo = (prices: Array<Price>, is_free: boolean | und
         discountedPrice: discountedPrice
     }
 }
+
+export const formatPrice = (price: number) => price.toFixed(2);

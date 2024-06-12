@@ -6,7 +6,8 @@ import {
     FormField,
     FormItem,
     FormLabel,
-    FormMessage
+    FormMessage,
+    Spinner
 } from "@/components";
 import {
     HiMinus,
@@ -15,13 +16,19 @@ import {
 import { useStepperContext } from "../stepper/stepper.context";
 import { useFormContext } from "react-hook-form";
 import { useAuthStore, useCheckOutStore } from "@/store";
-import { confirmMembership, generateMembership } from '@/api/auth';
-import { useSession } from "next-auth/react";
-import { getProductPrice } from "@/utils";
+import { confirmMembership } from '@/api/auth';
+import { getProductPrice, getProductPriceInfo, setFormError } from "@/utils";
 import { Price, Product } from "@/entities";
 import { CheckoutProduct } from "@/store/checkout/checkout.types";
+import { useMutation } from "@tanstack/react-query";
+import { isApiError } from "@/api";
+import { toast } from "sonner";
+import { ConfirmMembershipPayload } from "@/api/auth/auth.types";
 
-type K = keyof {};
+type CouponFormData = {
+    coupon: string
+    isCouponApplied: boolean
+}
 
 function calculateTotal(products: Array<CheckoutProduct>) {
     const getPrice = (prices: Product["prices"]) => {
@@ -51,48 +58,57 @@ export function PaymentList() {
     const { nextStep } = useStepperContext();
     const { authUser } = useAuthStore();
     const { products, increaseProductQuantity, decreaseProductQuantity, removeProduct } = useCheckOutStore();
-    const form = useFormContext<{
-        coupon: string
-        hasCompletedMemberShip: boolean
-    }>();
-    const session = useSession();
+    const form = useFormContext<CouponFormData>();
+
+    const { mutate, isPending, isSuccess, data, reset } = useMutation({
+        mutationFn: (payload: ConfirmMembershipPayload) => confirmMembership(payload),
+        onSuccess(data, variables, context) {
+            form.setValue("isCouponApplied", true);
+        },
+        onError(error, variables, context) {
+            if (isApiError(error) && error.response) {
+                setFormError<CouponFormData>(error.response.data, form.setError)
+            } else {
+                toast.error("Something went wrong!");
+            }
+        },
+        mutationKey: ["ApplyCoupon"]
+    })
 
     const subscriptions = products.filter(product => product.data.type === "subscription");
     const bundles = products.filter(product => product.data.type === "bundle");
 
-    const handleNext = () => {
+    const handleRemoveCoupon = () => {
+        reset();
+    }
+
+    const onSubmit = (values: CouponFormData) => {
         if (authUser) {
-            const payload = {
+            mutate({
                 coupon: form.getValues("coupon") || null,
                 user: authUser.id,
                 prices: products
-                    .map(product => product.data.prices[0])
-                    .map(price => ({
-                        price: price.id,
-                        quantity: 1
-                    }))
-            }
+                    // .map(product => product.data.prices[0])
+                    // .map(price => ({
+                    //     price: price.id,
+                    //     quantity: 1
+                    // }))
+                    .map(product => {
+                        const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices);
 
-            confirmMembership(payload)
-                .then(res => {
-                    form.setValue("hasCompletedMemberShip", true);
-                    nextStep();
-                })
-                .catch(err => {
-                    const errors = err.response.data;
-
-                    if (errors && typeof errors === "object") {
-                        Object.entries(errors).forEach((error) => {
-                            const [key, val] = error as [K, [string]];
-
-                            if (key === "coupon") {
-                                form.setError(key, {
-                                    message: val[0]
-                                });
+                        if (!!discountedPrice) {
+                            return {
+                                price: discountedPrice.id,
+                                quantity: product.quantity
                             }
-                        });
-                    }
-                })
+                        } else {
+                            return {
+                                price: defaultPrice.id,
+                                quantity: product.quantity
+                            }
+                        }
+                    })
+            })
         }
     }
 
@@ -121,34 +137,64 @@ export function PaymentList() {
                                         </td>
                                         <PriceSelector
                                             prices={subscription.data.prices}
-                                            view={price => <td className="font-normal py-2" align="right">${price}</td>}
+                                            view={price => (
+                                                <td className="font-normal py-2" align="right">
+                                                    <div className="flex items-center w-full justify-end">
+                                                        {/* <p>10</p> */}
+                                                        <p>${price}</p>
+                                                    </div>
+                                                </td>
+                                            )}
                                         />
                                     </tr>
                                 ))}
 
                                 <tr>
                                     <td colSpan={3} className="pt-2 pb-8">
-                                        <Form {...form}>
-                                            <form>
-                                                <FormField
-                                                    control={form.control}
-                                                    name="coupon"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel htmlFor="coupon">Subscription Coupon Code</FormLabel>
-                                                            <FormControl>
-                                                                <Input
-                                                                    id="coupon"
-                                                                    placeholder="e.g.35639234"
-                                                                    {...field}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            </form>
-                                        </Form>
+                                        {data ? (
+                                            <Button
+                                                variant="fatal"
+                                                className="mt-2"
+                                                onClick={handleRemoveCoupon}
+                                                type="button"
+                                                full
+                                            >
+                                                Remove Coupon
+                                            </Button>
+                                        ) : (
+                                            <Form {...form}>
+                                                <form onSubmit={form.handleSubmit(onSubmit)}>
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="coupon"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel htmlFor="coupon">Subscription Coupon Code</FormLabel>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        id="coupon"
+                                                                        placeholder="e.g.35639234"
+                                                                        {...field}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+
+                                                    <Button
+                                                        variant="fatal"
+                                                        className="mt-2"
+                                                        type="submit"
+                                                        disabled={isPending}
+                                                        full
+                                                    >
+                                                        Apply Coupon
+                                                        {isPending && <Spinner className="w-4 h-4 ml-4" />}
+                                                    </Button>
+                                                </form>
+                                            </Form>
+                                        )}
                                     </td>
                                 </tr>
                             </>
@@ -180,7 +226,7 @@ export function PaymentList() {
                         </tr>
                         <tr>
                             <td className="font-bold pt-2" colSpan={2}>TOTAL:</td>
-                            <td className="font-bold pt-2" align="right">${calculateTotal(products)}</td>
+                            <td className="font-bold pt-2" align="right">${data ? data.total : calculateTotal(products)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -189,7 +235,7 @@ export function PaymentList() {
             <footer className="block sm:hidden">
                 <Button
                     full
-                    onClick={handleNext}
+                    onClick={nextStep}
                 >
                     Proceed to payment
                 </Button>

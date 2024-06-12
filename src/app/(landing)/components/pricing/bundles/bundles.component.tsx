@@ -152,7 +152,7 @@ export function Bundle({ bundles, session }: BundleProps) {
               ))}
           </Swiper>
         ) : (
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 w-full">
             {[...bundles]
               .sort((bundleA, bundleB) => bundleA.number_of_entries - bundleB.number_of_entries)
               .map(bundle => (
