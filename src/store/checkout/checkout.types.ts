@@ -11,6 +11,7 @@ type State = {
     products: Array<CheckoutProduct>
     pricingType?: "subscription" | "bundle"
     closestGiveAwayDate?: string
+    accountTab?: "info" | "entries"
 }
 
 type Actions = {
@@ -20,7 +21,8 @@ type Actions = {
     increaseProductQuantity: (id: string) => void
     decreaseProductQuantity: (id: string) => void
     setPricingType: (type: "subscription" | "bundle") => void
-    setClosestGiveAwayDate: (date:string) => void
+    setClosestGiveAwayDate: (date: string) => void
+    setAccountTab: (type: "info" | "entries") => void
 }
 
 export type CheckOutStore = State & Actions
