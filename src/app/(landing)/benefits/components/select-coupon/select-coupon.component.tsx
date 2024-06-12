@@ -16,6 +16,10 @@ type SelectCoupon = {
 
 export default function SelectCoupons({ coupon }: SelectCoupon) {
 
+  const handleUniqueLink = (url: string) => {
+    window.open(url, '_blank');
+  }
+
   const handleCopy = () => {
     if (coupon?.clip) {
       navigator.clipboard.writeText(coupon.clip);
@@ -40,13 +44,24 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
             {coupon?.description}
           </div>
 
-          <div className="bg-[#E5E7EB] p-2 rounded-[64px] flex flex-row justify-between w-[250px] items-center">
+          {coupon?.clip && <div className="bg-[#E5E7EB] p-2 rounded-[64px] flex flex-row justify-between w-[250px] items-center">
             <div className="font-medium text-xs mx-auto leading-6 text-[#171614]">{coupon?.clip}</div>
             <Button onClick={handleCopy} className="w-[117px] h-[48px] flex flex-row gap-2" variant="primary">
               <HiOutlineDocumentDuplicate size={16} />
               <span className="font-medium text-base leading-6"> Copy </span>
             </Button>
           </div>
+          }
+          {
+            !coupon?.clip && coupon?.link &&
+            <Button onClick={() => handleUniqueLink(coupon?.link as string)} className="w-fit h-[48px] flex flex-row gap-2" variant="primary">
+              <span className="font-medium text-base leading-6"> Mila Unique Link </span>
+            </Button>
+          }
+          {
+            !coupon?.clip && !coupon?.link && coupon?.instructions &&
+            <span className="font-medium text-base leading-6"> {coupon?.instructions} </span>
+          }
 
 
         </div>
@@ -103,7 +118,7 @@ export default function SelectCoupons({ coupon }: SelectCoupon) {
                     <TikTokIcon />
                   </Link>
                 );
-                case 'x':
+              case 'x':
                 return (
                   <Link href={item?.url} className="items-center cursor-pointer" key={item.platform} target="_blank">
                     <XIcon />

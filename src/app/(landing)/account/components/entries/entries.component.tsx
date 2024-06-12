@@ -2,6 +2,7 @@
 import { getProfileEntries } from "@/api/auth";
 import { ProfileEntryResponse } from "@/api/auth/auth.types";
 import { Button, Spinner } from "@/components";
+import { useCheckOutStore } from "@/store";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
@@ -13,6 +14,7 @@ export default function Entries({ session }: { session: Session | null }) {
 
     const isLoggedIn = !!session;
     const router = useRouter();
+    const { setPricingType } = useCheckOutStore();
 
     const { data: entryDetails, isLoading: isProfileLoading }: UseQueryResult<ProfileEntryResponse> =
         useQuery({
@@ -32,6 +34,7 @@ export default function Entries({ session }: { session: Session | null }) {
     }
 
     const getMoreEntries = () => {
+        setPricingType("bundle")
         router.push('/#pricing');
     }
 
