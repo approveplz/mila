@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Drawer, DrawerContent } from "@/components";
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Drawer, DrawerContent, Spinner } from "@/components";
 import { useCheckOutStore } from "@/store";
 import { toast } from "sonner";
 import { buyAdditionalBundles, checkInvoicePaymentStatus, checkPaymentMethodExists } from "@/api/auth";
@@ -36,7 +36,9 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
       }
     }),
     onSuccess(data, variables, context) {
+      triggerRef.current?.click();
       toast("Additional bundle bought Successfuly")
+      window.location.reload()
     },
     onError(error, variables, context) {
       toast.error("Error occured while buying additional bundles")
@@ -61,7 +63,6 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
       if (data) {
         checkInvoicePaymentStatusMutate({ invoiceId: data.invoice })
       } else {
-        console.log("payment flow ====> ");
         triggerRef.current?.click();
         setShowPaymentDialog(true);
       }
@@ -91,69 +92,6 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
           }
         })
     })
-
-    // setIsLoading(true);
-
-    // buyAdditionalBundles(session?.user?.user?.id as string, { prices: items }).then(res => {
-    //   toast("Invoice has been generated, please wait while bundles are being bought.", {
-    //     action: {
-    //       label: "X",
-    //       onClick: () => console.log("Undo"),
-    //     },
-    //   })
-
-    //   const invoiceId = res?.invoice;
-    //   let attempts = 0;
-    //   const maxAttempts = 12;
-
-    //   const interval = setInterval(() => {
-    //     checkInvoicePaymentStatus({ invoiceId })
-    //       .then(paymentStatus => {
-    //         if (paymentStatus.is_paid) {
-    //           clearInterval(interval);
-    //           toast("Additional bundle bought Successfuly", {
-    //             action: {
-    //               label: "X",
-    //               onClick: () => console.log("Undo"),
-    //             },
-    //           })
-    //           setIsLoading(false);
-    //           clearProducts("all");
-    //         } else {
-    //           attempts += 1;
-    //           if (attempts >= maxAttempts) {
-    //             clearInterval(interval);
-    //             toast("Error occured while buying additional bundles", {
-    //               action: {
-    //                 label: "X",
-    //                 onClick: () => console.log("Undo"),
-    //               },
-    //             })
-    //             setIsLoading(false);
-    //           }
-    //         }
-    //       })
-    //       .catch(error => {
-    //         clearInterval(interval);
-    //         toast("Error occured while buying additional bundles", {
-    //           action: {
-    //             label: "X",
-    //             onClick: () => console.log("Undo"),
-    //           },
-    //         })
-    //         setIsLoading(false);
-    //       });
-    //   }, 2000);
-    // }).catch(error => {
-    //   console.error('Error checking payment status:', error);
-    //   toast("Error occured while generating invoice", {
-    //     action: {
-    //       label: "X",
-    //       onClick: () => console.log("Undo"),
-    //     },
-    //   })
-
-    // })
   }
 
   return (
@@ -174,6 +112,7 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
             onClick={buyBundles}
           >
             Confirm
+            {isPending && <Spinner className="w-4 h-4 ml-4" />}
           </Button>
         </DialogContent>
       </Dialog>
@@ -182,7 +121,10 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
         dismissible={false}
         nested={true}
         open={showPaymentDialog}
-        onOpenChange={(state) => setShowPaymentDialog(state)}
+        onOpenChange={(state) => {
+          setShowPaymentDialog(state)
+          window.location.reload()
+        }}
       >
         <DrawerContent className="bg-white h-full rounded-none z-[9999] max-h-screen">
           <BuyBundlePayment />

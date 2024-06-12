@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Button, Input, Label, Spinner } from '@/components';
+import { Button, DrawerClose, Input, Label, Spinner } from '@/components';
 import {
     CardNumberElement,
     CardExpiryElement,
@@ -164,6 +164,7 @@ PaymentFormGroup.displayName = "PaymentFormGroup";
 
 export function PaymentForm() {
     const { session } = useCurrentSession();
+    const triggerRef = React.useRef<HTMLButtonElement | null>(null);
 
     const { mutate: checkInvoicePaymentStatusMutate, mutateAsync: checkInvoicePaymentStatusAsyncMutate } = useMutation({
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload).then(res => {
@@ -174,9 +175,9 @@ export function PaymentForm() {
             }
         }),
         async onSuccess(data, variables) {
-            if (session) {
-                // return null;
-            }
+            toast("Additional bundle bought Successfuly");
+            triggerRef.current?.click();
+
         },
         retry(failureCount, error) {
             if (failureCount > 3) return false;
@@ -197,9 +198,8 @@ export function PaymentForm() {
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
         async onSuccess(data, variables) {
             if (data.is_paid) {
-                if (session) {
-                    // return null;
-                }
+                toast("Additional bundle bought Successfuly");
+                triggerRef.current?.click();
             } else {
                 return markLatestInvoicePaidAsyncMutate(variables).then(res => res.processing)
             }
@@ -226,18 +226,8 @@ export function PaymentForm() {
     }, [])
 
     const onPayment = React.useCallback(async (stripe: Stripe, elements: StripeElements) => {
-        // create a payment method
-        const { paymentMethod } = await stripe.createPaymentMethod({
-            type: "card",
-            card: elements.getElement(CardNumberElement)!,
-            // billing_details: {
-            //     name,
-            //     email,
-            // },
-        })
-
         trackPromise(setupBundlesBuying({
-            payment_method: paymentMethod?.id as string,
+            payment_method: null,
             prices: getProductsPrices()
         }).then(async (res) => {
             const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
@@ -246,7 +236,6 @@ export function PaymentForm() {
                 }
             })
 
-            console.log("paymentIntent: ", paymentIntent);
             if (error) {
                 toast.error(error.message)
             } else {
@@ -269,6 +258,8 @@ export function PaymentForm() {
                     <p className="text-lg leading-[27px] font-normal">You will be charged $99.96</p>
                 </div>
             </div>
+
+            <DrawerClose ref={triggerRef} />
 
             <PaymentFormGroup
                 paymentCallBack={onPayment}

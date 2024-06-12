@@ -267,7 +267,7 @@ export type CheckInvoicePaymentStatusResponse = {
 }
 
 export type SetupBundlesBuyingPayload = {
-    payment_method: string
+    payment_method: string | null
     prices: Array<{
         price: string
         quantity: number
