@@ -66,9 +66,12 @@ export default function Entries({ session }: { session: Session | null }) {
                                 </div>
 
                             </div>
-                            <div className="font-medium text-xs leading-4 text-[#EF4444]">
-                                *Expire on {getDayOfMonth(entryDetails?.entries?.subscription_expiry as string)}
-                            </div>
+                            {(entryDetails?.entries?.subscription_count
+                                && entryDetails?.entries?.subscription_count > 0 &&
+                                entryDetails?.entries?.subscription_expiry) ?
+                                <div className="font-medium text-xs leading-4 text-[#EF4444]">
+                                    *Expire on {getDayOfMonth(entryDetails?.entries?.subscription_expiry as string)}
+                                </div> : null}
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex flex-row gap-2 items-center">
@@ -84,9 +87,10 @@ export default function Entries({ session }: { session: Session | null }) {
 
                             </div>
 
-                            <div className="font-medium text-xs leading-4 text-[#EF4444]">
-                                *Expire on {getDayOfMonth(entryDetails?.entries?.bundle_expiry as string)}
-                            </div>
+                            {(entryDetails?.entries?.bundle_count && entryDetails?.entries?.bundle_count > 0 && entryDetails?.entries?.bundle_expiry) ?
+                                <div className="font-medium text-xs leading-4 text-[#EF4444]">
+                                    *Expire on {getDayOfMonth(entryDetails?.entries?.bundle_expiry as string)}
+                                </div> : null}
                         </div>
 
                         <hr className="w-full border border-[#D9D9D9]" />
