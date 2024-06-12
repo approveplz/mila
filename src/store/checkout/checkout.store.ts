@@ -11,9 +11,15 @@ export const useCheckOutStore = create<CheckOutStore>()(
                 products: [],
                 pricingType: "subscription",
                 closestGiveAwayDate: "",
+                accountTab: 'info',
                 setPricingType(type: "subscription" | "bundle") {
                     set(state => {
                         state.pricingType = type;
+                    });
+                },
+                setAccountTab(type: "entries" | "info") {
+                    set(state => {
+                        state.accountTab = type;
                     });
                 },
                 setClosestGiveAwayDate(date: string) {
