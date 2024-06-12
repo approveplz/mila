@@ -17,7 +17,7 @@ const stepsMetaWithPayment: Array<StepperComponent> = [
 const stepsMeta: Array<StepperComponent> = [
     AuthStep,
     VerifyEmail,
-    VerifyPhone,
+    // VerifyPhone,
     Finish
 ];
 

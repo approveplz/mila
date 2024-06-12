@@ -8,6 +8,7 @@ import { HiOutlineEnvelope, HiXMark } from "react-icons/hi2";
 import { sendVerificationEmail, sendVerificationSms, verifyEmailOrSMS } from "@/api/auth";
 import { useMutation } from "@tanstack/react-query";
 
+const isPhoneVerfied = true;
 export function NavBanner() {
     const { session } = useCurrentSession();
     const [isOpened, setIsOpened] = React.useState(false);
@@ -59,7 +60,7 @@ export function NavBanner() {
         return null;
     } else if (session?.user.user.metadata.is_free_tier_subscriber === false) {
         return null;
-    } else if (session?.user.user.metadata.is_email_verified === true && session?.user.user.metadata.is_phone_verified === true) {
+    } else if (session?.user.user.metadata.is_email_verified === true && isPhoneVerfied === true) {
         return null
     }
 
@@ -70,7 +71,7 @@ export function NavBanner() {
                     <p className="text-black font-medium">Please verify your information to be entered to win!</p>
 
                     <div className="flex flex-col sm:flex-row [&>*]:flex-1 sm:[&>*]:flex-initial gap-4 w-full sm:w-auto">
-                        {!session?.user.user.metadata.is_phone_verified && (
+                        {!isPhoneVerfied && (
                             <Button onClick={() => sendVerificationSmsMutate()} disabled={isPendingSendVerificationSmsMutate}>
                                 Verify Phone
                                 {isPendingSendVerificationSmsMutate && <Spinner className="w-4 h-4 ml-4" />}
