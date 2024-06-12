@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components";
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Drawer, DrawerContent } from "@/components";
 import { useCheckOutStore } from "@/store";
 import { toast } from "sonner";
 import { buyAdditionalBundles, checkInvoicePaymentStatus, checkPaymentMethodExists } from "@/api/auth";
@@ -9,11 +9,13 @@ import { useCurrentSession } from "@/hooks";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { BuyAdditionalBundlesPayload, GetCheckInvoicePaymentStatusParams } from "@/api/auth/auth.types";
 import { getProductPriceInfo, withAsync } from "@/utils";
+import { BuyBundlePayment } from "./buy-bundle-payment.component";
 
 export function BuyBundleDialog({ children }: React.PropsWithChildren) {
   const { products, clearProducts } = useCheckOutStore();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { session } = useCurrentSession();
+  const [showPaymentDialog, setShowPaymentDialog] = React.useState(false);
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
 
   const { mutateAsync: checkPaymentMethodExistMutate } = useMutation({
     mutationFn: () => checkPaymentMethodExists(),
@@ -48,7 +50,6 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
   })
 
   const { mutate: buyAdditionalBundlesMutate, isPending } = useMutation({
-    // mutationFn: (payload: BuyAdditionalBundlesPayload) => buyAdditionalBundles(payload),
     mutationFn: (payload: BuyAdditionalBundlesPayload) => checkPaymentMethodExistMutate().then(res => {
       if (res.exists) {
         return buyAdditionalBundles(payload)
@@ -61,6 +62,8 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
         checkInvoicePaymentStatusMutate({ invoiceId: data.invoice })
       } else {
         console.log("payment flow ====> ");
+        triggerRef.current?.click();
+        setShowPaymentDialog(true);
       }
     },
     onError(error, variables, context) {
@@ -154,24 +157,37 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger>
-        {children}
-      </DialogTrigger>
-      <DialogContent className="sm:w-[455px] w-[329px] z-[999999]">
-        <DialogHeader>
-          <DialogTitle className="font-normal text-[32px] leading-[38.4px]">Confirmation</DialogTitle>
-        </DialogHeader>
-        <div className="leading-9 text-xl font-normal">
-          Are you sure you want to buy these additional bundles ?
-        </div>
-        <Button
-          disabled={isPending}
-          onClick={buyBundles}
-        >
-          Confirm
-        </Button>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog>
+        <DialogTrigger ref={triggerRef}>
+          {children}
+        </DialogTrigger>
+        <DialogContent className="sm:w-[455px] w-[329px] z-[999999]">
+          <DialogHeader>
+            <DialogTitle className="font-normal text-[32px] leading-[38.4px]">Confirmation</DialogTitle>
+          </DialogHeader>
+          <div className="leading-9 text-xl font-normal">
+            Are you sure you want to buy these additional bundles ?
+          </div>
+          <Button
+            disabled={isPending}
+            onClick={buyBundles}
+          >
+            Confirm
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      <Drawer
+        dismissible={false}
+        nested={true}
+        open={showPaymentDialog}
+        onClose={() => {}}
+      >
+        <DrawerContent className="bg-white h-full rounded-none z-[9999] max-h-screen">
+          <BuyBundlePayment />
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }

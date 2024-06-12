@@ -6,8 +6,8 @@ export async function SignUpDrawer() {
     const session = await auth();
 
     return (
-        <Provider>
+        <>
             <Stepper session={session} />
-        </Provider>
+        </>
     )
 }
