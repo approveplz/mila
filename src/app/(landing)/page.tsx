@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
+      <Header  session={session}/>
       {/* <Brands /> */}
       {/* <Benefits /> */}
       <HowItWorks />
