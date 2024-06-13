@@ -244,3 +244,36 @@ export type SubscribeToNewsletterPayload = {
 export type SubscribeToNewsletterResponse = {
     email: string
 }
+
+export type BuyAdditionalBundlesPayload = {
+    userId: string
+    prices: Array<{
+        price: string
+        quantity: number
+    }>
+}
+
+export type BuyAdditionalBundlesResponse = {
+    invoice: string
+}
+
+export type GetCheckInvoicePaymentStatusParams = {
+    invoiceId: string
+}
+
+export type CheckInvoicePaymentStatusResponse = {
+    id: string,
+    is_paid: boolean
+}
+
+export type SetupBundlesBuyingPayload = {
+    payment_method: string | null
+    prices: Array<{
+        price: string
+        quantity: number
+    }>
+}
+
+export type SetupBundlesBuyingResponse = {
+    client_secret: string
+}

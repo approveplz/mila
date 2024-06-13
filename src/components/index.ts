@@ -34,3 +34,4 @@ export * from "./common/thank-you/thank-you.component"
 // Overlay
 export * from "./overlay/signup-drawer/signup-drawer.component"
 export * from "./overlay/amoe-drawer/amoe-drawer.component"
+export * from "./overlay/buy-bundle-dialog/buy-bundle-dialog.component"
