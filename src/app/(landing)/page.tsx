@@ -28,7 +28,7 @@ export default async function Home() {
       <HowItWorks />
       <GiveAway />
       <Pricing session={session} products={products} />
-      <MajorGiveaways  />
+      <MajorGiveaways productsArray={products} />
       <MinorGiveaways />
       <FollowUs />
       <FAQ />

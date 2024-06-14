@@ -44,7 +44,7 @@ export function MinorGiveaways() {
         {title}
       </div> */}
 
-      {giveAwayData && <div className="max-w-full flex flex-col gap-3 items-left">
+      {giveAwayData && <div className="max-w-full flex flex-col gap-3 items-center">
         <div className="flex sm:flex-wrap overflow-x-auto max-w-full sm:max-w-[1440px] sm:justify-left  items-left gap-4 px-6 sm:px-0 pb-8 pt-2">
           {giveAwayData?.slice(0,8)?.map((giveAway, index) => (
             <div key={index} className="relative flex-shrink-0 shadow-lg rounded-[30px] w-[262px] flex flex-col gap-4">
@@ -80,7 +80,7 @@ export function MinorGiveaways() {
                   <div className="font-semibold text-xs leading-6">MINOR</div>
                 </div>
 
-                <div className="font-bold text-[14px] leading-[20px] text-[#54423A]">
+                <div className="font-semibold text-[24px] leading-8 text-[#171614]  ">
                   {giveAway?.brand}
                 </div>
 
