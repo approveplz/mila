@@ -38,9 +38,9 @@ export default async function RootLayout({
           {children}
           {auth}
         </Providers>
-        <GoogleTagManager gtmId="GTM-KJWWCPKP" />
         <Toaster />
       </body>
+      <GoogleTagManager gtmId="GTM-KJWWCPKP" />
     </html>
   );
 }
