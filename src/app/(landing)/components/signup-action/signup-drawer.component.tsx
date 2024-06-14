@@ -11,7 +11,7 @@ import { HiArrowUpRight } from "react-icons/hi2";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { useRouter } from "next/navigation";
 import useTotalAmount from "@/hooks/useTotalAmount";
-import { sendGTMEvent } from '@next/third-parties/google'
+import { sendGTMEvent } from '@/third-parties/google'
 
 
 export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
@@ -21,7 +21,8 @@ export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
 
     const triggerGTMEvent = () => {
         console.log('in GTM event');
-        sendGTMEvent({ event: 'begin_checkout', value: { checkout_total: totalAmount,  }  })
+        sendGTMEvent(
+            { event: 'begin_checkout', value: { checkout_total: totalAmount, currency: 'USD'  }  })
     }
 
     return (
