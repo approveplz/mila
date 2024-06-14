@@ -14,7 +14,9 @@ import { sendVerificationEmail } from "@/api/auth";
 import { HiOutlineHeart } from "react-icons/hi2";
 import { useStepperContext } from "../stepper/stepper.context";
 import useTotalAmount from "@/hooks/useTotalAmount";
-import { sendGTMEvent } from '@next/third-parties/google'
+import { sendGTMEvent } from '@next/third-parties/google';
+import { useEffect } from "react";
+
 
 
 export function Finish() {
@@ -37,7 +39,7 @@ export function Finish() {
 export function FinishPayment({ session }: StepperComponentProps) {
     const { nextStep } = useStepperContext();
     const { totalAmount } = useTotalAmount();
-
+    
     const handleVerifyEmail = () => {
         sendVerificationEmail().then(res => {
             console.log("res: ", res);
@@ -45,7 +47,13 @@ export function FinishPayment({ session }: StepperComponentProps) {
             console.log("err: ", err);
         })
     }
+    // ...
 
+    useEffect(() => {
+        sendGTMEvent({ event: 'subscribed', value: { checkout_total: totalAmount } });
+    }, [totalAmount]);
+
+    // ...
     return (
         <Container>
             <CentralizedContent className="py-16 sm:py-0" fullHeight={true}>
@@ -63,9 +71,7 @@ export function FinishPayment({ session }: StepperComponentProps) {
                     <div className="min-w-[304px] self-center hidden sm:flex">
                         <DrawerClose className="w-full">
                             <Button
-                                onClick={() => {
-                                    sendGTMEvent({ event: 'subscribed', value: { checkout_total: totalAmount} });
-                                }} full>Home</Button>
+                                full>Home</Button>
                         </DrawerClose>
                     </div>
 
