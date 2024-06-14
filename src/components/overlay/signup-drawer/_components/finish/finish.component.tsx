@@ -51,7 +51,7 @@ export function FinishPayment({ session }: StepperComponentProps) {
 
     useEffect(() => {
         sendGTMEvent({ event: 'subscribed', value: { checkout_total: totalAmount } });
-    }, []);
+    }, [totalAmount]);
 
     // ...
     return (
