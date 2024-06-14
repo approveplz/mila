@@ -7,6 +7,8 @@ import { messages } from "@/shared/constants/messages";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { useState } from "react";
+import MuxPlayer from '@mux/mux-player-react';
+
 
 export function Header({ session }: { session: Session | null }) {
   const { header: {
@@ -29,7 +31,89 @@ export function Header({ session }: { session: Session | null }) {
 
   return (
     <header>
-      {/* <div className="relative">
+      <div className="relative">
+        <div className="w-full">
+          {width > 640 ? <MuxPlayer
+            playbackId="BGEwuTu7kUeXVzTLZmhkHcmsi1t3VXQu8vrxYIItLCo"
+            className="z-70"
+            // metadata={{
+            //   video_id: 'video-id-123456',
+            //   video_title: 'Bick Buck Bunny',
+            //   viewer_user_id: 'user-id-bc-789',
+            // }}
+            loop={true}
+            muted={true}
+            autoPlay={true}
+            streamType="on-demand"
+          /> :
+            <MuxPlayer
+              playbackId="qQjEtUKAgRKp02MXrIt4kUSFPSI3a8NZQG51a6lvhJJU"
+              className="z-70"
+              // metadata={{
+              //   video_id: 'video-id-123456',
+              //   video_title: 'Bick Buck Bunny',
+              //   viewer_user_id: 'user-id-bc-789',
+              // }}
+              loop={true}
+              muted={true}
+              autoPlay={true}
+              streamType="on-demand"
+            />}
+      </div>
+        
+        <div className="z-80 absolute w-full h-[573px] sm:h-[900px] top-0 bg-transparent">
+          {/* Your content here */}
+        </div>
+
+        <div id="content" className="-top-[75px] absolute z-90 sm:left-[231px] sm:top-[286px] flex items-center justify-center">
+          <div className="sm:w-[58%] mx-[33px] my-[253px] sm:my-0 sm:mx-0 text-center flex flex-col gap-4 ">
+            <div className="font-light text-4xl sm:text-7xl leading-[43px] sm:leading-[64.8px] text-white font-tt-ramillas">
+              {headingA} <span className="italic">{headingB}</span> {headingC}
+            </div>
+            <div className="font-normal text-[18px] text-white leading-[30px] ">
+              {subHeading}
+            </div>
+
+            {!session && (
+              <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mt-4">
+                <Button className="h-[40px]" variant="secondary" asChild>
+                  <Link href="/#how-it-works">
+                    {learnMore}
+                  </Link>
+                </Button>
+                <Button className="h-[40px]" variant="secondary-outline" asChild>
+                  <Link href="/#pricing">
+                    {signUp}
+                  </Link>
+                </Button>
+
+                <AmoeDrawer />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </header >
+
+
+  )
+}
+
+
+
+
+
+
+{/* </div> */ }
+
+
+{/* </div> */ }
+
+
+
+
+
+{/* <div className="relative">
         {width > 640 ? <video
           className="z-80"
           id="background-video"
@@ -65,8 +149,8 @@ export function Header({ session }: { session: Session | null }) {
 
         } */}
 
-        {/* sm:bg-[url('/images/headerScreen.png')] bg-[url('/images/headerMobile.jpg')]  sm:h-[900px] bg-no-repeat bg-cover  sm:bg-top h-[770px] */}
-        {/* {videoLoaded && <div id="content" className="-top-[75px] absolute z-90 sm:left-[231px] sm:top-[286px] flex items-center justify-center">
+{/* sm:bg-[url('/images/headerScreen.png')] bg-[url('/images/headerMobile.jpg')]  sm:h-[900px] bg-no-repeat bg-cover  sm:bg-top h-[770px] */ }
+{/* {videoLoaded && <div id="content" className="-top-[75px] absolute z-90 sm:left-[231px] sm:top-[286px] flex items-center justify-center">
           <div className="sm:w-[58%] mx-[33px] my-[253px] sm:my-0 sm:mx-0 text-center flex flex-col gap-4 ">
             <div className="font-light text-4xl sm:text-7xl leading-[43px] sm:leading-[64.8px] text-white font-tt-ramillas">
               {headingA} <span className="italic">{headingB}</span> {headingC}
@@ -94,7 +178,12 @@ export function Header({ session }: { session: Session | null }) {
           </div>
         </div>}
       </div> */}
-      <div className="sm:bg-[url('/images/headerScreen.png')] bg-[url('/images/headerMobile.jpg')] sm:h-[900px] bg-no-repeat bg-cover h-[770px] sm:bg-top flex items-center justify-center">
+
+{/* <div className="sm:bg-[url('/images/headerScreen.png')] bg-[url('/images/headerMobile.jpg')] sm:h-[900px] bg-no-repeat bg-cover h-[770px] sm:bg-top flex items-center justify-center">
+
+
+        
+
         <div className="sm:w-[43%] mx-[33px] my-[253px] sm:my-0 sm:mx-0 text-center flex flex-col gap-4 ">
           <div className="font-light text-4xl sm:text-7xl leading-[43px] sm:leading-[64.8px] text-white font-tt-ramillas">
             {headingA} <span className="italic">{headingB}</span> {headingC}
@@ -102,7 +191,7 @@ export function Header({ session }: { session: Session | null }) {
           <div className="font-normal text-[18px] text-white leading-[30px] ">
             {subHeading}
           </div>
-          
+
           {!session && (
             <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mt-4">
               <Button className="h-[40px]" variant="secondary" asChild>
@@ -120,7 +209,4 @@ export function Header({ session }: { session: Session | null }) {
             </div>
           )}
         </div>
-      </div>
-    </header>
-  )
-}
+      </div> */}
