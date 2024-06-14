@@ -88,23 +88,22 @@ export function PhoneStep({ actions }: AmoeStepType) {
     const isValidPhone = async () => {
         const { response: validPhone } = await withAsync(() => trigger("phone"));
 
-        // if (validPhone) {
-        //     const { phone, email, giveaway } = getValues();
-        //     const { response, error } = await withAsync(() => checkEligibilityMutateAsync({ phone: `1 ${phone}`, giveaway: giveaway.id, secret: process.env.NEXT_PUBLIC_API_SECRET! }));
+        if (validPhone) {
+            const { phone, email, giveaway } = getValues();
+            const { response, error } = await withAsync(() => checkEligibilityMutateAsync({ phone: `1 ${phone}`, giveaway: giveaway.id, secret: process.env.NEXT_PUBLIC_API_SECRET! }));
 
-        //     if (response?.is_eligible) {
-        //         const { response } = await withAsync(() => verifyMutateAsync({ email, phone: `1 ${phone}`, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
+            if (response?.is_eligible) {
+                const { response } = await withAsync(() => verifyMutateAsync({ email, phone: `1 ${phone}`, secret: process.env.NEXT_PUBLIC_API_SECRET! }))
 
-        //         if (response) {
-        //             setShouldVerify(true);
-        //         }
-        //     } else {
-        //         setShowModalWarning(true)
-        //     }
-        // }
+                if (response) {
+                    setShouldVerify(true);
+                }
+            } else {
+                setShowModalWarning(true)
+            }
+        }
 
-        // return false
-        return true
+        return false
     };
 
     const isValidCode = async () => {

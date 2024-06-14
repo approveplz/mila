@@ -41,17 +41,13 @@ export function VerifyEmail({ session }: StepperComponentProps) {
                 <EmailVerificationContent
                     type="wider"
                     onReSend={handleVerifyEmail}
-                    // action={checkoutFlow === "free" && (
-                    //     <Button full onClick={() => verifyPhoneMutate()} disabled={isPending}>
-                    //         Verify Your Phone Number
-                    //         {isPending && <Spinner className="w-4 h-4 ml-4" />}
-                    //     </Button>
-                    // )}
                     action={checkoutFlow === "free" && (
-                        <Button full onClick={nextStep}>
-                            Next
+                        <Button full onClick={() => verifyPhoneMutate()} disabled={isPending}>
+                            Verify Your Phone Number
+                            {isPending && <Spinner className="w-4 h-4 ml-4" />}
                         </Button>
                     )}
+
                 />
             </CentralizedContent>
         </Container>
