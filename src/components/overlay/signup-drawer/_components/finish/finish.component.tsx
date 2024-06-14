@@ -13,9 +13,13 @@ import { StepperComponentProps } from "../stepper/stepper.types";
 import { sendVerificationEmail } from "@/api/auth";
 import { HiOutlineHeart } from "react-icons/hi2";
 import { useStepperContext } from "../stepper/stepper.context";
+import useTotalAmount from "@/hooks/useTotalAmount";
+import { sendGTMEvent } from '@next/third-parties/google'
+
 
 export function Finish() {
     const router = useRouter();
+
 
     return (
         <Container>
@@ -32,6 +36,7 @@ export function Finish() {
 
 export function FinishPayment({ session }: StepperComponentProps) {
     const { nextStep } = useStepperContext();
+    const { totalAmount } = useTotalAmount();
 
     const handleVerifyEmail = () => {
         sendVerificationEmail().then(res => {
@@ -57,7 +62,11 @@ export function FinishPayment({ session }: StepperComponentProps) {
 
                     <div className="min-w-[304px] self-center hidden sm:flex">
                         <DrawerClose className="w-full">
-                            <Button full>Home</Button>
+                            <Button
+                                onClick={() => {
+                                    sendGTMEvent({ event: 'buttonClicked', value: `${totalAmount}` })
+                                    sendGTMEvent({ event: 'buttonClicked', value: `USD` })
+                                }} full>Home</Button>
                         </DrawerClose>
                     </div>
 
