@@ -31,7 +31,7 @@ export function NavBanner() {
     })
 
     const { mutate: sendVerificationSmsMutate, isPending: isPendingSendVerificationSmsMutate } = useMutation({
-        mutationFn: () => sendVerificationEmail(),
+        mutationFn: () => sendVerificationSms(),
         onSuccess() {
             setIsOpened(true);
         }
@@ -46,14 +46,6 @@ export function NavBanner() {
             toast.error("Invalid code!");
         }
     })
-
-    const handleSendVerifyPhone = () => {
-        sendVerificationSms().then(res => {
-            console.log("res: ", res);
-        }).catch(err => {
-            console.log("err: ", err);
-        })
-    }
 
     if (!!!session) {
         return null;
@@ -92,7 +84,7 @@ export function NavBanner() {
                         showHeader={false}
                         isLoading={isPendingVerifyEmailOrSMSMutate}
                         onVerify={(pin) =>  verifyEmailOrSMSMutate({ server_code: pin, client_code: pin })}
-                        onReSend={handleSendVerifyPhone}
+                        onReSend={sendVerificationSmsMutate}
                         phone={session?.user.user.phone || ""}
                     />
                 </DialogContent>
