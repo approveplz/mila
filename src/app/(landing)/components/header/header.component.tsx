@@ -6,6 +6,7 @@ import { useWidth } from "@/hooks";
 import { messages } from "@/shared/constants/messages";
 import { Session } from "next-auth";
 import Link from "next/link";
+import { useState } from "react";
 
 export function Header({ session }: { session: Session | null }) {
   const { header: {
@@ -18,7 +19,13 @@ export function Header({ session }: { session: Session | null }) {
   } } = messages;
   // bg-[23%] 
 
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   const { width } = useWidth();
+
+  const handleVideoLoaded = () => {
+    setVideoLoaded(true);
+  };
 
   return (
     <header>
@@ -29,6 +36,7 @@ export function Header({ session }: { session: Session | null }) {
           loop
           autoPlay
           muted
+          onLoadedData={handleVideoLoaded}
           style={{
             position: "relative",
             width: "100%",
@@ -44,6 +52,7 @@ export function Header({ session }: { session: Session | null }) {
             loop
             autoPlay
             muted
+            onLoadedData={handleVideoLoaded}
             style={{
               position: "relative",
               width: "100%",
@@ -57,7 +66,7 @@ export function Header({ session }: { session: Session | null }) {
         }
 
         {/* sm:bg-[url('/images/headerScreen.png')] bg-[url('/images/headerMobile.jpg')]  sm:h-[900px] bg-no-repeat bg-cover  sm:bg-top h-[770px] */}
-        <div id="content" className="-top-[75px] absolute z-90 sm:left-[231px] sm:top-[286px] flex items-center justify-center">
+        {videoLoaded && <div id="content" className="-top-[75px] absolute z-90 sm:left-[231px] sm:top-[286px] flex items-center justify-center">
           <div className="sm:w-[58%] mx-[33px] my-[253px] sm:my-0 sm:mx-0 text-center flex flex-col gap-4 ">
             <div className="font-light text-4xl sm:text-7xl leading-[43px] sm:leading-[64.8px] text-white font-tt-ramillas">
               {headingA} <span className="italic">{headingB}</span> {headingC}
@@ -83,7 +92,7 @@ export function Header({ session }: { session: Session | null }) {
               </div>
             )}
           </div>
-        </div>
+        </div>}
       </div>
     </header>
   )
