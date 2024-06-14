@@ -96,11 +96,17 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
 
   return (
     <>
-      <Dialog>
+      <Dialog onOpenChange={state => console.log("state: ", state)}>
         <DialogTrigger ref={triggerRef}>
           {children}
         </DialogTrigger>
-        <DialogContent className="sm:w-[455px] w-[329px] z-[999999]">
+        <DialogContent
+          className="sm:w-[455px] w-[329px] z-[999999]"
+          withClose
+          onEscapeKeyDown={(e) => e.preventDefault()}
+          onPointerDown={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+        >
           <DialogHeader>
             <DialogTitle className="font-normal text-[32px] leading-[38.4px]">Confirmation</DialogTitle>
           </DialogHeader>
@@ -124,7 +130,7 @@ export function BuyBundleDialog({ children }: React.PropsWithChildren) {
         onOpenChange={(state) => {
           setShowPaymentDialog(state)
 
-          if(state === false) {
+          if (state === false) {
             window.location.reload()
           }
         }}
