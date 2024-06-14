@@ -11,7 +11,7 @@ import { HiArrowUpRight } from "react-icons/hi2";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { useRouter } from "next/navigation";
 import useTotalAmount from "@/hooks/useTotalAmount";
-import { sendGTMEvent } from '@/third-parties/google'
+import { sendGTMEvent } from '@next/third-parties/google'
 
 
 export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
