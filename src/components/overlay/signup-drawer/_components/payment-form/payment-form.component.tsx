@@ -92,8 +92,8 @@ const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
             onClick={() => {
                 setIsDisabled(true);
                 onClick()
-                sendGTMEvent({ event: 'buttonClicked', value: `${totalAmount}` })
-                sendGTMEvent({ event: 'buttonClicked', value: `USD` })
+
+                sendGTMEvent({ event: 'add_payment_info', value: { value: totalAmount, currency: 'USD' } });
             }}
         >
             Pay

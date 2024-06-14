@@ -116,7 +116,7 @@ export function AuthForm() {
             })
 
         mutate({ ...data, phone: `1 ${data.phone}`, prices })
-        sendGTMEvent({ event: 'buttonClicked', value: `complete_registration` });
+        sendGTMEvent({ event: 'complete_registration' });
     }
 
     React.useEffect(() => {

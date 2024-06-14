@@ -64,8 +64,7 @@ export function FinishPayment({ session }: StepperComponentProps) {
                         <DrawerClose className="w-full">
                             <Button
                                 onClick={() => {
-                                    sendGTMEvent({ event: 'buttonClicked', value: `${totalAmount}` })
-                                    sendGTMEvent({ event: 'buttonClicked', value: `USD` })
+                                    sendGTMEvent({ event: 'subscribed', value: { checkout_total: totalAmount} });
                                 }} full>Home</Button>
                         </DrawerClose>
                     </div>
