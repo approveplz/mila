@@ -85,10 +85,25 @@ export function SubscriptionInfoCard({
         return !!(session?.user.user.metadata.subscribed_products.some(prod => prod.product === cardId));
     }, [session?.user.user.metadata.subscribed_products, cardId]);
 
+    const cardSelected = useMemo(() => {
+        if(isLoggedIn) {
+            return false;
+        }
+        // if (selected) {
+        //     return selected
+        // } else {
+        //     return isCardSelected;
+        // }
+    }, [selected, isCardSelected])
+
     console.log({ type, isCardSelected, selected })
     return (
         <figure className="w-full">
-            <div className={cn(cardClasses({ type, selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
+            <div className={cn(cardClasses({
+                type,
+                selected: cardSelected,
+                // selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected)
+            }))}>
                 <div
                     className={cn(cva("price-card__bg h-full", {
                         variants: {
@@ -129,17 +144,17 @@ export function SubscriptionInfoCard({
 
                         <div className="w-full flex flex-col">
                             {!isLoggedIn ? (
-                                <Button variant={selected ? "primary" : "fatal-outline"} onClick={onSelect}>
-                                    {selected ? "Selected" : "Select"}
+                                <Button variant={cardSelected ? "primary" : "fatal-outline"} onClick={onSelect}>
+                                    {cardSelected ? "Selected" : "Select"}
                                 </Button>
                             ) : (
                                 <>
                                     {isCardSelected ? (
-                                        <Button variant="primary" >
+                                        <Button variant="primary">
                                             Current
                                         </Button>
                                     ) : (
-                                        <Button variant="fatal-outline" onClick={onSelect}>
+                                        <Button variant={cardSelected ? "primary" : "fatal-outline"} onClick={onSelect}>
                                             Upgrade
                                         </Button>
                                     )}
