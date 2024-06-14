@@ -33,6 +33,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
+      <GoogleTagManager gtmId="GTM-KJWWCPKP" />
       <body className={cn(inter.variable, ttRamillasTrlVar.variable, inter.className, "text-fatal")}>
         <Providers session={session}>
           {children}
@@ -40,7 +41,7 @@ export default async function RootLayout({
         </Providers>
         <Toaster />
       </body>
-      <GoogleTagManager gtmId="GTM-KJWWCPKP" />
+      
     </html>
   );
 }
