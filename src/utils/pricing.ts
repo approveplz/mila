@@ -1,7 +1,6 @@
 import { Price } from "@/entities";
 
 export const getDefaultPrice = (prices: Array<Price>, is_free: boolean | undefined = false) => {
-    console.log('prices in default function->', prices)
     const price = [...prices].sort((priceA, priceB) => priceA.sort_order - priceB.sort_order)
         .find(price => price.is_default)
 
