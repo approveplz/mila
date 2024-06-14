@@ -4,7 +4,7 @@ import { cn, formatPrice } from "@/utils";
 import { formatNumberWithCommas } from "@/utils/currency";
 import { VariantProps, cva } from "class-variance-authority"
 import { Session } from "next-auth";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { HiCheck, HiOutlineGift, HiXMark } from "react-icons/hi2";
 
 // const cardClasses = cva("relative overflow-hidden rounded-[24px] max-h-[579px] price-card before:rounded-3xl before:-z-10 z-20", {
@@ -62,7 +62,9 @@ const tiersBenefits = {
     gold,
 }
 
-type K = keyof typeof tiersBenefits
+type K = keyof typeof tiersBenefits;
+
+const tiersOrder = ['free', 'bronze', 'silver', 'gold'];
 
 export function SubscriptionInfoCard({
     cardId,
@@ -77,22 +79,13 @@ export function SubscriptionInfoCard({
     onSelect,
     session
 }: Props) {
-
     const isLoggedIn = !!session;
 
-    const [isCardSelected, selectIsCardSelected] = useState<boolean>(false)
+    const isCardSelected = useMemo(() => {
+        return !!(session?.user.user.metadata.subscribed_products.some(prod => prod.product === cardId));
+    }, [session?.user.user.metadata.subscribed_products, cardId]);
 
-    useEffect(() => {
-        if (isLoggedIn && session) {
-            session?.user?.user?.metadata?.subscribed_products?.forEach((item) => {
-                if (item.product === cardId) {
-                    selectIsCardSelected(true)
-                }
-            })
-        }
-    }, [session])
-
-
+    console.log({ type, isCardSelected, selected })
     return (
         <figure className="w-full">
             <div className={cn(cardClasses({ type, selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected) }))}>
@@ -116,22 +109,6 @@ export function SubscriptionInfoCard({
 
                             <div className="relative flex flex-col gap-8 items-left  w-full">
                                 <div className="flex flex-col items-left gap-1">
-                                    {/* {isDiscounted ? (
-                                    <h6
-                                        className={cn("font-semibold text-[20px] leading-[24.2px] line-through", {
-                                            "text-[#C7B8A3]": type !== "gold",
-                                            "text-[#DFD7C9]": type === "gold"
-                                        })}
-                                    >
-                                        ${defaultPrice}
-                                    </h6>
-                                ) : (
-                                    <div>
-                                        <h6 className="font-semibold text-[20px] leading-[24.2px] line-through text-white">
-                                            ${defaultPrice}
-                                        </h6>
-                                    </div>
-                                )} */}
                                     <h6 className="font-light text-5xl leading-[48px]">
                                         ${formatPrice(isDiscounted ? discountedPrice : defaultPrice)}
                                     </h6>
@@ -140,57 +117,41 @@ export function SubscriptionInfoCard({
                                     </div>
                                 </div>
 
-                                {/* <hr
-                                className={cn(cva("w-full border-t", {
-                                    variants: {
-                                        type: {
-                                            free: "border-[#D1D5DB]",
-                                            bronze: "border-[#9CA3AF]",
-                                            silver: "border-[#9CA3AF]",
-                                            gold: "border-[#D1D5DB]"
-                                        }
-                                    }
-                                })({ type }))}
-                            /> */}
 
                                 <div className="flex flex-col gap-2 items-left">
-                                    {/* <div className="font-normal text-base leading-6">
-                                    {getMessageA}
-                                </div> */}
-
                                     <div className="flex flex-row gap-2 items-center">
                                         <HiOutlineGift size={24} className="text-primary" />
                                         <span className="font-tt-ramillas text-[26px] font-semibold leading-[38.6px] text-primary">{formatNumberWithCommas(entries)} {entries > 1 ? "Entries" : "Entry"}</span>
                                     </div>
-                                    {/* <div className="font-normal text-base leading-6">
-                                    {getMessageB}
-                                </div> */}
                                 </div>
                             </div>
                         </div>
 
-                        {/* <div className="flex flex-col items-left gap-1">
-                        {tiersBenefits[type as K].benefits.map((benefit, index) => (
-                            <div key={index} className="flex gap-1 items-center">
-                                {benefit?.included ? <HiCheck size={16} color="black" /> : <HiXMark size={16} color="black" />}
-                                <div className="text-sm leading-6 font-normal">
-                                    {benefit?.benefit}
-                                </div>
-                            </div>
-                        ))}
-                    </div> */}
+                        <div className="w-full flex flex-col">
+                            {!isLoggedIn ? (
+                                <Button variant={selected ? "primary" : "fatal-outline"} onClick={onSelect}>
+                                    {selected ? "Selected" : "Select"}
+                                </Button>
+                            ) : (
+                                <>
+                                    {isCardSelected ? (
+                                        <Button variant="primary" >
+                                            Current
+                                        </Button>
+                                    ) : (
+                                        <Button variant="fatal-outline" onClick={onSelect}>
+                                            Upgrade
+                                        </Button>
+                                    )}
+                                </>
+                            )}
+                        </div>
 
-                        {!isLoggedIn && <div className="w-full flex flex-col ">
-                            <Button variant={selected ? "primary" : "fatal-outline"} onClick={onSelect}>
-                                {selected ? "Selected" : "Select"}
-                            </Button>
-                        </div>}
-
-                        {(isLoggedIn && isCardSelected) && <div className="w-full flex flex-col">
+                        {/* {(isLoggedIn && isCardSelected) && <div className="w-full flex flex-col">
                             <Button variant="primary" >
                                 Selected
                             </Button>
-                        </div>}
+                        </div>} */}
                     </div>
                 </div>
             </div>
