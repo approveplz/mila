@@ -23,6 +23,9 @@ import { Product, User } from "@/entities";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { toast } from "sonner";
 import { CheckoutProduct } from "@/store/checkout/checkout.types";
+import useTotalAmount from "@/hooks/useTotalAmount";
+import { sendGTMEvent } from '@next/third-parties/google'
+
 
 type K = keyof {};
 
@@ -70,6 +73,7 @@ Header.displayName = "Header";
 const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
     const { promiseInProgress } = usePromiseTracker();
     const [isDisabled, setIsDisabled] = React.useState(false);
+    const { totalAmount } = useTotalAmount();
 
     React.useEffect(() => {
         if (isDisabled) {
@@ -88,6 +92,8 @@ const LoaderButton = React.memo(({ onClick }: { onClick: () => void }) => {
             onClick={() => {
                 setIsDisabled(true);
                 onClick()
+                sendGTMEvent({ event: 'buttonClicked', value: `${totalAmount}` })
+                sendGTMEvent({ event: 'buttonClicked', value: `USD` })
             }}
         >
             Pay
