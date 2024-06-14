@@ -80,7 +80,7 @@ export function MinorGiveaways() {
 
               <div className="flex flex-col gap-6 px-6 pb-6">
                 <div className="flex flex-col gap-4">
-                  <div className="font-extrabold text-[32px] leading-[26px] text-[#171614]">
+                  <div className="font-semibold text-[24px] leading-8 text-[#171614]">
                     {giveAway?.brand}
                   </div>
 
@@ -150,7 +150,7 @@ export function MinorGiveaways() {
                           <div className="font-semibold text-base leading-6">MINOR</div>
                         </div>
                         <div className="flex flex-col gap-4">
-                          <div className="font-black text-[32px] leading-[26px] text-[#171614]">
+                          <div className="font-semibold text-[24px] leading-8 text-[#171614]  ">
                             {giveAway?.brand}
                           </div>
 

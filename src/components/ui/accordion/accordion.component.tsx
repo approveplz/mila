@@ -28,14 +28,14 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 text-left justify-between font-normal text-base leading-6 sm:text-lg transition-all [&[data-state=open]>svg]:rotate-180 border-t border-primary px-6 pb-4 pt-5",
+        "flex flex-1 text-left justify-between font-normal  text-base leading-6 sm:text-lg transition-all [&[data-state=open]>svg]:rotate-180 border-t border-primary px-6 pb-4 pt-5",
         className
       )}
       {...props}
     >
       {children}
-      {isOpen ? <HiMiniMinus className="transition-transform duration-200" color="#B06E6A" size={24} /> :
-        <HiMiniPlus className="transition-transform duration-200" color="#B06E6A" size={24} />}
+      {isOpen ? <HiMiniMinus className="transition-transform duration-200 min-w-[24px]" color="#B06E6A" size={24} /> :
+        <HiMiniPlus className="transition-transform duration-200 min-w-[24px]" color="#B06E6A" size={24} />}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ))
