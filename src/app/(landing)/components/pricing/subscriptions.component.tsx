@@ -32,9 +32,7 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
   const { totalAmount } = useTotalAmount();
 
   useEffect(() => {
-    if (totalAmount > 0) {
-      sendGTMEvent({ event: 'buttonClicked', value: `${totalAmount}` })
-    }
+    sendGTMEvent({ event: 'checkout_intent', value: { checkout_total: totalAmount } });
   }, [totalAmount])
 
   return (

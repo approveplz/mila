@@ -20,8 +20,7 @@ export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
     const { totalAmount } = useTotalAmount();
 
     const triggerGTMEvent = () => {
-        sendGTMEvent({ event: 'buttonClicked', value: `${totalAmount}` })
-        sendGTMEvent({ event: 'buttonClicked', value: `USD` })
+        sendGTMEvent({ event: 'begin_checkout', value: { checkout_total: totalAmount,  }  })
     }
 
     return (
