@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { Provider } from "./_components/provider/provider.component";
 import Stepper from "./_components/stepper/stepper.component";
 
 export async function SignUpDrawer() {
