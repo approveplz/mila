@@ -1,4 +1,5 @@
 import { Button } from "@/components";
+import { Product } from "@/entities";
 import { messages } from "@/shared/constants/messages";
 import { cn, formatPrice } from "@/utils";
 import { formatNumberWithCommas } from "@/utils/currency";
@@ -37,8 +38,8 @@ type Props = VariantProps<typeof cardClasses> & {
     defaultPrice: number
     discountedPrice: number
     isDiscounted: boolean
+    subscribedProduct?: Product
     onSelect: () => void
-    session: Session | null
     cardId: string
 }
 
@@ -74,35 +75,16 @@ export function SubscriptionInfoCard({
     type = "free",
     defaultPrice,
     discountedPrice,
+    subscribedProduct,
     isDiscounted,
     selected = false,
-    onSelect,
-    session
+    onSelect
 }: Props) {
-    const isLoggedIn = !!session;
-
-    const isCardSelected = useMemo(() => {
-        return !!(session?.user.user.metadata.subscribed_products.some(prod => prod.product === cardId));
-    }, [session?.user.user.metadata.subscribed_products, cardId]);
-
-    const cardSelected = useMemo(() => {
-        // if(isLoggedIn) {
-        //     return false;
-        // }
-        if (selected) {
-            return selected
-        } else {
-            return isCardSelected;
-        }
-    }, [selected, isCardSelected])
-
-    console.log({ type, isCardSelected, selected })
     return (
         <figure className="w-full">
             <div className={cn(cardClasses({
                 type,
-                selected: cardSelected,
-                // selected: (isLoggedIn && isCardSelected) || (!isLoggedIn && selected)
+                selected,
             }))}>
                 <div
                     className={cn(cva("price-card__bg h-full", {
@@ -143,30 +125,24 @@ export function SubscriptionInfoCard({
                         </div>
 
                         <div className="w-full flex flex-col">
-                            {!isLoggedIn ? (
-                                <Button variant={cardSelected ? "primary" : "fatal-outline"} onClick={onSelect}>
-                                    {cardSelected ? "Selected" : "Select"}
+                            {!!!subscribedProduct ? (
+                                <Button variant={selected ? "primary" : "fatal-outline"} onClick={onSelect}>
+                                    {selected ? "Selected" : "Select"}
                                 </Button>
                             ) : (
                                 <>
-                                    {isCardSelected ? (
-                                        <Button variant="primary">
+                                    {subscribedProduct.id === cardId ? (
+                                        <Button variant={selected ? "primary" : "fatal-outline"}>
                                             Current
                                         </Button>
                                     ) : (
-                                        <Button variant={cardSelected ? "primary" : "fatal-outline"} onClick={onSelect}>
-                                            Upgrade
+                                        <Button variant={selected ? "primary" : "fatal-outline"} onClick={onSelect}>
+                                            {tiersOrder.indexOf(type as string) > tiersOrder.indexOf(subscribedProduct.tier) ? "Upgrade" : "Downgrade"}
                                         </Button>
                                     )}
                                 </>
                             )}
                         </div>
-
-                        {/* {(isLoggedIn && isCardSelected) && <div className="w-full flex flex-col">
-                            <Button variant="primary" >
-                                Selected
-                            </Button>
-                        </div>} */}
                     </div>
                 </div>
             </div>

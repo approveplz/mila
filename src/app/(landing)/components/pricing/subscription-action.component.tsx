@@ -5,12 +5,13 @@ import { Button, Container, Dialog, DialogClose, DialogContent, DialogFooter, Di
 import { HiArrowUpRight } from "react-icons/hi2";
 import { useCheckOutStore } from "@/store";
 import { useMutation } from "@tanstack/react-query";
-import { changeBillingPlan, nextBillingCycle } from "@/api/auth";
+import { changeBillingPlan, checkInvoicePaymentStatus, nextBillingCycle } from "@/api/auth";
 import { getProductPrice, getProductPriceInfo } from "@/utils";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { Price, Product } from "@/entities";
 import { useCurrentSession } from "@/hooks";
+import { GetCheckInvoicePaymentStatusParams } from "@/api/auth/auth.types";
 
 export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Array<Product> }) {
     const triggerRef = React.useRef<HTMLButtonElement>(null);
@@ -21,7 +22,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
     const selectSubscriptions = products.filter(prod => prod.data.type === "subscription");
     const newSubscription = selectSubscriptions[0];
     const currentSubscription = React.useMemo(() => {
-        if(session) {
+        if (session) {
             return subscriptions.find(sub => session.user.user.metadata.subscribed_products.some(prod => prod.product === sub.id))
         }
     }, [session, subscriptions]);
@@ -36,16 +37,45 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
         return defaultPrice
     }
 
+    const { mutate: checkInvoicePaymentStatusMutate, isPending: IsPendingCheckInvoicePaymentStatus } = useMutation({
+        mutationFn: (params: GetCheckInvoicePaymentStatusParams) => checkInvoicePaymentStatus(params).then(res => {
+            if (res.is_paid) {
+                return res;
+            } else {
+                throw new Error("User is inactive")
+            }
+        }),
+        onSuccess(data, variables, context) {
+            toast("Successfully upgrade subscription")
+            setIsDialogOpen(false);
+            // window.location.reload()
+        },
+        onError(error, variables, context) {
+            setIsDialogOpen(false);
+            toast.error("Error occurred while upgrading subscription")
+        },
+        retry(failureCount, error) {
+            if (failureCount > 15) return false;
+
+            return true;
+        },
+        retryDelay: 2000
+    })
+
     const { mutate: nextBillingCycleMutate, isPending: isPendingNextBillingCycle, data: nextBillingCycleData } = useMutation({
         mutationFn: (payload: { price: string }) => nextBillingCycle(payload),
         onSuccess(data) {
             setIsDialogOpen(true);
         },
+        onError(error) {
+            toast.error("Something went wrong!");
+        },
     });
-
+    
     const { mutateAsync: changeBillingPlanMutate, isPending: IsPendingChangeBillingPlan } = useMutation({
         mutationFn: (payload: { price: string }) => changeBillingPlan(payload),
         onError(error) {
+            setIsDialogOpen(false);
             toast.error("Something went wrong!");
         },
     });
@@ -57,33 +87,52 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
             changeBillingPlanMutate({ price: (!!discountedPrice) ? discountedPrice.id : defaultPrice.id })
                 .then(res => {
                     console.log("res: ", res);
+
+                    if (res.operation === "upgrade") {
+                        // setIsDialogOpen(false);
+                        // toast("The plan is scheduled for a upgrade");
+                        if(res.invoice) {
+                            checkInvoicePaymentStatusMutate({ invoiceId: res.invoice })
+                        }
+                    }
+
+                    if (res.operation === "downgrade") {
+                        setIsDialogOpen(false);
+                        toast("The plan is scheduled for a downgrade");
+                    }
+
+                    if (res.operation === "no_change") {
+                        setIsDialogOpen(false);
+                        toast.error("The plan is already scheduled");
+                    }
                 })
         }
     }
 
-    console.log("session: ", session);
     return (
         <Dialog open={isDialogOpen} onOpenChange={state => setIsDialogOpen(state)}>
-            <Button
-                variant="fatal-outline"
-                onClick={() => {
-                    if (newSubscription) {
-                        const { discountedPrice, defaultPrice } = getProductPriceInfo(newSubscription.data.prices);
+            {products.length > 0 && (
+                <Button
+                    variant="fatal-outline"
+                    onClick={() => {
+                        if (newSubscription) {
+                            const { discountedPrice, defaultPrice } = getProductPriceInfo(newSubscription.data.prices);
 
-                        nextBillingCycleMutate({
-                            price: (!!discountedPrice) ? discountedPrice.id : defaultPrice.id
-                        })
-                    }
-                }}
-                disabled={isPendingNextBillingCycle}
-            >
-                <span className="select-none">Continue With Selected</span>
-                {isPendingNextBillingCycle ? (
-                    <Spinner className="w-4 h-4 ml-3" />
-                ) : (
-                    <HiArrowUpRight className="ml-3 h-6 w-4" />
-                )}
-            </Button>
+                            nextBillingCycleMutate({
+                                price: (!!discountedPrice) ? discountedPrice.id : defaultPrice.id
+                            })
+                        }
+                    }}
+                    disabled={isPendingNextBillingCycle}
+                >
+                    <span className="select-none">Continue With Selected</span>
+                    {isPendingNextBillingCycle ? (
+                        <Spinner className="w-4 h-4 ml-3" />
+                    ) : (
+                        <HiArrowUpRight className="ml-3 h-6 w-4" />
+                    )}
+                </Button>
+            )}
             <DialogContent
                 className="w-[329px] sm:w-[442px] z-[999999] gap-12"
                 withClose
@@ -117,11 +166,11 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
                     </Button>
                     <Button
                         full
-                        disabled={IsPendingChangeBillingPlan}
+                        disabled={IsPendingChangeBillingPlan || IsPendingCheckInvoicePaymentStatus}
                         onClick={handleChangeBillingPlan}
                     >
                         Confirm
-                        {IsPendingChangeBillingPlan && <Spinner className="w-4 h-4 ml-4" />}
+                        {(IsPendingChangeBillingPlan || IsPendingCheckInvoicePaymentStatus) && <Spinner className="w-4 h-4 ml-4" />}
                     </Button>
                 </DialogFooter>
             </DialogContent>

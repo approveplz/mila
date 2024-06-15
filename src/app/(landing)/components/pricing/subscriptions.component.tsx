@@ -11,7 +11,7 @@ import { useCheckOutStore } from "@/store";
 import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
 import { Session } from "next-auth";
 import { useWidth } from "@/hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useTotalAmount from "@/hooks/useTotalAmount";
 import { sendGTMEvent } from '@next/third-parties/google'
 
@@ -28,8 +28,20 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
 
   const { width } = useWidth()
   const isLoggedIn = !!session;
+  const subscribed_products = useMemo(() => session?.user.user.metadata.subscribed_products || [], [session])
+  const selectedSubscriptions = products.filter(prod => prod.data.type === "subscription");
 
   const { totalAmount } = useTotalAmount();
+
+  const getSelected = useCallback((subscription: Product) => {
+    const hasInCart = products.some(prod => prod.id === subscription.id);
+
+    if(selectedSubscriptions.length > 0) {
+      return hasInCart
+    } else {
+      return !!(subscribed_products.some(prod => prod.product === subscription.id))
+    }
+  }, [products, subscribed_products, selectedSubscriptions.length])
 
   useEffect(() => {
     sendGTMEvent({ event: 'checkout_intent', value: { checkout_total: totalAmount } });
@@ -63,12 +75,12 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
               <SwiperSlide key={subscription.id}>
                 <SubscriptionInfoCard
                   cardId={subscription.id}
-                  session={session}
                   title={subscription.name}
                   duration={subscription.access_duration}
                   type={subscription.tier as any}
                   entries={subscription.number_of_entries}
-                  selected={products.some(prod => prod.id === subscription.id)}
+                  subscribedProduct={subscriptions.find(sub => subscribed_products.some(prod => prod.product === sub.id))}
+                  selected={getSelected(subscription)}
                   {...getProductPrice(subscription.prices)}
                   onSelect={() => {
                     addProduct(subscription)
@@ -84,13 +96,13 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
             .map(subscription => (
               <SubscriptionInfoCard
                 cardId={subscription.id}
-                session={session}
                 key={subscription.id}
                 title={subscription.name}
                 duration={subscription.access_duration}
                 type={subscription.tier as any}
                 entries={subscription.number_of_entries}
-                selected={products.some(prod => prod.id === subscription.id)}
+                subscribedProduct={subscriptions.find(sub => subscribed_products.some(prod => prod.product === sub.id))}
+                selected={getSelected(subscription)}
                 {...getProductPrice(subscription.prices)}
                 onSelect={() => {
                   addProduct(subscription)
