@@ -53,7 +53,7 @@ export function Header({ session }: { session: Session | null }) {
             onLoadedData={handleVideoLoaded}
             autoPlay
             muted
-            loop
+            // loop
           />}
 
         {videoLoaded && <div id="content" className="-top-[75px] absolute z-90 sm:left-[231px] sm:top-[286px] flex items-center justify-center">
