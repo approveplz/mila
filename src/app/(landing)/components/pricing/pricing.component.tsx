@@ -1,12 +1,14 @@
 import * as React from "react";
 import { messages } from "@/shared/constants/messages";
 import { Product } from "@/entities";
-import { Container } from "@/components";
+import { Button, Container, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components";
 import PricingTabs from "./pricing-tabs.component";
 import { PricingAction } from "./pricing-action.component";
 import { SignUpAction } from "../signup-action/signup-action.component";
 import { auth } from "@/auth";
 import { Session } from "next-auth";
+import { HiArrowUpRight } from "react-icons/hi2";
+import { SubscriptionAction } from "./subscription-action.component";
 
 export async function Pricing({
   products,
@@ -39,9 +41,13 @@ export async function Pricing({
 
           <PricingTabs session={session ? session : null} products={products} />
 
-          {!isLoggedIn && <PricingAction>
-            <SignUpAction />
-          </PricingAction>}
+          {!isLoggedIn ? (
+            <PricingAction>
+              <SignUpAction />
+            </PricingAction>
+          ) : (
+            <SubscriptionAction subscriptions={products.filter(product => product.type === "subscription")} />
+          )}
         </div>
       </Container>
     </section>

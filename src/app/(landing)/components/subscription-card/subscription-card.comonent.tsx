@@ -86,14 +86,14 @@ export function SubscriptionInfoCard({
     }, [session?.user.user.metadata.subscribed_products, cardId]);
 
     const cardSelected = useMemo(() => {
-        if(isLoggedIn) {
-            return false;
-        }
-        // if (selected) {
-        //     return selected
-        // } else {
-        //     return isCardSelected;
+        // if(isLoggedIn) {
+        //     return false;
         // }
+        if (selected) {
+            return selected
+        } else {
+            return isCardSelected;
+        }
     }, [selected, isCardSelected])
 
     console.log({ type, isCardSelected, selected })
@@ -122,7 +122,7 @@ export function SubscriptionInfoCard({
                                 {title.toUpperCase()}
                             </p>
 
-                            <div className="relative flex flex-col gap-8 items-left  w-full">
+                            <div className="relative flex flex-col gap-8 items-left w-full">
                                 <div className="flex flex-col items-left gap-1">
                                     <h6 className="font-light text-5xl leading-[48px]">
                                         ${formatPrice(isDiscounted ? discountedPrice : defaultPrice)}
