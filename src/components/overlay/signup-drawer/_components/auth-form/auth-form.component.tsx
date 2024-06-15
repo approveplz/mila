@@ -39,6 +39,7 @@ import { isApiError } from "@/api";
 import { PatternFormat } from "react-number-format";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 import { toast } from "sonner";
+import { sendGTMEvent } from '@next/third-parties/google'
 
 export function AuthForm() {
     const { nextStep } = useStepperContext();
@@ -115,6 +116,7 @@ export function AuthForm() {
             })
 
         mutate({ ...data, phone: `1 ${data.phone}`, prices })
+        sendGTMEvent({ event: 'complete_registration' });
     }
 
     React.useEffect(() => {

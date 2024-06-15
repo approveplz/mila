@@ -46,13 +46,12 @@ export function NavContent() {
         <Accordion type="single" collapsible value={accordionValue} onValueChange={val => console.log(val)}>
             <AccordionItem value="nav">
                 <div className="flex justify-between items-center">
-                    <NavList />
-
                     <div className="relative h-12 w-[90px]">
                         <Link href="/">
                             <Image src="/images/logo-fatal.svg" alt="logo" fill />
                         </Link>
                     </div>
+                    <NavList />
 
                     <div className="hidden sm:flex">
                         {session ? (

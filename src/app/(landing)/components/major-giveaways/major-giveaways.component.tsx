@@ -65,7 +65,7 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
           pricingData?.isDiscounted ? setAmount(quantity * pricingData?.discountedPrice) : setAmount(quantity * pricingData?.defaultPrice)
         }
       })
-    } else if ( products?.length > 0 && pricingType === 'bundle') {
+    } else if (products?.length > 0 && pricingType === 'bundle') {
       let amount = 0;
       products.forEach(product => {
         if (product?.data?.type === 'bundle') {
@@ -79,9 +79,8 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
   }, [products, pricingType])
 
   useEffect(() => {
-    setAmount(0);
-
     if (isLoggedIn && pricingType === 'subscription') {
+      setAmount(0);
       session?.user?.user?.metadata?.subscribed_products.forEach(subProduct => {
         subscriptions?.forEach(subscription => {
           if (subProduct?.product === subscription?.id) {
@@ -91,7 +90,7 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
           }
         })
       })
-    } 
+    }
     // else if (isLoggedIn && pricingType === 'bundle') {
     //   let amount = 0;
     //   session?.user?.user?.metadata?.subscribed_products.forEach(subProduct => {
@@ -111,31 +110,34 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
 
 
 
+
   return (
     <section className={`${width < 640 ? '!py-[33px]' : 'pt-[66px]'} ${showHeading ? 'pb-0' : 'pb-[66px] pt-8'} ${width < 640 ? 'px-6' : 'px-[160px]'} flex flex-col items-center gap-8 bg-[#F3F3F3]`}>
 
-      {showHeading && <div>
-        {!isLoggedIn && <div>
-          {products?.length > 0 && amount > 0 && pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-            FOR ${amount} A MONTH, YOU&apos;LL GET ALL OF THIS
-          </div>}
-          
-        </div>}
+      {showHeading &&
+        <div>
+          {!isLoggedIn && <div>
+            {products?.length > 0 && amount > 0 && pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+              FOR ${amount} A MONTH, YOU&apos;LL GET ALL OF THIS
+            </div>}
 
-        {products?.length > 0 && amount > 0 && pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+          </div>}
+
+          {products?.length > 0 && amount > 0 && pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
             FOR YOUR ${amount} BUNDLE, YOU&apos;LL GET ALL OF THIS
           </div>}
 
-        {isLoggedIn && <div>
-          {pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
-            FOR ${amount} A MONTH, YOU&apos;LL GET ALL OF THIS
-          </div>}
-          {/* {pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+          {isLoggedIn && <div>
+            {pricingType === 'subscription' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
+              FOR ${amount} A MONTH, YOU&apos;LL GET ALL OF THIS
+            </div>}
+            {/* {pricingType === 'bundle' && <div className="select-none font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
             FOR YOUR ${amount} BUNDLE, YOU'LL GET ALL OF THIS. for bundle selection.
           </div>} */}
-        </div>}
+          </div>}
 
-      </div>}
+        </div>
+      }
 
       {/* <div className="font-tt-ramillas text-center font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-[#171614] px-[50px] sm:px-[110px]">
         YOU'LL GET ALL OF THIS. Directing to major and minor giveaways, showing timers and entries as per selected plan. 'For Your $[x]' contains accumulative price.

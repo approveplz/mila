@@ -11,6 +11,9 @@ import { useCheckOutStore } from "@/store";
 import { getDefaultPrice, getDiscountedPrice, getProductPrice } from "@/utils";
 import { Session } from "next-auth";
 import { useWidth } from "@/hooks";
+import { useEffect, useState } from "react";
+import useTotalAmount from "@/hooks/useTotalAmount";
+import { sendGTMEvent } from '@next/third-parties/google'
 
 type SubscriptionProps = {
   subscriptions: Array<Product>;
@@ -25,6 +28,12 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
 
   const { width } = useWidth()
   const isLoggedIn = !!session;
+
+  const { totalAmount } = useTotalAmount();
+
+  useEffect(() => {
+    sendGTMEvent({ event: 'checkout_intent', value: { checkout_total: totalAmount } });
+  }, [totalAmount])
 
   return (
     <div className="flex flex-col gap-6 w-full mt-12">
@@ -93,3 +102,4 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
     </div>
   )
 }
+

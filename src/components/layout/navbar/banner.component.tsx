@@ -8,7 +8,6 @@ import { HiOutlineEnvelope, HiXMark } from "react-icons/hi2";
 import { sendVerificationEmail, sendVerificationSms, verifyEmailOrSMS } from "@/api/auth";
 import { useMutation } from "@tanstack/react-query";
 
-const isPhoneVerfied = true;
 export function NavBanner() {
     const { session } = useCurrentSession();
     const [isOpened, setIsOpened] = React.useState(false);
@@ -32,7 +31,7 @@ export function NavBanner() {
     })
 
     const { mutate: sendVerificationSmsMutate, isPending: isPendingSendVerificationSmsMutate } = useMutation({
-        mutationFn: () => sendVerificationEmail(),
+        mutationFn: () => sendVerificationSms(),
         onSuccess() {
             setIsOpened(true);
         }
@@ -48,19 +47,11 @@ export function NavBanner() {
         }
     })
 
-    const handleSendVerifyPhone = () => {
-        sendVerificationSms().then(res => {
-            console.log("res: ", res);
-        }).catch(err => {
-            console.log("err: ", err);
-        })
-    }
-
     if (!!!session) {
         return null;
     } else if (session?.user.user.metadata.is_free_tier_subscriber === false) {
         return null;
-    } else if (session?.user.user.metadata.is_email_verified === true && isPhoneVerfied === true) {
+    } else if (session?.user.user.metadata.is_email_verified === true && session?.user.user.metadata.is_phone_verified === true) {
         return null
     }
 
@@ -71,7 +62,7 @@ export function NavBanner() {
                     <p className="text-black font-medium">Please verify your information to be entered to win!</p>
 
                     <div className="flex flex-col sm:flex-row [&>*]:flex-1 sm:[&>*]:flex-initial gap-4 w-full sm:w-auto">
-                        {!isPhoneVerfied && (
+                        {!session?.user.user.metadata.is_phone_verified && (
                             <Button onClick={() => sendVerificationSmsMutate()} disabled={isPendingSendVerificationSmsMutate}>
                                 Verify Phone
                                 {isPendingSendVerificationSmsMutate && <Spinner className="w-4 h-4 ml-4" />}
@@ -93,7 +84,7 @@ export function NavBanner() {
                         showHeader={false}
                         isLoading={isPendingVerifyEmailOrSMSMutate}
                         onVerify={(pin) =>  verifyEmailOrSMSMutate({ server_code: pin, client_code: pin })}
-                        onReSend={handleSendVerifyPhone}
+                        onReSend={sendVerificationSmsMutate}
                         phone={session?.user.user.phone || ""}
                     />
                 </DialogContent>
