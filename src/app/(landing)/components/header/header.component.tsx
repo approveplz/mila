@@ -45,35 +45,35 @@ export function Header({ session }: { session: Session | null }) {
           loop
         />
           :
-          <MuxVideo
-            style={{ minWidth: '100vw', height: '100%', maxWidth: '100%' }}
-            playbackId="qQjEtUKAgRKp02MXrIt4kUSFPSI3a8NZQG51a6lvhJJU"
-            streamType="on-demand"
-            controls={false}
-            onLoadedData={handleVideoLoaded}
-            playsInline
-            autoPlay
-            muted
-            // loop
-          />
-
-          // <video
-          //   className="z-80"
-          //   id="background-video"
-          //   loop
-          //   autoPlay
-          //   muted
+          // <MuxVideo
+          //   style={{ minWidth: '100vw', height: '100%', maxWidth: '100%' }}
+          //   playbackId="qQjEtUKAgRKp02MXrIt4kUSFPSI3a8NZQG51a6lvhJJU"
+          //   streamType="on-demand"
+          //   controls={false}
           //   onLoadedData={handleVideoLoaded}
           //   playsInline
-          //   style={{
-          //     position: "relative",
-          //     width: "100%",
-          //     left: 0,
-          //     top: 0,
-          //   }}
-          // >
-          //   <source src='https://mila-live-bucket.s3.amazonaws.com/header-video/header_mobile_video.MOV' />
-          // </video>
+          //   autoPlay
+          //   muted
+          //   // loop
+          // />
+
+          <video
+            className="z-80"
+            id="background-video"
+            loop
+            autoPlay
+            muted
+            onLoadedData={handleVideoLoaded}
+            playsInline
+            style={{
+              position: "relative",
+              width: "100%",
+              left: 0,
+              top: 0,
+            }}
+          >
+            <source src='https://mila-live-bucket.s3.amazonaws.com/header-video/header_mobile_video.MOV' />
+          </video>
         }
 
         {videoLoaded && <div id="content" className="-top-[75px] absolute z-90 sm:left-[231px] sm:top-[286px] flex items-center justify-center">
