@@ -28,7 +28,20 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
 
   const { width } = useWidth()
   const isLoggedIn = !!session;
-  const subscribed_products = useMemo(() => session?.user.user.metadata.subscribed_products || [], [session])
+  const subscribed_products = useMemo(() => {
+    const subscribedProducts: Array<{ product: string, quantity: number }> = [];
+    // is_free_tier_subscriber;
+
+    if (session) {
+      if (session.user.user.metadata.is_free_tier_subscriber && session.user.user.metadata.is_email_verified === false && session.user.user.metadata.is_phone_verified === false) {
+        subscribedProducts.push(...subscriptions.filter(sub => sub.tier === "free").map(prod => ({ product: prod.id, quantity: 1 })));
+      };
+
+      subscribedProducts.push(...session?.user.user.metadata.subscribed_products);
+    }
+
+    return subscribedProducts;
+  }, [session, subscriptions])
   const selectedSubscriptions = products.filter(prod => prod.data.type === "subscription");
 
   const { totalAmount } = useTotalAmount();
@@ -36,10 +49,10 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
   const getSelected = useCallback((subscription: Product) => {
     const hasInCart = products.some(prod => prod.id === subscription.id);
 
-    if(selectedSubscriptions.length > 0) {
+    if (selectedSubscriptions.length > 0) {
       return hasInCart
     } else {
-      return !!(subscribed_products.some(prod => prod.product === subscription.id))
+      return subscribed_products.some(prod => prod.product === subscription.id)
     }
   }, [products, subscribed_products, selectedSubscriptions.length])
 

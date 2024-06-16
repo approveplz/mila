@@ -2,12 +2,12 @@
 
 import { AmoeDrawer } from "@/components";
 import { Button } from "@/components/ui/button/button.component"
-import { useWidth } from "@/hooks";
 import { messages } from "@/shared/constants/messages";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { useState } from "react";
 import MuxVideo from '@mux/mux-video-react';
+import { useWidth } from "@/hooks";
 
 
 export function Header({ session }: { session: Session | null }) {
