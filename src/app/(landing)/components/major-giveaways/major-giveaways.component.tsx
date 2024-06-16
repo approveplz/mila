@@ -117,10 +117,6 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
 
   }, [productsArray, session, pricingType, isLoggedIn, subscriptions, products])
 
-
-  console.log("entries: ", entries, isLoggedIn, products.length);
-
-
   return (
     <section className={`${width < 640 ? '!py-[33px]' : 'pt-[66px]'} ${showHeading ? 'pb-0' : 'pb-[66px] pt-8'} ${width < 640 ? 'px-6' : 'px-[160px]'} flex flex-col items-center gap-8 bg-[#F3F3F3]`}>
 

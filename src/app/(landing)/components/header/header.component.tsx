@@ -10,7 +10,7 @@ import MuxVideo from '@mux/mux-video-react';
 import { useWidth } from "@/hooks";
 
 
-export function Header({ session }: { session: Session | null }) {
+export default function Header({ session }: { session: Session | null }) {
   const { header: {
     headingA,
     headingB,
