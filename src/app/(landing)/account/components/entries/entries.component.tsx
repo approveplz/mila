@@ -72,8 +72,8 @@ export default function Entries({ session }: { session: Session | null }) {
                             {(entryDetails?.entries?.subscription_count
                                 && entryDetails?.entries?.subscription_count > 0 &&
                                 entryDetails?.entries?.subscription_expiry) ?
-                                <div className="font-medium text-xs leading-4 text-[#EF4444]">
-                                    *Renews on {getDayOfMonth(entryDetails?.entries?.subscription_expiry as string)}
+                                <div className="font-medium text-xs leading-4 text-[#000000]">
+                                    Renews on {getDayOfMonth(entryDetails?.entries?.subscription_expiry as string)}
                                 </div> : null}
                         </div>
                         <div className="flex flex-col gap-2">
