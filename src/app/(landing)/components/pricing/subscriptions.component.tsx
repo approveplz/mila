@@ -31,8 +31,7 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
   const isLoggedIn = !!session;
   const subscribed_products = useMemo(() => {
     const subscribedProducts: Array<{ product: string, quantity: number }> = [];
-    // is_free_tier_subscriber;
-
+    
     if (session) {
       if (session.user.user.metadata.is_free_tier_subscriber && session.user.user.metadata.is_email_verified === false && session.user.user.metadata.is_phone_verified === false) {
         subscribedProducts.push(...subscriptions.filter(sub => sub.tier === "free").map(prod => ({ product: prod.id, quantity: 1 })));
@@ -57,7 +56,6 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
     }
   }, [products, subscribed_products, selectedSubscriptions.length])
 
-  console.log("session: ", session, subscriptions);
   useEffect(() => {
     sendGTMEvent({ event: 'checkout_intent', value: { checkout_total: totalAmount } });
   }, [totalAmount])
