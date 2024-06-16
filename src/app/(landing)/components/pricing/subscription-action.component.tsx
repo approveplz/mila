@@ -68,7 +68,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
         onSuccess(data, variables, context) {
             toast("Successfully upgraded subscription")
             setIsDialogOpen(false);
-            // window.location.reload()
+            window.location.reload()
         },
         onError(error, variables, context) {
             setIsDialogOpen(false);
