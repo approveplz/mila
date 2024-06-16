@@ -21,9 +21,9 @@ export function HowItWorks() {
       description: giveAwaysDescription
     }
   } } = messages;
-
+  // -mt-[20px] sm:-mt-[35px]
   return (
-    <section id="how-it-works" className="sm:py-[64px] py-16 px-6 sm:px-0 bg-[#171614] flex flex-col gap-20">
+    <section id="how-it-works" className="sm:py-[64px] py-16 px-6 sm:px-0 bg-[#171614] flex flex-col gap-20 ">
       <div className="flex flex-col items-center gap-6 sm:mx-[336px]">
         <div className="font-tt-ramillas font-normal text-4xl sm:text-5xl leading-[43.2px] sm:leading-[57.6px] text-white ">
           {heading}

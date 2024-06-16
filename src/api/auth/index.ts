@@ -35,7 +35,11 @@ import {
     GetCheckInvoicePaymentStatusParams,
     CheckInvoicePaymentStatusResponse,
     SetupBundlesBuyingPayload,
-    SetupBundlesBuyingResponse
+    SetupBundlesBuyingResponse,
+    NextBillingCyclePayload,
+    NextBillingCycleResponse,
+    ChangeBillingPlanPayload,
+    ChangeBillingPlanResponse
 } from "./auth.types";
 
 export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => {
@@ -168,6 +172,18 @@ export const setupBundlesBuying = (payload: SetupBundlesBuyingPayload) => {
     return api
         .put<SetupBundlesBuyingResponse>("/payments/v0/setup-bundles-buying", payload)
         .then(res => res.data);
+}
+
+export const nextBillingCycle = (payload: NextBillingCyclePayload) => {
+    return api
+        .post<NextBillingCycleResponse>("/payments/v0/next-billing-cycle", payload)
+        .then(res => res.data)
+}
+
+export const changeBillingPlan = (payload: ChangeBillingPlanPayload) => {
+    return api
+        .post<ChangeBillingPlanResponse>("/payments/v0/change-plan", payload)
+        .then(res => res.data)
 }
 
 export const getCouponDetail = (payload: GetCouponDetailParams) => {

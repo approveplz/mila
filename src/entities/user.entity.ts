@@ -18,6 +18,6 @@ export type User = {
 }
 
 type SubscribedProduct = {
-    product:String,
+    product: string,
     quantity:number
 }

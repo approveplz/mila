@@ -11,16 +11,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { Stripe, StripeElement, StripeElementStyleVariant, StripeElements } from '@stripe/stripe-js';
 import { confirmMembership, generateMembership, latestInvoicePaymentStatus, markLatestInvoicePaid, setupBundlesBuying } from '@/api/auth';
-import { useAuthStore, useCheckOutStore } from '@/store';
-import { useFormContext } from 'react-hook-form';
-import { getProductPriceInfo, setFormError, withAsync } from '@/utils';
-import { Session } from 'next-auth';
 import { useMutation } from "@tanstack/react-query";
-import { serialize } from "object-to-formdata";
-import * as actions from "@/actions";
-import { useFormState } from "react-dom";
-import { useAuthContext } from "@/components/provider/auth/auth.component";
-import { User } from "@/entities";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { toast } from "sonner";
 import { useCurrentSession } from "@/hooks";
@@ -162,7 +153,7 @@ const PaymentFormGroup = React.memo(({
 
 PaymentFormGroup.displayName = "PaymentFormGroup";
 
-export function PaymentForm() {
+export function PaymentForm({ clientSecret }: { clientSecret: string }) {
     const { session } = useCurrentSession();
     const triggerRef = React.useRef<HTMLButtonElement | null>(null);
 
@@ -175,7 +166,7 @@ export function PaymentForm() {
             }
         }),
         async onSuccess(data, variables) {
-            toast("Additional bundle bought Successfuly");
+            toast("Successfully upgraded subscription");
             triggerRef.current?.click();
         },
         retry(failureCount, error) {
@@ -197,7 +188,7 @@ export function PaymentForm() {
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
         async onSuccess(data, variables) {
             if (data.is_paid) {
-                toast("Additional bundle bought Successfuly");
+                toast("Successfully upgraded subscription");
                 triggerRef.current?.click();
             } else {
                 return markLatestInvoicePaidAsyncMutate(variables).then(res => res.processing)
@@ -205,45 +196,17 @@ export function PaymentForm() {
         },
     });
 
-    const getProductsPrices = React.useCallback(() => {
-        return useCheckOutStore.getState().products
-            .map(product => {
-                const { discountedPrice, defaultPrice } = getProductPriceInfo(product.data.prices)
-
-                if (!!discountedPrice) {
-                    return {
-                        price: discountedPrice.id,
-                        quantity: product.quantity
-                    }
-                } else {
-                    return {
-                        price: defaultPrice.id,
-                        quantity: product.quantity
-                    }
-                }
-            })
-    }, [])
-
     const onPayment = React.useCallback(async (stripe: Stripe, elements: StripeElements) => {
-        trackPromise(setupBundlesBuying({
-            payment_method: null,
-            prices: getProductsPrices()
-        }).then(async (res) => {
-            const { error, paymentIntent } = await stripe.confirmCardPayment(res.client_secret, {
-                payment_method: {
-                    card: elements.getElement(CardNumberElement)!
-                }
-            })
-
-            if (error) {
-                toast.error(error.message)
-            } else {
-                return latestInvoicePaymentStatusAsyncMutate({ userId: session?.user.user.id as string, secret: process.env.NEXT_PUBLIC_API_SECRET! })
+        trackPromise(stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardNumberElement)!
             }
-        }).catch(err => {
-            toast.error("Something went wrong! Please contact support.")
+        }).then(res => {
+            latestInvoicePaymentStatusAsyncMutate({ userId: session?.user.user.id as string, secret: process.env.NEXT_PUBLIC_API_SECRET! })
+        }).catch(error => {
+            toast.error(error.message)
         }))
-    }, [getProductsPrices, latestInvoicePaymentStatusAsyncMutate, session?.user.user.id])
+    }, [latestInvoicePaymentStatusAsyncMutate, session?.user.user.id, clientSecret])
 
     const renderActions = React.useCallback((handlePayment: () => void) => (
         <LoaderButton onClick={handlePayment} />

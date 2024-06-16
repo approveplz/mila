@@ -277,3 +277,22 @@ export type SetupBundlesBuyingPayload = {
 export type SetupBundlesBuyingResponse = {
     client_secret: string
 }
+
+export type NextBillingCyclePayload = {
+    price: string
+}
+
+export type NextBillingCycleResponse = {
+    current_cycle: string,
+    next_cycle: string
+}
+
+export type ChangeBillingPlanPayload = {
+    price: string
+}
+
+export type ChangeBillingPlanResponse = {
+    operation: "subscription" | "upgrade" | "downgrade" | "schedule_reverted" | "no_change"
+    invoice: string | null
+    client_secret: string | null
+}

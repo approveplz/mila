@@ -233,7 +233,7 @@ export function PaymentForm({ session }: { session: Session | null }) {
         },
         retry(failureCount, error) {
             if (failureCount > 15) {
-                toast.error("Something went wrong!");
+                toast.error("Something went wrong! Please contact support.");
                 return false;
             };
 
