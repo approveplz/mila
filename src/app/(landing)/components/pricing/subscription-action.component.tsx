@@ -38,8 +38,8 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
     }, [session, subscriptions]);
 
     const changePlanType = React.useMemo(() => {
-        if(currentSubscription && newSubscription) {
-            if(tiersOrder.indexOf(newSubscription.data.tier as string) < tiersOrder.indexOf(currentSubscription.tier as string)) {
+        if (currentSubscription && newSubscription) {
+            if (tiersOrder.indexOf(newSubscription.data.tier as string) < tiersOrder.indexOf(currentSubscription.tier as string)) {
                 return "downgrade";
             }
 
@@ -142,7 +142,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
     return (
         <>
             <Dialog open={isDialogOpen} onOpenChange={state => setIsDialogOpen(state)}>
-                {products.length > 0 && (
+                {selectSubscriptions.length > 0 && (
                     <Button
                         variant="fatal-outline"
                         onClick={() => {
@@ -177,7 +177,9 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
 
                     <div className="font-normal">
                         <p>
-                            By {changePlanType === "downgrade" ? "downgrading": "upgrading"} you will be immediately upgraded to the {newSubscription?.data.name.toUpperCase()} benefits and entries and the cost will pro-rate to the new subscription. Your next billing cycle will be on {format(nextBillingCycleData?.next_cycle ?? new Date(), "MM/dd/yyyy")}.
+                            By {changePlanType === "downgrade" ? "downgrading" : "upgrading"} {" "}
+                            {changePlanType === "downgrade" ? `you will be scheduled to downgrade to ${newSubscription?.data.name.toUpperCase()} benefits at the end of your current billing cycle.` : `you will be immediately upgraded to the ${newSubscription?.data.name.toUpperCase()} benefits and entries and the cost will pro-rate to the new subscription.`}
+                            Your next billing cycle will be on {format(nextBillingCycleData?.next_cycle ?? new Date(), "MM/dd/yyyy")}.
                         </p>
 
                         <div className="flex justify-center gap-8 text-4xl mt-4">

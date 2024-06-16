@@ -41,12 +41,10 @@ export async function Pricing({
 
           <PricingTabs session={session ? session : null} products={products} />
 
-          {!isLoggedIn ? (
+          {!isLoggedIn && (
             <PricingAction>
               <SignUpAction />
             </PricingAction>
-          ) : (
-            <SubscriptionAction subscriptions={products.filter(product => product.type === "subscription")} />
           )}
         </div>
       </Container>

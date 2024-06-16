@@ -14,6 +14,7 @@ import { useWidth } from "@/hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useTotalAmount from "@/hooks/useTotalAmount";
 import { sendGTMEvent } from '@next/third-parties/google'
+import { SubscriptionAction } from "./subscription-action.component";
 
 type SubscriptionProps = {
   subscriptions: Array<Product>;
@@ -56,38 +57,62 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
     }
   }, [products, subscribed_products, selectedSubscriptions.length])
 
+  console.log("session: ", session, subscriptions);
   useEffect(() => {
     sendGTMEvent({ event: 'checkout_intent', value: { checkout_total: totalAmount } });
   }, [totalAmount])
 
   return (
-    <div className="flex flex-col gap-6 w-full mt-12">
-      {products.filter(product => product.data.type === "subscription").length > 0 && !isLoggedIn && (
-        <button
-          className="font-medium text-primary text-lg leading-7 cursor-pointer"
-          onClick={() => clearProducts("subscription")}
-        >
-          {clearSelection}
-        </button>
-      )}
+    <>
+      <div className="flex flex-col gap-6 w-full mt-12">
+        {products.filter(product => product.data.type === "subscription").length > 0 && !isLoggedIn && (
+          <button
+            className="font-medium text-primary text-lg leading-7 cursor-pointer"
+            onClick={() => clearProducts("subscription")}
+          >
+            {clearSelection}
+          </button>
+        )}
 
-      {width < 768 ? (
-        <Swiper
-          style={{
-            paddingBottom: "48px"
-          }}
-          slidesPerView={1.2}
-          pagination={{ clickable: true }}
-          spaceBetween={16}
-          modules={[Pagination]}
-          className="mySwiper"
-        >
-          {subscriptions
-            .sort((a, b) => a.sort_order - b.sort_order)
-            .map(subscription => (
-              <SwiperSlide key={subscription.id}>
+        {width < 768 ? (
+          <Swiper
+            style={{
+              paddingBottom: "48px"
+            }}
+            slidesPerView={1.2}
+            pagination={{ clickable: true }}
+            spaceBetween={16}
+            modules={[Pagination]}
+            className="mySwiper"
+          >
+            {subscriptions
+              .sort((a, b) => a.sort_order - b.sort_order)
+              .map(subscription => (
+                <SwiperSlide key={subscription.id}>
+                  <SubscriptionInfoCard
+                    cardId={subscription.id}
+                    title={subscription.name}
+                    duration={subscription.access_duration}
+                    type={subscription.tier as any}
+                    entries={subscription.number_of_entries}
+                    subscribedProduct={subscriptions.find(sub => subscribed_products.some(prod => prod.product === sub.id))}
+                    selected={getSelected(subscription)}
+                    {...getProductPrice(subscription.prices)}
+                    onSelect={() => {
+                      addProduct(subscription)
+                    }}
+                  />
+                </SwiperSlide>
+              ))}
+          </Swiper>
+        ) : (
+          <div className="flex gap-2 [&>*]:flex-1">
+            {subscriptions
+              .sort((a, b) => a.sort_order - b.sort_order)
+              .map(subscription => (
                 <SubscriptionInfoCard
                   cardId={subscription.id}
+                  key={subscription.id}
                   title={subscription.name}
                   duration={subscription.access_duration}
                   type={subscription.tier as any}
@@ -99,32 +124,16 @@ export default function Subscription({ subscriptions, session }: SubscriptionPro
                     addProduct(subscription)
                   }}
                 />
-              </SwiperSlide>
-            ))}
-        </Swiper>
-      ) : (
-        <div className="flex gap-2 [&>*]:flex-1">
-          {subscriptions
-            .sort((a, b) => a.sort_order - b.sort_order)
-            .map(subscription => (
-              <SubscriptionInfoCard
-                cardId={subscription.id}
-                key={subscription.id}
-                title={subscription.name}
-                duration={subscription.access_duration}
-                type={subscription.tier as any}
-                entries={subscription.number_of_entries}
-                subscribedProduct={subscriptions.find(sub => subscribed_products.some(prod => prod.product === sub.id))}
-                selected={getSelected(subscription)}
-                {...getProductPrice(subscription.prices)}
-                onSelect={() => {
-                  addProduct(subscription)
-                }}
-              />
-            ))}
-        </div>
-      )}
-    </div>
+              ))}
+          </div>
+        )}
+
+      </div>
+
+      <div className="flex justify-center">
+        {isLoggedIn && <SubscriptionAction subscriptions={subscriptions} />}
+      </div>
+    </>
   )
 }
 
