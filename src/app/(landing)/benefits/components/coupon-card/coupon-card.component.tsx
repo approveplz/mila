@@ -30,7 +30,7 @@ export function CouponCard({ isLoggedIn, upgrade = false, coupon }: CoupenCardDa
   return (
     <div className="relative flex flex-col bg-white rounded-[24px] w-40 h-[345px] sm:w-[205px] sm:h-[329px] shadow-lg">
       {!isLoggedIn && <div className="absolute flex flex-col justify-center items-center rounded-[24px] h-full w-full bg-[#171614BF]">
-        <button className="bg-[#FFFFFF] cursor-pointer py-2 px-5 rounded-[50px] flex  gap-3 justify-center items-center w-[130px] z-10" onClick={handleSignUp}>
+        <button className="bg-[#FFFFFF] cursor-pointer py-2 px-5 rounded-[50px] flex  gap-3 justify-center items-center w-[130px] z-30" onClick={handleSignUp}>
           <HiOutlineLockClosed size={24} />
 
           <span className="text-[#171614] font-medium leading-4 text-xs">
@@ -39,8 +39,8 @@ export function CouponCard({ isLoggedIn, upgrade = false, coupon }: CoupenCardDa
         </button>
       </div>}
 
-      {isLoggedIn && upgrade && <div className="absolute flex flex-col justify-center items-center rounded-[24px] h-full w-full px-4 bg-[#171614BF]">
-        <div className="bg-[#FFFFFF] cursor-pointer py-2 rounded-[24px] flex sm:flex-row flex-col gap-3 justify-center items-center sm:w-[179px] w-[143px] z-10">
+      {isLoggedIn && !coupon?.id && <div className="absolute flex flex-col justify-center items-center rounded-[24px] h-full w-full px-4 bg-[#171614BF]">
+        <div onClick={handleSignUp} className="bg-[#FFFFFF] cursor-pointer py-2 rounded-[24px] flex sm:flex-row flex-col gap-3 justify-center items-center sm:w-[179px] w-[143px] z-30">
           <HiOutlineLockClosed size={24} />
           <div className="text-[#171614] font-medium leading-4 text-xs">
             Upgrade to reveal
@@ -48,7 +48,12 @@ export function CouponCard({ isLoggedIn, upgrade = false, coupon }: CoupenCardDa
         </div>
       </div>}
 
-      <div className={`relative h-full flex flex-col ${(upgrade || !isLoggedIn) ? 'blur-[9px]' : 'blur-[0px]'}`}>
+      {(!isLoggedIn || !coupon?.id) &&  <div className='absolute w-full h-full bg-transparent z-20 rounded-[24px]'>
+
+      </div>}
+
+      <div className={`relative z-10 h-full flex flex-col ${(!coupon?.id || !isLoggedIn) ? 'blur-[9px]' : 'blur-[0px]'}`}>
+
         <div className="absolute right-4 top-4 rounded-[24px] bg-[#171614]">
           <div className="px-2 py-1 font-semibold text-base leading-6 text-[#FFFFFF]">
             {coupon?.off_label ? coupon?.off_label : 'BOGO'}
