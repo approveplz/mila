@@ -166,7 +166,7 @@ export function PaymentForm({ clientSecret }: { clientSecret: string }) {
             }
         }),
         async onSuccess(data, variables) {
-            toast("Successfully upgrade subscription");
+            toast("Successfully upgraded subscription");
             triggerRef.current?.click();
         },
         retry(failureCount, error) {
@@ -188,7 +188,7 @@ export function PaymentForm({ clientSecret }: { clientSecret: string }) {
         mutationFn: (payload: { secret: string, userId: string }) => latestInvoicePaymentStatus(payload),
         async onSuccess(data, variables) {
             if (data.is_paid) {
-                toast("Successfully upgrade subscription");
+                toast("Successfully upgraded subscription");
                 triggerRef.current?.click();
             } else {
                 return markLatestInvoicePaidAsyncMutate(variables).then(res => res.processing)
