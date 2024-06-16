@@ -14,6 +14,9 @@ import { useCurrentSession } from "@/hooks";
 import { GetCheckInvoicePaymentStatusParams } from "@/api/auth/auth.types";
 import { BuyBundlePayment } from "@/components/overlay/buy-subscription-dialog/buy-bundle-payment.component";
 
+const tiersOrder = ['free', 'bronze', 'silver', 'gold'];
+// {tiersOrder.indexOf(type as string) > tiersOrder.indexOf(subscribedProduct.tier) ? "Upgrade" : "Downgrade"}
+
 export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Array<Product> }) {
     const triggerRef = React.useRef<HTMLButtonElement>(null);
     const [isDialogOpen, setIsDialogOpen] = React.useState(false);
@@ -26,13 +29,23 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
     const newSubscription = selectSubscriptions[0];
     const currentSubscription = React.useMemo(() => {
         if (session) {
-            if(session.user.user.metadata.subscribed_products.length > 0) {
+            if (session.user.user.metadata.subscribed_products.length > 0) {
                 return subscriptions.find(sub => session.user.user.metadata.subscribed_products.some(prod => prod.product === sub.id))
             } else {
                 return subscriptions.find(sub => sub.tier === "free");
             }
         }
     }, [session, subscriptions]);
+
+    const changePlanType = React.useMemo(() => {
+        if(currentSubscription && newSubscription) {
+            if(tiersOrder.indexOf(newSubscription.data.tier as string) < tiersOrder.indexOf(currentSubscription.tier as string)) {
+                return "downgrade";
+            }
+
+            return "upgrade";
+        }
+    }, [currentSubscription, newSubscription])
 
     const displayPrice = (prices: Price[]) => {
         const { isDiscounted, defaultPrice, discountedPrice } = getProductPrice(prices);
@@ -53,7 +66,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
             }
         }),
         onSuccess(data, variables, context) {
-            toast("Successfully upgrade subscription")
+            toast("Successfully upgraded subscription")
             setIsDialogOpen(false);
             // window.location.reload()
         },
@@ -93,9 +106,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
 
             changeBillingPlanMutate({ price: (!!discountedPrice) ? discountedPrice.id : defaultPrice.id })
                 .then(res => {
-                    console.log("res: ", res);
-
-                    if(res.operation === "subscription") {
+                    if (res.operation === "subscription") {
                         if (res.client_secret) {
                             setIsDialogOpen(false);
                             setShowPaymentDialog(true);
@@ -104,7 +115,11 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
                     }
 
                     if (res.operation === "upgrade") {
-                        if (res.invoice) {
+                        if (res.client_secret) {
+                            setIsDialogOpen(false);
+                            setShowPaymentDialog(true);
+                            setPaymentClientSecret(res.client_secret)
+                        } else if (res.invoice) {
                             checkInvoicePaymentStatusMutate({ invoiceId: res.invoice })
                         }
                     }
@@ -112,17 +127,18 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
                     if (res.operation === "downgrade") {
                         setIsDialogOpen(false);
                         toast("The plan is scheduled for a downgrade");
+                        // window.location.reload();
                     }
 
                     if (res.operation === "no_change") {
                         setIsDialogOpen(false);
                         toast.error("The plan is already scheduled");
+                        // window.location.reload();
                     }
                 })
         }
     }
 
-    console.log("currentSubscription: ", currentSubscription);
     return (
         <>
             <Dialog open={isDialogOpen} onOpenChange={state => setIsDialogOpen(state)}>
@@ -161,7 +177,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
 
                     <div className="font-normal">
                         <p>
-                            By upgrading you will be immediately upgraded to the {newSubscription?.data.name.toUpperCase()} benefits and entries and the cost will pro-rate to the new subscription. Your next billing cycle will be on {format(nextBillingCycleData?.next_cycle ?? new Date(), "MM/dd/yyyy")}.
+                            By {changePlanType === "downgrade" ? "downgrading": "upgrading"} you will be immediately upgraded to the {newSubscription?.data.name.toUpperCase()} benefits and entries and the cost will pro-rate to the new subscription. Your next billing cycle will be on {format(nextBillingCycleData?.next_cycle ?? new Date(), "MM/dd/yyyy")}.
                         </p>
 
                         <div className="flex justify-center gap-8 text-4xl mt-4">

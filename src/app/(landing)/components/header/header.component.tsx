@@ -2,11 +2,9 @@
 
 import { AmoeDrawer } from "@/components";
 import { Button } from "@/components/ui/button/button.component"
-import { useWidth } from "@/hooks";
 import { messages } from "@/shared/constants/messages";
 import { Session } from "next-auth";
 import Link from "next/link";
-import { useState } from "react";
 
 export function Header({ session }: { session: Session | null }) {
   const { header: {
@@ -21,7 +19,7 @@ export function Header({ session }: { session: Session | null }) {
 
   // const [videoLoaded, setVideoLoaded] = useState(false);
 
-  const { width } = useWidth();
+  // const { width } = useWidth();
 
   // const handleVideoLoaded = () => {
   //   setVideoLoaded(true);
