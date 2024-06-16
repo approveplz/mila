@@ -76,10 +76,10 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
       })
       setAmount(amount)
     }
-  }, [products, pricingType])
+  }, [products, pricingType, isLoggedIn])
 
   useEffect(() => {
-    if (isLoggedIn && pricingType === 'subscription') {
+    if (isLoggedIn && products.length === 0 && pricingType === 'subscription') {
       setAmount(0);
       session?.user?.user?.metadata?.subscribed_products.forEach(subProduct => {
         subscriptions?.forEach(subscription => {
@@ -90,6 +90,16 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
           }
         })
       })
+    } else if (isLoggedIn && products.length > 0 && pricingType === 'subscription') {
+      let amount = 0;
+      products.forEach(product => {
+        if (product?.data?.type === 'subscription') {
+          const quantity = product.quantity
+          const pricingData = product?.data?.prices[0]?.unit_amount;
+          amount += quantity * Number(pricingData)
+        }
+      })
+      setAmount(amount)
     }
     // else if (isLoggedIn && pricingType === 'bundle') {
     //   let amount = 0;
@@ -105,10 +115,10 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
     //   setAmount(amount)
     // }
 
-  }, [productsArray, session, pricingType])
+  }, [productsArray, session, pricingType, isLoggedIn, subscriptions, products])
 
 
-
+  console.log("entries: ", entries, isLoggedIn, products.length);
 
 
   return (
@@ -184,12 +194,22 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
                     </div>
                   </div>}
 
-                {isLoggedIn &&
+                {isLoggedIn && products.length === 0 &&
                   ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
                   <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
                     <div className="font-semibold text-base leading text-primary">
                       {session?.user?.user?.metadata?.total_entries_count < 1000 ? session?.user?.user?.metadata?.total_entries_count : `${(session?.user?.user?.metadata?.total_entries_count / 1000).toFixed(1)}k`} {session?.user?.user?.metadata?.total_entries_count > 1 ? 'entries' : 'entry'}
+                    </div>
+                  </div>}
+
+                {isLoggedIn && products.length > 0 &&
+                  entries > 0 &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle") &&
+                  <div className="absolute top-4 left-4 flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                    <HiOutlineGift size={24} color="#B06E6A" />
+                    <div className="font-semibold text-base leading text-primary">
+                      {entries < 1000 ? entries : `${(entries / 1000).toFixed(1)}k`} {entries > 1 ? 'entries' : 'entry'}
                     </div>
                   </div>}
 
@@ -251,7 +271,7 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
                   </div>}
 
 
-                {isLoggedIn &&
+                {isLoggedIn && products.length === 0 &&
                   ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
                   && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
                     <HiOutlineGift size={24} color="#B06E6A" />
@@ -260,7 +280,15 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
                     </div>
                   </div>}
 
-
+                {isLoggedIn && products.length > 0 &&
+                  entries > 0 &&
+                  ((pricingType === "bundle" && index === 0) || pricingType !== "bundle")
+                  && <div className="absolute top-4 left-4  flex flex-row gap-2 bg-[#EFECE5] py-2 px-4 rounded-[20px]">
+                    <HiOutlineGift size={24} color="#B06E6A" />
+                    <div className="font-semibold text-base leading text-primary">
+                      {entries < 1000 ? entries : `${(entries / 1000).toFixed(1)}k`} {entries > 1 ? 'entries' : 'entry'}
+                    </div>
+                  </div>}
 
                 <div className="pl-6 py-6 pr-3 flex flex-col gap-4">
                   <div className=" bg-primary border border-primary px-2 rounded-[16px] w-fit">
