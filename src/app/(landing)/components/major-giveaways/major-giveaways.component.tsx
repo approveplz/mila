@@ -91,16 +91,16 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
         })
       })
     } else if (isLoggedIn && products.length > 0 && pricingType === 'subscription') {
-      let amount = 0;
+      setAmount(0);
       products.forEach(product => {
         if (product?.data?.type === 'subscription') {
           const quantity = product.quantity
-          console.log('product?.data?.prices', product?.data?.prices)
-          const pricingData = product?.data?.prices[0]?.unit_amount;
-          amount += quantity * Number(pricingData)
+
+          const pricingData = getProductPrice(product?.data?.prices);
+          pricingData?.isDiscounted ? setAmount(quantity * pricingData?.discountedPrice) : setAmount(quantity * pricingData?.defaultPrice)
         }
       })
-      setAmount(amount)
+
     }
     // else if (isLoggedIn && pricingType === 'bundle') {
     //   let amount = 0;
