@@ -95,6 +95,7 @@ export default function MajorGiveaways({ showHeading = true, productsArray = [] 
       products.forEach(product => {
         if (product?.data?.type === 'subscription') {
           const quantity = product.quantity
+          console.log('product?.data?.prices', product?.data?.prices)
           const pricingData = product?.data?.prices[0]?.unit_amount;
           amount += quantity * Number(pricingData)
         }
