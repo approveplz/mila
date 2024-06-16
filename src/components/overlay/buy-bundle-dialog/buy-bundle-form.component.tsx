@@ -241,7 +241,7 @@ export function PaymentForm() {
                 return latestInvoicePaymentStatusAsyncMutate({ userId: session?.user.user.id as string, secret: process.env.NEXT_PUBLIC_API_SECRET! })
             }
         }).catch(err => {
-            toast.error("Something went wrong")
+            toast.error("Something went wrong! Please contact support.")
         }))
     }, [getProductsPrices, latestInvoicePaymentStatusAsyncMutate, session?.user.user.id])
 

@@ -88,7 +88,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
             setIsDialogOpen(true);
         },
         onError(error) {
-            toast.error("Something went wrong!");
+            toast.error("Something went wrong! Please Contact support.");
         },
     });
 
@@ -96,7 +96,7 @@ export function SubscriptionAction({ subscriptions = [] }: { subscriptions: Arra
         mutationFn: (payload: { price: string }) => changeBillingPlan(payload),
         onError(error) {
             setIsDialogOpen(false);
-            toast.error("Something went wrong!");
+            toast.error("Something went wrong! Please contact support.");
         },
     });
 

@@ -69,7 +69,7 @@ export function PaymentList() {
             if (isApiError(error) && error.response) {
                 setFormError<CouponFormData>(error.response.data, form.setError)
             } else {
-                toast.error("Something went wrong!");
+                toast.error("Something went wrong! Please contact support.");
             }
         },
         mutationKey: ["ApplyCoupon"]
