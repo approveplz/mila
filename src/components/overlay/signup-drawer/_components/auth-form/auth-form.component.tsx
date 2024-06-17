@@ -261,7 +261,7 @@ export function AuthForm() {
                     control={form.control}
                     name="token"
                     render={({ field }) => (
-                        <FormItem className="flex justify-center w-full z-[9999999]">
+                        <FormItem className="flex justify-center z-[9999999]" style={{ width: '90%' }}>
                             <FormControl>
                                 <HCaptcha
                                     sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_EASY_SITE_KEY!}
