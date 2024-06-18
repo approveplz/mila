@@ -60,7 +60,7 @@ export function FinishPayment({ session }: StepperComponentProps) {
         <Container>
             <CentralizedContent className="py-16 sm:py-0" fullHeight={true}>
                 <div className="flex flex-col gap-20 sm:gap-24 justify-center h-full">
-                    {width < 640 && (
+                    {width > 640 && (
                         <ThankYou
                             type="wider"
                             info="Your payment was successful."
