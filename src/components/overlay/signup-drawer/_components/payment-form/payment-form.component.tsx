@@ -44,7 +44,7 @@ function calculateTotal(products: Array<CheckoutProduct>) {
 }
 
 const inputStylesBase: StripeElementStyleVariant = {
-    fontSize: "14px",
+    fontSize: "16px",
     color: "#171614",
     fontFamily: "Inter",
     fontWeight: 400,

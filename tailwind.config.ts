@@ -20,7 +20,7 @@ const config: Config = {
       },
       screens: {
         xs: '376px',
-        tall: { 'raw': '(min-height: 712px)' },
+        tall: { 'raw': '(min-height: 812px)' },
       },
       keyframes: {
         "accordion-down": {
