@@ -266,6 +266,9 @@ export function AuthForm() {
                                 <HCaptcha
                                     sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_EASY_SITE_KEY!}
                                     onVerify={(token) => field.onChange(token)}
+                                    scriptLocation={document.body}
+                                    size="normal"
+                                    reCaptchaCompat={false}
                                 />
                             </FormControl>
                             <FormMessage />
