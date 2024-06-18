@@ -58,10 +58,10 @@ export function FinishPayment({ session }: StepperComponentProps) {
         <Container>
             <CentralizedContent className="py-16 sm:py-0" fullHeight={true}>
                 <div className="flex flex-col gap-20 sm:gap-24 justify-center h-full">
-                    <ThankYou
+                    {/* <ThankYou
                         type="wider"
                         info="Your payment was successful."
-                    />
+                    /> */}
 
                     <EmailVerificationContent
                         type="narrow"
@@ -70,12 +70,11 @@ export function FinishPayment({ session }: StepperComponentProps) {
 
                     <div className="min-w-[304px] self-center hidden sm:flex">
                         <DrawerClose className="w-full">
-                            <Button
-                                full>Home</Button>
+                            <Button full>Home</Button>
                         </DrawerClose>
                     </div>
 
-                    <div className="min-w-[304px] self-center flex sm:hidden pb-12">
+                    <div className="min-w-full sm:min-w-[304px] self-center flex sm:hidden">
                         <Button full onClick={nextStep}>Proceed to Check-out</Button>
                     </div>
                 </div>
