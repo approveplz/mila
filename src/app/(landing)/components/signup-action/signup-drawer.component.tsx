@@ -5,7 +5,10 @@ import {
     Button,
     Drawer,
     DrawerContent,
-    DrawerTrigger
+    DrawerTrigger,
+    Sheet,
+    SheetContent,
+    SheetTrigger
 } from "@/components";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
@@ -21,27 +24,45 @@ export function SignupDrawerWrapper({ children }: React.PropsWithChildren) {
 
     const triggerGTMEvent = () => {
         sendGTMEvent(
-            { event: 'begin_checkout', value: { checkout_total: totalAmount, currency: 'USD'  }  })
+            { event: 'begin_checkout', value: { checkout_total: totalAmount, currency: 'USD' } })
     }
 
     return (
-        <Drawer
-            dismissible={false}
-            nested={true}
-            onClose={() => {
-                retrieveSession()
-                window.location.reload();
+        // <Drawer
+        //     dismissible={false}
+        //     nested={true}
+        //     onClose={() => {
+        //         retrieveSession()
+        //         window.location.reload();
+        //     }}
+        // >
+        //     <DrawerTrigger asChild>
+        //         <Button onClick={triggerGTMEvent} variant="fatal">
+        //             <span className="select-none" >Continue With Selected </span>
+        //             <HiArrowUpRight className="ml-3 h-6 w-4" />
+        //         </Button>
+        //     </DrawerTrigger>
+        //     <DrawerContent className="bg-white h-full rounded-none z-[9999] max-h-screen">
+        //         {children}
+        //     </DrawerContent>
+        // </Drawer>
+        <Sheet
+            onOpenChange={state => {
+                if (state === false) {
+                    retrieveSession()
+                    window.location.reload();
+                }
             }}
         >
-            <DrawerTrigger asChild>
+            <SheetTrigger asChild>
                 <Button onClick={triggerGTMEvent} variant="fatal">
-                    <span className="select-none" >Continue With Selected </span>
+                    <span className="select-none">Continue With Selected</span>
                     <HiArrowUpRight className="ml-3 h-6 w-4" />
                 </Button>
-            </DrawerTrigger>
-            <DrawerContent className="bg-white h-full rounded-none z-[9999] max-h-screen">
+            </SheetTrigger>
+            <SheetContent side="bottom" className="z-[9999] max-h-screen">
                 {children}
-            </DrawerContent>
-        </Drawer>
+            </SheetContent>
+        </Sheet>
     )
 }
