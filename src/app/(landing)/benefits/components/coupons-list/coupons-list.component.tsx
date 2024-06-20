@@ -27,8 +27,10 @@ export function CoupensList({ session }: { session: Session | null }) {
           if (!selectedCategory)
             setSelectedCategory(res?.results[0]?.id)
           return res;
+
         }),
       enabled: isLoggedIn,
+      refetchOnWindowFocus: false,
     })
 
   const { data: coupons, isLoading: isCouponLoading }: UseQueryResult<GetCouponsResponse> =
@@ -39,6 +41,7 @@ export function CoupensList({ session }: { session: Session | null }) {
           return res;
         }),
       enabled: !!selectedCategory,
+      refetchOnWindowFocus: false,
     })
   const couponCards = Array.from({ length: 10 });
 
