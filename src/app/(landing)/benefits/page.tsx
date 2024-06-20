@@ -10,7 +10,7 @@ export default async function Coupons() {
   return (
     <div>
       <Header session={session}/>
-      {session && <Promotions/>}
+      {<Promotions session={session}/>}
       {/* <Brands /> */}
       <CoupensList session={session} />
       <BecomeAPartner />

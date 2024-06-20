@@ -7,6 +7,7 @@ import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 import { useWidth } from '@/hooks';
 import { Dialog, DialogContent, DialogTrigger } from '@/components';
 import SelectCoupons from '../select-coupon/select-coupon.component';
+import { Session } from 'next-auth';
 
 
 const mockData = [
@@ -113,13 +114,169 @@ const mockData = [
     "is_active": true,
     "created": "2024-06-08T20:34:33.067407Z",
     "modified": "2024-06-08T20:35:04.442558Z"
+  },
+
+  {
+    "id": "cpn_345e5a968d689db7432a",
+    "fullscreen": "/images/BannerMaisonWristAfficionado.png",
+    "mobileScreen": '/images/BannerMaisonWristAfficionado(Mobile).png',
+    "business": {
+      "id": "bis_37b2e643658ae7d374d9b42375a98b",
+      "logo": {
+        "id": "res_37a458e945293ed592d6b87a72b362",
+        "title": "Maison Wrist Aficionado.webp",
+        "description": null,
+        "filename": "Maison Wrist Aficionado.webp",
+        "type": "business_logo",
+        "size": 18354,
+        "mime_type": "image/webp",
+        "file_url": "https://mila-live-bucket.s3.us-east-1.amazonaws.com/business/20240614213749248485/Maison Wrist Aficionado.webp",
+        "linked": true,
+        "is_internal": false,
+        "created": "2024-06-14T21:37:49.251831Z",
+        "modified": "2024-06-14T21:37:49.254556Z",
+        "created_by": null
+      },
+      "name": "Maison Wrist Aficionado",
+      "description": "The number one Trusted Reseller of Hermes Bags",
+      "address": null,
+      "phone": "",
+      "email": "",
+      "category": "Fashion & Retail",
+      "categorical_hierarchy": "Fashion & Retail",
+      "socials": [
+        {
+          "id": "scl_2a384739adbaad6b5e28",
+          "business": "bis_37b2e643658ae7d374d9b42375a98b",
+          "url": "https://maisonwristaficionado.com/",
+          "platform": "website",
+          "created": "2024-06-14T21:37:49.440083Z",
+          "modified": "2024-06-14T21:37:49.440094Z"
+        }
+      ],
+      "created": "2024-06-14T21:37:49.244959Z",
+      "modified": "2024-06-14T21:37:49.438921Z"
+    },
+    "minimum_plan": "Bronze",
+    "off_label": "$2,000 OFF",
+    "description": "$2,000 off from purchases over $35k",
+    "clip": "MWAMILA2000",
+    "link": null,
+    "instructions": "",
+    "is_active": true,
+    "created": "2024-06-14T21:38:43.877822Z",
+    "modified": "2024-06-14T21:38:43.877837Z"
+  },
+
+  {
+    "id": "cpn_687936ae8da8ed7b2543",
+    "fullscreen": "/images/BannerOdette.png",
+    "mobileScreen": '/images/BannerOdette(Mobile).png',
+    "business": {
+      "id": "bis_b52a4687936ae8da8ed7b254395eb8",
+      "logo": {
+        "id": "res_8ea325464a8e97d77bd3b65289eb76",
+        "title": "odette-logo-800x532.webp",
+        "description": null,
+        "filename": "odette-logo-800x532.webp",
+        "type": "business_logo",
+        "size": 61898,
+        "mime_type": "image/webp",
+        "file_url": "https://mila-live-bucket.s3.us-east-1.amazonaws.com/business/20240614010844592039/odette-logo-800x532.webp",
+        "linked": true,
+        "is_internal": false,
+        "created": "2024-06-14T01:08:44.596527Z",
+        "modified": "2024-06-14T01:08:44.598225Z",
+        "created_by": null
+      },
+      "name": "Odette + Odile",
+      "description": "Inspired by the iconic ballet Swan Lake, Odette+Odile tells the story of two swans:\r\nthe gentle, elegant, and pure Odette, and the wild, rebellious, and seductive Odile.",
+      "address": null,
+      "phone": "",
+      "email": "",
+      "category": "Fashion & Retail",
+      "categorical_hierarchy": "Fashion & Retail",
+      "socials": [
+        {
+          "id": "scl_687936ae8da8ed7b2543",
+          "business": "bis_b52a4687936ae8da8ed7b254395eb8",
+          "url": "https://www.odette-odile.com/",
+          "platform": "website",
+          "created": "2024-06-14T01:08:44.856930Z",
+          "modified": "2024-06-14T01:08:44.856941Z"
+        }
+      ],
+      "created": "2024-06-14T01:08:44.587006Z",
+      "modified": "2024-06-14T01:08:44.855783Z"
+    },
+    "minimum_plan": "Bronze",
+    "off_label": "30% OFF",
+    "description": "30% off the entire site",
+    "clip": "MILA30",
+    "link": null,
+    "instructions": "",
+    "is_active": true,
+    "created": "2024-06-14T01:09:13.132490Z",
+    "modified": "2024-06-14T01:09:13.132504Z"
+  },
+  {
+    "id": "cpn_2a384739adbaad6b5e28",
+    "fullscreen": "/images/BannerTheWristAficionado(desktop).jpg",
+    "mobileScreen": '/images/BannerTheWristAficionado(mobile).jpg',
+    "business": {
+      "id": "bis_7be592a384739adbaad6b5e286b746",
+      "logo": {
+        "id": "res_7265498746aeb2d9a3d9583723aeb5",
+        "title": "Wrist Aficionado.webp",
+        "description": null,
+        "filename": "Wrist Aficionado.webp",
+        "type": "business_logo",
+        "size": 51598,
+        "mime_type": "image/webp",
+        "file_url": "https://mila-live-bucket.s3.us-east-1.amazonaws.com/business/20240614212852823657/Wrist Aficionado.webp",
+        "linked": true,
+        "is_internal": false,
+        "created": "2024-06-14T21:28:52.826866Z",
+        "modified": "2024-06-14T21:28:52.828666Z",
+        "created_by": null
+      },
+      "name": "Wrist Aficionado",
+      "description": "A luxury boutique with global reach. The most premium brands and carefully selected luxury goods.",
+      "address": null,
+      "phone": "",
+      "email": "",
+      "category": "Fashion & Retail",
+      "categorical_hierarchy": "Fashion & Retail",
+      "socials": [
+        {
+          "id": "scl_eb32679aed2e8d8b3457",
+          "business": "bis_7be592a384739adbaad6b5e286b746",
+          "url": "https://wristaficionado.com/",
+          "platform": "website",
+          "created": "2024-06-14T21:28:53.006149Z",
+          "modified": "2024-06-14T21:28:53.006160Z"
+        }
+      ],
+      "created": "2024-06-14T21:28:52.814890Z",
+      "modified": "2024-06-14T21:28:53.004907Z"
+    },
+    "minimum_plan": "Bronze",
+    "off_label": "30% OFF",
+    "description": "30% Off the Jewels by Aficionado line",
+    "clip": "JEWELS30",
+    "link": null,
+    "instructions": "",
+    "is_active": true,
+    "created": "2024-06-14T21:29:18.552224Z",
+    "modified": "2024-06-14T21:29:18.552243Z"
   }
 ]
 
 
-export function Promotions() {
+export function Promotions({ session }: { session: Session | null }) {
 
   const { width } = useWidth();
+  const isLoggedIn = !!session;
 
   return (
     <section>
@@ -136,27 +293,45 @@ export function Promotions() {
           modules={[Pagination, Navigation]}
           className="promotions"
         >
-          {mockData?.map((data,index) => (
+          {isLoggedIn ? <div>
+            {mockData?.map((data, index) => (
 
-            <SwiperSlide key={index} className='relative'>
-              <Dialog>
-                <DialogTrigger >
+              <SwiperSlide key={index} className='relative'>
+                <Dialog>
+                  <DialogTrigger >
+                    <Image
+                      src={width > 640 ? data?.fullscreen : data?.mobileScreen}
+                      alt="promotions"
+                      layout="fill"
+                      className={`w-full object-cover`}
+                    />
+                  </DialogTrigger>
+                  <DialogContent className='w-[365px] z-[99999] sm:!w-[543px] !py-0 pb-4' withClose={true} >
+                    <SelectCoupons coupon={data} />
+                  </DialogContent>
+                </Dialog>
+
+              </SwiperSlide>
+
+            ))}
+          </div>
+            :
+            <div>
+
+
+              {mockData?.map((data, index) => (
+
+                <SwiperSlide key={index} className='relative'>
                   <Image
                     src={width > 640 ? data?.fullscreen : data?.mobileScreen}
                     alt="promotions"
                     layout="fill"
                     className={`w-full object-cover`}
                   />
-                </DialogTrigger>
-                <DialogContent className='w-[365px] z-[99999] sm:!w-[543px] !py-0 pb-4' withClose={true} >
-                  <SelectCoupons coupon={data} />
-                </DialogContent>
-              </Dialog>
+                </SwiperSlide>
 
-            </SwiperSlide>
-
-          ))}
-
+              ))}
+            </div>}
 
 
           {/* <SwiperSlide className='relative'>
