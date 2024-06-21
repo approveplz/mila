@@ -21,11 +21,7 @@ const stepsMeta: Array<StepperComponent> = [
     Finish
 ];
 
-export function StepperMain({
-    session
-}: {
-    session: Session | null
-}) {
+export function StepperMain() {
     const { step } = useStepperContext();
     const { checkoutFlow } = useCheckOutStore();
     const withPayment = checkoutFlow === "paid";
@@ -34,13 +30,13 @@ export function StepperMain({
         const Component = stepsMetaWithPayment[step - 1];
 
         return (
-            <Component session={session} />
+            <Component />
         )
     } else {
         const Component = stepsMeta[step - 1];
 
         return (
-            <Component session={session} />
+            <Component />
         )
     }
 }

@@ -11,7 +11,6 @@ import { VerifyPhone } from "../verify-phone/verify-phone.component";
 import { Finish, FinishPayment, FinishThanks } from "../finish/finish.component";
 import { useStepperContext } from "./stepper.context";
 import { useCheckOutStore } from "@/store";
-import { Session } from "next-auth";
 import { StepperComponent } from "./stepper.types";
 
 const stepsMobileMetaWithPayment: Array<StepperComponent> = [
@@ -31,11 +30,7 @@ const stepsMobileMeta: Array<StepperComponent> = [
     Finish
 ];
 
-export function StepperMobile({
-    session
-}: {
-    session: Session | null
-}) {
+export function StepperMobile() {
     const { step } = useStepperContext();
     const { checkoutFlow } = useCheckOutStore();
     const withPayment = checkoutFlow === "paid";
@@ -44,13 +39,13 @@ export function StepperMobile({
         const Component = stepsMobileMetaWithPayment[step - 1];
 
         return (
-            <Component session={session} />
+            <Component />
         )
     } else {
         const Component = stepsMobileMeta[step - 1];
 
         return (
-            <Component session={session} />
+            <Component />
         )
     }
 }
