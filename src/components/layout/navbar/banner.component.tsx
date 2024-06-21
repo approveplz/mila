@@ -7,9 +7,10 @@ import { toast } from "sonner"
 import { HiOutlineEnvelope, HiXMark } from "react-icons/hi2";
 import { sendVerificationEmail, sendVerificationSms, verifyEmailOrSMS } from "@/api/auth";
 import { useMutation } from "@tanstack/react-query";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
 export function NavBanner() {
-    const { session } = useCurrentSession();
+    const { session } = useAuthContext();
     const [isOpened, setIsOpened] = React.useState(false);
 
     const { mutate: sendVerificationEmailMutate, isPending: isPendingSendVerificationEmailMutate } = useMutation({
@@ -47,6 +48,8 @@ export function NavBanner() {
         }
     })
 
+    console.log("session banner: ", session)
+    
     if (!!!session) {
         return null;
     } else if (session?.user.user.metadata.is_free_tier_subscriber === false) {

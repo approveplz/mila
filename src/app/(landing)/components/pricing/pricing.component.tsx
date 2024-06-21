@@ -16,14 +16,13 @@ export async function Pricing({
   children
 }: {
   products: Array<Product>,
-  session?: Session | null
+  session: Session | null
 } & React.PropsWithChildren) {
   const { pricing: {
     headingA,
     headingB,
     description,
   } } = messages;
-  const isLoggedIn = !!session;
 
   return (
     <section id="pricing" className="overflow-auto pt-[66px] sm:px-[160px] bg-[#F3F3F3]">
@@ -39,13 +38,11 @@ export async function Pricing({
             </div>
           </div>
 
-          <PricingTabs session={session ? session : null} products={products} />
+          <PricingTabs session={session} products={products} />
 
-          {!isLoggedIn && (
-            <PricingAction>
-              <SignUpAction />
-            </PricingAction>
-          )}
+          <PricingAction>
+            <SignUpAction session={session} />
+          </PricingAction>
         </div>
       </Container>
     </section>

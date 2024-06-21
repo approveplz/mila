@@ -37,7 +37,7 @@ export function Finish() {
     )
 }
 
-export function FinishPayment({ session }: StepperComponentProps) {
+export function FinishPayment() {
     const { nextStep } = useStepperContext();
     const { totalAmount } = useTotalAmount();
     const { width } = useWidth();
@@ -87,7 +87,7 @@ export function FinishPayment({ session }: StepperComponentProps) {
     )
 }
 
-export function FinishThanks({ session }: StepperComponentProps) {
+export function FinishThanks() {
     return (
         <Container>
             <CentralizedContent>

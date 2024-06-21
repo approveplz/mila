@@ -20,7 +20,7 @@ export function PaymentListFormProvider({ children }: React.PropsWithChildren) {
     )
 }
 
-export function PaymentStep({ session }: StepperComponentProps) {
+export function PaymentStep() {
     return (
         <PaymentListFormProvider>
             <div className="mx-auto grid max-w-lg grid-cols-1 gap-x-[11.63rem] gap-y-16 min-h-screen lg:max-w-none lg:grid-cols-2">
@@ -35,7 +35,7 @@ export function PaymentStep({ session }: StepperComponentProps) {
                 <div className="w-full max-w-[375px]">
                     <div className="flex min-h-full flex-col justify-center">
                         <h2 className="text-[32px] font-tt-ramillas text-center mb-[32px]">Select payment method</h2>
-                        <PaymentForm session={session} />
+                        <PaymentForm />
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@ export function PaymentStep({ session }: StepperComponentProps) {
     )
 }
 
-export function PaymentListStep({ session }: StepperComponentProps) {
+export function PaymentListStep() {
     return (
         <Container>
             <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0" fullHeight={true}>
@@ -55,12 +55,12 @@ export function PaymentListStep({ session }: StepperComponentProps) {
     )
 }
 
-export function PaymentFormStep({ session }: StepperComponentProps) {
+export function PaymentFormStep() {
     return (
         <Container>
             <CentralizedContent centralized="h" className="flex flex-col pt-16 pb-12 sm:pt-0 sm:pb-0" fullHeight={true}>
                 <PaymentListFormProvider>
-                    <PaymentForm session={session} />
+                    <PaymentForm />
                 </PaymentListFormProvider>
             </CentralizedContent>
         </Container>
