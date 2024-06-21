@@ -49,7 +49,6 @@ export const signInWithCredentials = (payload: SignInWithCredentialsPayload) => 
 }
 
 export const refreshToken = (payload: RefreshTokenPayload) => {
-
     return api
         .post<RefreshTokenResponse>("/auth/v0/token/refresh", payload)
         .then(res => {
@@ -100,7 +99,6 @@ export const getCouponCategories = () => {
         .then(res => res.data);
 }
 
-
 export const getCoupons = (params: GetCouponsParams) => {
     return api
         .get<GetCouponsResponse>(`/coupons/v0/coupons`, { params })
@@ -131,6 +129,16 @@ export const getMe = () => {
         .then(res => res.data)
 }
 
+export const getMeAuth = ({ accessToken }: { accessToken: string }) => {
+    return api
+        .get<GetMeResponse>("/users/v0/me", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+        .then(res => res.data)
+}
+
 export const latestInvoicePaymentStatus = ({ userId, ...payload }: LatestInvoicePaymentStatusPayload) => {
     return api
         .put<LatestInvoicePaymentStatusResponse>(`/users/v0/user/${userId}/latest-invoice-payment-status`, payload)
@@ -154,7 +162,6 @@ export const buyAdditionalBundles = ({ userId, ...payload }: BuyAdditionalBundle
         .put<BuyAdditionalBundlesResponse>(`/payments/v0/user/${userId}/buy-one-time-bundles`, payload)
         .then(res => res.data)
 }
-
 
 export const checkInvoicePaymentStatus = (params: GetCheckInvoicePaymentStatusParams) => {
     return api

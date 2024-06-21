@@ -54,7 +54,7 @@ export function PhoneVerificationContent({
     }
 
     return (
-        <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
+        <article className="flex flex-col gap-8 items-stretch sm:items-center justify-between sm:justify-normal max-w-full sm:max-w-[592px] h-full sm:h-auto pt-16 pb-12 sm:pt-0 sm:pb-0">
             {showHeader && (
                 <header className="flex flex-col gap-8 items-center">
                     <h2 className="text-4xl font-tt-ramillas">Just one more step!</h2>
@@ -63,8 +63,10 @@ export function PhoneVerificationContent({
 
             <main className="flex flex-col gap-8 items-center text-center">
                 <HiOutlineDevicePhoneMobile className="h-12 w-12 text-primary" />
-                <h2 className="text-4xl font-tt-ramillas">Phone number verification</h2>
-                <p>Please enter the 6 digit code that we sent to: <br />
+                <h2 className="text-3xl sm:text-4xl font-tt-ramillas">Phone number verification</h2>
+                <p>
+                    <span>Please enter the 6 digit code that we sent to:</span> 
+                    <br />
                     <PatternFormat
                         displayType="text"
                         format="+1 (###)-####-###"
@@ -100,13 +102,13 @@ export function PhoneVerificationContent({
                 </Form>
             </main>
 
-            <footer className="flex flex-col items-center gap-8 min-w-[346px]">
+            <footer className="flex flex-col items-center gap-8 min-w-full sm:min-w-[346px]">
                 <Button full form="phone-pin-form" disabled={isLoading}>
                     Verify
                     {isLoading && <Spinner className="w-4 h-4 ml-4" />}
                 </Button>
 
-                <div className="flex items-center">
+                <div className="flex flex-col sm:flex-row items-center">
                     <p>Didn&apos;t get the code?</p>
                     <button className="font-medium ml-1" onClick={onReSend}>Resend verification code</button>
                 </div>

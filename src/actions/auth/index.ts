@@ -119,3 +119,38 @@ export async function authRegisterSigIn(prevState: any, data: FormData) {
 export async function signUp(data: FormData) {
     await signIn('register', data);
 }
+
+export async function authSignInToken(data: FormData) {
+    try {
+        await signIn('auth', data);
+
+        return {
+            status: 'success',
+            error: ''
+        }
+    } catch (error) {
+        if (isRedirectError(error as Error)) {
+            return {
+                status: 'success',
+                error: ''
+            }
+        };
+
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case 'CredentialsSignin':
+                    return {
+                        status: 'failed',
+                        error: 'Invalid email or password.'
+                    };
+                default:
+                    return {
+                        status: 'failed',
+                        error: 'Something went wrong.'
+                    };
+            }
+        }
+
+        throw error;
+    }
+}
