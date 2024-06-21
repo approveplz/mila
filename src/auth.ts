@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { isApiError } from "@/api"
-import { signInWithCredentials } from "@/api/auth"
+import { getMeAuth, signInWithCredentials } from "@/api/auth"
 import { withAsync } from "@/utils/withAsync";
 import { removePrefixFromObjectKeys } from "./utils";
 
@@ -62,7 +62,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     user
                 } as {}
             },
-        })
+        }),
+        Credentials({
+            id: "auth",
+            name: "auth",
+            credentials: {
+                access: {
+                    label: "Password"
+                },
+                refresh: {
+                    label: "Password"
+                },
+            },
+            async authorize(credentials) {
+                const { response, error } = await withAsync(() => getMeAuth({
+                    accessToken: credentials.access as string,
+                }));
+
+                if (error) {
+                    if (isApiError(error)) {
+                        return null;
+                    } else {
+                        throw new Error("An unexpected issue occurred.");
+                    }
+                }
+
+                return {
+                    access: credentials.access,
+                    refresh: credentials.refresh,
+                    user: response
+                } as {}
+            },
+        }),
     ],
     callbacks: {
         async jwt({ token, user }) {

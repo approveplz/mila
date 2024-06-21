@@ -82,7 +82,7 @@ export function NavBanner() {
             </Container>
 
             <Dialog open={isOpened} onOpenChange={open => setIsOpened(open)}>
-                <DialogContent className="sm:max-w-[455px] z-[99999] [&_header]:hidden">
+                <DialogContent className="max-w-[calc(100%-24px)] mx-auto sm:max-w-[455px] z-[99999] [&_header]:hidden">
                     <PhoneVerificationContent
                         showHeader={false}
                         isLoading={isPendingVerifyEmailOrSMSMutate}
