@@ -120,7 +120,6 @@ export function AuthForm() {
         sendGTMEvent({ event: 'complete_registration' });
     }
 
-    console.log("sitekey: ", process.env.NEXT_PUBLIC_RECAPCTHA_SITE_KEY);
     React.useEffect(() => {
         if (resultAuthFormAction) {
             if (resultAuthFormAction.status === "success") {
@@ -265,13 +264,6 @@ export function AuthForm() {
                     render={({ field }) => (
                         <FormItem className="flex justify-center w-full z-[99999]">
                             <FormControl>
-                                {/* <HCaptcha
-                                    sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_EASY_SITE_KEY!}
-                                    onVerify={(token) => field.onChange(token)}
-                                    scriptLocation={document.body}
-                                    size="normal"
-                                    reCaptchaCompat={false}
-                                /> */}
                                 <ReCAPTCHA
                                     sitekey={process.env.NEXT_PUBLIC_RECAPCTHA_SITE_KEY!}
                                     onChange={token => field.onChange(token)}
