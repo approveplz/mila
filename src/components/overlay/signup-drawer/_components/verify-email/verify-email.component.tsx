@@ -5,7 +5,7 @@ import { useStepperContext } from "../stepper/stepper.context";
 import { StepperComponentProps } from "../stepper/stepper.types";
 import { useMutation } from "@tanstack/react-query";
 
-export function VerifyEmail({ session }: StepperComponentProps) {
+export function VerifyEmail() {
     const { nextStep } = useStepperContext();
     const { checkoutFlow } = useCheckOutStore();
 

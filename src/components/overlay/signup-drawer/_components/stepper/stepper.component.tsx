@@ -7,20 +7,16 @@ import { StepperMobile } from "./stepper-mobile.meta";
 import { useWidth } from "@/hooks";
 import { Session } from "next-auth";
 
-function Stepper({
-    session
-}: {
-    session: Session | null
-}) {
+function Stepper() {
     const { width } = useWidth()
 
     return (
         <StepperProvider>
             {width < 640 ? (
-                <StepperMobile session={session} />
+                <StepperMobile />
             ) : (
                 <div className="overflow-auto py-3 tall:overflow-hidden tall:py-0 max-h-screen">
-                    <StepperMain session={session} />
+                    <StepperMain />
                 </div>
             )}
         </StepperProvider>

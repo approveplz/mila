@@ -47,7 +47,9 @@ export type VerifyEmailOrSMSPayload = {
     server_code: string
 }
 
-export type VerifyEmailOrSMSResponse = User;
+export type VerifyEmailOrSMSResponse = AuthCredentials & {
+    user: User
+};
 
 type MembershipPayload = {
     user: string

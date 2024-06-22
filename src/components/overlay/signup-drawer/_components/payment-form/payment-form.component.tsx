@@ -196,7 +196,7 @@ const PaymentFormGroup = React.memo(({
 
 PaymentFormGroup.displayName = "PaymentFormGroup";
 
-export function PaymentForm({ session }: { session: Session | null }) {
+export function PaymentForm() {
     const { nextStep } = useStepperContext();
     const { authUser } = useAuthStore();
     const isLoading = React.useRef(false);

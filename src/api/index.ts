@@ -29,7 +29,7 @@ axiosInstance.interceptors.request.use(
     async (config: any) => {
         const isNoAuthUrl = noAuthUrls.some((pattern) => pattern.test(config.url));
 
-        if (!isNoAuthUrl) {
+        if (!config.headers.Authorization && !isNoAuthUrl) {
             let session;
             let accessToken;
 
