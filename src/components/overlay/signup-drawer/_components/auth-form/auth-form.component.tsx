@@ -58,8 +58,7 @@ export function AuthForm() {
             full_name: "",
             phone: "",
             state: "",
-            is_over_18_and_agrees_tc: false,
-            token: ""
+            is_over_18_and_agrees_tc: false
         }
     });
 
@@ -97,7 +96,7 @@ export function AuthForm() {
     })
 
     const onSubmit = (signUpFormData: SignUpFormData) => {
-        const { token: _, ...data } = signUpFormData;
+        const { ...data } = signUpFormData;
 
         const prices = products
             .map(product => {
@@ -258,26 +257,10 @@ export function AuthForm() {
                     )}
                 />
 
-                <FormField
-                    control={form.control}
-                    name="token"
-                    render={({ field }) => (
-                        <FormItem className="flex justify-center w-full z-[99999]">
-                            <FormControl>
-                                <ReCAPTCHA
-                                    sitekey={process.env.NEXT_PUBLIC_RECAPCTHA_SITE_KEY!}
-                                    onChange={token => field.onChange(token)}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
                 <Button
                     className="mt-auto sm:mt-0"
                     type="submit"
-                    disabled={!form.watch("is_over_18_and_agrees_tc") || !!!form.watch("token") || isPending}
+                    disabled={!form.watch("is_over_18_and_agrees_tc") || isPending}
                 >
                     Sign Up {isPending && <Spinner className="w-4 h-4 ml-4" />}
                 </Button>

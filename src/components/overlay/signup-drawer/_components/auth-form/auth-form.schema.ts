@@ -18,10 +18,7 @@ export const signUpSchema = z.object({
     state: z
         .string()
         .min(1, { message: "State is required" }),
-    is_over_18_and_agrees_tc: z.boolean().default(false),
-    token: z
-        .string()
-        .min(1, { message: "Captcha is required" })
+    is_over_18_and_agrees_tc: z.boolean().default(false)
 });
 
 export type SignUpFormData = z.infer<typeof signUpSchema>
