@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { verifyEmailOrSMS } from "@/api/auth";
 import { auth } from "@/auth";
-import { apiRouteHandler } from "@/api";
 
 function isRedirectError(error: Error & { digest?: string }) {
     return !!error.digest?.startsWith("NEXT_REDIRECT")
@@ -26,12 +25,18 @@ export default async function Page({
             redirect('/');
         } else {
             try {
-                const response = await apiRouteHandler.post("/api/auth/authSignInToken", {
-                    access: res.access,
-                    refresh: res.refresh,
+                const response = await fetch("/api/auth/authSignInToken", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        access: res.access,
+                        refresh: res.refresh,
+                    })
                 });
 
                 console.log("response: ", response);
+                const data = await response.json();
+
+                console.log("data: ", data);
                 redirect('/');
             } catch (error) {
                 throw error;
