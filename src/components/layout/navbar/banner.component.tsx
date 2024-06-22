@@ -29,19 +29,38 @@ export function NavBanner() {
                 </div>
             ))
         },
+        onError(error, variables, context) {
+            toast.error("Something went wrong!");
+        },
     })
 
     const { mutate: sendVerificationSmsMutate, isPending: isPendingSendVerificationSmsMutate } = useMutation({
         mutationFn: () => sendVerificationSms(),
         onSuccess() {
             setIsOpened(true);
-        }
+        },
+        onError(error, variables, context) {
+            toast.error("Something went wrong!");
+        },
     })
 
     const { mutate: verifyEmailOrSMSMutate, isPending: isPendingVerifyEmailOrSMSMutate } = useMutation({
         mutationFn: (payload: { server_code: string, client_code: string }) => verifyEmailOrSMS(payload),
         onSuccess() {
             setIsOpened(false);
+            toast.custom(t => (
+                <div className="flex items-center px-4 py-3">
+                    <div className="flex items-center gap-2">
+                        <HiOutlineEnvelope className="h-6 w-6" />
+                        <p className="font-medium">Successfully verified phone number!</p>
+                    </div>
+
+                    <button className="ml-auto" onClick={() => toast.dismiss(t)}>
+                        <HiXMark className="h-6 w-6" />
+                    </button>
+                </div>
+            ));
+            window.location.reload()
         },
         onError() {
             toast.error("Invalid code!");
@@ -49,7 +68,7 @@ export function NavBanner() {
     })
 
     console.log("session banner: ", session)
-    
+
     if (!!!session) {
         return null;
     } else if (session?.user.user.metadata.is_free_tier_subscriber === false) {
@@ -82,11 +101,11 @@ export function NavBanner() {
             </Container>
 
             <Dialog open={isOpened} onOpenChange={open => setIsOpened(open)}>
-                <DialogContent className="max-w-[calc(100%-24px)] mx-auto sm:max-w-[455px] z-[99999] [&_header]:hidden">
+                <DialogContent className="max-w-[calc(100%-24px)] mx-auto sm:max-w-[455px] z-[99999] [&_header]:hidden" withClose>
                     <PhoneVerificationContent
                         showHeader={false}
                         isLoading={isPendingVerifyEmailOrSMSMutate}
-                        onVerify={(pin) =>  verifyEmailOrSMSMutate({ server_code: pin, client_code: pin })}
+                        onVerify={(pin) => verifyEmailOrSMSMutate({ server_code: pin, client_code: pin })}
                         onReSend={sendVerificationSmsMutate}
                         phone={session?.user.user.phone || ""}
                     />
