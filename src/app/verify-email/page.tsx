@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { verifyEmailOrSMS } from "@/api/auth";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -10,9 +10,12 @@ import { serialize } from "object-to-formdata";
 import { useAuthContext } from "@/components/provider/auth/auth.component";
 
 export default function Page() {
-    const params = useParams();
+    const searchParams = useSearchParams();
     const router = useRouter();
     const { resultAuthTokenFormAction, authTokenFormAction, session } = useAuthContext();
+
+    const client_code = searchParams.get("client_code");
+    const server_code = searchParams.get("client_code");
 
     const { mutate } = useMutation({
         mutationFn: (payload: VerifyEmailOrSMSPayload) => verifyEmailOrSMS(payload),
@@ -33,10 +36,10 @@ export default function Page() {
     })
 
     React.useEffect(() => {
-        if (params.client_code && params.server_code) {
-            mutate({ server_code: params.server_code as string, client_code: params.client_code as string })
+        if (client_code && server_code) {
+            mutate({ server_code: server_code, client_code: client_code })
         }
-    }, [mutate, params.server_code, params.client_code])
+    }, [mutate, server_code, client_code])
 
     React.useEffect(() => {
         if (resultAuthTokenFormAction.status === "success") {
