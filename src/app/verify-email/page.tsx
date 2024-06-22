@@ -26,7 +26,7 @@ export default async function Page({
             redirect('/');
         } else {
             try {
-                const response = await api.post("/api/authSignInToken", {
+                const response = await api.post("/api/auth/authSignInToken", {
                     access: res.access,
                     refresh: res.refresh,
                 });
