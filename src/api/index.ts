@@ -10,7 +10,7 @@ const axiosParams = {
 };
 
 const axiosInstance = axios.create(axiosParams);
-const apiRouteHandler = axios.create(axiosParams);
+const apiRouteHandler = axios.create();
 
 export const isApiError = (error: unknown): error is ApiError => {
     return axios.isAxiosError(error);
