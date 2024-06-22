@@ -25,12 +25,13 @@ export default async function Page({
             redirect('/');
         } else {
             try {
-                const response = await fetch("/api/auth/authSignInToken", {
+                const formData = new FormData();
+                formData.append("access", res.access);
+                formData.append("refresh", res.refresh);
+
+                const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL!}/api/auth/authSignInToken`, {
                     method: "POST",
-                    body: JSON.stringify({
-                        access: res.access,
-                        refresh: res.refresh,
-                    })
+                    body: formData
                 });
 
                 console.log("response: ", response);
