@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { verifyEmailOrSMS } from "@/api/auth";
-import * as actions from "@/actions";
-import { serialize } from "object-to-formdata";
 import { auth } from "@/auth";
+import api from "@/api";
 
 function isRedirectError(error: Error & { digest?: string }) {
     return !!error.digest?.startsWith("NEXT_REDIRECT")
@@ -24,18 +23,14 @@ export default async function Page({
             redirect('/');
         } else {
             try {
-                await actions.authSignInToken(serialize({
+                await api.post("/api/authSignInToken", {
                     access: res.access,
                     refresh: res.refresh,
-                }))
+                });
 
                 redirect('/');
             } catch (error) {
-                if (isRedirectError(error as Error)) {
-                    redirect('/');
-                } else {
-                    throw error;
-                }
+                throw error;
             }
         }
     }
