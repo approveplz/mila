@@ -33,8 +33,10 @@ type Props = React.PropsWithChildren
 const [useAuthContext, AuthContext] = contextFactory<{
     session: Session | null,
     status: string,
-    resultAuthFormAction: { status: string, error: string }
+    resultAuthFormAction: { status: string, error: string },
+    resultAuthTokenFormAction: { status: string, error: string },
     authFormAction: (payload: FormData) => void,
+    authTokenFormAction: (payload: FormData) => void,
     retrieveSession: () => Promise<void>
 }>();
 
@@ -71,19 +73,32 @@ function AuthProvider({ children }: Props) {
         error: ''
     });
 
+    const [resultAuthTokenFormAction, authTokenFormAction] = useFormState(actions.authSignInToken, {
+        status: 'idle',
+        error: ''
+    });
+
     React.useEffect(() => {
         if (resultAuthFormAction.status !== "idle") {
             retrieveSession();
         }
     }, [resultAuthFormAction, retrieveSession])
 
+    React.useEffect(() => {
+        if (resultAuthTokenFormAction.status !== "idle") {
+            retrieveSession();
+        }
+    }, [resultAuthTokenFormAction, retrieveSession])
+
     return (
         <AuthContext.Provider value={{
             session, 
             status,
-            authFormAction,
             retrieveSession,
-            resultAuthFormAction
+            authFormAction,
+            resultAuthFormAction,
+            authTokenFormAction,
+            resultAuthTokenFormAction
         }}>
             {children}
         </AuthContext.Provider>

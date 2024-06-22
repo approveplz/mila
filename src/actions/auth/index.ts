@@ -120,7 +120,7 @@ export async function signUp(data: FormData) {
     await signIn('register', data);
 }
 
-export async function authSignInToken(data: FormData) {
+export async function authSignInToken(prevState: any, data: FormData) {
     try {
         await signIn('auth', data);
 

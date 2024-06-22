@@ -1,49 +1,49 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import { useParams, useRouter } from "next/navigation";
 import { verifyEmailOrSMS } from "@/api/auth";
-import { auth } from "@/auth";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { VerifyEmailOrSMSPayload } from "@/api/auth/auth.types";
+import * as React from "react";
+import { serialize } from "object-to-formdata";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
-function isRedirectError(error: Error & { digest?: string }) {
-    return !!error.digest?.startsWith("NEXT_REDIRECT")
-}
+export default function Page() {
+    const params = useParams();
+    const router = useRouter();
+    const { resultAuthTokenFormAction, authTokenFormAction, session } = useAuthContext();
 
-export default async function Page({
-    searchParams
-}: {
-    searchParams: {
-        server_code: string
-        client_code: string
-    }
-}) {
-    const session = await auth();
-    const res = await verifyEmailOrSMS({ client_code: searchParams.client_code, server_code: searchParams.server_code });
-
-    console.log("session: ", session);
-    console.log("res: ", res);
-
-    if (res) {
-        if (session) {
-            redirect('/');
-        } else {
-            try {
-                const formData = new FormData();
-                formData.append("access", res.access);
-                formData.append("refresh", res.refresh);
-
-                const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL!}/api/auth/authSignInToken`, {
-                    method: "POST",
-                    body: formData
-                });
-
-                console.log("response: ", response);
-                const data = await response.json();
-
-                console.log("data: ", data);
-                redirect('/');
-            } catch (error) {
-                throw error;
+    const { mutate } = useMutation({
+        mutationFn: (payload: VerifyEmailOrSMSPayload) => verifyEmailOrSMS(payload),
+        async onSuccess(data, variables, context) {
+            if (!!!session) {
+                await authTokenFormAction(serialize({
+                    access: data.access,
+                    refresh: data.refresh,
+                }));
             }
+
+            toast.success("Email verified successfully");
+        },
+        onError(error, variables, context) {
+            toast.error("Error verifying email!");
+            router.push("/")
+        },
+    })
+
+    React.useEffect(() => {
+        if (params.client_code && params.server_code) {
+            mutate({ server_code: params.server_code as string, client_code: params.client_code as string })
         }
-    }
+    }, [mutate, params.server_code, params.client_code])
+
+    React.useEffect(() => {
+        if (resultAuthTokenFormAction.status === "success") {
+            router.push("/")
+        }
+    }, [resultAuthTokenFormAction, router])
+
 
     return (
         <p>Redirecting...</p>
