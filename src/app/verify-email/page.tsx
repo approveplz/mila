@@ -20,14 +20,16 @@ export default function Page() {
     const { mutate } = useMutation({
         mutationFn: (payload: VerifyEmailOrSMSPayload) => verifyEmailOrSMS(payload),
         async onSuccess(data, variables, context) {
-            if (!!!session) {
+            if (session) {
+                toast.success("Email verified successfully");
+                router.push("/");
+            } else {
                 await authTokenFormAction(serialize({
                     access: data.access,
                     refresh: data.refresh,
                 }));
+                toast.success("Email verified successfully");
             }
-
-            toast.success("Email verified successfully");
         },
         onError(error, variables, context) {
             toast.error("Error verifying email!");
