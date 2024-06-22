@@ -1,44 +1,54 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { verifyEmailOrSMS } from "@/api/auth";
-import * as actions from "@/actions";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { VerifyEmailOrSMSPayload } from "@/api/auth/auth.types";
+import * as React from "react";
 import { serialize } from "object-to-formdata";
-import { auth } from "@/auth";
+import { useAuthContext } from "@/components/provider/auth/auth.component";
 
-function isRedirectError(error: Error & { digest?: string }) {
-    return !!error.digest?.startsWith("NEXT_REDIRECT")
-}
+export default function Page() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const { resultAuthTokenFormAction, authTokenFormAction, session } = useAuthContext();
 
-export default async function Page({
-    searchParams
-}: {
-    searchParams: {
-        server_code: string
-        client_code: string
-    }
-}) {
-    const session = await auth();
-    const res = await verifyEmailOrSMS({ client_code: searchParams.client_code, server_code: searchParams.server_code });
+    const client_code = searchParams.get("client_code");
+    const server_code = searchParams.get("server_code");
 
-    if (res) {
-        if (session) {
-            redirect('/');
-        } else {
-            try {
-                await actions.authSignInToken(serialize({
-                    access: res.access,
-                    refresh: res.refresh,
-                }))
-
-                redirect('/');
-            } catch (error) {
-                if (isRedirectError(error as Error)) {
-                    redirect('/');
-                } else {
-                    throw error;
-                }
+    const { mutate } = useMutation({
+        mutationFn: (payload: VerifyEmailOrSMSPayload) => verifyEmailOrSMS(payload),
+        async onSuccess(data, variables, context) {
+            if (session) {
+                toast.success("Email verified successfully");
+                router.push("/");
+            } else {
+                await authTokenFormAction(serialize({
+                    access: data.access,
+                    refresh: data.refresh,
+                }));
+                toast.success("Email verified successfully");
             }
+        },
+        onError(error, variables, context) {
+            toast.error("Error verifying email!");
+            router.push("/")
+        },
+    })
+
+    React.useEffect(() => {
+        if (client_code && server_code) {
+            mutate({ server_code: server_code, client_code: client_code })
         }
-    }
+    }, [mutate, server_code, client_code])
+
+    React.useEffect(() => {
+        if (resultAuthTokenFormAction.status === "success") {
+            router.push("/")
+        }
+    }, [resultAuthTokenFormAction, router])
+
 
     return (
         <p>Redirecting...</p>
