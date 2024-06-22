@@ -19,6 +19,9 @@ export default async function Page({
     const session = await auth();
     const res = await verifyEmailOrSMS({ client_code: searchParams.client_code, server_code: searchParams.server_code });
 
+    console.log("session: ", session);
+    console.log("res: ", res);
+
     if (res) {
         if (session) {
             redirect('/');
@@ -31,6 +34,7 @@ export default async function Page({
 
                 redirect('/');
             } catch (error) {
+                console.log("error: ", error);
                 if (isRedirectError(error as Error)) {
                     redirect('/');
                 } else {
