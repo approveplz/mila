@@ -15,7 +15,7 @@ export default function Page() {
     const { resultAuthTokenFormAction, authTokenFormAction, session } = useAuthContext();
 
     const client_code = searchParams.get("client_code");
-    const server_code = searchParams.get("client_code");
+    const server_code = searchParams.get("server_code");
 
     const { mutate } = useMutation({
         mutationFn: (payload: VerifyEmailOrSMSPayload) => verifyEmailOrSMS(payload),
