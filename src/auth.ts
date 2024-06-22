@@ -79,6 +79,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     accessToken: credentials.access as string,
                 }));
 
+                console.log(response, error)
+
                 if (error) {
                     if (isApiError(error)) {
                         return null;

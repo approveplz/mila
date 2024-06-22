@@ -18,16 +18,20 @@ export default async function Page({
     const session = await auth();
     const res = await verifyEmailOrSMS({ client_code: searchParams.client_code, server_code: searchParams.server_code });
 
+    console.log("session: ", session);
+    console.log("res: ", res);
+
     if (res) {
         if (session) {
             redirect('/');
         } else {
             try {
-                await api.post("/api/authSignInToken", {
+                const response = await api.post("/api/authSignInToken", {
                     access: res.access,
                     refresh: res.refresh,
                 });
 
+                console.log("response: ", response);
                 redirect('/');
             } catch (error) {
                 throw error;
